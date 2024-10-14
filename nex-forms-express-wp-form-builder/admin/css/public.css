@@ -425,14 +425,14 @@ span.nf-pp {
     margin-bottom: 5px;
 }
 .pro_upgrade a:hover {
-    background: #0074a6;
+    background: #a5cb34;
 }
 .pro_upgrade a {
     font-weight: 600;
     color: #ffffff !important;
-    font-size: 105%;
-    background: #3292bb;
-    padding: 4px 18px;
+    /* font-size: 105%; */
+    background: #92b136;
+    padding: 3px 7px;
     border-radius: 40px;
     border-color: transparent;
 }

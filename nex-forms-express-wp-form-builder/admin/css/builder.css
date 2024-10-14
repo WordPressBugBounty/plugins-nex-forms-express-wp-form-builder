@@ -8531,18 +8531,18 @@ span.input-group-addon.pixels {
 	display: none !important;
 }
 
-span.c_logic_field_type{
-	position: absolute !important;
-	left: 176px;
-	z-index: 100000000;
-	top: 1px;
-	color: #666;
-	padding: 9px 9px;
-	width: 33px;
-	border-radius: 4px 0px 0px 4px;
-	text-align: center;
-	height: 31px;
-	display: none;
+span.c_logic_field_type {
+    position: absolute !important;
+    left: 175px;
+    z-index: 100000000;
+    top: 1px;
+    color: #666;
+    padding: 9px 9px;
+    width: 33px;
+    border-radius: 13px;
+    text-align: center;
+    height: 31px;
+    display: none;
 }
 
 .is_arrow span.c_logic_field_type{
@@ -8550,9 +8550,11 @@ span.c_logic_field_type{
 	color: #b7e8fe;
 }
 
-.is_target span.c_logic_field_type{
-	background: #b7e8fe;
-	color: #0073aa;
+.is_target span.c_logic_field_type {
+    background: #0073aa;
+    color: #b7e8fe;
+    border-radius: 13px !important;
+	left: 175px;
 }
 
 .is_target.is_arrow span.c_logic_field_type:before{
@@ -8568,12 +8570,12 @@ span.c_logic_field_type{
 }
 
 .html_image span.c_logic_field_type{
-	border-radius: 4px 0px 6px 0px;
+	/*border-radius: 4px 0px 6px 0px;
 	border-right: 3px solid #ddd;
 	border-bottom: 3px solid #ddd;
 	border-top: 1px solid #ddd;
 	border-left: 1px solid #ddd;
-	background: #fff;
+	background: #fff;*/
 }
 
 .form_canvas.conditional-logic-opened span.c_logic_field_type{
@@ -8598,13 +8600,13 @@ span.c_logic_field_type{
 	margin-bottom: 0 !important;
 }
 
-.form_canvas.conditional-logic-opened .panel-default>.panel-heading{
-	color: #666  !important;
-	background-color: #fff  !important;
-	border-color: #ddd  !important;
-	font-size: 12px  !important;
-	padding-left: 45px  !important;
-	height: 33px !important;
+.form_canvas.conditional-logic-opened .panel-default>.panel-heading {
+    color: #666 !important;
+    background-color: #f1f1f1 !important;
+    border-color: #ddd !important;
+    font-size: 12px !important;
+    padding-left: 45px !important;
+    height: 33px !important;
 }
 
 #nex-forms .form_canvas.conditional-logic-opened .is_panel .panel .panel-body{
@@ -8616,8 +8618,9 @@ span.c_logic_field_type{
 }
 
 #nex-forms .form_canvas.conditional-logic-opened .panel-default {
-    border-color: #ddd !important;
-    background: #f9f9f9;
+    border-color: #cfcfcf !important;
+    /* background: #f9f9f9; */
+    border-width: 2px !important;
 }
 
 #nex-forms .form_canvas.conditional-logic-opened .is_panel span.c_logic_field_type{
@@ -8637,10 +8640,10 @@ span.c_logic_field_type{
 #nex-forms .form_canvas.conditional-logic-opened div.inner-canvas-container .form_field.over-connector .label_container .nf_title .the_label,
 #nex-forms .form_canvas.conditional-logic-opened div.inner-canvas-container .form_field.over-connector .the_input_element,
 #nex-forms .form_canvas.conditional-logic-opened div.inner-canvas-container .form_field.over-connector .panel-default>.panel-heading{
-	background: #f8f8f8 !important;
-	color: #ff9800 !important;
+	background: #0073aa !important;
+	color: #fff !important;
 	transition: all 0.2s;
-	border-color: #ff9800 !important;
+	border-color: #0073aa !important;
 }
 
 #nex-forms .form_canvas.conditional-logic-opened div.inner-canvas-container .form_field.show-active-rule .c_logic_field_type,
@@ -8654,26 +8657,29 @@ span.c_logic_field_type{
 	border-color: #ff9800 !important;
 }
 
-.form_canvas.conditional-logic-opened .label_container{
-	display: block !important;
-	padding: 9px 10px 3px 40px;
-	background: #fff;
-	border-radius: 4px;
-	width: 350px;
-	border: 1px solid #ddd;
-	left: 190px;
-	position: relative;
-	z-index: 10000000;
-	min-height: 33px;
+.form_canvas.conditional-logic-opened .label_container {
+    display: block !important;
+    padding: 9px 10px 3px 40px;
+    background: #f1f1f1;
+    border-radius: 15px;
+    width: 350px;
+    border: 1px solid #ddd;
+    left: 190px;
+    position: relative;
+    z-index: 10000000;
+    min-height: 33px;
 }
 
-.form_canvas.conditional-logic-opened .html_image .input_container{
-	width: 350px !important;
-	left: 190px;
-	background: #fff;
-	padding: 10px 10px 10px 40px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
+.form_canvas.conditional-logic-opened .html_image .input_container {
+    width: 350px !important;
+    left: 190px;
+    background: #f1f1f1;
+    padding: 10px 10px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    display: flex !important;
+    justify-content: center;
+    text-align: center !important;
 }
 
 .form_canvas.conditional-logic-opened .is_panel .html_image .input_container{
@@ -8681,37 +8687,55 @@ span.c_logic_field_type{
 	width: 330px !important;
 }
 
-#nex-forms .form_canvas.conditional-logic-opened .the_input_element,
-#nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn,
-#nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn:hover,
-#nex-forms .form_canvas.conditional-logic-opened .submit-button button.btn.btn-lg.col-sm-12{
-	color: #666 !important;
-	background: #fff !important;
-	width: 350px !important;
-	left: 175px !important;
-	position: relative;
-	padding: 8px 10px 8px 40px !important;
-	text-align: left !important;
-	font-size: 12px !important;
-	border-radius: 4px !important;
-	border: 1px solid #ddd !important;
-	opacity: 1 !important;
-	box-shadow: none !important;
-	z-index: 10000000;
-	text-align-last: left !important;
-	overflow: hidden;
-	float: left;
-	min-height: 33px;
+#nex-forms .form_canvas.conditional-logic-opened .the_input_element, #nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn, #nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn:hover, #nex-forms .form_canvas.conditional-logic-opened .submit-button button.btn.btn-lg.col-sm-12 {
+    color: #666 !important;
+    background: #f1f1f1 !important;
+    width: 350px !important;
+    left: 175px !important;
+    position: relative;
+    padding: 8px 10px 8px 40px !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    border-radius: 15px !important;
+    border: 1px solid #ddd !important;
+    opacity: 1 !important;
+    box-shadow: none !important;
+    z-index: 10000000;
+    text-align-last: left !important;
+    overflow: hidden;
+    float: left;
+    min-height: 33px;
+    /* display: flex; */
+    /* align-items: center; */
 }
+
+#nex-forms .form_canvas.conditional-logic-opened .is_arrow .the_input_element, 
+#nex-forms .form_canvas.conditional-logic-opened .is_arrow button.the_input_element.btn, 
+#nex-forms .form_canvas.conditional-logic-opened .is_arrow button.the_input_element.btn:hover, 
+#nex-forms .form_canvas.conditional-logic-opened .is_arrow .submit-button button.btn.btn-lg.col-sm-12,
+#nex-forms .form_canvas.conditional-logic-opened .is_target .the_input_element, 
+#nex-forms .form_canvas.conditional-logic-opened .is_target button.the_input_element.btn, 
+#nex-forms .form_canvas.conditional-logic-opened .is_target button.the_input_element.btn:hover, 
+#nex-forms .form_canvas.conditional-logic-opened .is_target .submit-button button.btn.btn-lg.col-sm-12{
+	background: #fff !important;	
+	border: 1px solid #0073aa;
+}
+
+.form_canvas.conditional-logic-opened .is_arrow .label_container,
+.form_canvas.conditional-logic-opened .is_target .label_container{
+	background: #fff !important;	
+	border: 1px solid #0073aa;
+}
+
 
 #nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn,
 #nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn:hover{
 	height: 33px;
 }
 
-#nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn{
-	color: #666  !important;
-	background: #fff !important;
+#nex-forms .form_canvas.conditional-logic-opened button.the_input_element.btn {
+    color: #666 !important;
+    background: #f1f1f1 !important;
 }
 
 #nex-forms .form_canvas.conditional-logic-opened .the_input_element *{
@@ -8723,7 +8747,9 @@ span.c_logic_field_type{
 	max-width: 100px !important;
 	height: auto !important;
 }
-
+#nex-forms .form_canvas.conditional-logic-opened .icon_element {
+    margin-left: -15px;
+}
 #nex-forms .form_canvas.conditional-logic-opened .the-image-container{
 	width: 100px;
 	height: auto !important;
@@ -8750,8 +8776,8 @@ span.c_logic_field_type{
 #nex-forms .form_field .cl_arrow:hover,
 #nex-forms .form_field .show-active-rule.cl_arrow{
 	border-color: #555;
-	border-radius: 10px 0 0 10px;
-	transition: all 0.3s;
+	border-radius: 5px 0 0 5px;
+	transition: all 0.2s;
 	margin-top: -2px;
 }
 
@@ -8771,9 +8797,9 @@ span.c_logic_field_type{
 
 .cl_arrow{
 	position: absolute;
-	border-top: 1px solid #ddd;
-	border-left: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #bbb;
+	border-left: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
 	top: -70px;
 	left: -140px;
 	display: none;
@@ -9275,7 +9301,7 @@ span.avd_arrow_start{
 }
 
 #nex-forms .conditional-logic-ui .inner-canvas-container .step .tab-pane:hover{
-	background: #f9f9f9;
+	/*background: #f9f9f9;*/
 }
 
 .adv_target,

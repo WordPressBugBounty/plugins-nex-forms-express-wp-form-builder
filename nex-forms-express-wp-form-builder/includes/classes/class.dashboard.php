@@ -79,7 +79,7 @@ function NEXForms_entries_page(){
 	$output .= '<div class="hidden" style="display:none;">';
 	$output .= $dashboard->dashboard_menu('Form Entries');
 	$output .= '</div>';
-	if(!$dashboard->checkout)
+	/*if(!$dashboard->checkout)
 			{
 				 $output .= '<div id="dashboard_panel" class="dashboard_panel">';
 					$output .= '<div class="row row_zero_margin ">';
@@ -93,7 +93,7 @@ function NEXForms_entries_page(){
 			
 			echo $output;
 			return;
-			}
+			}*/
 	
 	$output .= '<div class="admin_url" style="display:none;">'.admin_url().'</div>';
 	
@@ -160,8 +160,15 @@ function NEXForms_entries_page(){
 						$output .= '<div class="entry_views">';
 						
 							$output .= '<button class="nf_button aa_bg_main_btn do_action no_batch  view_form_data active" data-action="view-data" disabled="disabled"><span class="fas fa-database"></span> '.__('Entry Data','nex-forms').'</button>';
+							if($dashboard->checkout){
 							$output .= '<button class="nf_button aa_bg_main_btn do_action no_batch" data-action="view-admin-email" disabled="disabled"><span class="fas fa-envelope"></span> '.__('View Admin Email','nex-forms').'</button>';
 							$output .= '<button class="nf_button aa_bg_main_btn do_action no_batch" data-action="view-user-email" disabled="disabled"><span class="far fa-envelope"></span> '.__('View User Email','nex-forms').'</button>';
+							}
+							else
+							{
+							$output .= '<button class="nf_button aa_bg_main_btn  no_batch"  disabled="disabled"><span class="fas fa-envelope"></span> '.__('View Admin Email','nex-forms').'</button>';
+							$output .= '<button class="nf_button aa_bg_main_btn  no_batch"  disabled="disabled"><span class="far fa-envelope"></span> '.__('View User Email','nex-forms').'</button>';
+							}
 						$output .= '</div>';
 					
 						$output .= '<div class="entry_actions">';	
@@ -709,10 +716,65 @@ $output .= '<div class="hidden">';
 	$output .= $dashboard->dashboard_menu('Add-ons');
 $output .= '</div>';		 
 		 $output .= '<div id="dashboard_panel" class="dashboard_panel global_settings_page">';
-			$output .= $dashboard->new_menu();
+			$output .= $dashboard->new_menu('add-ons');
+				
+				
+				
+				//PAYPAL PRO
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/paypal-pro/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>PayPal Pro</h3>';
+							
+							$output .= 'Enable online payments through PayPal. Incudes Itemized PayPal checkout and email sending options based on payment status.';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nf_get_paypal_payment'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				//PDF CREATOR
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/pdf-creator/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>PDF Creator</h3>';
+							$output .= 'Enables custom PDF creation from submmited form data. Also include options for these PDF\'s to be attached to admin and user emails.';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nf_not_found_notice_pdf'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/pdf-creator-for-nexforms/11220942?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				
 				
 				//FORM THEMES
-				$output .= '<div class="col-sm-3">';
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-themes/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-themes.png',  dirname(dirname(__FILE__))).'"></a>';	
@@ -729,65 +791,68 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/form-themes-for-nexforms/10037800?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/form-themes-for-nexforms/10037800?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
 					$output .= '</div>';		
 				$output .= '</div>';
 				
-				//PAYPAL PRO
-				$output .= '<div class="col-sm-3">';
+				
+				//ZAPIER
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/paypal-pro/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png',  dirname(dirname(__FILE__))).'"></a>';	
+							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/zapier-integration/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-zapier.png',  dirname(dirname(__FILE__))).'"></a>';	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>PayPal Pro</h3>';
-							
-							$output .= 'Enable online payments through PayPal. Incudes Itemized PayPal checkout and email sending options based on payment status.<br />&nbsp;';
+							$output .= '<h3>Zapier Integration</h3>';
+							$output .= 'Enables the integration of NEX-Forms to over 4000 apps.';
 						$output .= '</div>';
 						$output .= '<div class="add_on_check">';	
 							
-							if(function_exists('nf_get_paypal_payment'))
+							if(function_exists('NEXForms_not_found_notice_zapier'))
 								{
 								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/zapier-integration-for-nexforms/38000632?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
 					$output .= '</div>';		
 				$output .= '</div>';
 				
-				//PDF CREATOR
-				$output .= '<div class="col-sm-3">';
+				
+				//DIGITAL SIGNATURES
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/pdf-creator/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png',  dirname(dirname(__FILE__))).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/digital-signatures/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png',  dirname(dirname(__FILE__))).'"></a>';	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>PDF Creator</h3>';
-							$output .= 'Enables custom PDF creation from submmited form data. Also include options for these PDF\'s to be attached to admin and user emails.<br />&nbsp;';
+							$output .= '<h3>Digital / E-Signatures</h3>';
+							$output .= 'Allows you to add digital signature fields to your forms. Use these signatures in email and PDF\'s.';
 						$output .= '</div>';
 						$output .= '<div class="add_on_check">';	
 							
-							if(function_exists('nf_not_found_notice_pdf'))
+							if(function_exists('nf_not_found_notice_ds'))
 								{
 								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/pdf-creator-for-nexforms/11220942?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/digital-signatures-for-nexforms/17044658?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
-					$output .= '</div>';		
+					$output .= '</div>';	
 				$output .= '</div>';
+				
+				
 				//SUPER SELECT
-				$output .= '<div class="col-sm-3">';
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/super-select-form-field/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-super-select.png', dirname(dirname(__FILE__))).'"></a>';	
@@ -804,14 +869,14 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a  href="https://codecanyon.net/item/super-selection-form-field-for-nexforms/23748570?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a  href="https://codecanyon.net/item/super-selection-form-field-for-nexforms/23748570?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
 					$output .= '</div>';		
 				$output .= '</div>';
 				//STRIPE
-				/*$output .= '<div class="col-sm-3">';
+				/*$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/stripe/" target="_blank"><img src="https://basixonline.net/add-ons/covers/nex-forms-add-on-stripe.png"></a>';	
@@ -828,7 +893,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/user/basix/portfolio?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/user/basix/portfolio?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -837,143 +902,11 @@ $output .= '</div>';
 			  	
 				
 				
+					
 				
-				
-				
-				
-				
-				//MAILCHIMP
-				$output .= '<div class="col-sm-3">';
-					$output .= '<div class="add_on_item">';	
-						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png',  dirname(dirname(__FILE__))).'"></a>';	
-						$output .= '</div>';
-						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>MailChimp</h3>';
-							$output .= 'Automatically update your MailChimp lists with new subscribers from NEX-Forms. <br />&nbsp;';
-						$output .= '</div>';
-						$output .= '<div class="add_on_check">';	
-							
-							if(function_exists('nexforms_mc_test_api'))
-								{
-								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
-								}
-							else
-								{
-								$output .= '<a href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-								}
-							
-						$output .= '</div>';
-					$output .= '</div>';		
-				$output .= '</div>';
-				
-				
-				//MAILSTER
-				$output .= '<div class="col-sm-3">';
-					$output .= '<div class="add_on_item">';	
-						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png',  dirname(dirname(__FILE__))).'"></a>';	
-						$output .= '</div>';
-						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>Mailster</h3>';
-							$output .= 'Automatically update your Mailster lists with new subscribers from NEX-Forms. <br />&nbsp;';
-						$output .= '</div>';
-						$output .= '<div class="add_on_check">';	
-							
-							if(function_exists('nexforms_ms_test_api'))
-								{
-								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
-								}
-							else
-								{
-								$output .= '<a href="https://codecanyon.net/item/mailster-for-nexforms/27019198?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-								}
-							
-						$output .= '</div>';
-					$output .= '</div>';		
-				$output .= '</div>';
-				
-				//MAILPOET
-				$output .= '<div class="col-sm-3">';
-					$output .= '<div class="add_on_item">';	
-						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png',  dirname(dirname(__FILE__))).'"></a>';	
-						$output .= '</div>';
-						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>MailPoet</h3>';
-							$output .= 'Automatically update your MailPoet lists with new subscribers from NEX-Forms. <br />&nbsp;';
-						$output .= '</div>';
-						$output .= '<div class="add_on_check">';	
-							
-							if(function_exists('nexforms_mp_test_api'))
-								{
-								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
-								}
-							else
-								{
-								$output .= '<a href="https://codecanyon.net/item/mailpoet-for-nexforms/26950120?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-								}
-							
-						$output .= '</div>';
-					$output .= '</div>';		
-				$output .= '</div>';
-				
-				
-				
-				//GETRESPONSE
-				$output .= '<div class="col-sm-3">';
-					$output .= '<div class="add_on_item">';	
-						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/getresponse/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png',  dirname(dirname(__FILE__))).'"></a>';	
-						$output .= '</div>';
-						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>GetRepsonse</h3>';
-							$output .= 'Automatically update your GetResponse lists with new subscribers from NEX-Forms. <br />&nbsp;';
-						$output .= '</div>';
-						$output .= '<div class="add_on_check">';	
-							
-							if(function_exists('nexforms_gr_test_api'))
-								{
-								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
-								}
-							else
-								{
-								$output .= '<a href="https://codecanyon.net/item/getresponse-for-nexforms/18462247?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-								}
-							
-						$output .= '</div>';
-					$output .= '</div>';		
-				$output .= '</div>';
-				
-				
-				
-				//DIGITAL SIGNATURES
-				$output .= '<div class="col-sm-3">';
-					$output .= '<div class="add_on_item">';	
-						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/digital-signatures/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png',  dirname(dirname(__FILE__))).'"></a>';	
-						$output .= '</div>';
-						$output .= '<div class="add_on_desciprtion">';	
-							$output .= '<h3>Digital Signatures</h3>';
-							$output .= 'Allows you to add digital signature fields to your forms. Use these signatures in email and PDF\'s.<br />&nbsp;';
-						$output .= '</div>';
-						$output .= '<div class="add_on_check">';	
-							
-							if(function_exists('nf_not_found_notice_ds'))
-								{
-								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
-								}
-							else
-								{
-								$output .= '<a href="https://codecanyon.net/item/digital-signatures-for-nexforms/17044658?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-								}
-							
-						$output .= '</div>';
-					$output .= '</div>';		
-				$output .= '</div>';
 				
 				//FORM TO POST
-				$output .= '<div class="col-sm-3">';
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-to-post-or-page/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-to-post-or-page.png',  dirname(dirname(__FILE__))).'"></a>';	
@@ -990,7 +923,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/form-to-postpage-for-nexforms/19538774?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/form-to-postpage-for-nexforms/19538774?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1005,7 +938,7 @@ $output .= '</div>';
 				
 				
 				//CONDITIONAL CONTENT BLOCKS
-				$output .= '<div class="col-sm-3">';
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/conditional-content-blocks/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-conditional-content-blocks.png',  dirname(dirname(__FILE__))).'"></a>';	
@@ -1022,7 +955,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/conditional-content-blocks-for-nexforms/22096224?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/conditional-content-blocks-for-nexforms/22096224?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1031,14 +964,14 @@ $output .= '</div>';
 				
 				
 				//SHORTCODE PROCESSOR
-				$output .= '<div class="col-sm-3">';
+				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
 							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/shortcode-processor/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-shortcode-processor.png',  dirname(dirname(__FILE__))).'"></a>';	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Shorcode Processor</h3>';
-							$output .= 'Run your own custom shorcode or 3rd party plugin/theme shorcode anywhere in your forms.<br /><br />&nbsp;';
+							$output .= 'Run your own custom shorcode or 3rd party plugin/theme shorcode anywhere in your forms.';
 						$output .= '</div>';
 						$output .= '<div class="add_on_check">';	
 							
@@ -1048,12 +981,122 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://codecanyon.net/item/shortcode-processor-for-nexforms/22556756?ref=Basix" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://codecanyon.net/item/shortcode-processor-for-nexforms/22556756?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
 					$output .= '</div>';		
 				$output .= '</div>';
+				
+				
+				
+				
+				//MAILCHIMP
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>MailChimp</h3>';
+							$output .= 'Automatically update your MailChimp lists with new subscribers from NEX-Forms. ';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nexforms_mc_test_api'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				
+				//MAILSTER
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>Mailster</h3>';
+							$output .= 'Automatically update your Mailster lists with new subscribers from NEX-Forms. ';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nexforms_ms_test_api'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/mailster-for-nexforms/27019198?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				//MAILPOET
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>MailPoet</h3>';
+							$output .= 'Automatically update your MailPoet lists with new subscribers from NEX-Forms. ';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nexforms_mp_test_api'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/mailpoet-for-nexforms/26950120?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				
+				
+				//GETRESPONSE
+				$output .= '<div class="col-sm-12">';
+					$output .= '<div class="add_on_item">';	
+						$output .= '<div class="add_on_cover">';
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/getresponse/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png',  dirname(dirname(__FILE__))).'"></a>';	
+						$output .= '</div>';
+						$output .= '<div class="add_on_desciprtion">';	
+							$output .= '<h3>GetRepsonse</h3>';
+							$output .= 'Automatically update your GetResponse lists with new subscribers from NEX-Forms.';
+						$output .= '</div>';
+						$output .= '<div class="add_on_check">';	
+							
+							if(function_exists('nexforms_gr_test_api'))
+								{
+								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
+								}
+							else
+								{
+								$output .= '<a href="https://codecanyon.net/item/getresponse-for-nexforms/18462247?ref=Basix" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								}
+							
+						$output .= '</div>';
+					$output .= '</div>';		
+				$output .= '</div>';
+				
+				
+				
+				
 				
 				
 				
@@ -1811,7 +1854,6 @@ if(!class_exists('NEXForms_dashboard'))
 			$dashboard->dashboard_checkout();
 			
 			$output = '';
-			
 			$output .= '<div class="nf-header">';
 				$output .= '<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/" target="_blank" class="logo"></a>
 							
@@ -1824,9 +1866,10 @@ if(!class_exists('NEXForms_dashboard'))
 								<div class="item">
 									<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
 								</div>
-								'.(($page_title=="dashboard") ? '<div class="item">
-									<a href="https://basixonline.net/nex-forms-free-add-ons-download/" target="_blank"><span class="fas fa-cloud-download-alt"></span>Add-ons Download</a>
+								'.(($page_title=="dashboard" || $page_title=="add-ons" || !$dashboard->checkout) ? '<div class="item">
+									<a href="https://basixonline.net/nex-forms-free-add-ons-download/" target="_blank"><span class="fas fa-cloud-download-alt"></span>Free Add-ons Download</a>
 								</div>' : '');
+								
 							$output .= ($theme->Name=='NEX-Forms Demo' || !$dashboard->checkout) ? '
 								<div class="item buy-now">
 									<a href="https://1.envato.market/zQ6de">Buy now</a>
@@ -1846,8 +1889,8 @@ if(!class_exists('NEXForms_dashboard'))
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-reporting') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-reporting"  data-placement="bottom" data-title="'.__('Reporting','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-reporting') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-database"></span> <span class="menu-text">'.__('Reporting','nex-forms').'</span></a></li>';
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-analytics') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-analytics"  data-placement="bottom" data-title="'.__('Analytics','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-analytics') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-chart-bar"></span> <span class="menu-text">'.__('Analytics','nex-forms').'</span></a></li>';
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-file-uploads') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-file-uploads"  data-placement="bottom" data-title="'.__('File Uploads','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-file-uploads') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-file-upload"></span> <span class="menu-text">'.__('File Uploads','nex-forms').'</span></a></li>';
-										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings"  data-placement="bottom" data-title="'.__('Global Settings','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-cog"></span> <span class="menu-text">'.__('Settings','nex-forms').'</span></a></li>';
-										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons"  data-placement="bottom" data-title="'.__('Add-ons','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-plug"></span> <span class="menu-text">'.__('Add-ons','nex-forms').'</span></a></li>';
+										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').'" style="position: absolute;bottom: 90px;"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings"  data-placement="bottom" data-title="'.__('Global Settings','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-cog"></span> <span class="menu-text">'.__('Settings','nex-forms').'</span></a></li>';
+										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'" style="position: absolute;bottom: 144px;"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons"  data-placement="bottom" data-title="'.__('Add-ons','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-plug"></span> <span class="menu-text">'.__('Add-ons','nex-forms').'</span></a></li>';
 								
 								
 							   $output .= '</ul>';
@@ -4559,7 +4602,7 @@ if(!class_exists('NEXForms_dashboard'))
 						$output .= '</div>';
 						$output .= '<div class="col-sm-7">';
 							if($client_info['purchase_code'])
-								$output .= $client_info['purchase_code'];
+								$output .= '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['purchase_code'],-6);
 							else
 								$output .= __('<strong>License not activated for this domain. Please refresh this page and enter your purchase code when prompted.</strong>','nex-forms');
 						$output .= '</div>';
@@ -4569,7 +4612,7 @@ if(!class_exists('NEXForms_dashboard'))
 							$output .= '<strong>'.__('Envato Username','nex-forms').'</strong>';
 						$output .= '</div>';
 						$output .= '<div class="col-sm-7">';
-							$output .= $client_info['envato_user_name'];
+							$output .= substr($client_info['envato_user_name'],0,1).'&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['envato_user_name'],-1);
 						$output .= '</div>';
 					$output .= '</div>';
 					$output .= '<div class="row">';
@@ -4682,7 +4725,7 @@ if(!class_exists('NEXForms_dashboard'))
 				$date_picker_lang = $preferences['field_preferences']['pref_date_picker_lang'];
 				
 			if($preferences['field_preferences']['pref_date_picker_format'])
-				$date_picker_lang = $preferences['field_preferences']['pref_date_picker_format'];
+				$date_picker_format = $preferences['field_preferences']['pref_date_picker_format'];
 			
 			$output = '';
 			$output .= '

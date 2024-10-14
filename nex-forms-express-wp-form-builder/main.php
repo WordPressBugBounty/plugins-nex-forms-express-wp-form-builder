@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.5
+Version: 8.7.8
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -64,16 +64,6 @@ function enqueue_nf_jquery(){
 
 add_action( 'wp_enqueue_scripts', 'enqueue_nf_jquery' );
 
-
-if(is_admin())
-	{
-	require dirname(__FILE__) . '/includes/classes/plugin-update-checker/plugin-update-checker.php';
-	$MyUpdateChecker = new Puc_v4p4_Plugin_UpdateChecker (
-		'https://basixonline.net/repository/nex-forms-updates.json',
-		__FILE__,
-		'main'
-		);
-	}
 
 require( dirname(__FILE__) . '/includes/load.php');
 
@@ -356,8 +346,8 @@ function NEXForms5_main_menu(){
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Reporting','Reporting', NF_USER_LEVEL, 'nex-forms-page-reporting', 'NEXForms_reporting_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Analytics','Analytics',NF_USER_LEVEL, 'nex-forms-page-analytics', 'NEXForms_stats_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-File Uploads','File Uploads', NF_USER_LEVEL, 'nex-forms-page-file-uploads', 'NEXForms_attachments_page');
-	add_submenu_page( 'nex-forms-dashboard', 'NF-Setup','Settings', NF_USER_LEVEL, 'nex-forms-page-global-settings', 'NEXForms_global_setup_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_add_ons_page');
+	add_submenu_page( 'nex-forms-dashboard', 'NF-Setup','Settings', NF_USER_LEVEL, 'nex-forms-page-global-settings', 'NEXForms_global_setup_page');
 	
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Builder-View','Builder', NF_USER_LEVEL, 'nex-forms-builder', 'NEXForms_form_builder');
 	add_submenu_page( '', 'NF-Test','Test', NF_USER_LEVEL, 'nex-forms-test-page', 'NEXForms_test_page');
@@ -575,6 +565,70 @@ function NEXForms_test_page(){
 				
 			}	
 		}*/
+	
+	
+	/*$sql = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms`';
+	$wpdb->query($sql);
+	
+	$sql2 = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms_entries`';
+	$wpdb->query($sql2);
+	
+	$sql3 = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms_email_templates`';
+	$wpdb->query($sql3);
+	
+	$sql4 = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms_views`';
+	$wpdb->query($sql4);
+	
+	$sql5 = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms_stats_interactions`';
+	$wpdb->query($sql5);
+	
+	$sql6 = 'DROP TABLE `'.$wpdb->prefix.'wap_nex_forms_files`';
+	$wpdb->query($sql6);
+	*/
+	
+	
+	global $wpdb; 	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
+	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms_entries`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms_entries\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
+	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms_email_templates`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms_email_templates\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
+	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms_views`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms_views\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
+	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms_stats_interactions`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms_stats_interactions\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
+	
+	$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.'wap_nex_forms_files`');
+	foreach($fields as $field)
+		{
+		echo '$database_actions->alter_plugin_table(\'wap_nex_forms_files\',\''.$field->Field.'\',\''.$field->Type.'\');<br />';
+		}
+	echo '<br><br>';
 		
 }
 
@@ -752,78 +806,100 @@ function NEXForms5_run_instalation(){
 	
 	
 	$database_actions = new NEXForms_Database_Actions();
-	$database_actions->recollate_plugin_table();
+	//$database_actions->recollate_plugin_table();
 	
-	$database_actions->alter_plugin_table('wap_nex_forms','last_update','TIMESTAMP');
-	$database_actions->alter_plugin_table('wap_nex_forms','hidden_fields','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','clean_html','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','custom_url','text');
+	$database_actions->alter_plugin_table('wap_nex_forms','title','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','description','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','mail_to','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','confirmation_mail_body','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','admin_email_body','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','bcc','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','bcc_user_mail','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','post_type','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','post_action','text');	
+	$database_actions->alter_plugin_table('wap_nex_forms','confirmation_mail_subject','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','user_confirmation_mail_subject','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','from_address','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','from_name','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','on_screen_confirmation_message','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','confirmation_page','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_fields','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','clean_html','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','visual_settings','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','google_analytics_conversion_code','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','colour_scheme','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','send_user_mail','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','user_email_field','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','on_form_submission','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','date_sent','datetime');
+	$database_actions->alter_plugin_table('wap_nex_forms','is_form','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','is_template','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','hidden_fields','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_hidden_fields','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','custom_url','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','post_type','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','post_action','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','bcc','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','bcc_user_mail','mediumtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','custom_css','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','is_paypal','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','total_views','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','time_viewed','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','email_on_payment_success','text');
+	$database_actions->alter_plugin_table('wap_nex_forms','is_paypal','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','total_views','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','time_viewed','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','email_on_payment_success','mediumtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','conditional_logic','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','conditional_logic_array','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','server_side_logic','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_type','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','template_type','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','user_confirmation_mail_subject','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','draft_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_status','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','currency_code','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','products','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','business','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','cmd','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','return_url','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','cancel_url','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','lc','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','environment','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','email_subscription','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','mc_field_map','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','mc_list_id','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','gr_field_map','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','gr_list_id','mediumtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','pdf_html','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','attach_pdf_to_email','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','pdf_settings','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_to_post_map','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','is_form_to_post','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_status','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_hidden_fields','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','kak','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','attach_pdf_to_email','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_to_post_map','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','is_form_to_post','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','md_theme','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_theme','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','jq_theme','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_style','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','multistep_settings','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','multistep_html','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','paypal_client_Id','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','paypal_client_secret','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','payment_success_msg','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','payment_failed_msg','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_type','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','template_type','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','draft_Id','mediumtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','is_wrapped','mediumtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','upload_settings','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','attachment_settings','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','currency_code','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','products','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','business','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','cmd','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','return_url','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','cancel_url','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','lc','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','environment','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','email_subscription','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','mc_field_map','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','mc_list_id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms','option_settings','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','mp_field_map','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','mp_list_id','text');
 	$database_actions->alter_plugin_table('wap_nex_forms','ms_field_map','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','ms_list_id','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','gr_field_map','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','gr_list_id','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','option_settings','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','jq_theme','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','md_theme','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_theme','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','form_style','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','msg_style','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','is_wrapped','text');
-	$database_actions->alter_plugin_table('wap_nex_forms','multistep_settings','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','multistep_html','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','on_screen_confirmation_message_admin','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','entry_count','BIGINT(255) DEFAULT 0');
+	$database_actions->alter_plugin_table('wap_nex_forms','msg_style','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','entry_count','bigint(20)');
 	$database_actions->alter_plugin_table('wap_nex_forms','zapier_web_hook_url','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','reply_to','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','enqueue_array','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','pdf_settings','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','hubspot_portal_id','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','hubspot_form_id','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','is_hubspot','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','reply_to','longtext');
-	$database_actions->alter_plugin_table('wap_nex_forms','enqueue_array','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','last_update','timestamp');
 	
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','nex_forms_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','page','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','ip','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','hostname','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','city','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','region','text');
@@ -831,8 +907,15 @@ function NEXForms5_run_instalation(){
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','loc','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','org','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','postal','text');
-	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_payment_id','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','user_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','viewed','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','date_time','datetime');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_invoice','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','payment_status','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','form_data','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_data','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_payment_token','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_payment_id','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','payment_ammount','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','payment_currency','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','saved_admin_email','longtext');
@@ -841,13 +924,36 @@ function NEXForms5_run_instalation(){
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','starred','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','trashed','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','attachments','text');
-
+	
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','nex_forms_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','mail_type','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','mail_to','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','mail_body','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','mail_subject','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','from_address','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','from_name','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','send_user_mail','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','user_email_field','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','bcc','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','bcc_user_mail','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_email_templates','attachments','text');
+	
+	$database_actions->alter_plugin_table('wap_nex_forms_views','nex_forms_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_views','time_viewed','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_views','date_time','datetime');
+	
+	$database_actions->alter_plugin_table('wap_nex_forms_stats_interactions','nex_forms_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_stats_interactions','time_interacted','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_stats_interactions','date_time','datetime');
+	
+	$database_actions->alter_plugin_table('wap_nex_forms_files','nex_forms_Id','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_files','name','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_files','type','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_files','size','text');
+	$database_actions->alter_plugin_table('wap_nex_forms_files','url','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_files','location','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_files','entry_Id','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_files','trashed','text');
-	
-	$database_actions->alter_plugin_table('wap_nex_forms_views','date_time','datetime');
-	$database_actions->alter_plugin_table('wap_nex_forms_stats_interactions','date_time','datetime');
 	
 	//MIGRATE ATTACHMENT DATA
 	if(get_option('nf_set_attachments')!='1')
@@ -891,11 +997,7 @@ function NEXForms5_run_instalation(){
 			update_option('convert_paypal','1');
 			}
 		}
-	
-	
-	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_invoice','text');
-	$database_actions->alter_plugin_table('wap_nex_forms_entries','payment_status','text');
-	$database_actions->alter_plugin_table('wap_nex_forms_entries','paypal_data','longtext');	
+		
 }
 
 /***************************************/
@@ -946,8 +1048,6 @@ function NEXForms_form_preview(){
 
 
 function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=''){
-	
-	
 	
 	
 	if($atts==0)
@@ -1436,7 +1536,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 				}
 				
 		//OPEN POPUP MODAL
-				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? esc_attr($form_css_style) : 'background:'.esc_attr($background).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;').'width:'.esc_attr($width).' !important;height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false"><div class="modal-dialog">';
+				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? esc_attr($form_css_style) : 'background:'.esc_attr($background).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;').'width:'.esc_attr($width).' !important;height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
 					
 				$output .= '<span data-bs-dismiss="modal" data-dismiss="modal" class="modal-action modal-close '.esc_attr($button_color).'"><i class="material-icons fa fa-close"></i></span>';
 				$output .= '<div class="modal-content" id="nf_form_'.esc_attr($unigue_form_Id).'">';	
@@ -2107,7 +2207,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		
 	//CLOSE POPUP MODAL
 	if($open_trigger=="popup")	
-		$output .= '</div></div></div></div>';
+		$output .= '</div></div></div>';
 	
 	//CLOSE STICKY
 	if($make_sticky=='yes')	
@@ -5572,10 +5672,63 @@ global $wp_meta_boxes;
  
 function nex_forms_dashboard() {
 echo '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>14 premium add-ons worth $270 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $270</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>';
+}
 
 
 
+//register_activation_hook( __FILE__, 'NEXForms_welcome_screen_activate' );
+function NEXForms_welcome_screen_activate() {
+  set_transient( 'NEXForms__welcome_screen_activation_redirect', true, 30 );
+}
 
+add_action( 'admin_init', 'NEXForms_welcome_screen_do_activation_redirect' );
+function NEXForms_welcome_screen_do_activation_redirect() {
+  // Bail if no activation redirect
+    if ( ! get_transient( 'NEXForms__welcome_screen_activation_redirect' ) ) {
+    return;
+  }
+
+  // Delete the redirect transient
+  delete_transient( 'NEXForms__welcome_screen_activation_redirect' );
+
+  // Bail if activating from network, or bulk
+  if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+    return;
+  }
+
+  // Redirect to bbPress about page
+  wp_safe_redirect( add_query_arg( array( 'page' => 'welcome-to-nex-forms' ), admin_url( 'index.php' ) ) );
+
+}
+
+add_action('admin_menu', 'NEXForms_welcome_screen_pages');
+
+function NEXForms_welcome_screen_pages() {
+  add_dashboard_page(
+    'Welcome To Welcome Screen',
+    'Welcome To Welcome Screen',
+    'read',
+    'welcome-to-nex-forms',
+    'NEXForms_welcome_screen_content'
+  );
+}
+
+function NEXForms_welcome_screen_content() {
+  ?>
+  <div class="wrap">
+    <h2>An Example Welcome Screen</h2>
+
+    <p>
+      You can put any content you like here from columns to sliders - it's up to you
+    </p>
+  </div>
+  <?php
+}
+
+add_action( 'admin_head', 'NEXForms_welcome_screen_remove_menus' );
+
+function NEXForms_welcome_screen_remove_menus() {
+    remove_submenu_page( 'index.php', 'welcome-to-nex-forms' );
 }
 
 

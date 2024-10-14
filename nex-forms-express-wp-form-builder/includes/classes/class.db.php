@@ -203,9 +203,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			$p = chr(112);$r = chr(114);$e = chr(101);$u = chr(117);$d = chr(100);$a = chr(97);$t = chr(116);$o = chr(111);$n = chr(110);$i = chr(105);$f = chr(102);$c = chr(99);$v = chr(118);
-			$string = $p.$r.$e."_".$u.$p.$d.$a.$t.$e."_".$o.$p.$t.$i.$o.$n."_".$n.$f."_".$a.$c.$t.$i.$v.$a.$t.$e.$d;
-			if( array_key_exists( $string , $GLOBALS['wp_filter']) )
+			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
 				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
@@ -2731,7 +2729,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 										
 										$output .= '<td valign="top" style="vertical-align:top !important;">';
 											if($form_entry->payment_status=='payed')
-
 												$output .= 'Payed';
 											elseif($form_entry->payment_status=='pending')
 												$output .= 'Pending';
@@ -3234,8 +3231,13 @@ if(!class_exists('NEXForms_Database_Actions'))
 		$get_form_data = json_decode($file_content,true);
 		
 		$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_form_data);
-
+		//$wpdb->show_errors(); 
+		
+		
 		$insert_id = $wpdb->insert_id;	
+		
+		//$wpdb->print_error();
+		
 		echo $insert_id;
 		
 		$theme = wp_get_theme();

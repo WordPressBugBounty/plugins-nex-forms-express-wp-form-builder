@@ -114,7 +114,7 @@ div#nex_forms_entries {
     flex-direction: column;
     width: 18%;
     min-width: 250px;
-    height: calc(100vh - 73px);
+    height: calc(100vh - 93px);
     overflow: auto;
     border-right: 1px solid rgb(211 211 211);
 }
@@ -206,10 +206,11 @@ div#nex_forms_entries {
     cursor: ns-resize;
     bottom: 0px;
 }
-ul.forms_menu{
-	margin: 0px;
-	width: 100%;
-	padding-top: 4px;
+ul.forms_menu {
+    margin: 0px;
+    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 40px;
 }
 .sub_form_item a {
     padding-left: 38px !important;

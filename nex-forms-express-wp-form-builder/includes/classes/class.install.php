@@ -40,13 +40,15 @@ if(!class_exists('NF5_Instalation'))
 			
 			$all_fields = array_merge($default_fields,$this->db_table_fields);
 			
+			$charset_collate = $wpdb->get_charset_collate();
+			
 			if($wpdb->get_var("show tables like '".$table_name."'") != $table_name){
-				$sql = 'CREATE TABLE `'. $table_name .'` 
+				$sql = 'CREATE TABLE '. $table_name .'
 				(';
 				foreach($all_fields as $key => $val)
-					$sql .= '`'.$key.'` '.$val.',';
-				$sql .= 'PRIMARY KEY (`'. $this->db_table_primary_key .'`)
-				) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4';
+					$sql .= ''.$key.' '.$val.',';
+				$sql .= 'PRIMARY KEY ('. $this->db_table_primary_key .')
+				) '.$charset_collate.';';
 				
 			$wpdb->query($sql);
 			}

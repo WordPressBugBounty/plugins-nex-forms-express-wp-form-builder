@@ -43,8 +43,8 @@ if(!class_exists('NEXForms_Functions'))
 						
 						
 						
-						if($theme->Name!='NEX-Forms Demo')
-							$output .= '<li>				<a class="" data-panel="panel-5" data-sub-heading="'.__('Manual Form Import','nex-forms').'"><span class="fas fa-file-import"></span> '.__('Manual Import','nex-forms').'</a></li>';
+						//if($theme->Name!='NEX-Forms Demo')
+							//$output .= '<li>				<a class="" data-panel="panel-5" data-sub-heading="'.__('Manual Form Import','nex-forms').'"><span class="fas fa-file-import"></span> '.__('Manual Import','nex-forms').'</a></li>';
 					$output .= '<ul>';
 				$output .= '</div>';
 				

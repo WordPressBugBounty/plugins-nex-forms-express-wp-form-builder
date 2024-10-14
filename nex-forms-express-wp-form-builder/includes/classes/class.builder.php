@@ -3910,13 +3910,13 @@ tiff</div></div></form>';
 								$output .= '<div class="input-group input-group-sm">';	
 									//LEFT
 									$output .= '<span class="input-group-addon">';
-										$output .= '<span class="icon-text">Top Left</span>';
+										$output .= '<span class="fa fa-solid fa-border-top-left"></span>';
 									$output .= '</span>';
 									$output .= '<input name="html_field_border_radius_top_left" id="html_field_border_radius_top_left" class="form-control" value="0">';
 									
 									//RIGHT
 									$output .= '<span class="input-group-addon">';
-										$output .= '<span class="icon-text">Top Right</span>';
+										$output .= '<span class="fa fa-solid fa-border-top-left fa-rotate-90"></span>';
 									$output .= '</span>';
 									$output .= '<input name="html_field_border_radius_top_right" id="html_field_border_radius_top_right" class="form-control" value="0">';
 									
@@ -3933,13 +3933,13 @@ tiff</div></div></form>';
 									
 									//TOP
 									$output .= '<span class="input-group-addon">';
-										$output .= '<span class="icon-text">Bottom Left</span>';
+										$output .= '<span class="fa fa-solid fa-border-top-left fa-rotate-270"></span>';
 									$output .= '</span>';
 									$output .= '<input name="html_field_border_radius_bottom_left" id="html_field_border_radius_bottom_left" class="form-control" value="0">';
 									
 									//BOTTOM
 									$output .= '<span class="input-group-addon">';
-										$output .= '<span class="icon-text">Bottom Right</span>';
+										$output .= '<span class="fa fa-solid fa-border-top-left fa-rotate-180"></span>';
 									$output .= '</span>';
 									$output .= '<input name="html_field_border_radius_bottom_right" id="html_field_border_radius_bottom_right" class="form-control" value="0">';
 									

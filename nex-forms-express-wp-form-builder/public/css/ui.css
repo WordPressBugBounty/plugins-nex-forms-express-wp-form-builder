@@ -317,10 +317,30 @@ div.bootstrap-datetimepicker-widget.dropdown-menu tr{
 	top: -6px;
 	position: relative;
 }
-
-#nex-forms .is_focused .input-group{
-	 outline: 0  !important;
+/*#nex-forms .is_focused .input-group,
+#nex-forms .is_focused input{
+	outline:none;
+	transition:outline 0.1s ease 0s;
 }
+#nex-forms .is_focused .input-group {
+    outline: 7px solid #ddd;
+    height: 100%;
+    
+    border-radius: 4px;
+    outline-offset: -1px;
+	transition:outline 0.1s ease 0s;
+}
+
+#nex-forms .is_focused input {
+    outline: 7px solid #ddd !important;
+    height: 100%;
+    border-radius: 4px;
+    outline-offset: -1px;
+	transition:outline 0.1s ease 0s !important;
+}
+#nex-forms .is_focused .input-group input{
+	outline:none !important;
+}*/
 /*#nex-forms .input-group:after{
 	content: "";
 	width: calc(100% - 1px);

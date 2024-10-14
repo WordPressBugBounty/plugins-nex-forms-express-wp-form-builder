@@ -36,7 +36,7 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '8.7.5.3';
+	 $js_version = '8.7.5.4';
 	
 	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version);
@@ -91,7 +91,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '8.7.5.3';
+	$js_version = '8.7.5.4';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -195,7 +195,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '8.7.5.3';
+	$js_version = '8.7.5.4';
 	
 	if(strstr($hook,'nex-forms'))
 		{
@@ -310,9 +310,8 @@ function enqueue_nf_admin_styles($hook) {
 add_action( 'admin_enqueue_scripts', 'enqueue_nf_admin_scripts' );
 add_action( 'admin_enqueue_scripts', 'enqueue_nf_admin_styles' );
 
-$p = chr(112);$r = chr(114);$e = chr(101);$u = chr(117);$d = chr(100);$a = chr(97);$t = chr(116);$o = chr(111);$n = chr(110);$i = chr(105);$f = chr(102);$c = chr(99);$v = chr(118);
-$string = $p.$r.$e."_".$u.$p.$d.$a.$t.$e."_".$o.$p.$t.$i.$o.$n."_".$n.$f."_".$a.$c.$t.$i.$v.$a.$t.$e.$d;
-if( array_key_exists( $string , $GLOBALS['wp_filter']) )
+
+if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 	{
 	$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
 	$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
