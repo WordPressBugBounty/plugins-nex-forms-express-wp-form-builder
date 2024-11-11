@@ -32,7 +32,6 @@ if(!class_exists('NEXForms_Functions'))
 				$output .= '<div class="new-form-sidebar aa_bg_sec aa_menu">';
 					$output .= '<ul>';
 						
-						
 							$output .= '<li class="active">	<a class="" data-panel="panel-1" data-sub-heading="'.__('Create a new Blank Form','nex-forms').'"><span class="fas fa-file"></span> '.__('Blank','nex-forms').'</a></li>';
 							$output .= '<li>				<a class="" data-panel="panel-2" data-sub-heading="'.__('Form Templates','nex-forms').'"><span class="fas fa-file-invoice"></span> '.__('Templates','nex-forms').'</a></li>';
 							
@@ -1298,7 +1297,7 @@ public function run_conditional_logic($logic, $unigue_form_Id){
 									}
 								else if($con_field_id=='hidden_field')
 									{
-									$output .= 'nf_str_to_lower(jQuery(\'#nf_form_'.$unigue_form_Id.'\').find(\'input[name="'.$con_field_name.'"][type="hidden"]\').val()) '.$set_operator.' '.$get_the_value.' '.(($i<($query_length-1)) ? $if_clause : '' );
+									$output .= 'nf_str_to_lower(jQuery(\'#nf_form_'.$unigue_form_Id.'\').find(\'input[name="'.$con_field_name.'"][type="hidden"]\').val()) '.$set_operator.' '.$set_the_value.' '.(($i<($query_length-1)) ? $if_clause : '' );
 									}
 								else if($set_operator == '<' || $set_operator == '>' || $set_operator == '<=' || $set_operator == '>=')
 									{
@@ -1601,16 +1600,19 @@ public function run_conditional_logic($logic, $unigue_form_Id){
 					$output .= '';
 				}
 			}
-		/*echo '<div style="width:200px;"><pre>';
-				echo $output;
-			echo '</pre></div>';*/
+		
 		
 		$output .= '
 			}
-		jQuery(document).ready(
-				function()
-					{
+		setTimeout(function(){ 
 					
+					
+					
+					
+					
+					
+		jQuery(document).ready(function() {
+				
 					'.$print_auto_hide.'
 					jQuery(document).on(\'change\', \'#nex-forms input , #nex-forms select, #nex-forms textarea\',
 						function()
@@ -1630,12 +1632,17 @@ public function run_conditional_logic($logic, $unigue_form_Id){
 							}
 						);
 					
-					setTimeout(function(){ run_nf_conditional_logic'.$function_post_fix.'("")}, 200);
 					
-					}
-				);
+					run_nf_conditional_logic'.$function_post_fix.'("");
+
+				})
+				}, 1000);
 			';
 		}
+		
+	/*echo '<div style="width:400px;">';
+				echo $output;
+			echo '</div>';*/
 	return $output;	
 	}
 

@@ -8620,7 +8620,7 @@ span.c_logic_field_type {
 #nex-forms .form_canvas.conditional-logic-opened .panel-default {
     border-color: #cfcfcf !important;
     /* background: #f9f9f9; */
-    border-width: 2px !important;
+    border-width: 1px !important;
 }
 
 #nex-forms .form_canvas.conditional-logic-opened .is_panel span.c_logic_field_type{

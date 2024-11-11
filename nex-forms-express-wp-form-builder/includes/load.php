@@ -36,7 +36,7 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '8.7.5.4';
+	 $js_version = '8.7.9.1';
 	
 	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version);
@@ -56,6 +56,7 @@ function nf_prefix_register_admin_resources(){
 	// BS DATETIME
 	wp_register_script('nex-forms-locales.min', plugins_url('/libs/locales.min.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-moment.min', plugins_url('/libs/moment.min.js',dirname(__FILE__)),'',$js_version);
+	//wp_register_script('nex-forms-nex-select', plugins_url('/libs/nex-select.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-date-time',plugins_url('/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',dirname(__FILE__)),'',$js_version);
 	
 	wp_register_script('nex-forms-raty',plugins_url('/public/js/min/jquery.raty-fa.js',dirname(__FILE__)),'',$js_version);
@@ -91,7 +92,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '8.7.5.4';
+	$js_version = '8.7.9.1';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -169,6 +170,7 @@ function enqueue_nf_admin_scripts($hook) {
 			wp_enqueue_script('nex-forms-date-time');
 			
 			wp_enqueue_script('nex-forms-raty');
+			wp_enqueue_script('nex-forms-nex-select');
 			wp_enqueue_script('nex-forms-fields');
 			
 			wp_enqueue_script('nex-forms-bootstrap.touchspin');
@@ -195,7 +197,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '8.7.5.4';
+	$js_version = '8.7.9.1';
 	
 	if(strstr($hook,'nex-forms'))
 		{
@@ -276,6 +278,7 @@ function enqueue_nf_admin_styles($hook) {
 		
 		//FRONT+BACK
 		wp_enqueue_style('nex-forms-animate',plugins_url('/public/css/min/animate.css',dirname(__FILE__)),'',$js_version);
+		//wp_enqueue_style('nex-forms-nex-select',plugins_url('/public/css/min/nex-select.css',dirname(__FILE__)),'',$js_version);
 		wp_enqueue_style('nex-forms-ui',plugins_url('/public/css/'.NF_PATH.'ui.css',dirname(__FILE__)),'',$js_version);
 		
 		wp_enqueue_style('nex-forms-font-awesome-6',plugins_url('/public/css/fa6/css/all.min.css',dirname(__FILE__)),'',$js_version);

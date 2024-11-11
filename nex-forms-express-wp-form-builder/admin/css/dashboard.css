@@ -1191,26 +1191,24 @@ a.btn.add_new_where_clause:hover:after{
 	content: "where";
 }
 
-a.btn.remove_where_clause,
-a.btn.remove_where_clause:hover{
-	border-radius: 20px !important;
-	color: #888;
-	float: right;
-	font-size: 10px !important;
-	height: 21px !important;
-	line-height: 18px;
-	margin-right: 34px;
-	margin-top: 6px;
-	opacity: 0.7;
-	transition: all 150ms ease 0ms;
-	width: 21px;
-	display: flex;
-	background: transparent !important;
-	border: 1px solid rgba(255,255,255,0.4) !important;
-	align-content: center;
-	justify-content: center;
+a.btn.remove_where_clause, a.btn.remove_where_clause:hover {
+    border-radius: 20px !important;
+    color: #888;
+    float: right;
+    font-size: 10px !important;
+    height: 21px !important;
+    line-height: 18px;
+    margin-right: 34px;
+    margin-top: 6px;
+    opacity: 0.7;
+    transition: all 150ms ease 0ms;
+    width: 21px;
+    display: flex;
+    background: transparent !important;
+    border: 1px solid rgb(211 211 211) !important;
+    align-content: center;
+    justify-content: center;
 }
-
 a.btn.remove_where_clause:hover{
 	opacity: 1;
 	transform: rotate(180deg);
@@ -11532,21 +11530,21 @@ span.menu-text{
     border-bottom: 1px solid #ddd;
 	background: #f8f9fa;
 }
-.version {
+/*.version {
     margin-right: 30px;
     margin-left: 67px;
     border-right: 1px solid #d3d3d3;
     border-left: 1px solid #d3d3d3;
     padding: 6px 35px;
     font-size: 16px;
-}
-/*.version {
+}*/
+.version {
     margin-right: 30px;
     border-right: 1px solid #d3d3d3;
     padding: 3px 24px;
     font-size: 6px;
     color: transparent;
-}*/
+}
 
 .dashboard-top-menu {
     display: flex;

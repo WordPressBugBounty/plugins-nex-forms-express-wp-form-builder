@@ -3970,7 +3970,15 @@ tiff</div></div></form>';
 	/*** Panel Options ***/
 			
 							
-								$output .= '<div class="field-setting col-xs-12 s-panel">';
+								$output .= '<div class="field-setting col-xs-12 s-panel">'; 
+								
+									$output .= '<div class="field-setting no-batch-edit col-xs-12 s-panel">';
+								
+										$output .= '<small class="first-setting">'.__('Panel Id','nex-forms').'</small>';
+										$output .= '<input type="text" class="form-control" name="set_panel_id" id="set_panel_id"  placeholder="'.__('Set a Panel ID for identification in Conditional Logic','nex-forms').'">';
+									
+								$output .= '</div>';	
+								
 									$output .= '<small>'.__('Panel','nex-forms').'</small>';
 									$output .= '<div role="group" class="input-group input-group-sm">';
 										$output .= '<input type="text" class="form-control" name="set_panel_heading" id="set_panel_heading"  placeholder="Panel Heading">';

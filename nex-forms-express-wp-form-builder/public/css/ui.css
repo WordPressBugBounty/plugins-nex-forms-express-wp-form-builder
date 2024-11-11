@@ -11495,8 +11495,8 @@ nf-admin .nf_ms_breadcrumb > ul > li span.the_step_icon{
 	margin-bottom: 15px;
 }
 
-.nex-forms-header-footer.nex-forms-footer{
-	margin-top: 15px;
+.nex-forms-header-footer.nex-forms-footer {
+    margin-top: 15px !important;
 }
 
 .modal-content .nex-forms-header-footer.nex-forms-header,

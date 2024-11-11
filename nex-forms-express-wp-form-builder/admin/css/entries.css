@@ -118,8 +118,8 @@ div#nex_forms_entries {
     overflow: auto;
     border-right: 1px solid rgb(211 211 211);
 }
-.submission_reporting .right-col{
-	width: 86%;
+.submission_reporting .right-col {
+    width: 100%;
 }
 .right-col{
 	display: flex;
@@ -148,6 +148,14 @@ div#nex_forms_entries {
 	margin-top: -1px;
 	min-height: 20px;
 }
+
+
+.submission_reporting .wap_nex_forms_entries .dashboard-box-header {
+    border-top: 1px solid #ddd;
+    border-radius: 0;
+}
+
+
 .right-col-inner{
 	width: 100%;
 	height: 100%;

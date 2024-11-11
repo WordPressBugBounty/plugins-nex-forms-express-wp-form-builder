@@ -152,7 +152,15 @@
 }
 
 .reporting_controls {
-    background: #e9e9e9;
+    background: #f8f9fa;
+}
+.reporting_controls a.nf_button.aa_bg_main_btn {
+    background: #eaf1fb !important;
+    box-shadow: none;
+    border-radius: 100px;
+}
+.reporting_controls a.nf_button.aa_bg_main_btn:hover {
+    background: #40c4ff  !important;
 }
 
 a.nf_button.aa_bg_main_btn {
@@ -312,6 +320,26 @@ th.db-table-head.sortable.sorting {
 .aa_menu li:hover a {
     background-color: #eeeff0 !important;
     color: #333 !important;
+}
+
+.nex_forms_entries .reporting_controls input.form-control, 
+.nex_forms_entries .reporting_controls select.form_control {
+    box-shadow: none;
+    height: 36px !important;
+    padding: 0 10px !important;
+    margin-bottom: 2px;
+    font-size: 13px !important;
+    display: block !important;
+    border-color: #d3d3d3;
+    font-size: 12px !important;
+    color: #888 !important;
+}
+
+.submission_reporting .right-col-inner {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #f8f9fa !important;
 }
 /*.dashboard-box.database_table.wap_nex_forms.new-forms:hover {
     background: #e8f0fe !important;

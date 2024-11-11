@@ -1866,7 +1866,7 @@ if(!class_exists('NEXForms_dashboard'))
 								<div class="item">
 									<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
 								</div>
-								'.(($page_title=="dashboard" || $page_title=="add-ons" || !$dashboard->checkout) ? '<div class="item">
+								'.(($page_title=="dashboard2" || $page_title=="add-ons" || !$dashboard->checkout) ? '<div class="item">
 									<a href="https://basixonline.net/nex-forms-free-add-ons-download/" target="_blank"><span class="fas fa-cloud-download-alt"></span>Free Add-ons Download</a>
 								</div>' : '');
 								
@@ -3063,12 +3063,12 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			
 			$output = '';
-			$page_num = isset($_POST['page']) ? sanitize_text_field($_POST['page']) : 0;
+			$page_num = isset($_POST['page']) ? esc_sql(sanitize_title($_POST['page'])) : 0;
 			$page_num = sanitize_title($page_num);
 			
-			$page_num = isset($_POST['page']) ? sanitize_text_field($_POST['page']) : 0;
+			$page_num = isset($_POST['page']) ? esc_sql(sanitize_title($_POST['page'])) : 0;
 			$page_num = sanitize_title($page_num);
-			$search_term = isset($_POST['search_term']) ? sanitize_text_field($_POST['search_term']) : '';
+			$search_term = isset($_POST['search_term']) ?  esc_sql(sanitize_title($_POST['search_term'])) : '';
 			$limit = 10;			
 			
 			$nf_functions = new NEXForms_Functions();
@@ -3079,7 +3079,7 @@ if(!class_exists('NEXForms_dashboard'))
 			$field_selection = (isset($_POST['field_selection'])) ?  sanitize_text_field($_POST['field_selection']) : '';
 			$search_params = (isset($_POST['search_params'])) ?  sanitize_text_field($_POST['search_params']) : '';
 			
-			$do_action = (isset($_POST['do_action'])) ? sanitize_text_field($_POST['do_action']) : $this->action;
+			$do_action = (isset($_POST['do_action'])) ? sanitize_title($_POST['do_action']) : $this->action;
 			
 			$sort_by_table = '';
 			
@@ -3091,14 +3091,14 @@ if(!class_exists('NEXForms_dashboard'))
 					$sort_by_table = $wpdb->prefix.'wap_nex_forms_entries.';
 				}
 			
-			$sort_by = (isset($_POST['sort_by']) && $_POST['sort_by']!='') ? sanitize_text_field($_POST['sort_by']) : 'Id';
+			$sort_by = (isset($_POST['sort_by']) && $_POST['sort_by']!='') ? esc_sql(sanitize_title($_POST['sort_by'])) : 'Id';
 			
 			
 			$sort_by = $sort_by_table.$sort_by;
 			
-			$sort_by_direction =(isset($_POST['sort_by_direction']) && $_POST['sort_by_direction']!='') ? sanitize_text_field($_POST['sort_by_direction']) : 'DESC';
+			$sort_by_direction =(isset($_POST['sort_by_direction']) && $_POST['sort_by_direction']!='') ? esc_sql(sanitize_title($_POST['sort_by_direction'])) : 'DESC';
 			
-			$record_limit = (isset($_POST['record_limit'])) ? sanitize_text_field($_POST['record_limit']) : $this->record_limit;
+			$record_limit = (isset($_POST['record_limit'])) ? esc_sql(sanitize_title($_POST['record_limit'])) : $this->record_limit;
 	
 			
 			if($header_params)

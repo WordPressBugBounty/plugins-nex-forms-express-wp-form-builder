@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.8
+Version: 8.7.9
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -2035,8 +2035,44 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 									{
 									foreach($_POST as $key => $val)
 										{	
-										if(get_option('nf_activated'))				
-											$output .= '<input type="hidden" name="'.$key.'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
+										if(get_option('nf_activated'))	
+											{
+											
+											if(
+												$key!='form_Id' &&
+												$key!='nf_preview_id' &&
+												$key!='paypal_invoice' &&
+												$key!='paypal_return_url' &&
+												$key!='math_result' &&
+												$key!='set_file_ext' &&
+												$key!='format_date' &&
+												$key!='action' &&
+												$key!='set_radio_items' &&
+												$key!='change_button_layout' &&
+												$key!='set_check_items' &&
+												$key!='set_autocomplete_items' &&
+												$key!='required' &&
+												$key!='xform_submit' &&
+												$key!='current_page' &&
+												$key!='ajaxurl' &&
+												$key!='page_id' &&
+												$key!='page' &&
+												$key!='ip' &&
+												$key!='nf_page_id' &&
+												$key!='nf_page_title' &&
+												$key!='nex_forms_Id' &&
+												$key!='company_url' &&
+												$key!='submit' &&
+												$key!='ms_current_step' &&
+												!strstr($key,'real_val') &&
+												!strstr($key,'_nomail') &&
+												!strstr($key,'gu__')
+												)
+													{
+														
+													$output .= '<input type="hidden" name="'.$key.'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
+													}
+											}
 										}	
 									}
 								
@@ -2363,12 +2399,35 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			}
 		wp_add_inline_script('nex-forms-onload', $paypal_scripts);
 		}
+	
+	
+	
+	$update_entry = isset($_REQUEST['nf_update_entry']) ? sanitize_title($_REQUEST['nf_update_entry']) : false;
+	$update_nex_forms_id = isset($_REQUEST['nex_forms_Id']) ? sanitize_title($_REQUEST['nex_forms_Id']) : false;
+	
+	if($update_entry || $create_entry)
+		{
+		if($update_entry)
+			{
+			$output .= '<div class="hidden" id="resend_email_nex_forms_Id" value="">'.$update_nex_forms_id.'</div>';
+			
+			$add_js = 'setTimeout(function(){ jQuery(document).ready(
+						function()
+							{
+							nf_send_nf_email('.json_encode($_REQUEST).');
+							}
+					);
+					}, 1000);
+					';
+			}
+			wp_add_inline_script('nex-forms-onload', $add_js);
+		}
+	
+	
 		
 	//PRINT OUTPUT
 	$output = NEXForms_rgba2Hex($output);
 	if($echo){
-		//echo wp_kses( $output, NEXForms_allowed_tags() );
-		//echo 'FORM ID = '.$id.'<br /><br />';
 		echo $output;
 	}
 	else
@@ -2432,116 +2491,15 @@ add_filter( 'safe_style_css', function( $styles ) {
 	$styles[] = 'right';
     return $styles;
 } );
-/*add_filter( 'safe_style_css', array(
-			'background',
-			'background-color',
-			'background-image',
-			'background-position',
-			'background-size',
-			'background-attachment',
-			'background-blend-mode',
-			'border',
-			'border-radius',
-			'border-width',
-			'border-color',
-			'border-style',
-			'border-right',
-			'border-right-color',
-			'border-right-style',
-			'border-right-width',
-			'border-bottom',
-			'border-bottom-color',
-			'border-bottom-style',
-			'border-bottom-width',
-			'border-left',
-			'border-left-color',
-			'border-left-style',
-			'border-left-width',
-			'border-top',
-			'border-top-color',
-			'border-top-style',
-			'border-top-width',
-			'border-spacing',
-			'border-collapse',
-			'caption-side',
-			'columns',
-			'column-count',
-			'column-fill',
-			'column-gap',
-			'column-rule',
-			'column-span',
-			'column-width',
-			'color',
-			'font',
-			'font-family',
-			'font-size',
-			'font-style',
-			'font-variant',
-			'font-weight',
-			'letter-spacing',
-			'line-height',
-			'text-align',
-			'text-decoration',
-			'text-indent',
-			'text-transform',
-			'height',
-			'min-height',
-			'max-height',
-			'width',
-			'min-width',
-			'max-width',
-			'margin',
-			'margin-right',
-			'margin-bottom',
-			'margin-left',
-			'margin-top',
-			'padding',
-			'padding-right',
-			'padding-bottom',
-			'padding-left',
-			'padding-top',
-			'flex',
-			'flex-basis',
-			'flex-direction',
-			'flex-flow',
-			'flex-grow',
-			'flex-shrink',
-			'grid-template-columns',
-			'grid-auto-columns',
-			'grid-column-start',
-			'grid-column-end',
-			'grid-column-gap',
-			'grid-template-rows',
-			'grid-auto-rows',
-			'grid-row-start',
-			'grid-row-end',
-			'grid-row-gap',
-			'grid-gap',
-			'justify-content',
-			'justify-items',
-			'justify-self',
-			'align-content',
-			'align-items',
-			'align-self',
-			'clear',
-			'cursor',
-			'direction',
-			'float',
-			'list-style-type',
-			'object-position',
-			'overflow',
-			'vertical-align',
-			'display',
-			'visibility'
-		));
-
-*/
 
 add_action( 'wp_ajax_submit_nex_form', 'submit_nex_form');
 add_action( 'wp_ajax_nopriv_submit_nex_form', 'submit_nex_form');
 
 add_action( 'wp_ajax_nf_resend_email', 'nf_send_mail');
 add_action( 'wp_ajax_nopriv_nf_resend_email', 'nf_send_mail');
+
+add_action( 'wp_ajax_nf_send_nf_email', 'nf_send_mail');
+add_action( 'wp_ajax_nopriv_nf_send_nf_email', 'nf_send_mail');
 
 add_action( 'wp_ajax_nf_add_form_view', 'NEXForms_add_view');
 add_action( 'wp_ajax_nopriv_nf_add_form_view', 'NEXForms_add_view');
@@ -4449,13 +4407,19 @@ function NEXFORMS_validate_email($email){
 
 function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true, $files=array(), $checked=false, $files_array=array()){
 		
-			
+			$data_array = $_POST;
 			
 			if($_POST['resend_email']=='1')
 				{
 				$nex_forms_id = sanitize_title($_POST['nex_forms_Id']);
 				$entry_id = sanitize_title($_POST['entry_Id']);
 				$resent = true;	
+				}
+			
+			if($_POST['send_nf_email']=='1')
+				{
+				$nex_forms_id = sanitize_title($_POST['set_nex_forms_Id']);
+				$data_array = $_POST['data'];
 				}
 			
 			
@@ -4494,10 +4458,12 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 						';
 			$i				= 1;
 
-			foreach($_POST as $key=>$val)
+			foreach($data_array as $key=>$val)
 				{
 				if(
 				$key!='nf_entry_redirect_id' &&
+				$key!='form_Id' &&
+				$key!='nf_update_entry' &&
 				$key!='nf_preview_id' &&
 				$key!='nf_set_entry_update_id' &&
 				$key!='paypal_invoice' &&
@@ -5486,7 +5452,7 @@ else
 		
 		
 		
-		if($_POST['resend_email']=='1')
+		if($_POST['resend_email']=='1' || $_POST['send_nf_email']=='1')
 			die();
 	}
 }
