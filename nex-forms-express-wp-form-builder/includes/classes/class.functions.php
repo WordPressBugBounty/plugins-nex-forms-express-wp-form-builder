@@ -87,7 +87,7 @@ if(!class_exists('NEXForms_Functions'))
 					//$output .= '<p>'.__('Select any of the pre-made form demo templates below to quick start your form. ','nex-forms').'</p>';
 					$output .= '<div class="row">';
 					if(!$args)
-						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to gain access to pre-made templates as per <a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/" target="_blank">http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/</a>').'</strong></div>';	
+						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to gain access to pre-made templates as per <a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/" target="_blank">http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/</a>','nex-forms').'</strong></div>';	
 					else
 						{
 						foreach ( scandir( plugin_dir_path( dirname(dirname(__FILE__)))  . "includes/templates/" ) as $dir )
@@ -252,7 +252,7 @@ if(!class_exists('NEXForms_Functions'))
 					//$output .= '<h5><strong>'.__('Import Form','nex-forms').'</strong></h5>';
 					$output .= '<p>'.__('Browse to any form exported by NEX-Forms. Open it to start import.','nex-forms').'</p>';
 					if(!$args)
-						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to enable form imports.').'</strong></div>';	
+						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to enable form imports.','nex-forms').'</strong></div>';	
 					else
 						{
 						$output .= '<button id="upload_form" class="form-control  btn blue waves-effect waves-light import_form">'.__('Import Form','nex-forms').'</button>';
@@ -264,7 +264,7 @@ if(!class_exists('NEXForms_Functions'))
 					$output .= '<div class="row">';
 						$output .= '<div class="col-sm-12">';
 							if(!$args)
-								$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to enable form imports.').'</strong></div>';	
+								$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to enable form imports.','nex-forms').'</strong></div>';	
 							else
 								{
 								$output .= '<form class="manual_import_form" name="manual_import_form" id="manual_import_form" method="post" action="'.admin_url('admin-ajax.php').'">';
@@ -745,7 +745,7 @@ if(!class_exists('NEXForms_Functions'))
 						
 						$dimention = getimagesize($movefile['file']);
 						
-						echo json_encode(array('image_url'=>$movefile['url'], 'image_size'=>$file, 'dimention'=>$dimention));
+						NEXForms_clean_echo( json_encode(array('image_url'=>$movefile['url'], 'image_size'=>$file, 'dimention'=>$dimention)));
 						}
 					} 
 				}
@@ -755,7 +755,7 @@ if(!class_exists('NEXForms_Functions'))
 	
 	
 	public function view_excerpt($content,$chars=0){
-			$content = strip_tags($content);
+			$content = wp_strip_all_tags($content);
 			$excerpt = '';
 			for($i=0;$i<$chars;$i++){
 				$excerpt .= substr($content,$i,1);
@@ -773,7 +773,7 @@ if(!class_exists('NEXForms_Functions'))
 			return str_replace('\\','',$set_excerpt);
 		}
 	public function view_excerpt2($content,$chars=0){
-			$content = strip_tags($content);
+			$content = wp_strip_all_tags($content);
 			$excerpt = '';
 			for($i=0;$i<$chars;$i++){
 				$excerpt .= substr($content,$i,1);
@@ -817,7 +817,7 @@ if(!class_exists('NEXForms_Functions'))
 	
 	$output = '';
 	$print_auto_hide = '';
-	$function_post_fix = rand(1,99999999);
+	$function_post_fix = wp_rand(1,99999999);
 	
 	$output .= '<script type="text/javascript" name="js_con">
 	
@@ -1042,7 +1042,7 @@ public function run_conditional_logic($logic, $unigue_form_Id){
 	$output = '';
 	$con_count = 0;
 	$print_auto_hide = '';
-	$function_post_fix = rand(1,99999999);
+	$function_post_fix = wp_rand(1,99999999);
 	
 	
 	//echo '<pre>';
@@ -1681,14 +1681,14 @@ function add_nf_wf_notice_dismissible() {
 			{
 			if(class_exists('wordfence'))
 				{
-				 echo '<div class="notice notice-warning dismiss_nf_notice is-dismissible">
+				 NEXForms_clean_echo( '<div class="notice notice-warning dismiss_nf_notice is-dismissible">
 					 <p><strong>NEX-FORMS NOTICE:</strong> <strong>WordFence currently active</strong><br /><br />If you have issues saving a form, i.e: if the SAVE BUTTON KEEPS SPINNING...<br /><strong>WHAT TO DO</strong>? 
 					 <br /><br />
 					 <strong>OPTION 1: </strong><br />Whitelist your own IP address in your WordFence Firewall. <br /><a href="'.get_option('siteurl').'/wp-admin/admin.php?page=WordfenceOptions" target="_blank">See <strong>Advanced Firewall Options</strong> -> Whitelisted IP addresses that bypass all rules</a>.<br /><br />
 					 <strong>OPTION 2: </strong><br />Put WordFence in Learning Mode, save a form, then take it out of learning mode. <br /><a href="'.get_option('siteurl').'/wp-admin/admin.php?page=WordfenceOptions" target="_blank">See Web <strong>Application Firewall Status</strong></a>
 					 <br /><br />After you have done this, go back to your form and HIT SAVE AGAIN (even while the button is still spinning).
 					 <br /><br /><button type="button" class=" button button-primary dismiss_nf_notice">Got it</a></p>
-				 </div>';
+				 </div>');
 				}
 			}
     }
@@ -1755,29 +1755,10 @@ function NEXForms_time_elapsed_string($datetime, $full = false) {
 		}
 $get_nf_functions = new NEXForms_Functions();
 
-
-
 function NEXForms_clean_echo($content){
-	echo htmlspecialchars_decode( esc_html($content));
+	$content = NEXForms_rgba2Hex($content);
+	echo wp_kses( $content, NEXForms_allowed_tags());
 }
-
-/*add_filter('tiny_mce_before_init', 'tags_tinymce_fix');
-
-function tags_tinymce_fix($init)
-    {
-        $init['remove_redundant_brs'] = false;// don't remove redundant BR
-        $init['wpautop'] = false;//wpautop = yes
-        $init['indent'] = false;
-        $init['tadv_noautop'] = false;
-        $init['forced_root_block'] = false;//no p tags around the whole block
-        $init['entities'] .= ',160,nbsp,173,shy'; //keep nbsp and shy
-        $init['entity_encoding'] = 'named';
-        $init['remove_linebreaks'] = false;
-        $init['convert_newlines_to_brs'] = false;// don't convert newline characters to br tags
-
-        return $init;
-    }*/
-
 
 function NEXForms_allowed_tags(){
 	$default_attribs = array(
@@ -1838,6 +1819,7 @@ function NEXForms_allowed_tags(){
 		'br'            	=> $default_attribs,
 		'hr'            	=> $default_attribs,
 		'strong'        	=> $default_attribs,
+		'strike'        	=> $default_attribs,
 		'caption'			=> $default_attribs,
 		'blockquote'    	=> $default_attribs,
 		'del'           	=> $default_attribs,
@@ -1850,6 +1832,21 @@ function NEXForms_allowed_tags(){
 		'label'        		=> $default_attribs,
 		'em'            	=> $default_attribs,
 		'code'          	=> $default_attribs,
+		'canvas'			=> $default_attribs,
+		'nav'				=> $default_attribs,
+		'iframe'          			=> array_merge( $default_attribs, array(
+			'src' 					=> array(),
+			'allow' 				=> array(),
+			'allowfullscreen' 		=> array(),
+			'allowpaymentrequest' 	=> array(),
+			'height' 				=> array(),
+			'loading' 				=> array(),
+			'name' 					=> array(),
+			'referrerpolicy' 		=> array(),
+			'sandbox' 				=> array(),
+			'srcdoc' 				=> array(),
+			'width' 				=> array(),
+		) ),
 		'img'          		=> array_merge( $default_attribs, array(
 			'src' 			=> array(),
 			'alt' 			=> array(),

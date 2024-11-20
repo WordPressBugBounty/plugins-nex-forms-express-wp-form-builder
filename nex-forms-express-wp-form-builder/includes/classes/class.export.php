@@ -23,7 +23,7 @@ if(!class_exists('NF5_Export_Forms'))
 				header("Content-Disposition: attachment; filename=\"".$db_actions->get_title2(sanitize_title($_REQUEST['nex_forms_Id']),'wap_nex_forms').".txt\";" );
 				//header("Content-Transfer-Encoding: base64");
 				
-				echo htmlspecialchars_decode( esc_html($form_export));
+				echo $form_export;
 				exit;
 				}
 			
@@ -34,10 +34,10 @@ if(!class_exists('NF5_Export_Forms'))
 		public function generate_form(){
 			global $wpdb;
 			
-				$form_data = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d ',sanitize_title($_REQUEST['nex_forms_Id'])));
+				$form_data = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d ',sanitize_title($_REQUEST['nex_forms_Id']))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				//$content = str_replace('\\','',$form_data->form_fields);
 				$content = '';
-				$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix ."wap_nex_forms");
+				$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix ."wap_nex_forms"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				$field_array = array();
 				$count_fields = count($fields);
 				$i = 0;

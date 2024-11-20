@@ -42,15 +42,13 @@ if(!class_exists('NF5_Instalation'))
 			
 			$charset_collate = $wpdb->get_charset_collate();
 			
-			if($wpdb->get_var("show tables like '".$table_name."'") != $table_name){
-				$sql = 'CREATE TABLE '. $table_name .'
-				(';
+			if($wpdb->get_var("show tables like '".$table_name."'") != $table_name){$sql = 'CREATE TABLE '. $table_name .'('; // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				foreach($all_fields as $key => $val)
 					$sql .= ''.$key.' '.$val.',';
 				$sql .= 'PRIMARY KEY ('. $this->db_table_primary_key .')
 				) '.$charset_collate.';';
 				
-			$wpdb->query($sql);
+			$wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			}
 		}
 	}

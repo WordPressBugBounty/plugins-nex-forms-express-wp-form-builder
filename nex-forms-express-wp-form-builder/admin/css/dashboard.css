@@ -2006,8 +2006,8 @@ span.do_highlight{
 }
 
 span.do_highlight2 {
-    background: #277ba3;
-    padding: 6px 8px;
+    background: linear-gradient(89deg, #b137a6 0%, #ae43ef 100%);
+    padding: 6px 36px;
     color: #fff;
     font-size: 24px;
     font-weight: bold;
@@ -2031,6 +2031,47 @@ a.buy-now-special {
     border-radius: 6px;
     font-weight: bold;
 }
+
+
+a.buy-now-special:hover {
+    background: #a8d12d;
+    border-bottom: 2px solid #96b53c;
+    transition: all 0.2s ease 0s;
+}
+a.buy-now-special {
+    margin: 0 auto;
+    width: 354px;
+    display: block;
+    text-align: center;
+    background: #a5cb34;
+    color: #fff !important;
+    padding: 20px;
+    font-size: 20px;
+    border-bottom: 2px solid #7c9532;
+    border-radius: 6px;
+    font-weight: bold;
+}
+a.btn-hs.btn-2:hover {
+    transition: outline 0.1s ease 0s;
+    outline: 5px solid #b8c0e8;
+    color: #fff;
+}
+
+a.btn-hs.btn-2 {
+    background: #5266ce;
+    color: #fffefe;
+    border-color: #5266ce;
+    padding: 15px 0;
+    width: 53%;
+    display: block;
+    text-align: center;
+    font-size: 150%;
+    border-radius: 37px;
+    white-space: nowrap;
+    margin: 0 auto;
+    font-weight: 700;
+}
+
 .popover.tour .popover-navigation .btn-group{
 	margin-top: -4px !important;
 	border: none !important;
@@ -11362,20 +11403,25 @@ li.analytics_item{
 	}
 
 }
-
+.popover.tour.tutorial-step-1 strong.hl {
+    background: linear-gradient(89deg, #392bb3 0%, #75b9f5 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 .tutorial-step-1.popover.tour h3.popover-title {
-    background: #e8f0fe !important;
-    border-color: #cee0ff !important;
-    color: #0074a6 !important;
+    background: #000000 !important;
+    border-color: #000000 !important;
+    color: #B137A6 !important;
     font-size: 24px;
-	border-radius: 8px 8px 0 0 !important;
+    border-radius: 8px 8px 0 0 !important;
 }
 .popover.tour.tutorial-step-1.tour-2024-special-02-02,
 .popover.tour.tutorial-step-1.tour-2024-special-02-03,
 .popover.tour.tutorial-step-1.tour-2024-special-02-04,
 .popover.tour.tutorial-step-1.tour-2024-special-02-05,
 .popover.tour.tutorial-step-1.tour-2024-special-02-06,
-.popover.tour.tutorial-step-1.tour-2024-special-02-07 {
+.popover.tour.tutorial-step-1.tour-2024-special-02-07,
+.popover.tour.tutorial-step-1.tour-2024-special-11-20 {
     width: 36% !important;
     max-width: 700px !important;
     left: 32% !important;
@@ -11530,21 +11576,21 @@ span.menu-text{
     border-bottom: 1px solid #ddd;
 	background: #f8f9fa;
 }
-/*.version {
+.version {
     margin-right: 30px;
     margin-left: 67px;
     border-right: 1px solid #d3d3d3;
     border-left: 1px solid #d3d3d3;
     padding: 6px 35px;
     font-size: 16px;
-}*/
-.version {
+}
+/*.version {
     margin-right: 30px;
     border-right: 1px solid #d3d3d3;
     padding: 3px 24px;
     font-size: 6px;
     color: transparent;
-}
+}*/
 
 .dashboard-top-menu {
     display: flex;

@@ -3,12 +3,12 @@
 #nex-forms{
 	display: block !important;
 }
-#nex-forms input[name="_name"],
+/*#nex-forms input[name="_name"],
 #nex-forms input[name="surname"],
 span[data-field-name="_name"],
 span[data-field-name="surname"]{
 	text-transform: capitalize !important;
-}
+}*/
 
 #nex-forms input[type="password"].form-control{
 	border-color: #ddd;

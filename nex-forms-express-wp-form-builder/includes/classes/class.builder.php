@@ -84,7 +84,7 @@ if(!class_exists('NEXForms_Builder7')){
 				
 				$this->tut_id = sanitize_title($tut_id);
 				
-				$form_attr = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id='.$this->form_Id);
+				$form_attr = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id='.$this->form_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				
 				$plugin_data = new NEXForms5_Config();
 				$this->plugin_version = $plugin_data->plugin_version;
@@ -156,7 +156,7 @@ if(!class_exists('NEXForms_Builder7')){
 			global $wpdb;
 			
 			$form_Id = sanitize_title($_POST['form_Id']);
-			$c_logic = $wpdb->get_var($wpdb->prepare('SELECT conditional_logic_array FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id= %d ',$form_Id));
+			$c_logic = $wpdb->get_var($wpdb->prepare('SELECT conditional_logic_array FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id= %d ',$form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$rules = json_decode($c_logic);
 
@@ -209,7 +209,7 @@ if(!class_exists('NEXForms_Builder7')){
 					}
 				$output .= '</div>';
 				
-		echo $output;
+		NEXForms_clean_echo($output);
 		wp_die();
 		}
 		
@@ -307,7 +307,7 @@ if(!class_exists('NEXForms_Builder7')){
 						<div class="col-sm-12">
 						  <div class="help_menu dropdown_menu aa_menu">
 							  	<ul>
-								<li class="top-right-item"><a class="kbsc-tut"  data-toggle="tooltip_bs" data-placement="bottom" data-title="Keyboard<br>Shortcuts"><span class="fas fa-keyboard" ></span></a></li>
+								<li class="top-right-item"><a class="kbsc-tut"  data-toggle="tooltip_bs" data-placement="bottom" data-title="Keyboard Shortcuts"><span class="fas fa-keyboard" ></span></a></li>
 								<li class="top-right-item"><a class="btn waves-effect-nf waves-light-nf  tutorial-menu"><span class="fa fa-graduation-cap"></span></a>
 									<ul class="aa_bg_sec aa_menu_2">
 										<li class="heading aa_font_color_default">INTERACTIVE TUTORIALS</li>
@@ -347,7 +347,7 @@ if(!class_exists('NEXForms_Builder7')){
 						
 						/*$output .= '<li class="open-form-item"><a class="btn waves-effect-nf waves-light-nf saved-forms" href="#" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Forms','nex-forms').'"><span class="fas fa-folder-open"></span></a>
 											
-											  <!-- Dropdown Structure -->
+											  '); Dropdown Structure -->
 											  <ul id="" class="aa_menu_2">';
 											  global $wpdb;
 					
@@ -363,7 +363,7 @@ if(!class_exists('NEXForms_Builder7')){
 						$output .= '</ul></div>';	 
 						  
 						  
-						  $output .= '<nav class="nav-extended aa_bg_main builder_nav ">';
+						  $output .= '<nav class="nav-extended aa_bg_main builder_nav">';
 							
 						
 				
@@ -383,15 +383,14 @@ if(!class_exists('NEXForms_Builder7')){
 										
 									  	<li>
 										<div class="history-tools">
-											<div class="history_action do_undo" data-action="undo"><span class="fas fa-undo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Undo last action<br><small>CTRL+Z</small>','nex-forms').'"></span></div>
-											<div class="history_action do_redo" data-action="redo"><span class="fas fa-redo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Redo last undo<br><small>CTRL+SHIFT+Z</small>','nex-forms').'"></span></div>
+											<div class="history_action do_undo" data-action="undo"><span class="fas fa-undo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Undo last action - CTRL+Z','nex-forms').'"></span></div>
+											<div class="history_action do_redo" data-action="redo"><span class="fas fa-redo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Redo last undo - CTRL+SHIFT+Z','nex-forms').'"></span></div>
 										</div>
 										</li>
 										'.((!get_option('nf_activated') || $theme->Name=='NEX-Forms Demo') ? '<li><a href="https://1.envato.market/zQ6de" target="_blank" class="btn waves-effect-nf waves-light-nf upgrade_pro">BUY NEX-FORMS</a>' : '').'</li>
 									  </ul>
 									  </div>';
-								//$output .= '</div>';
-					$output .= '</div>';
+								$output .= '</nav>';
 					$output .= '</div>';
 					$output .= '</div>';
 		return $output;
@@ -526,8 +525,8 @@ if(!class_exists('NEXForms_Builder7')){
 			$output .= '<div class="field-setting col-xs-6 s-all">';	
 								$output .= '<div role="group" class="btn-group ms-scroll-top">';
 									$output .= '<small>'.__('Auto-scroll to top of next step','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf yes '.(($scroll_to_top!='no') ? 'active' : '' ).'" type="button" title="'.__('Auto scroll to the<br />top of next step on<br />step advance','nex-forms').'"><i class="fa fa-check"></i></button>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf no '.(($scroll_to_top=='no') ? 'active' : '' ).'" type="button" title="'.__('No auto scrolling on<br />step advance','nex-forms').'"><i class="fa fa-close"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf yes '.(($scroll_to_top!='no') ? 'active' : '' ).'" type="button" title="'.__('Auto scroll to the top of next step on step advance','nex-forms').'"><i class="fa fa-check"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf no '.(($scroll_to_top=='no') ? 'active' : '' ).'" type="button" title="'.__('No auto scrolling on step advance','nex-forms').'"><i class="fa fa-close"></i></button>';
 								$output .= '</div>';
 							$output .= '</div>';
 							
@@ -765,13 +764,11 @@ if(!class_exists('NEXForms_Builder7')){
 							$output .= '<div class="field-setting col-xs-4 s-all">';
 								$output .= '<small>'.__('Type','nex-forms').'</small>';
 								$output .= '<select name="set_breadcrumb_type" id="set_breadcrumb_type" class="form-control set_breadcrumb_type" data-selected="'.$bc_type.'">
-												<!--<option value="basix">'.__('Basic','nex-forms').'</option>-->
+												
 												<option value="pilled">'.__('Pilled','nex-forms').'</option>
 												<option value="triangular">'.__('Arrowed','nex-forms').'</option>
 												<option value="rectangular">'.__('Tiled','nex-forms').'</option>
 												<option value="rounded">'.__('Rounded','nex-forms').'</option>
-												<!--<option value="dotted">'.__('Timeline','nex-forms').'</option>-->
-												<!--<option value="dotted">'.__('Slider','nex-forms').'</option>-->
 												<option value="skewed-f">'.__('Slanted - Forward','nex-forms').'</option>
 												<option value="skewed-b">'.__('Slanted - Backward','nex-forms').'</option>
 												<option value="p_bar">'.__('Percentage Bar','nex-forms').'</option>
@@ -795,7 +792,6 @@ if(!class_exists('NEXForms_Builder7')){
 													<option value="cyan">'.__('Cyan','nex-forms').'</option>
 													<option value="teal">'.__('Teal','nex-forms').'</option>
 													<option value="lime">'.__('Lime','nex-forms').'</option>
-													<!--<option value="yellow">'.__('Yellow','nex-forms').'</option>-->
 													<option value="amber">'.__('Amber','nex-forms').'</option>
 													<option value="orange">'.__('Orange','nex-forms').'</option>
 													<option value="brown">'.__('Brown','nex-forms').'</option>
@@ -872,7 +868,7 @@ if(!class_exists('NEXForms_Builder7')){
 							$output .= '<div class="field-setting col-xs-4 s-all">';
 								$output .= '<div role="group" class="btn-group bc_folded" data-value="'.$bc_folded.'">';
 									$output .= '<small>'.__('Folded Crumb Items','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf folded '.(($bc_folded=='bc-folded') ? 'active' : '' ).'" type="button" title="'.__('Display Step title<br>only when active','nex-forms').'"><i class="fas fa-book"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf folded '.(($bc_folded=='bc-folded') ? 'active' : '' ).'" type="button" title="'.__('Display Step title only when active','nex-forms').'"><i class="fas fa-book"></i></button>';
 									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf unfolded '.(($bc_folded=='bc-unfolded') ? 'active' : '' ).'" type="button" title="'.__('Always display Step title','nex-forms').'"><i class="fas fa-book-open"></i></button>';
 								$output .= '</div>';
 							$output .= '</div>';
@@ -1661,7 +1657,7 @@ if(!class_exists('NEXForms_Builder7')){
 	/*** Background repeat ***/									
 										$output .= '<div role="group" class="btn-group timer-bg-repeat">';
 											$output .= '<small>'.__('Repeat','nex-forms').'</small>';
-											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat" type="button" title="'.__('Repeat X &amp; Y','nex-forms').'"><i class="fa fa-arrows"></i></button>';
+											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat" type="button" title="'.__('Repeat X & Y','nex-forms').'"><i class="fa fa-arrows"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat-x" type="button" title="'.__('Repeat X','nex-forms').'"><i class="fa fa-arrows-h"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat-y" type="button" title="'.__('Repeat Y','nex-forms').'"><i class="fa fa-arrows-v"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf no-repeat" type="button" title="'.__('None','nex-forms').'"><i class="fa fa-remove"></i></button>';
@@ -1872,8 +1868,8 @@ if(!class_exists('NEXForms_Builder7')){
 							$output .= '<div class="field-setting col-xs-4 s-all msg-editor-only">';
 								$output .= '<div role="group" class="btn-group msg_placement" data-value="'.$msg_placement.'">';
 									$output .= '<small>'.__('Placement','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf outside '.(($msg_placement=='outside') ? 'active' : '' ).'" type="button" title="'.__('Show Outside the<br />Form Wrapper','nex-forms').'"><i class="fa fa-sign-out-alt"></i></button>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf inside '.(($msg_placement=='inside') ? 'active' : '' ).'" type="button" title="'.__('Show Inside the<br />Form Wrapper','nex-forms').'"><i class="fa fa-sign-in-alt"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf outside '.(($msg_placement=='outside') ? 'active' : '' ).'" type="button" title="'.__('Show Outside the Form Wrapper','nex-forms').'"><i class="fa fa-sign-out-alt"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf inside '.(($msg_placement=='inside') ? 'active' : '' ).'" type="button" title="'.__('Show Inside the Form Wrapper','nex-forms').'"><i class="fa fa-sign-in-alt"></i></button>';
 									//$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf position_both '.(($bc_position=='both') ? 'active' : '' ).'" type="button" title="'.__('Display top and <br />bottom of the Form','nex-forms').'"><i class="fa fa-arrows-v"></i></button>';
 								$output .= '</div>';
 							$output .= '</div>';
@@ -1960,8 +1956,7 @@ if(!class_exists('NEXForms_Builder7')){
                                                     <div class="m-right"><input type="number" name="form_margin_right" id="form_margin_right" value="0" /></div>
                                                     <div class="m-bottom"><input type="number" name="form_margin_bottom" id="form_margin_bottom" value="0" /></div>
                                                     <div class="m-left"><input type="number" name="form_margin_left" id="form_margin_left" value="0" /></div>
-                                                   <!-- <div class="triangle tri-top"></div>
-                                                    <div class="triangle tri-bottom"></div>-->
+                                                   
                                                     
                                                 </div>
                                                 <div class="border-wrapper">
@@ -2673,7 +2668,7 @@ tiff</div></div></form>';
 									$output .= '<small class="width_distribution">'.__('Width Distribution','nex-forms').'</small>';						
 									$output .= '<div class="row">';
 										$output .= '<div class="col-xs-1">';
-											$output .= '<small class="width_indicator left"><input type="text" name="set_label_width" id="set_label_width" class="form-control">'.__('','nex-forms').'</small>';
+											$output .= '<small class="width_indicator left"><input type="text" name="set_label_width" id="set_label_width" class="form-control"></small>';
 										$output .= '</div>';
 										$output .= '<div class="col-xs-10 width_slider"><br />';
 											$output .= '<select name="label_width" id="label_width">
@@ -2693,7 +2688,7 @@ tiff</div></div></form>';
 										$output .= '</div>';
 											
 										$output .= '<div class="col-xs-1">';
-											$output .= '<small class="width_indicator right"><input type="text" name="set_input_width" id="set_input_width" class="form-control">'.__('','nex-forms').'</small>';
+											$output .= '<small class="width_indicator right"><input type="text" name="set_input_width" id="set_input_width" class="form-control"></small>';
 										$output .= '</div>';
 									
 									$output .= '</div>';
@@ -2858,8 +2853,7 @@ tiff</div></div></form>';
                                                     <div class="m-right"><input type="number" name="field_spacing_margin_right" id="field_spacing_margin_right" value="0" /></div>
                                                     <div class="m-bottom"><input type="number" name="field_spacing_margin_bottom" id="field_spacing_margin_bottom" value="15" /></div>
                                                     <div class="m-left"><input type="number" name="field_spacing_margin_left" id="field_spacing_margin_left" value="0" /></div>
-                                                   <!-- <div class="triangle tri-top"></div>
-                                                    <div class="triangle tri-bottom"></div>-->
+                                                   
                                                     
                                                 </div>
                                                 <div class="border-wrapper">
@@ -2896,8 +2890,8 @@ tiff</div></div></form>';
 												//$output .= '<small><em>'.__('The grid will hold its inline layout up to the device selected','nex-forms').'</em></small>';
 												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-mobile" data-val="nf-no-mobile" type="button" title="'.__('Mobiles','nex-forms').'"><i class="fa fa-mobile"></i></button>';
 												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-tablet" data-val="nf-no-tablet" type="button" title="'.__('Tablets','nex-forms').'"><i class="fa fa-tablet"></i></button>';
-												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-laptops" data-val="nf-no-laptop" type="button" title="'.__('Laptops').'"><i class="fa fa-laptop"></i></button>';
-												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-pc" type="button" data-val="nf-no-pc" title="'.__('Desktops and larger devices').'"><i class="fa fa-desktop"></i></button>';
+												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-laptops" data-val="nf-no-laptop" type="button" title="'.__('Laptops','nex-forms').'"><i class="fa fa-laptop"></i></button>';
+												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-pc" type="button" data-val="nf-no-pc" title="'.__('Desktops and larger devices','nex-forms').'"><i class="fa fa-desktop"></i></button>';
 												
 											$output .= '</div>';
 										$output .= '</div>';
@@ -3023,8 +3017,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting fs-disabled col-xs-3 s-text s-tags s-radios s-checks s-spinner s-select s-multi-select s-file-uploader s-multi-file-uploader none_material">';
 									$output .= '<div role="group" class="btn-group input-disabled">';
 										$output .= '<small>'.__('Disabled','nex-forms').'</small>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Editable<br />Field" type="button"><i class="fa fa-remove"></i></button>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" type="button" title="Uneditable<br />Field"><i class="fa fa-check"></i></button>';
+										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Editable Field" type="button"><i class="fa fa-remove"></i></button>';
+										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" type="button" title="Uneditable Field"><i class="fa fa-check"></i></button>';
 									$output .= '</div>';
 								$output .= '</div>';
 /*** SIGNATURE OPTIONS ***/
@@ -3179,8 +3173,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting col-xs-4 s-time s-date set-popup-keep-open">';	
 										$output .= '<div role="group" class="btn-group  popup-keep-open">';
 														$output .= '<small>'.__('Keep Open','nex-forms').'</small>';
-														$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" title="Disable the selection<br />of Past Dates" type="button"><i class="fa fa-check"></i></button>';
-														$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Enable the selection<br />of Past Dates" type="button"><i class="fa fa-remove"></i></button>';
+														$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" title="Disable Past Dates" type="button"><i class="fa fa-check"></i></button>';
+														$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Enable Past Dates" type="button"><i class="fa fa-remove"></i></button>';
 													$output .= '</div>';
 									$output .= '</div>';
 							
@@ -3210,8 +3204,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting col-xs-4 s-date">';	
 								$output .= '<div class="btn-group disable_past_dates">
 											<small>'.__('Disable Past Dates','nex-forms').'</small>
-											<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" title="Disable the selection<br />of Past Dates" type="button"><i class="fa fa-check"></i></button>
-											<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Enable the selection<br />of Past Dates" type="button"><i class="fa fa-remove"></i></button>
+											<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm yes" title="Disable Past Dates" type="button"><i class="fa fa-check"></i></button>
+											<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm no active" title="Enable Past Dates" type="button"><i class="fa fa-remove"></i></button>
 										  </div>';
 							$output .= '</div>';	
 							
@@ -3309,7 +3303,7 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting col-xs-4 no-batch-edit s-super-select">';
 								$output .= '<div role="group" class="btn-group icon-select-type">';
 									$output .= '<small>'.__('Select Type','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf icon-normal-select" type="button" title="'.__('Normal Check/Radio Select Style','nex-forms').'"> <i class="fa fa-dot-circle-o"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf icon-normal-select" type="button" title="'.__('Normal Check or Radio Select Style','nex-forms').'"> <i class="fa fa-dot-circle-o"></i></button>';
 									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf icon-dropdown-select" type="button" title="'.__('Dropdown Select Style','nex-forms').'"><i class="fa fas fa-list-ul"></i> </button>';
 									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf icon-spin-select" type="button" title="'.__('Spinner Select Style','nex-forms').'"><i class="fas fa-arrows-alt-h"></i> </button>';
 								$output .= '</div>';
@@ -3328,8 +3322,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting col-xs-4 no-batch-edit s-super-select">';		
 										$output .= '<div role="group" class="btn-group icon-auto-step">';
 											$output .= '<small>'.__('Auto Advance','nex-forms').'</small>';
-											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step<br />on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
-											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step<br />on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
+											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
+											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
 										$output .= '</div>';
 									$output .= '</div>';	
 							
@@ -3884,8 +3878,7 @@ tiff</div></div></form>';
                                                     <div class="m-right"><input type="number" name="html_field_spacing_margin_right" id="html_field_spacing_margin_right" value="0" /></div>
                                                     <div class="m-bottom"><input type="number" name="html_field_spacing_margin_bottom" id="html_field_spacing_margin_bottom" value="0" /></div>
                                                     <div class="m-left"><input type="number" name="html_field_spacing_margin_left" id="html_field_spacing_margin_left" value="0" /></div>
-                                                   <!-- <div class="triangle tri-top"></div>
-                                                    <div class="triangle tri-bottom"></div>-->
+                                                   
                                                     
                                                 </div>
                                                 <div class="border-wrapper">
@@ -3960,8 +3953,8 @@ tiff</div></div></form>';
 												//$output .= '<small><em>'.__('The grid will hold its inline layout up to the device selected','nex-forms').'</em></small>';
 												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-mobile" data-val="nf-no-mobile" type="button" title="'.__('Mobiles','nex-forms').'"><i class="fa fa-mobile"></i></button>';
 												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-tablet" data-val="nf-no-tablet" type="button" title="'.__('Tablets','nex-forms').'"><i class="fa fa-tablet"></i></button>';
-												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-laptops" data-val="nf-no-laptop" type="button" title="'.__('Laptops').'"><i class="fa fa-laptop"></i></button>';
-												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-pc" type="button" data-val="nf-no-pc" title="'.__('Desktops and larger devices').'"><i class="fa fa-desktop"></i></button>';
+												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-laptops" data-val="nf-no-laptop" type="button" title="'.__('Laptops','nex-forms').'"><i class="fa fa-laptop"></i></button>';
+												$output .= '<button class="btn btn-default active waves-effect-nf waves-light-nf set-pc" type="button" data-val="nf-no-pc" title="'.__('Desktops and larger devices','nex-forms').'"><i class="fa fa-desktop"></i></button>';
 												
 											$output .= '</div>';
 										$output .= '</div>';
@@ -4058,8 +4051,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting no-batch-edit col-xs-6 s-select s-radios s-thumbs-select-single">';
 								$output .= '<div role="group" class="btn-group select-auto-step" >';
 									$output .= '<small>'.__('Auto Advance to next step?','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step<br />on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step<br />on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
 								$output .= '</div>';
 							$output .= '</div>';
 							
@@ -4076,8 +4069,8 @@ tiff</div></div></form>';
 							$output .= '<div class="field-setting no-batch-edit col-xs-6 s-thumbs-select">';
 								$output .= '<div role="group" class="btn-group thumb-auto-step" >';
 									$output .= '<small>'.__('Auto Advance to next step?','nex-forms').'</small>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step<br />on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
-									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step<br />on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-no active" type="button" title="'.__('Do not advance to next step on selection','nex-forms').'"><i class="fa fa-close"></i></button>';
+									$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf auto-step-yes" type="button" title="'.__('Advance to next step on selection','nex-forms').'"><i class="fas fa-check"></i></button>';
 								$output .= '</div>';
 							$output .= '</div>';
 							
@@ -4228,10 +4221,10 @@ tiff</div></div></form>';
 									$output .= '<div role="group" class="btn-group display-radios-checks">';
 											$output .= '<small>'.__('Width Distribution','nex-forms').'</small>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf 1c" type="button" title="1 Thumb per row"><i class="fas fa-arrows-alt-h"></i></button>
-														<button class="btn btn-default waves-effect-nf waves-light-nf 2c" type="button" title="2 Thumbs per row"><i class="btn-tx tx-lg">&frac12;</i></button>
-														<button class="btn btn-default waves-effect-nf waves-light-nf 3c" type="button" title="3 Thumbs per row"><i class="btn-tx tx-lg">&frac13;</i></button>
-														<button class="btn btn-default waves-effect-nf waves-light-nf 4c" type="button" title="4 Thumbs per row"><i class="btn-tx tx-lg">&frac14;</i></button>
-														<button class="btn btn-default waves-effect-nf waves-light-nf 6c" type="button" title="6 Thumbs per row"><i class="btn-tx tx-lg">&frac16;</i></button>';
+														<button class="btn btn-default waves-effect-nf waves-light-nf 2c" type="button" title="2 Thumbs per row"><i class="btn-tx tx-sm">1/2</i></button>
+														<button class="btn btn-default waves-effect-nf waves-light-nf 3c" type="button" title="3 Thumbs per row"><i class="btn-tx tx-sm">1/3</i></button>
+														<button class="btn btn-default waves-effect-nf waves-light-nf 4c" type="button" title="4 Thumbs per row"><i class="btn-tx tx-sm">1/4</i></button>
+														<button class="btn btn-default waves-effect-nf waves-light-nf 6c" type="button" title="6 Thumbs per row"><i class="btn-tx tx-sm">1/6</i></button>';
 										$output .= '</div>';
 							$output .= '</div>';
 							
@@ -4746,7 +4739,7 @@ tiff</div></div></form>';
 	/*** Background repeat ***/									
 										$output .= '<div role="group" class="btn-group bg-repeat">';
 											$output .= '<small>'.__('Repeat','nex-forms').'</small>';
-											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat" type="button" title="Repeat X &amp; Y"><i class="fa fa-arrows"></i></button>';
+											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat" type="button" title="Repeat X and Y"><i class="fa fa-arrows"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat-x" type="button" title="Repeat X"><i class="fa fa-arrows-h"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf repeat-y" type="button" title="Repeat Y"><i class="fa fa-arrows-v"></i></button>';
 											$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf no-repeat" type="button" title="None"><i class="fa fa-close"></i></button>';
@@ -5073,10 +5066,10 @@ tiff</div></div></form>';
 											$output .= '<div role="group" class="btn-group setting-responsive-grid">';
 												$output .= '<small>'.__('Grid Inline Responsiveness','nex-forms').'</small>';
 												$output .= '<small><em>'.__('The grid will hold its inline layout up to the device selected','nex-forms').'</em></small>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-xs" type="button" title="'.__('Grid stays inline no matter<br />the device max width','nex-forms').'"><i class="fa fa-mobile"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-sm" type="button" title="'.__('If device max-width <= 480px<br />Break grids','nex-forms').'"><i class="fa fa-tablet"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-md" type="button" title="'.__('If device max-width <= 768px<br />Break grids').'"><i class="fa fa-laptop"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-lg" type="button" title="'.__('If device max-width <= 1024px<br />Break grids').'"><i class="fa fa-desktop"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-xs" type="button" title="'.__('Grid stays inline no matter the device max width','nex-forms').'"><i class="fa fa-mobile"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-sm" type="button" title="'.__('If device max-width <= 480px - Break grids','nex-forms').'"><i class="fa fa-tablet"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-md" type="button" title="'.__('If device max-width <= 768px - Break grids','nex-forms').'"><i class="fa fa-laptop"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-lg" type="button" title="'.__('If device max-width <= 1024px - Break grids','nex-forms').'"><i class="fa fa-desktop"></i></button>';
 												
 											$output .= '</div>';
 										$output .= '</div>';
@@ -5152,13 +5145,13 @@ tiff</div></div></form>';
 									
 								$output .= '</div>';
 									
-									$output .= '<!--<div class="btn-group required-star">';
+									$output .= '<div class="btn-group required-star hidden">';
 										$output .= '<small>'.__('Indicator','nex-forms').'</small>';
 										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm full active" type="button">&nbsp;<span class="glyphicon glyphicon-star"></span>&nbsp;</button>';
 										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm empty" type="button">&nbsp;<span class="glyphicon glyphicon-star-empty"></span>&nbsp;</button>';
 										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm asterisk" type="button">&nbsp;<span class="glyphicon glyphicon-asterisk"></span>&nbsp;</button>';
 										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf btn-sm none" type="button">&nbsp;<span class="fa fa-eye-slash"></span></button>';
-									$output .= '</div>-->';
+									$output .= '</div>';
 								
 								$output .= '<div class="field-setting col-xs-6 s-v-text">';		
 									$output .= '<small>'.__('Validate As','nex-forms').'</small>';
@@ -5213,11 +5206,26 @@ tiff</div></div></form>';
 									$output .= '<small>'.__('Minimum Characters','nex-forms').'</small>';
 									$output .= '<input type="text" placeholder="Enter minimum allowed characters" id="set_min_val" name="set_min_val" class="form-control">';
 								$output .= '</div>';
-									
+								
+								
+								
+								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';
+	/*** Animation Selection ***/	
+									$output .= ' <small>'.__('Text Transform','nex-forms').'</small>
+														<select id="text_transform" class="form-control" name="text_transform">
+															  <option value="none" selected="selected">None</option>
+															  <option value="uc">Uppercase</option>
+															  <option value="lc">Lowercase</option>
+															  <option value="ucf">Capitalize</option>
+															
+														  </select>';
+												$output .= '</div>';
+								
+								
 								$output .= '<div class="field-setting col-xs-6 s-v-text">';	
 									$output .= '<small>'.__('Set Input Mask','nex-forms').'</small>';
 									$output .= '<input type="text" placeholder="Set input mask eg. (000) 000-0000" id="set_input_mask" name="set_input_mask" class="form-control">';
-									$output .= '<span class="setting_help_text">'.__('0 = Numbers 0-9').'<br />'.__('S = Alphabetic A-Z a-z').'<br />'.__('A = Alphanomeric 0-9 A-Z a-z').'</span>';
+									$output .= '<span class="setting_help_text">'.__('0 = Numbers 0-9','nex-forms').'<br />'.__('S = Alphabetic A-Z a-z','nex-forms').'<br />'.__('A = Alphanomeric 0-9 A-Z a-z','nex-forms').'</span>';
 								$output .= '</div>';	
 									
 									
@@ -5553,23 +5561,23 @@ tiff</div></div></form>';
 			if($set_jq_theme=='base')
 				$set_jq_theme = 'default';
 			
-			echo '<link class="jquery_ui_theme" name="jquery_ui_theme" rel="stylesheet" type="text/css" href="'.(($set_form_theme!='m_design') ? plugins_url( '/nex-forms-themes-add-on7/css/'.$set_jq_theme.'/jquery.ui.theme.css',dirname(dirname(dirname(__FILE__)))) : '' ).'"/>';
+			NEXForms_clean_echo( '<link class="jquery_ui_theme" name="jquery_ui_theme" rel="stylesheet" type="text/css" href="'.(($set_form_theme!='m_design') ? plugins_url( '/nex-forms-themes-add-on7/css/'.$set_jq_theme.'/jquery.ui.theme.css',dirname(dirname(dirname(__FILE__)))) : '' ).'"/>');
 
 			$output .= '<div class="form-canvas-area form-editor-view '.$set_theme_shade.'" data-sec-pre-class=".inner-form-canvas">';
 				$output .= '<div class="form-canvas-area-mask"></div>';
 				$output .= '<div class="preview-tools">';
 					$output .= '<span class="expand_fullscreen"><a class="btn waves-effect-nf waves-light-nf btn-fullscreen fc-options" href="#" data-toggle="tooltip_bs" data-placement="bottom" title="'.__('Enter Full Screen Mode','nex-forms').'"><span class="fa-solid fa-expand"></span></a></span>';
-					$output .= '<span class="colapse_fullscreen" style="display:none;"><a class="btn waves-effect-nf waves-light-nf btn-wordpress fc-options active" href="#" data-toggle="tooltip_bs" data-html="true" data-placement="bottom" title="'.__('Exit Fullscreen Mode<br>Show WordPress Menus','nex-forms').'"><span class="fa-solid fa-compress"></span></a></span>';
+					$output .= '<span class="colapse_fullscreen" style="display:none;"><a class="btn waves-effect-nf waves-light-nf btn-wordpress fc-options active" href="#" data-toggle="tooltip_bs" data-html="true" data-placement="bottom" title="'.__('Exit Fullscreen Mode - Show WordPress Menus','nex-forms').'"><span class="fa-solid fa-compress"></span></a></span>';
 					
 					$output .= '<div class="btn workspace_theme workspace_theme_light '.(($set_theme_shade=='light') ? 'active' : '').'" data-view="light" ><span class="fa-solid fa-sun" data-toggle="tooltip_bs" data-placement="bottom" title="Light Workspace"></span></div>';
 					$output .= '<div class="btn workspace_theme workspace_theme_dark '.(($set_theme_shade=='dark') ? 'active' : '').'" data-view="dark"><span class="fa-solid fa-moon" data-toggle="tooltip_bs" data-placement="bottom" title="Dark Workspace"></span></div>';
 					
 					$output .= '<div class="btn workspace hidden normal active" data-view="normal"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Form Design/Build View"><span class="fas fa-edit" ></span> '.__('Form Design','nex-forms').'</span></div>';
-					$output .= '<div class="btn workspace hidden success-msg" data-view="success-msg"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Success Messsage<br />Design/Build View"><span class="fas fa-check" ></span> '.__('Success Message','nex-forms').'</span></div>';
+					$output .= '<div class="btn workspace hidden success-msg" data-view="success-msg"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Success Messsage - Design/Build View"><span class="fas fa-check" ></span> '.__('Success Message','nex-forms').'</span></div>';
 					
 					$output .= '<div class="btn workspace hidden c-logic" data-view="normal"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Add,Edit,Delete Conditional Logic"><span class="fas fa-project-diagram" ></span> '.__('Conditional Logic','nex-forms').'</span></div>';
 					
-					$output .= '<div class="btn workspace split" data-view="split"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Form Design + Preview<br>Split Screen"><span class="fas fa-columns" ></span> '.__('Split - Form | Preview','nex-forms').'</span></div>';
+					$output .= '<div class="btn workspace split" data-view="split"><span data-toggle="tooltip_bs2" data-placement="bottom" title="Form Design + Preview - Split Screen"><span class="fas fa-columns" ></span> '.__('Split - Form | Preview','nex-forms').'</span></div>';
 					$output .= '<div class="btn workspace preview" ><span data-view="preview" data-toggle="tooltip_bs2" data-placement="bottom" title="Preview Form"><span class="fas fa-eye" ></span> '.__('Preview','nex-forms').'</span></div>';
 				$output .= '</div>';
 				
@@ -5999,7 +6007,7 @@ tiff</div></div></form>';
 									(
 									'category'	=>	'selection_fields',
 									'label'	=>	__('Thumb Select','nex-forms'),
-									'tooltip'	=>	__('Thumb / Image Select<br>(single or multi select)','nex-forms'),
+									'tooltip'	=>	__('Thumb / Image Select (single or multi select)','nex-forms'),
 									'sub_label'	=>	'',
 									'icon'	=>	'fa-solid fa-images',
 									'type' => 'image-choices-field',
@@ -6011,7 +6019,7 @@ tiff</div></div></form>';
 									(
 									'category'	=>	'selection_fields',
 									'label'	=>	__('Icon Select','nex-forms'),
-									'tooltip'	=>	__('Icon Select (AKA Super Select)<br>(multi or single select)','nex-forms'),
+									'tooltip'	=>	__('Icon Select (AKA Super Select) (multi or single select)','nex-forms'),
 									'sub_label'	=>	'',
 									'icon'	=>	'fa-solid fa-check-double',
 									'type' => 'icon-select-group',
@@ -7054,6 +7062,7 @@ tiff</div></div></form>';
 																			$output .= '<div class="input-group">';
 																				$output .= '<span class="input-group-addon prefix "><span class="fa '.$attr['icon'].'"></span></span>';
 																				$sec_message = '';
+																				$text_transform = '';
 																				if($attr['field_name']=='query')
 																					{
 																						$output .= '<textarea name="'.$nf_functions->format_name($attr['label']).'" placeholder=""  data-maxlength-color="label label-success" data-maxlength-position="bottom" data-maxlength-show="false" data-default-value="" class="error_message '.$set_required.' the_input_element textarea pre-format form-control '.$preferences['field_preferences']['pref_input_size'].' '.$preferences['field_preferences']['pref_input_text_align'].'" data-onfocus-color="#66AFE9" data-drop-focus-swadow="1" data-placement="bottom" data-content="'.$preferences['validation_preferences']['pref_requered_msg'].'" title=""></textarea>';
@@ -7061,18 +7070,26 @@ tiff</div></div></form>';
 																					}
 																				else
 																					{
+																					if($attr['field_name']=='_name')
+																						$text_transform = 'data-text-transform="ucf"';
 																					if($attr['field_name']=='email')
+																						{
 																						$sec_message = $preferences['validation_preferences']['pref_email_format_msg'];
+																						$text_transform = 'data-text-transform="lc"';
+																						}
 																					if($attr['field_name']=='phone_number')
 																						$sec_message = $preferences['validation_preferences']['pref_phone_format_msg'];
 																					if($attr['field_name']=='url')
+																						{
 																						$sec_message = $preferences['validation_preferences']['pref_url_format_msg'];
+																						$text_transform = 'data-text-transform="lc"';
+																						}
 																					if($attr['field_name']=='numbers')
 																						$sec_message = $preferences['validation_preferences']['pref_numbers_format_msg'];
 																					if($attr['field_name']=='char')
 																						$sec_message = $preferences['validation_preferences']['pref_char_format_msg'];
 																					
-																					$output .= '<input type="text" name="'.$attr['field_name'].'" class="error_message '.$set_required.' '.$attr['format'].' form-control the_input_element '.$preferences['field_preferences']['pref_input_size'].' '.$preferences['field_preferences']['pref_input_text_align'].'" data-onfocus-color="#66AFE9" data-drop-focus-swadow="1" data-placement="bottom" data-content="'.$preferences['validation_preferences']['pref_requered_msg'].'" title="" data-secondary-message="'.$sec_message.'"/>';
+																					$output .= '<input type="text" name="'.$attr['field_name'].'" class="error_message '.$set_required.' '.$attr['format'].' form-control the_input_element '.$preferences['field_preferences']['pref_input_size'].' '.$preferences['field_preferences']['pref_input_text_align'].'" data-onfocus-color="#66AFE9" data-drop-focus-swadow="1" data-placement="bottom" data-content="'.$preferences['validation_preferences']['pref_requered_msg'].'" title="" data-secondary-message="'.$sec_message.'" '.$text_transform.' />';
 																					}
 																			
 																			$output .= '</div>';
@@ -7534,7 +7551,7 @@ tiff</div></div></form>';
 						$output .= '<span class="input-group-addon selection">';
 									$output .= '<span class=""><span class="fa fa-paint-brush"></span></span>';
 								$output .= '</span>';
-						$output .= '<select name="md_theme_selection" class="form-control md_theme_selection '.$get_theme.' '.(($set_form_theme=='m_design' || $set_form_theme=='neumorphism') ?  : 'hidden').'" data-selected="'.$set_theme.'" data-toggle="tooltip_bs2" data-placement="bottom" title="Select Overall<br>Preset Color Scheme">
+						$output .= '<select name="md_theme_selection" class="form-control md_theme_selection '.$get_theme.' '.(($set_form_theme=='m_design' || $set_form_theme=='neumorphism') ?  : 'hidden').'" data-selected="'.$set_theme.'" data-toggle="tooltip_bs2" data-placement="bottom" title="Select Overall Preset Color Schemes">
 										<option  value="default" 		'.(($set_theme=='default' || !$set_theme) ? 'selected="selected"' : '').'>'.__('Default','nex-forms').'</option>
 										<option '.$disabled.' value="red" 			'.(($set_theme=='red') ? 'selected="selected"' : '').'>'.__('Red','nex-forms').'</option>
 										<option '.$disabled.' value="pink"			'.(($set_theme=='pink') ? 'selected="selected"' : '').'>'.__('Pink','nex-forms').'</option>
@@ -7556,7 +7573,7 @@ tiff</div></div></form>';
 										<option '.$disabled.' value="blue-gray"		'.(($set_theme=='blue-gray') ? 'selected="selected"' : '').'>'.__('Blue Gray','nex-forms').'</option>
 									</select> ';
 							
-									$output .= '<select name="choose_form_theme" class="form-control choose_form_theme '.$get_theme.' '.(($set_form_theme=='m_design' || $set_form_theme=='neumorphism') ? 'hidden' : '').'" data-selected="'.$set_jq_theme.'" data-toggle="tooltip_bs2" data-placement="bottom" title="Select Overall<br>Preset Color Scheme">
+									$output .= '<select name="choose_form_theme" class="form-control choose_form_theme '.$get_theme.' '.(($set_form_theme=='m_design' || $set_form_theme=='neumorphism') ? 'hidden' : '').'" data-selected="'.$set_jq_theme.'" data-toggle="tooltip_bs2" data-placement="bottom" title="Select Overall Preset Color Schemes">
 												<option  value="default">Default</option>
 												<option '.$disabled.' value="black-tie">'.__('black-tie','nex-forms').'</option>
 												<option '.$disabled.' value="blitzer">'.__('blitzer','nex-forms').'</option>
@@ -7616,10 +7633,10 @@ tiff</div></div></form>';
 						$output .= '<div class="input-group settings_form_width"  >';
 							 $output .= '<small class="label">'.__('Width','nex-forms').'</small>';
 							$output .= '<input type="number" class="form-control set_form_width" value="'.$set_form_width.'" />';
-							$output .= '<span class="input-group-addon '.(($form_width_unit=='%') ? 'active' : '').' percentage width_type" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Width in Percentage<br />(Responsive)">';
+							$output .= '<span class="input-group-addon '.(($form_width_unit=='%') ? 'active' : '').' percentage width_type" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Width in Percentage (Responsive)">';
 								$output .= '%';
 							$output .= '</span>';
-							$output .= '<span class="input-group-addon '.(($form_width_unit!='%') ? 'active' : '').' pixels width_type" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Width in Pixels<br />(Non-Responsive)">';
+							$output .= '<span class="input-group-addon '.(($form_width_unit!='%') ? 'active' : '').' pixels width_type" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Width in Pixels (Non-Responsive)">';
 								$output .= 'px';
 							$output .= '</span>';
 							
@@ -7631,11 +7648,11 @@ tiff</div></div></form>';
 							/*$output .= '<span class="input-group-addon">';
 								$output .= '<span class="icon-text">'.__('Background','nex-forms').'</span>';
 							$output .= '</span>';*/
-							$output .= '<span class="input-group-addon action-btn color-picker" spellcheck="false" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Wrapper<br>Background Color"><input type="text" class="form-control wrapper-bg-color" name="wrapper-bg-color" id="bs-color"></span>';
+							$output .= '<span class="input-group-addon action-btn color-picker" spellcheck="false" data-toggle="tooltip_bs2" data-placement="bottom" title="Set Form Wrapper Background Color"><input type="text" class="form-control wrapper-bg-color" name="wrapper-bg-color" id="bs-color"></span>';
 							
 							
-							$output .= '<span class="input-group-addon action-btn drop-shadow shadow-light" title="'.__('Light Shadow','nex-forms').'"><span class="shadow-light" data-toggle="tooltip_bs2" data-placement="bottom" title="Drop a light shadow<br>on form wrapper"></span></span>';
-							$output .= '<span class="input-group-addon action-btn drop-shadow shadow-dark" title="'.__('Dark Shadow','nex-forms').'"><span class="shadow-dark" data-toggle="tooltip_bs2" data-placement="bottom" title="Drop a dark shadow<br>on form wrapper"></span></span>';
+							$output .= '<span class="input-group-addon action-btn drop-shadow shadow-light" title="'.__('Light Shadow','nex-forms').'"><span class="shadow-light" data-toggle="tooltip_bs2" data-placement="bottom" title="Drop a light shadow"></span></span>';
+							$output .= '<span class="input-group-addon action-btn drop-shadow shadow-dark" title="'.__('Dark Shadow','nex-forms').'"><span class="shadow-dark" data-toggle="tooltip_bs2" data-placement="bottom" title="Drop a dark shadow"></span></span>';
 							
 							
 						
@@ -7662,7 +7679,7 @@ tiff</div></div></form>';
 					$form_style = str_replace('"','\'',$form_style);
 					
 					$form_bg = "#FFFFFF";
-					$form_shadow = "rgba(0, 0, 0, 0.2)";
+					$form_shadow = NEXForms_rgba2Hex("rgba(0, 0, 0, 0.2)");
 					$form_padding = "30";
 					$form_border_radius = "4";
 					
@@ -7683,7 +7700,7 @@ tiff</div></div></form>';
 						$form_shadow = "rgba(0, 0, 0, 0)";
 					
 					
-					$default_form_preset = "background: ".$form_bg."; box-shadow: ".$form_shadow." 0px 7px 16px 0px; border-radius: ".$form_border_radius."px; padding: ".$form_padding."px; border-color:#ddd;";
+					$default_form_preset = "background: ".$form_bg."; box-shadow: ".NEXForms_rgba2Hex($form_shadow)." 0px 7px 16px 0px; border-radius: ".$form_border_radius."px; padding: ".$form_padding."px; border-color:#ddd;";
 					
 					$form_style = ($this->admin_html) ? $form_style : $default_form_preset;
 					
@@ -8003,11 +8020,10 @@ $output .= '<div class="inner-form-canvas">';
 													</div>
 												</div>
 											</div>
-											<h4>'.__('','nex-forms').'</h4>
 									  </div>';
 						$output .= '<div class="resposive_tests">
 											
-											<!--<div class="preview-notice">To exit fullscreen preview, press <span>Esc</span></div>-->
+											
 											
 											<span class="close-preview fa fa-close" title="'.__('Close Preview','nex-forms').'"></span>
 											
@@ -8088,7 +8104,7 @@ $output .= '<div class="inner-form-canvas">';
 			$output .= '<div class="builder-footer">';
 			
 			$output .= '
-			'.(($theme->Name=='NEX-Forms Demo') ? '<!--<a href="https://1.envato.market/zQ6de" target="_blank"  style="padding:7px !important;" class="btn waves-effect-nf waves-light-nf upgrade_pro animated fadeInRight">BUY NEX-FORMS</a>-->' : '' ).'
+			'.(($theme->Name=='NEX-Forms Demo') ? '' : '' ).'
 			'.__('NEX-Forms version:','nex-forms').' '. $this->plugin_version.'';
 			
 			$output .= '</div>';
@@ -8106,146 +8122,146 @@ $output .= '<div class="inner-form-canvas">';
 			if(!get_option('nf_activated'))
 				$set_code = false;
 			
-			echo '<div class="form_attr_wrapper">';
+			NEXForms_clean_echo( '<div class="form_attr_wrapper">');
 				
-				echo '';
-					echo '<div class="form_attr_left_menu aa_bg_sec aa_menu">';
-					echo '<ul>';
-						echo '<li class="active"><a class="show-admin-email-setup sub-screen" data-screen="admin_email" ><span class="fa fa-user-plus"></span> <span class="sidemenu_text">'.__('Admin Emails','nex-forms').'</span></a></li>';
-						echo '<li><a class="show-user-email-setup sub-screen" data-screen="user_email"><span class="fa fa-user"></span> <span class="sidemenu_text">'.__('User Emails','nex-forms').'</span></a></li>';
-					echo '</ul>';
-				echo '</div>';//navigation
+				NEXForms_clean_echo('');
+					NEXForms_clean_echo( '<div class="form_attr_left_menu aa_bg_sec aa_menu">');
+					NEXForms_clean_echo( '<ul>');
+						NEXForms_clean_echo( '<li class="active"><a class="show-admin-email-setup sub-screen" data-screen="admin_email" ><span class="fa fa-user-plus"></span> <span class="sidemenu_text">'.__('Admin Emails','nex-forms').'</span></a></li>');
+						NEXForms_clean_echo( '<li><a class="show-user-email-setup sub-screen" data-screen="user_email"><span class="fa fa-user"></span> <span class="sidemenu_text">'.__('User Emails','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '</ul>');
+				NEXForms_clean_echo('</div>');//navigation
 
-				echo '<div class="form_attr_settings_wrapper">';
+				NEXForms_clean_echo( '<div class="form_attr_settings_wrapper">');
 					
-					echo '<div id="admin_email" class="nf-sub-screen">';
+					NEXForms_clean_echo( '<div id="admin_email" class="nf-sub-screen">');
 							
 						$send_admin_email 	= (isset($option_settings['0']['send_admin_email'])) ? $option_settings['0']['send_admin_email'] 	: 'true';
 						
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to receive Emails you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to receive Emails you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 				
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('Send Admin Email','nex-forms').'</div>';
-							echo '<div class="integration_form_field no_input tut_admin_email_7">';
-									echo  '<input class="with-gap" name="send_admin_email" '.((!$send_admin_email || $send_admin_email=='true') ? 'checked="checked"' : '' ).' id="send_admin_email_yes" value="true" type="radio">
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('Send Admin Email','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field no_input tut_admin_email_7">');
+									NEXForms_clean_echo( '<input class="with-gap" name="send_admin_email" '.((!$send_admin_email || $send_admin_email=='true') ? 'checked="checked"' : '' ).' id="send_admin_email_yes" value="true" type="radio">
 										   <label for="send_admin_email_yes">'.__('Yes','nex-forms').'</label>
 											<input class="with-gap" name="send_admin_email" '.(($send_admin_email =='false') ? 'checked="checked"' : '' ).' id="send_admin_email_no" value="false" type="radio">
 											<label for="send_admin_email_no">'.__('No','nex-forms').'</label>
-											';
-							echo '</div>';
-						echo '</div>';
+											');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('From Address','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_1">';
-								echo '<input type="text" class="form-control" name="nex_autoresponder_from_address" id="nex_autoresponder_from_address"  placeholder="'.__('Enter From Address','nex-forms').'" value="'.(($this->from_address) ? wp_unslash($this->from_address) : $preferences['email_preferences']['pref_email_from_address']).'">';
-							echo '</div>';
-						echo '</div>';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('From Address','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_1">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_autoresponder_from_address" id="nex_autoresponder_from_address"  placeholder="'.__('Enter From Address','nex-forms').'" value="'.(($this->from_address) ? wp_unslash($this->from_address) : $preferences['email_preferences']['pref_email_from_address']).'">');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('From Name','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_2">';
-								echo '<input type="text" class="form-control" name="nex_autoresponder_from_name" id="nex_autoresponder_from_name"  placeholder="'.__('Enter From Name','nex-forms').'"  value="'.(($this->from_name) ? wp_unslash($this->from_name) : $preferences['email_preferences']['pref_email_from_name']).'">';
-							echo '</div>';
-						echo '</div>';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('From Name','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_2">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_autoresponder_from_name" id="nex_autoresponder_from_name"  placeholder="'.__('Enter From Name','nex-forms').'"  value="'.(($this->from_name) ? wp_unslash($this->from_name) : $preferences['email_preferences']['pref_email_from_name']).'">');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('Recipients','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_3">';
-								echo '<input type="text" class="form-control" name="nex_autoresponder_recipients" id="nex_autoresponder_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->mail_to) ? wp_unslash(str_replace('"','\'',$this->mail_to)) : $preferences['email_preferences']['pref_email_recipients']).'">';
-							echo '</div>';
-						echo '</div>';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('Recipients','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_3">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_autoresponder_recipients" id="nex_autoresponder_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->mail_to) ? wp_unslash(str_replace('"','\'',$this->mail_to)) : $preferences['email_preferences']['pref_email_recipients']).'">');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('BCC','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_4">';
-								echo '<input type="text" class="form-control" name="nex_admin_bcc_recipients" id="nex_admin_bcc_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->bcc) ? wp_unslash($this->bcc) : '').'" >';
-							echo '</div>';
-						echo '</div>';
-						
-						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('Reply-To','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_8">';
-								echo '<input type="text" class="form-control" name="nex_admin_reply_to" id="nex_admin_reply_to"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->reply_to) ? wp_unslash($this->reply_to) : '').'" >';
-							echo '</div>';
-						echo '</div>';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('BCC','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_4">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_admin_bcc_recipients" id="nex_admin_bcc_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->bcc) ? wp_unslash($this->bcc) : '').'" >');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
 						
-						echo '<div class="row">';
-							echo '<div class="integration_form_label">'.__('Subject','nex-forms').'</div>';
-							echo '<div class="integration_form_field tut_admin_email_5">';
-								echo '<input type="text" class="form-control" name="nex_autoresponder_confirmation_mail_subject" id="nex_autoresponder_confirmation_mail_subject"  placeholder="'.__('Enter Email Subject','nex-forms').'" value="'.(($this->confirmation_mail_subject) ? wp_unslash($this->confirmation_mail_subject) : $preferences['email_preferences']['pref_email_subject']).'">';
-							echo '</div>';
-						echo '</div>';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('Reply-To','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_8">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_admin_reply_to" id="nex_admin_reply_to"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->reply_to) ? wp_unslash($this->reply_to) : '').'" >');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
+						
+						
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('Subject','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_5">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="nex_autoresponder_confirmation_mail_subject" id="nex_autoresponder_confirmation_mail_subject"  placeholder="'.__('Enter Email Subject','nex-forms').'" value="'.(($this->confirmation_mail_subject) ? wp_unslash($this->confirmation_mail_subject) : $preferences['email_preferences']['pref_email_subject']).'">');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
 						
 						$attach_to_admin_email 	= (isset($attach_to_email['0']['attach_to_admin_email'])) ? $attach_to_email['0']['attach_to_admin_email'] 	: 'true';
 						
-						echo '<div class="row last">';
-							echo '<div class="integration_form_label">'.__('Attach uploaded Files?','nex-forms').'</div>';
-							echo '<div class="integration_form_field no_input tut_admin_email_6">';
-									echo  '<input class="with-gap" name="attach_to_admin_email" '.((!$attach_to_admin_email || $attach_to_admin_email=='true') ? 'checked="checked"' : '' ).' id="attach_to_admin_email_yes" value="true" type="radio">
+						NEXForms_clean_echo('<div class="row last">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('Attach uploaded Files?','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field no_input tut_admin_email_6">');
+									NEXForms_clean_echo( '<input class="with-gap" name="attach_to_admin_email" '.((!$attach_to_admin_email || $attach_to_admin_email=='true') ? 'checked="checked"' : '' ).' id="attach_to_admin_email_yes" value="true" type="radio">
 										   <label for="attach_to_admin_email_yes">'.__('Yes','nex-forms').'</label>
 											<input class="with-gap" name="attach_to_admin_email" '.(($attach_to_admin_email =='false') ? 'checked="checked"' : '' ).' id="attach_to_admin_email_no" value="false" type="radio">
 											<label for="attach_to_admin_email_no">'.__('No','nex-forms').'</label>
-											';
+											');
 								
-							echo '</div>';
-						echo '</div>';
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 						
 						
 						
 						
 						
 						
-						echo '<div class="row">';
-							echo '<div class="editor_wrapper">';
+						NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="editor_wrapper">');
 								wp_editor( (($this->admin_email_body) ? wp_unslash($this->admin_email_body) : $preferences['email_preferences']['pref_email_body']), 'admin_email_body_content', array('media_buttons'=>true));
-							echo '</div>';
-						echo '</div>';
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 								
 						
-					echo '</div>';//admin_email
+					NEXForms_clean_echo('</div>');//admin_email
 				
 					
-					echo '<div id="user_email" class="nf-sub-screen hidden">';
+					NEXForms_clean_echo('<div id="user_email" class="nf-sub-screen hidden">');
 					
 						if(!$set_code)
-									echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to send USER Emails you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+									NEXForms_clean_echo('<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to send USER Emails you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
-									echo  '<div class="row">';
-										echo  '<div class="integration_form_label">'.__('Recipients (map email field)','nex-forms').'</div>';
-										echo  '<div class="integration_form_field tut_user_email_1">';
-											echo  '<select class="form-control posible_email_fields" data-selected="'.$this->user_email_field.'" id="nex_autoresponder_user_email_field" name="posible_email_fields"><option value="">'.__('Dont send confirmation mail to user','nex-forms').'</option></select>';
-										echo  '</div>';
-									echo  '</div>';
+									NEXForms_clean_echo( '<div class="row">');
+										NEXForms_clean_echo( '<div class="integration_form_label">'.__('Recipients (map email field)','nex-forms').'</div>');
+										NEXForms_clean_echo( '<div class="integration_form_field tut_user_email_1">');
+											NEXForms_clean_echo( '<select class="form-control posible_email_fields" data-selected="'.$this->user_email_field.'" id="nex_autoresponder_user_email_field" name="posible_email_fields"><option value="">'.__('Dont send confirmation mail to user','nex-forms').'</option></select>');
+										NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '</div>');
 									
-									echo  '<div class="row">';
-										echo  '<div class="integration_form_label">'.__('BCC','nex-forms').'</div>';
-										echo  '<div class="integration_form_field tut_user_email_2">';
-											echo  '<input type="text" class="form-control" name="nex_autoresponder_bcc_recipients" id="nex_autoresponder_bcc_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->bcc_user_mail) ? $this->bcc_user_mail : '').'" >';
-										echo  '</div>';
-									echo  '</div>';
+									NEXForms_clean_echo( '<div class="row">');
+										NEXForms_clean_echo( '<div class="integration_form_label">'.__('BCC','nex-forms').'</div>');
+										NEXForms_clean_echo( '<div class="integration_form_field tut_user_email_2">');
+											NEXForms_clean_echo( '<input type="text" class="form-control" name="nex_autoresponder_bcc_recipients" id="nex_autoresponder_bcc_recipients"  placeholder="'.__('Example: email@domain.com, email2@domain.com','nex-forms').'" value="'.(($this->bcc_user_mail) ? $this->bcc_user_mail : '').'" >');
+										NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '</div>');
 									
-									echo  '<div class="row last">';
-										echo  '<div class="integration_form_label">'.__('Subject','nex-forms').'</div>';
-										echo  '<div class="integration_form_field tut_user_email_3">';
-											echo  '<input type="text" class="form-control" name="nex_autoresponder_user_confirmation_mail_subject" id="nex_autoresponder_user_confirmation_mail_subject"  placeholder="'.__('Enter Email Subject','nex-forms').'" value="'.(($this->user_confirmation_mail_subject) ? wp_unslash($this->user_confirmation_mail_subject) :  $preferences['email_preferences']['pref_user_email_subject']).'">';
-										echo  '</div>';
-									echo  '</div>';
+									NEXForms_clean_echo( '<div class="row last">');
+										NEXForms_clean_echo( '<div class="integration_form_label">'.__('Subject','nex-forms').'</div>');
+										NEXForms_clean_echo( '<div class="integration_form_field tut_user_email_3">');
+											NEXForms_clean_echo( '<input type="text" class="form-control" name="nex_autoresponder_user_confirmation_mail_subject" id="nex_autoresponder_user_confirmation_mail_subject"  placeholder="'.__('Enter Email Subject','nex-forms').'" value="'.(($this->user_confirmation_mail_subject) ? wp_unslash($this->user_confirmation_mail_subject) :  $preferences['email_preferences']['pref_user_email_subject']).'">');
+										NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '</div>');
 									
-									echo '<div class="row">';
-										echo '<div class="editor_wrapper">';
+									NEXForms_clean_echo('<div class="row">');
+										NEXForms_clean_echo('<div class="editor_wrapper">');
 											wp_editor( (($this->confirmation_mail_body) ? wp_unslash($this->confirmation_mail_body) : $preferences['email_preferences']['pref_user_email_body']), 'user_email_body_content');
-										echo '</div>';
-									echo '</div>';
-				echo '</div>';//user_email
-			echo '</div>';	//form_attr_settings_wrapper
+										NEXForms_clean_echo('</div>');
+									NEXForms_clean_echo('</div>');
+				NEXForms_clean_echo('</div>');//user_email
+			NEXForms_clean_echo('</div>');	//form_attr_settings_wrapper
 				
-		echo '</div>';//form_attr_wrapper
+		NEXForms_clean_echo('</div>');//form_attr_wrapper
 					
 		}
 	
@@ -8258,81 +8274,81 @@ $output .= '<div class="inner-form-canvas">';
 		
 		
 			
-		echo '<div class="form_attr_wrapper ">';
+		NEXForms_clean_echo('<div class="form_attr_wrapper ">');
 			
 			
 			
 			
 			
-			echo '<div class="form_attr_left_menu aa_bg_sec aa_menu">';
-				echo '<ul>';
-					echo '<li class="active"><a class="show_on_submission_options sub-screen" data-screen="on_submission_settings"><span class="fa fa fa-send"></span> <span class="sidemenu_text">'.__('On Submit','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_hidden_fields sub-screen" data-screen="saved_hidden_fields"><span class="fa fa-eye-slash"></span> <span class="sidemenu_text">'.__('Hidden Fields','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_file_uploads_options sub-screen" data-screen="file_upload_settings"><span class="fa fa-cog"></span> <span class="sidemenu_text">'.__('Other','nex-forms').'</span></a></li>';
-				echo '</ul>';
-				echo '</div>';
+			NEXForms_clean_echo( '<div class="form_attr_left_menu aa_bg_sec aa_menu">');
+				NEXForms_clean_echo( '<ul>');
+					NEXForms_clean_echo( '<li class="active"><a class="show_on_submission_options sub-screen" data-screen="on_submission_settings"><span class="fa fa fa-send"></span> <span class="sidemenu_text">'.__('On Submit','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_hidden_fields sub-screen" data-screen="saved_hidden_fields"><span class="fa fa-eye-slash"></span> <span class="sidemenu_text">'.__('Hidden Fields','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_file_uploads_options sub-screen" data-screen="file_upload_settings"><span class="fa fa-cog"></span> <span class="sidemenu_text">'.__('Other','nex-forms').'</span></a></li>');
+				NEXForms_clean_echo( '</ul>');
+				NEXForms_clean_echo( '</div>');
 				
 						$set_code = true;
 						if(!get_option('nf_activated'))
 							$set_code = false;
 						
-						echo '<div class="form_attr_settings_wrapper">';
+						NEXForms_clean_echo( '<div class="form_attr_settings_wrapper">');
 							
 							
-							echo '<div id="on_submission_settings" class="nf-sub-screen">';
+							NEXForms_clean_echo( '<div id="on_submission_settings" class="nf-sub-screen">');
 							
 							if(!$set_code)
-								echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
-							echo  '<div class="row">';
-								echo  '<div class="integration_form_label ">'.__('Submission Type','nex-forms').'</div>'; 
-								echo  '<div class="integration_form_field no_input tour_form_submit_setup_1">';
-									echo  '<input class="with-gap" name="form_post_action" '.((!$this->post_action || $this->post_action=='ajax') ? 'checked="checked"' : '' ).' id="post_action_ajax" value="ajax" type="radio">
+							NEXForms_clean_echo(  '<div class="row">');
+								NEXForms_clean_echo(  '<div class="integration_form_label ">'.__('Submission Type','nex-forms').'</div>'); 
+								NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_form_submit_setup_1">');
+									NEXForms_clean_echo(  '<input class="with-gap" name="form_post_action" '.((!$this->post_action || $this->post_action=='ajax') ? 'checked="checked"' : '' ).' id="post_action_ajax" value="ajax" type="radio">
 											<label for="post_action_ajax">'.__('AJAX (default)','nex-forms').'</label>
 											
 											<input class="with-gap" '.(($set_code) ? '' : 'disabled="disabled"').' name="form_post_action" '.(($this->post_action =='custom') ? 'checked="checked"' : '' ).' id="post_action_custom" value="custom" type="radio">
-											<label for="post_action_custom">'.__('Custom (For developers)','nex-forms').'</label>';
-								echo  '</div>';
-							echo  '</div>';	
+											<label for="post_action_custom">'.__('Custom (For developers)','nex-forms').'</label>');
+								NEXForms_clean_echo(  '</div>');
+							NEXForms_clean_echo(  '</div>');	
 							
 							
 							
-							echo  '<div class="row submit_ajax_options '.((!$this->post_action || $this->post_action=='ajax') ? '' : 'hidden' ).'">';
-								echo  '<div class="integration_form_label ">'.__('After Form Submission','nex-forms').'</div>'; 
-								echo  '<div class="integration_form_field no_input tour_form_submit_setup_2">';
-									echo  '<input class="with-gap" name="on_form_submission" '.((!$this->on_form_submission || $this->on_form_submission=='message') ? 'checked="checked"' : '' ).' id="on_form_submission_message" value="message" type="radio">
+							NEXForms_clean_echo(  '<div class="row submit_ajax_options '.((!$this->post_action || $this->post_action=='ajax') ? '' : 'hidden' ).'">');
+								NEXForms_clean_echo(  '<div class="integration_form_label ">'.__('After Form Submission','nex-forms').'</div>'); 
+								NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_form_submit_setup_2">');
+									NEXForms_clean_echo(  '<input class="with-gap" name="on_form_submission" '.((!$this->on_form_submission || $this->on_form_submission=='message') ? 'checked="checked"' : '' ).' id="on_form_submission_message" value="message" type="radio">
 											<label for="on_form_submission_message">'.__('Show Success Message','nex-forms').'</label>
 											
 											<input class="with-gap" '.(($set_code) ? '' : 'disabled="disabled"').' name="on_form_submission" '.(($this->on_form_submission =='redirect') ? 'checked="checked"' : '' ).' id="on_form_submission_redirect" value="redirect" type="radio">
-											<label for="on_form_submission_redirect">'.__('Redirect to URL','nex-forms').'</label>';
-								echo  '</div>';
-							echo  '</div>';
+											<label for="on_form_submission_redirect">'.__('Redirect to URL','nex-forms').'</label>');
+								NEXForms_clean_echo(  '</div>');
+							NEXForms_clean_echo(  '</div>');
 							
-							echo  '<div class="row on_submit_redirect '.(($this->on_form_submission =='redirect') ? '' : 'hidden' ).'">';
-								echo  '<div class="integration_form_label">'.__('Redirect to','nex-forms').'</div>';
-								echo  '<div class="integration_form_field">';
-									echo  '<input type="text" class="form-control" name="confirmation_page" id="nex_autoresponder_confirmation_page"  placeholder="'.__('Enter Custom URL','nex-forms').'" value="'.(($this->confirmation_page) ? $this->confirmation_page : '').'" >';
-								echo  '</div>';
-							echo  '</div>';	
+							NEXForms_clean_echo(  '<div class="row on_submit_redirect '.(($this->on_form_submission =='redirect') ? '' : 'hidden' ).'">');
+								NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Redirect to','nex-forms').'</div>');
+								NEXForms_clean_echo(  '<div class="integration_form_field">');
+									NEXForms_clean_echo(  '<input type="text" class="form-control" name="confirmation_page" id="nex_autoresponder_confirmation_page"  placeholder="'.__('Enter Custom URL','nex-forms').'" value="'.(($this->confirmation_page) ? $this->confirmation_page : '').'" >');
+								NEXForms_clean_echo(  '</div>');
+							NEXForms_clean_echo(  '</div>');	
 							
 							
-							echo  '<div class="row submit_custom_options  '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">';
-								echo  '<div class="integration_form_label">'.__('Post Method','nex-forms').'</div>';
-								echo  '<div class="integration_form_field no_input">';
-									echo  '<input class="with-gap" name="form_post_method" '.((!$this->post_type || $this->post_type=='POST') ? 'checked="checked"' : '' ).' id="form_post_method_post" value="POST" type="radio">
+							NEXForms_clean_echo(  '<div class="row submit_custom_options  '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">');
+								NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Post Method','nex-forms').'</div>');
+								NEXForms_clean_echo(  '<div class="integration_form_field no_input">');
+									NEXForms_clean_echo(  '<input class="with-gap" name="form_post_method" '.((!$this->post_type || $this->post_type=='POST') ? 'checked="checked"' : '' ).' id="form_post_method_post" value="POST" type="radio">
 											<label for="form_post_method_post">POST</label>
 											
 											<input class="with-gap" name="form_post_method" '.(($this->post_type =='GET') ? 'checked="checked"' : '' ).' id="form_post_method_get" value="GET" type="radio">
-											<label for="form_post_method_get">GET</label>';
-								echo  '</div>';
-							echo  '</div>';	
-							echo  '<div class="row submit_custom_options '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">';
-									echo  '<div class="integration_form_label">'.__('Submit Form To','nex-forms').'</div>';
-									echo  '<div class="integration_form_field">';
-										echo  '<input type="text" class="form-control" name="custum_url" id="on_form_submission_custum_url"  placeholder="'.__('Enter Custom URL','nex-forms').'" value="'.(($this->custom_url) ? $this->custom_url : '').'" >';
-									echo  '</div>';
-							echo  '</div>';	
+											<label for="form_post_method_get">GET</label>');
+								NEXForms_clean_echo(  '</div>');
+							NEXForms_clean_echo(  '</div>');	
+							NEXForms_clean_echo(  '<div class="row submit_custom_options '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">');
+									NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Submit Form To','nex-forms').'</div>');
+									NEXForms_clean_echo(  '<div class="integration_form_field">');
+										NEXForms_clean_echo(  '<input type="text" class="form-control" name="custum_url" id="on_form_submission_custum_url"  placeholder="'.__('Enter Custom URL','nex-forms').'" value="'.(($this->custom_url) ? $this->custom_url : '').'" >');
+									NEXForms_clean_echo(  '</div>');
+							NEXForms_clean_echo(  '</div>');	
 							
 							
 							
@@ -8345,74 +8361,74 @@ $output .= '<div class="inner-form-canvas">';
 												$save_to_db = '0';
 											}
 										
-										echo  '<div class="row">';
-												echo  '<div class="integration_form_label ">'.__('Save Form Data to Database','nex-forms').'</div>'; 
-												echo  '<div class="integration_form_field no_input tour_form_submit_setup_1">';
-													echo  '<input class="with-gap" name="save_to_db" '.(($save_to_db) ? 'checked="checked"' : '' ).' id="save_to_db_1" value="1" type="radio">
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label ">'.__('Save Form Data to Database','nex-forms').'</div>'); 
+												NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_form_submit_setup_1">');
+													NEXForms_clean_echo(  '<input class="with-gap" name="save_to_db" '.(($save_to_db) ? 'checked="checked"' : '' ).' id="save_to_db_1" value="1" type="radio">
 															<label for="save_to_db_1">'.__('Yes','nex-forms').'</label>
 															
 															<input class="with-gap" name="save_to_db" '.(($save_to_db=='0') ? 'checked="checked"' : '' ).' id="save_to_db_2" value="0" type="radio">
-															<label for="save_to_db_2">'.__('No','nex-forms').'</label>';
-												echo  '</div>';
-											echo  '</div>';	
+															<label for="save_to_db_2">'.__('No','nex-forms').'</label>');
+												NEXForms_clean_echo(  '</div>');
+											NEXForms_clean_echo(  '</div>');	
 							
-										echo  '<div class="row">';
-												echo  '<div class="integration_form_label" >'.__('Submission Limit','nex-forms').'</em></div>';
-												echo  '<div class="integration_form_field zero_padding tour_other_options_setup_4">';
-													echo  '<input type="text" class="form-control" name="submit_limit" id="submit_limit"  placeholder="'.__('Leave Empty/Zero for unlimited submissions','nex-forms').'" value="'.(($option_settings[0]['submit_limit']) ? $option_settings[0]['submit_limit'] : '').'" >';
-												echo  '</div>';
-										echo  '</div>';	
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Submission Limit','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_4">');
+													NEXForms_clean_echo(  '<input type="text" class="form-control" name="submit_limit" id="submit_limit"  placeholder="'.__('Leave Empty/Zero for unlimited submissions','nex-forms').'" value="'.(($option_settings[0]['submit_limit']) ? $option_settings[0]['submit_limit'] : '').'" >');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 										
 												
 										
 										
-										echo  '<div class="row">';
-												echo  '<div class="integration_form_label" >'.__('Limit Reached Message<br><em>Only applicable when you have set a submission limit.</em>','nex-forms').'</em></div>';
-												echo  '<div class="integration_form_field zero_padding tour_other_options_setup_5">';
-													echo  '<textarea class="form-control" name="submit_limit_msg" id="submit_limit_msg"  placeholder="'.__('Leave blank to hide/remove the form without any message.','nex-forms').'">'.(($option_settings[0]['submit_limit_msg']) ? $option_settings[0]['submit_limit_msg'] : '').'</textarea>';
-												echo  '</div>';
-										echo  '</div>';	
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Limit Reached Message<br><em>Only applicable when you have set a submission limit.</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_5">');
+													NEXForms_clean_echo(  '<textarea class="form-control" name="submit_limit_msg" id="submit_limit_msg"  placeholder="'.__('Leave blank to hide/remove the form without any message.','nex-forms').'">'.(($option_settings[0]['submit_limit_msg']) ? $option_settings[0]['submit_limit_msg'] : '').'</textarea>');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 										
 										
 										
-										echo  '<div class="row">';
-												echo  '<div class="integration_form_label">'.__('Google Tracking Code<br /><em>Example: ga(\'send\', \'event\', \'link\', \'click\', \'http://example.com\')','nex-forms').'</em></div>';
-												echo  '<div class="integration_form_field zero_padding tour_other_options_setup_16">';
-													echo  '<input type="text"  class="form-control" name="google_analytics_conversion_code" id="google_analytics_conversion_code"  placeholder="'.__('Enter ga onclick code','nex-forms').'" value="'.(($this->google_analytics_conversion_code) ? $this->google_analytics_conversion_code : '').'" >';
-												echo  '</div>';
-										echo  '</div>';	
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Google Tracking Code<br /><em>Example: ga(\'send\', \'event\', \'link\', \'click\', \'http://example.com\')','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_16">');
+													NEXForms_clean_echo(  '<input type="text"  class="form-control" name="google_analytics_conversion_code" id="google_analytics_conversion_code"  placeholder="'.__('Enter ga onclick code','nex-forms').'" value="'.(($this->google_analytics_conversion_code) ? $this->google_analytics_conversion_code : '').'" >');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 										
-										echo  '<div class="row">';
-												echo  '<div class="integration_form_label" >'.__('Before Submit JS<br><em>Custom JS to be executed before a submission.</em>','nex-forms').'</em></div>';
-												echo  '<div class="integration_form_field zero_padding tour_other_options_setup_17">';
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Before Submit JS<br><em>Custom JS to be executed before a submission.</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_17">');
 												if(isset($option_settings[0]['before_submit_js']))
 													{
-													echo  '<textarea class="form-control" name="set_before_submit_js" id="before_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'">'.(($option_settings[0]['before_submit_js']) ? wp_unslash($option_settings[0]['before_submit_js']) : '').'</textarea>';
+													NEXForms_clean_echo(  '<textarea class="form-control" name="set_before_submit_js" id="before_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'">'.(($option_settings[0]['before_submit_js']) ? wp_unslash($option_settings[0]['before_submit_js']) : '').'</textarea>');
 													}
 												else
 													{
-													echo '<textarea class="form-control" name="set_before_submit_js" id="before_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'"></textarea>';
+													NEXForms_clean_echo( '<textarea class="form-control" name="set_before_submit_js" id="before_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'"></textarea>');
 													}
-												echo  '</div>';
-										echo  '</div>';	
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 										
-										echo  '<div class="row last">';
-												echo  '<div class="integration_form_label" >'.__('After Submit JS<br><em>Custom JS to be executed when submission is successful.</em>','nex-forms').'</em></div>';
-												echo  '<div class="integration_form_field zero_padding tour_other_options_setup_18">';
+										NEXForms_clean_echo(  '<div class="row last">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('After Submit JS<br><em>Custom JS to be executed when submission is successful.</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_18">');
 												if(isset($option_settings[0]['after_submit_js']))
 													{
-													echo  '<textarea class="form-control" name="set_after_submit_js" id="after_submit_js"  placeholder="'.__('Add Custom JS','nex-forms').'">'.(($option_settings[0]['after_submit_js']) ? wp_unslash($option_settings[0]['after_submit_js']) : '').'</textarea>';
+													NEXForms_clean_echo(  '<textarea class="form-control" name="set_after_submit_js" id="after_submit_js"  placeholder="'.__('Add Custom JS','nex-forms').'">'.(($option_settings[0]['after_submit_js']) ? wp_unslash($option_settings[0]['after_submit_js']) : '').'</textarea>');
 													}
 												else
 													{
-													echo '<textarea class="form-control" name="set_after_submit_js" id="after_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'"></textarea>';	
+													NEXForms_clean_echo( '<textarea class="form-control" name="set_after_submit_js" id="after_submit_js"   placeholder="'.__('Add Custom JS','nex-forms').'"></textarea>');	
 													}
-												echo  '</div>';
-										echo  '</div>';	
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 							
 							
 							
-						echo  '</div>';	
+						NEXForms_clean_echo(  '</div>');	
 						
 					
 					
@@ -8420,81 +8436,81 @@ $output .= '<div class="inner-form-canvas">';
 					
 					
 					
-					echo '<div id="file_upload_settings" class="integration nf-sub-screen hidden">';
+					NEXForms_clean_echo( '<div id="file_upload_settings" class="integration nf-sub-screen hidden">');
 							
 							if(!$set_code)
-								echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
 							
 										
-										echo  '<div class="row">';
-											echo  '<div class="integration_form_label" >'.__('Save Form Progress?<br><em>Allow users to complete the form at a later stage</em>','nex-forms').'</em></div>';
-											echo  '<div class="integration_form_field no_input tour_other_options_setup_3" style="padding: 15px 0px;">';
-												echo  '<input class="with-gap" name="save_form_progress" '.(($option_settings[0]['save_form_progress']=='true') ? 'checked="checked"' : '' ).' id="save_form_progress_yes" value="true" type="radio">
+										NEXForms_clean_echo(  '<div class="row">');
+											NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Save Form Progress?<br><em>Allow users to complete the form at a later stage</em>','nex-forms').'</em></div>');
+											NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_other_options_setup_3" style="padding: 15px 0px;">');
+												NEXForms_clean_echo(  '<input class="with-gap" name="save_form_progress" '.(($option_settings[0]['save_form_progress']=='true') ? 'checked="checked"' : '' ).' id="save_form_progress_yes" value="true" type="radio">
 														<label for="save_form_progress_yes">'.__('Enable','nex-forms').'</label>
 														<input class="with-gap" name="save_form_progress" '.((!$option_settings[0]['save_form_progress'] || $option_settings[0]['save_form_progress'] =='false') ? 'checked="checked"' : '' ).' id="save_form_progress_no" value="false" type="radio">
-														<label for="save_form_progress_no">'.__('Disable','nex-forms').'</label>';
-											echo  '</div>';
-										echo  '</div>';
+														<label for="save_form_progress_no">'.__('Disable','nex-forms').'</label>');
+											NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');
 										
 										
-										echo  '<div class="row">';
+										NEXForms_clean_echo(  '<div class="row">');
 										
-											echo  '<div class="integration_form_label">'.__('Save Submitted Files to Server?','nex-forms').'</div>';
-											echo  '<div class="integration_form_field no_input tour_other_options_setup_1">';
-												echo  '<input class="with-gap" name="upload_to_server" '.((!$upload_settings[0]['upload_to_server'] || $upload_settings[0]['upload_to_server']=='true') ? 'checked="checked"' : '' ).' id="upload_to_server_yes" value="true" type="radio">
+											NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Save Submitted Files to Server?','nex-forms').'</div>');
+											NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_other_options_setup_1">');
+												NEXForms_clean_echo(  '<input class="with-gap" name="upload_to_server" '.((!$upload_settings[0]['upload_to_server'] || $upload_settings[0]['upload_to_server']=='true') ? 'checked="checked"' : '' ).' id="upload_to_server_yes" value="true" type="radio">
 														<label for="upload_to_server_yes">'.__('Yes','nex-forms').'</label>
 														
 														<input class="with-gap" name="upload_to_server" '.(($upload_settings[0]['upload_to_server'] =='false') ? 'checked="checked"' : '' ).' id="upload_to_server_no" value="false" type="radio">
-														<label for="upload_to_server_no">'.__('No','nex-forms').'</label>';
-											echo  '</div>';
-										echo  '</div>';
+														<label for="upload_to_server_no">'.__('No','nex-forms').'</label>');
+											NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');
 										
 										
 										
 									
 						
-					echo  '</div>';		
+					NEXForms_clean_echo(  '</div>');		
 						
 						
-					echo '<div id="saved_hidden_fields" class="integration nf-sub-screen hidden">';
+					NEXForms_clean_echo( '<div id="saved_hidden_fields" class="integration nf-sub-screen hidden">');
 						
-						//echo  '<div class="col-xs-6 form-setup-column">';
-							//echo  '<div class="material_box">';
-								//echo  '<div class="material_box_head">Hidden Fields &nbsp;</div>';
+						//NEXForms_clean_echo(  '<div class="col-xs-6 form-setup-column">');
+							//NEXForms_clean_echo(  '<div class="material_box">');
+								//NEXForms_clean_echo(  '<div class="material_box_head">Hidden Fields &nbsp;</div>');
 						
 								
-								//echo  '<div class="material_box_content tour_hidden_fields_setup_2">';
+								//NEXForms_clean_echo(  '<div class="material_box_content tour_hidden_fields_setup_2">');
 								
-									echo  '<div class="row">';		
+									NEXForms_clean_echo(  '<div class="row">');		
 									
-										/*echo  '<div class="col-sm-2">';	
-											echo '<button class="add_hidden_field tour_hidden_fields_setup_1"><span class="btn-tx"><span class="fa fa-plus"></span> '.__('Add hidden Field','nex-forms').'</span></button></button>';
-										echo  '</div>';*/
-										//echo  '<div class="col-sm-9">';	
+										/*NEXForms_clean_echo(  '<div class="col-sm-2">');	
+											NEXForms_clean_echo( '<button class="add_hidden_field tour_hidden_fields_setup_1"><span class="btn-tx"><span class="fa fa-plus"></span> '.__('Add hidden Field','nex-forms').'</span></button></button>');
+										NEXForms_clean_echo(  '</div>');*/
+										//NEXForms_clean_echo(  '<div class="col-sm-9">');	
 											$db_actions = new NEXForms_Database_Actions();
 											$nf_functions = new NEXForms_Functions();
 											
 											if($nf_functions->isJson($this->hidden_fields))
 												{
-												echo $db_actions->get_form_hidden_fields($this->form_Id); //NEW
+												NEXForms_clean_echo( $db_actions->get_form_hidden_fields($this->form_Id)); //NEW
 												}
 											else
 												{
-												echo $db_actions->get_hidden_fields($this->form_Id); //OLD	
+												NEXForms_clean_echo( $db_actions->get_hidden_fields($this->form_Id)); //OLD	
 												}
-									  // echo  '</div>';
-								    echo  '</div>';
-								//echo  '</div>';
-							//echo  '</div>';
+									  // NEXForms_clean_echo(  '</div>');
+								    NEXForms_clean_echo(  '</div>');
+								//NEXForms_clean_echo(  '</div>');
+							//NEXForms_clean_echo(  '</div>');
 						
-						//echo  '</div>';
-					echo  '</div>';
-				echo  '</div>';
-			echo  '</div>';		
-		echo '</div>';
-		echo '</div>';
+						//NEXForms_clean_echo(  '</div>');
+					NEXForms_clean_echo(  '</div>');
+				NEXForms_clean_echo(  '</div>');
+			NEXForms_clean_echo(  '</div>');		
+		NEXForms_clean_echo( '</div>');
+		NEXForms_clean_echo( '</div>');
 		}
 	
 	
@@ -8508,7 +8524,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						$output .= '<div role="toolbar" class="btn-toolbar">';
 						$output .= '<div role="group" class="btn-group style-alignment">';
-							$output .= '<button class="btn active styling-tool-item btn-default" data-toggle="tooltip_bs" data-style-tool="default-tool" type="button" title="'.__('Normal Mode (Alt+C&nbsp;or&nbsp;Enter)','nex-forms').'"><i class="fa fa-mouse-pointer"></i></button>';
+							$output .= '<button class="btn active styling-tool-item btn-default" data-toggle="tooltip_bs" data-style-tool="default-tool" type="button" title="'.__('Normal Mode (Alt+C or Enter)','nex-forms').'"><i class="fa fa-mouse-pointer"></i></button>';
 						$output .= '</div>';
 						
 						
@@ -8611,79 +8627,79 @@ $output .= '<div class="inner-form-canvas">';
 			
 			$db_actions = new NEXForms_Database_Actions();
 			
-			echo '<div class="form_attr_wrapper">';
+			NEXForms_clean_echo( '<div class="form_attr_wrapper">');
 				
-						echo '	<div class="navigation" style="display:none;"><div class="nav-content">
+						NEXForms_clean_echo( '	<div class="navigation" style="display:none;"><div class="nav-content">
 									<ul class="tabs_nf tri-menu">
 										<li class="tab show_pdf_setup_menu_item"><a class="active" href="#pdfcreator">'.__('PDF Creator','nex-forms').'</a></li>
 										<li class="tab show_paypal_setup_menu_item"><a class="" href="#paypal_integration">'.__('PayPal','nex-forms').'</a></li>
 										<li class="tab show_zapier_setup_menu_item"><a class="" href="#zapier_integration">'.__('Zapier','nex-forms').'</a></li>
-										<!--<li class="tab show_hubspot_setup_menu_item"><a class="" href="#hubspot_integration">'.__('Hubspot','nex-forms').'</a></li>-->
+										<li class="tab show_hubspot_setup_menu_item hidden"><a class="" href="#hubspot_integration">'.__('Hubspot','nex-forms').'</a></li>
 										<li class="tab show_ftp_setup_menu_item"><a class="" href="#formtopost">'.__('Form to Post','nex-forms').'</a></li>
 										<li class="tab show_mc_setup_menu_item"><a class="" href="#mailchimp">'.__('MailChimp','nex-forms').'</a></li>
 										<li class="tab show_gr_setup_menu_item"><a class="" href="#getresponse">'.__('GetResponse','nex-forms').'</a></li>
 										<li class="tab show_mp_setup_menu_item"><a class="" href="#mailpoet">'.__('MailPoet','nex-forms').'</a></li>
 										<li class="tab show_ms_setup_menu_item"><a class="" href="#mailster">'.__('Mailster','nex-forms').'</a></li>
 									</ul>
-								</div></div>';
+								</div></div>');
 				
-				echo '<div class="form_attr_left_menu aa_bg_sec aa_menu">';
-				echo '<ul>';
-					echo '<li class="active"><a class="show_pdf_setup sub-screen" data-screen="pdfcreator"><span class="fa fa-file-pdf-o"></span> <span class="sidemenu_text">'.__('PDF Creator','nex-forms').'</span></a></li>';
+				NEXForms_clean_echo( '<div class="form_attr_left_menu aa_bg_sec aa_menu">');
+				NEXForms_clean_echo( '<ul>');
+					NEXForms_clean_echo( '<li class="active"><a class="show_pdf_setup sub-screen" data-screen="pdfcreator"><span class="fa fa-file-pdf-o"></span> <span class="sidemenu_text">'.__('PDF Creator','nex-forms').'</span></a></li>');
 					
-					echo '<li class=""><a class="show_paypal_setup sub-screen" data-screen="paypal_integration"><span class="fa fa-paypal"></span> <span class="sidemenu_text">'.__('PayPal','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_zapier_setup sub-screen" data-screen="zapier_integration"><span class="fa fa-asterisk"></span> <span class="sidemenu_text">'.__('Zapier','nex-forms').'</span></a></li>';
-					//echo '<li><a class="show_hubspot_setup sub-screen" data-screen="hubspot_integration"><span class="fa fas fa-project-diagram"></span> <span class="sidemenu_text">'.__('Hubspot','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_ftp_setup sub-screen" data-screen="formtopost"><span class="fa fa-edit"></span> <span class="sidemenu_text">'.__('Form to Post','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_mc_setup sub-screen" data-screen="mailchimp"><span class="fa-brands fa fa-mailchimp"></span> <span class="sidemenu_text">'.__('MailChimp','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_gr_setup sub-screen" data-screen="getresponse"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('GetResponse','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_mp_setup sub-screen" data-screen="mailpoet"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('MailPoet','nex-forms').'</span></a></li>';
-					echo '<li><a class="show_ms_setup sub-screen" data-screen="mailster"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('Mailster','nex-forms').'</span></a></li>';
-				echo '</ul>';
-				echo '</div>';
+					NEXForms_clean_echo( '<li class=""><a class="show_paypal_setup sub-screen" data-screen="paypal_integration"><span class="fa fa-paypal"></span> <span class="sidemenu_text">'.__('PayPal','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_zapier_setup sub-screen" data-screen="zapier_integration"><span class="fa fa-asterisk"></span> <span class="sidemenu_text">'.__('Zapier','nex-forms').'</span></a></li>');
+					//NEXForms_clean_echo( '<li><a class="show_hubspot_setup sub-screen" data-screen="hubspot_integration"><span class="fa fas fa-project-diagram"></span> <span class="sidemenu_text">'.__('Hubspot','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_ftp_setup sub-screen" data-screen="formtopost"><span class="fa fa-edit"></span> <span class="sidemenu_text">'.__('Form to Post','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_mc_setup sub-screen" data-screen="mailchimp"><span class="fa-brands fa fa-mailchimp"></span> <span class="sidemenu_text">'.__('MailChimp','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_gr_setup sub-screen" data-screen="getresponse"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('GetResponse','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_mp_setup sub-screen" data-screen="mailpoet"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('MailPoet','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_ms_setup sub-screen" data-screen="mailster"><span class="fa fa-envelope"></span> <span class="sidemenu_text">'.__('Mailster','nex-forms').'</span></a></li>');
+				NEXForms_clean_echo( '</ul>');
+				NEXForms_clean_echo( '</div>');
 
-				//echo '<div class="form_attr_setup">';
+				//NEXForms_clean_echo( '<div class="form_attr_setup">');
 				
-				echo '<div class="form_attr_settings_wrapper">';
+				NEXForms_clean_echo( '<div class="form_attr_settings_wrapper">');
 				
 						
-					echo '<div id="zapier_integration" class="integration nf-sub-screen hidden">';
+					NEXForms_clean_echo( '<div id="zapier_integration" class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 						if ( function_exists('NEXForms_not_found_notice_zapier'))
 							{	
 							
 													
 													global $wpdb;
-													$get_zapier_url = $wpdb->prepare('SELECT zapier_web_hook_url FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_title($this->form_Id));
-													$zapier_URL = $wpdb->get_var($get_zapier_url);
+													$get_zapier_url = $wpdb->prepare('SELECT zapier_web_hook_url FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_title($this->form_Id)); 
+													$zapier_URL = $wpdb->get_var($get_zapier_url); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 													
 													
 													
 													
-													echo '<div class="row">';
-														echo '<br /><div class="alert alert-info">
-														1. Use <a href="https://zapier.com/developer/public-invite/161949/d12842cda054f597d0b94260c4c6b53b/" target="_blank"><strong>THIS LINK</strong></a> to go to Zapier.com.<br />2. Hit Make a Zap! button. This will take you to the setup screen.<br />3. Under Choose a Trigger App, select NEX-Forms, and choose New Form Entry as the trigger. <br />4. On the Test this Setup screen, you will find a Webhook URL. Copy this URL and paste it in the field below.</div>';
-													echo '</div>';
+													NEXForms_clean_echo( '<div class="row">');
+														NEXForms_clean_echo( '<br /><div class="alert alert-info">
+														1. Use <a href="https://zapier.com/developer/public-invite/161949/d12842cda054f597d0b94260c4c6b53b/" target="_blank"><strong>THIS LINK</strong></a> to go to Zapier.com.<br />2. Hit Make a Zap! button. This will take you to the setup screen.<br />3. Under Choose a Trigger App, select NEX-Forms, and choose New Form Entry as the trigger. <br />4. On the Test this Setup screen, you will find a Webhook URL. Copy this URL and paste it in the field below.</div>');
+													NEXForms_clean_echo( '</div>');
 													
-													echo '<div class="row">';
-														echo '<div class="integration_form_label">Zapier Webhook URL</div>';
-														echo '<div class="integration_form_field zero_padding">';
-															echo '<input type="text" placeholder="Enter your webhook URL" value="'.$zapier_URL.'" name="zapier_web_hook_url" class="form-control">';
-														echo '</div>';
-													echo '</div>';
+													NEXForms_clean_echo( '<div class="row">');
+														NEXForms_clean_echo( '<div class="integration_form_label">Zapier Webhook URL</div>');
+														NEXForms_clean_echo( '<div class="integration_form_field zero_padding">');
+															NEXForms_clean_echo( '<input type="text" placeholder="Enter your webhook URL" value="'.$zapier_URL.'" name="zapier_web_hook_url" class="form-control">');
+														NEXForms_clean_echo( '</div>');
+													NEXForms_clean_echo( '</div>');
 		
 													
 										
 							}
 						else
-							echo '<div class="zapier_not_installed add_on_not_found"><span class="ni-icon fa fa-asterisk"></span><span class="message">'.__('Zapier add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="zapier_not_installed add_on_not_found"><span class="ni-icon fa fa-asterisk"></span><span class="message">'.__('Zapier add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 							
 					
 					
-					echo '</div>';	
+					NEXForms_clean_echo( '</div>');	
 					
 					
 					
@@ -8696,211 +8712,211 @@ $output .= '<div class="inner-form-canvas">';
 					
 					
 					
-					echo '<div id="paypal_integration"  class="integration nf-sub-screen hidden">';
+					NEXForms_clean_echo( '<div id="paypal_integration"  class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 						
 						if ( function_exists('nf_not_found_notice_pp') || function_exists('run_nf_adv_paypal')){
 						
-							echo '<div class="paypal-setup-column form-setup-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head aa_bg_main aa_font_color_default">';
-										echo ''.__('PayPal Setup','nex-forms').'';
-									echo '</div>';
-									echo '<div class="material_box_content">';
-										echo '<div class="paypal-column">';
-											echo '<div class="inner">';
+							NEXForms_clean_echo( '<div class="paypal-setup-column form-setup-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head aa_bg_main aa_font_color_default">');
+										NEXForms_clean_echo( ''.__('PayPal Setup','nex-forms').'');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content">');
+										NEXForms_clean_echo( '<div class="paypal-column">');
+											NEXForms_clean_echo( '<div class="inner">');
 												
-													echo $db_actions->print_paypal_setup($this->form_Id);
+													NEXForms_clean_echo( $db_actions->print_paypal_setup($this->form_Id));
 													
-												echo '</div>';
-										echo '</div>';
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+												NEXForms_clean_echo( '</div>');
+										NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 							
-							echo '<div class="paypal-items-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head">';
-										echo ''.__('PayPal Checkout Items','nex-forms').'';
-										echo '<button id="add_paypal_product" class="button btn btn-default tour_paypal_setup_9"><span class="fa fa-cart-plus"></span> '.__('Add Paypal Item','nex-forms').'</button>';
-									echo '</div>';
-									echo '<div class="material_box_content tour_paypal_setup_10">';
-										echo '<div class="paypal-column">';
-											echo '<div class="inner">';
-													echo $db_actions->build_paypal_products($this->form_Id);
-											echo '</div>';
+							NEXForms_clean_echo( '<div class="paypal-items-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head">');
+										NEXForms_clean_echo( ''.__('PayPal Checkout Items','nex-forms').'');
+										NEXForms_clean_echo( '<button id="add_paypal_product" class="button btn btn-default tour_paypal_setup_9"><span class="fa fa-cart-plus"></span> '.__('Add Paypal Item','nex-forms').'</button>');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content tour_paypal_setup_10">');
+										NEXForms_clean_echo( '<div class="paypal-column">');
+											NEXForms_clean_echo( '<div class="inner">');
+													NEXForms_clean_echo( $db_actions->build_paypal_products($this->form_Id));
+											NEXForms_clean_echo( '</div>');
 											
-										echo '</div>';
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+										NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 						}
 						else
-							echo '<div class="paypal_not_installed add_on_not_found"><span class="ni-icon fa fa-paypal"></span><span class="message">'.__('PayPal add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="paypal_not_installed add_on_not_found"><span class="ni-icon fa fa-paypal"></span><span class="message">'.__('PayPal add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 											
 							
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 					
 					
 					
-						echo '<div id="pdfcreator"  class="integration nf-sub-screen">';
+						NEXForms_clean_echo( '<div id="pdfcreator"  class="integration nf-sub-screen">');
 							if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 							if (function_exists('nf_not_found_notice_pdf'))
-								echo $this->print_pdf_creator($this->form_Id);
+								NEXForms_clean_echo( $this->print_pdf_creator($this->form_Id));
 							else
-								echo '<div class="pdf_not_installed add_on_not_found"><span class="ni-icon fa fa-file-pdf-o"></span><span class="message">'.__('PDF Creator add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/pdf-creator-for-nexforms/11220942?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+								NEXForms_clean_echo( '<div class="pdf_not_installed add_on_not_found"><span class="ni-icon fa fa-file-pdf-o"></span><span class="message">'.__('PDF Creator add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/pdf-creator-for-nexforms/11220942?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 						
-						echo '<div id="formtopost"  class="integration nf-sub-screen hidden">';
+						NEXForms_clean_echo( '<div id="formtopost"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-								echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_ftp_setup'))
-									echo nexforms_ftp_setup($this->form_Id);
+									NEXForms_clean_echo( nexforms_ftp_setup($this->form_Id));
 							else
-								echo '<div class="ftp_not_installed add_on_not_found"><span class="ni-icon fa fa-edit"></span><span class="message">'.__('Form to Post add-on not installed','nex-forms').'</span><a class="button buy_item" href="http://codecanyon.net/item/form-to-postpage-for-nexforms/19538774?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+								NEXForms_clean_echo( '<div class="ftp_not_installed add_on_not_found"><span class="ni-icon fa fa-edit"></span><span class="message">'.__('Form to Post add-on not installed','nex-forms').'</span><a class="button buy_item" href="http://codecanyon.net/item/form-to-postpage-for-nexforms/19538774?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 						
 						
-						echo '<div id="mailchimp"  class="integration nf-sub-screen hidden">';
+						NEXForms_clean_echo( '<div id="mailchimp"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mc_test_api'))
 							{
-							echo '<div class="form-setup-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head">';
-										echo ''.__('MailChimp','nex-forms').'';
-									echo '</div>';
-									echo '<div class="material_box_content">';
+							NEXForms_clean_echo( '<div class="form-setup-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head">');
+										NEXForms_clean_echo( ''.__('MailChimp','nex-forms').'');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content">');
 											
-												echo nexforms_mc_get_lists($this->form_Id, $this->mc_list_id);
-												echo '<div class="mc_field_map tour_mc_setup_3">';
-													echo nexforms_mc_get_form_fields($this->form_Id, $this->mc_list_id);
-												echo '</div>';
+												NEXForms_clean_echo( nexforms_mc_get_lists($this->form_Id, $this->mc_list_id));
+												NEXForms_clean_echo( '<div class="mc_field_map tour_mc_setup_3">');
+													NEXForms_clean_echo( nexforms_mc_get_form_fields($this->form_Id, $this->mc_list_id));
+												NEXForms_clean_echo( '</div>');
 												
 											
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 							}
 						else
-							echo '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailchimp add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailchimp add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 					
 						
-						echo '<div id="getresponse"  class="integration nf-sub-screen hidden">';
+						NEXForms_clean_echo( '<div id="getresponse"  class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_gr_test_api'))
 								{
-							echo '<div class="form-setup-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head">';
-										echo ''.__('GetResponse','nex-forms').'';
-									echo '</div>';
-									echo '<div class="material_box_content">';	
+							NEXForms_clean_echo( '<div class="form-setup-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head">');
+										NEXForms_clean_echo( ''.__('GetResponse','nex-forms').'');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content">');	
 										
 									
-										echo nexforms_gr_get_lists($this->form_Id, $this->gr_list_id);
-										echo '<div class="gr_field_map tour_gr_setup_3">';
-											echo nexforms_gr_get_form_fields($this->form_Id, $this->gr_list_id);
-										echo '</div>';
+										NEXForms_clean_echo( nexforms_gr_get_lists($this->form_Id, $this->gr_list_id));
+										NEXForms_clean_echo( '<div class="gr_field_map tour_gr_setup_3">');
+											NEXForms_clean_echo( nexforms_gr_get_form_fields($this->form_Id, $this->gr_list_id));
+										NEXForms_clean_echo( '</div>');
 										
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 							}
 						else
-							echo '<div class="gr_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">GetResponse add-on not installed</span><a class="button buy_item" href="https://codecanyon.net/item/getresponse-for-nexforms/18462247?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="gr_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">GetResponse add-on not installed</span><a class="button buy_item" href="https://codecanyon.net/item/getresponse-for-nexforms/18462247?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 						
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 					
 					
 						
-						echo '<div id="mailpoet" class="integration nf-sub-screen hidden">';
+						NEXForms_clean_echo( '<div id="mailpoet" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mp_test_api'))
 							{
-							echo '<div class="form-setup-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head">';
-										echo ''.__('MailPoet','nex-forms').'';
-									echo '</div>';
-									echo '<div class="material_box_content">';
+							NEXForms_clean_echo( '<div class="form-setup-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head">');
+										NEXForms_clean_echo( ''.__('MailPoet','nex-forms').'');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content">');
 												if(function_exists('mailpoet_wp_version_notice')) { 
-												echo nexforms_mp_get_lists($this->form_Id, $this->mp_list_id);
-												echo '<div class="mp_field_map tour_mp_setup_3">';
-													echo nexforms_mp_get_form_fields($this->form_Id, $this->mp_list_id);
-												echo '</div>';
+												NEXForms_clean_echo( nexforms_mp_get_lists($this->form_Id, $this->mp_list_id));
+												NEXForms_clean_echo( '<div class="mp_field_map tour_mp_setup_3">');
+													NEXForms_clean_echo( nexforms_mp_get_form_fields($this->form_Id, $this->mp_list_id));
+												NEXForms_clean_echo( '</div>');
 												
 												}
 												else{
-													echo '<div class="alert alert-danger">MailPoet is not installed. Please install the MailPoet plugin to use this add-on.</div>';	
+													NEXForms_clean_echo( '<div class="alert alert-danger">MailPoet is not installed. Please install the MailPoet plugin to use this add-on.</div>');	
 												}
 											
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 							}
 						else
-							echo '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('MailPoet add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('MailPoet add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 						
 						
-						echo '<div id="mailster" class="integration nf-sub-screen hidden">';
+						NEXForms_clean_echo( '<div id="mailster" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							echo '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://1.envato.market/zQ6de" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_ms_test_api'))
 							{
-							echo '<div class="form-setup-column">';
-								echo '<div class="material_box">';
-									echo '<div class="material_box_head">';
-										echo ''.__('MailSter','nex-forms').'';
-									echo '</div>';
-									echo '<div class="material_box_content">';
+							NEXForms_clean_echo( '<div class="form-setup-column">');
+								NEXForms_clean_echo( '<div class="material_box">');
+									NEXForms_clean_echo( '<div class="material_box_head">');
+										NEXForms_clean_echo( ''.__('MailSter','nex-forms').'');
+									NEXForms_clean_echo( '</div>');
+									NEXForms_clean_echo( '<div class="material_box_content">');
 												if( function_exists( 'mailster' ) ){
-												echo nexforms_ms_get_lists($this->form_Id, $this->ms_list_id);
-												echo '<div class="ms_field_map tour_ms_setup_3">';
-													echo nexforms_ms_get_form_fields($this->form_Id, $this->ms_list_id);
-												echo '</div>';
+												NEXForms_clean_echo( nexforms_ms_get_lists($this->form_Id, $this->ms_list_id));
+												NEXForms_clean_echo( '<div class="ms_field_map tour_ms_setup_3">');
+													NEXForms_clean_echo( nexforms_ms_get_form_fields($this->form_Id, $this->ms_list_id));
+												NEXForms_clean_echo( '</div>');
 												
 												}
 												else{
-													echo '<div class="alert alert-danger">Mailster is not installed. Please install the Mailster plugin to use this add-on.</div>';	
+													NEXForms_clean_echo( '<div class="alert alert-danger">Mailster is not installed. Please install the Mailster plugin to use this add-on.</div>');	
 												}
 											
-									echo '</div>';
-								echo '</div>';
-							echo '</div>';
+									NEXForms_clean_echo( '</div>');
+								NEXForms_clean_echo( '</div>');
+							NEXForms_clean_echo( '</div>');
 							}
 						else
-							echo '<div class="ms_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailster add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>';
+							NEXForms_clean_echo( '<div class="ms_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailster add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
-						echo '</div>';
+						NEXForms_clean_echo( '</div>');
 						
 					
 					
 			
-					//echo '</div>';	
-				echo '</div>';	
-			echo '</div>';	
+					//NEXForms_clean_echo( '</div>');	
+				NEXForms_clean_echo( '</div>');	
+			NEXForms_clean_echo( '</div>');	
 		}
 	
 	
@@ -8915,7 +8931,7 @@ $output .= '<div class="inner-form-canvas">';
 		if($form_Id)
 			{
 			$get_form = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_title($form_Id));
-			$form = $wpdb->get_row($get_form);
+			$form = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 			$pdf_attach = explode(',',$form->attach_pdf_to_email);
 			}
@@ -8926,27 +8942,27 @@ $output .= '<div class="inner-form-canvas">';
 			$pdf_size = $pdf_settings[0]['pdf_size'];
 			
 			
-			echo '<div class="">';
+			NEXForms_clean_echo( '<div class="">');
 				
-				echo '<div class="row">';
-					echo '<div class="integration_form_label">'.__('PDF Email Attachements','nex-forms').'</div>';
+				NEXForms_clean_echo( '<div class="row">');
+					NEXForms_clean_echo( '<div class="integration_form_label">'.__('PDF Email Attachements','nex-forms').'</div>');
 					
-					echo '<div class="integration_form_field no_input tour_pdf_setup_1" >';
-						echo '<input '.(in_array('admin',$pdf_attach) ? 'checked="checked"': '').' name="pdf_admin_attach" value="1" id="pdf_admin_attach" type="checkbox"><label for="pdf_admin_attach">'.__('Attach this PDF to Admin Notifications Emails','nex-forms').'<em></em></label>';
-						echo '<br /><input '.(in_array('user',$pdf_attach) ? 'checked="checked"': '').' name="pdf_user_attach" value="1" id="pdf_user_attach" type="checkbox"><label for="pdf_user_attach">'.__('Attach this PDF to Autoresponder User Emails','nex-forms').'<em></em></label>';
-					echo '</div>';
-				echo '</div>';
+					NEXForms_clean_echo( '<div class="integration_form_field no_input tour_pdf_setup_1" >');
+						NEXForms_clean_echo( '<input '.(in_array('admin',$pdf_attach) ? 'checked="checked"': '').' name="pdf_admin_attach" value="1" id="pdf_admin_attach" type="checkbox"><label for="pdf_admin_attach">'.__('Attach this PDF to Admin Notifications Emails','nex-forms').'<em></em></label>');
+						NEXForms_clean_echo( '<br /><input '.(in_array('user',$pdf_attach) ? 'checked="checked"': '').' name="pdf_user_attach" value="1" id="pdf_user_attach" type="checkbox"><label for="pdf_user_attach">'.__('Attach this PDF to Autoresponder User Emails','nex-forms').'<em></em></label>');
+					NEXForms_clean_echo( '</div>');
+				NEXForms_clean_echo( '</div>');
 				
 				
 				
-				echo  '<div class="row">';
+				NEXForms_clean_echo(  '<div class="row">');
 										
-						echo '<div class="integration_form_label">';
-							echo 'Page Orientation';
-						echo '</div>';
+						NEXForms_clean_echo( '<div class="integration_form_label">');
+							NEXForms_clean_echo( 'Page Orientation');
+						NEXForms_clean_echo( '</div>');
 					
-						echo  '<div class="integration_form_field no_input " style="margin-left:0 !important;">';
-							echo  '
+						NEXForms_clean_echo(  '<div class="integration_form_field no_input " style="margin-left:0 !important;">');
+							NEXForms_clean_echo(  '
 									<div class="col-sm-1 zero_padding"><input class="with-gap" name="pdf_orientation" '.((!$orientation || $orientation=='P') ? 'checked="checked"' : '' ).' id="pdf_p" value="P" type="radio">
 									<label for="pdf_p">Portriat</label></div>
 									
@@ -8956,19 +8972,19 @@ $output .= '<div class="inner-form-canvas">';
 									
 									
 									<div class="col-sm-10"></div>
-									';
-						echo '</div>';
-					echo '</div>';	
+									');
+						NEXForms_clean_echo( '</div>');
+					NEXForms_clean_echo( '</div>');	
 				
 				
-				/*echo  '<div class="row">';
+				/*NEXForms_clean_echo(  '<div class="row">');
 										
-						echo '<div class="integration_form_label">';
-							echo 'Page Size';
-						echo '</div>';
+						NEXForms_clean_echo( '<div class="integration_form_label">');
+							NEXForms_clean_echo( 'Page Size');
+						NEXForms_clean_echo( '</div>');
 					
-						echo  '<div class="integration_form_field no_input " style="margin-left:0 !important;">';
-							echo  '
+						NEXForms_clean_echo(  '<div class="integration_form_field no_input " style="margin-left:0 !important;">');
+							NEXForms_clean_echo(  '
 									<div class="col-sm-1 zero_padding"><input class="with-gap" name="pdf_size" '.(($pdf_size=='A1') ? 'checked="checked"' : '' ).' id="pdf_size_a1" value="A1" type="radio">
 									<label for="pdf_size_a1">A1</label></div>
 									
@@ -8991,12 +9007,12 @@ $output .= '<div class="inner-form-canvas">';
 									<label for="pdf_size_a7">A7</label></div>
 									
 									<div class="col-sm-5"></div>
-									';
-						echo '</div>';
-					echo '</div>';	*/
+									');
+						NEXForms_clean_echo( '</div>');
+					NEXForms_clean_echo( '</div>');	*/
 				
-				echo '<div class="row">';
-									echo '<div class="integration_form_label ">Page Size</div><div class="integration_form_field zero_padding"><select name="pdf_size" class="set_currency_code form-control" data-selected="'.(($pdf_size) ? $pdf_size : 'A4').'">
+				NEXForms_clean_echo( '<div class="row">');
+									NEXForms_clean_echo( '<div class="integration_form_label ">Page Size</div><div class="integration_form_field zero_padding"><select name="pdf_size" class="set_currency_code form-control" data-selected="'.(($pdf_size) ? $pdf_size : 'A4').'">
 												  <option value="A1">A1</option>
 												  <option value="A2">A2</option>
 												  <option value="A3">A3</option>
@@ -9004,16 +9020,16 @@ $output .= '<div class="inner-form-canvas">';
 												  <option value="A5">A5</option>
 												  <option value="A6">A6</option>
 												  <option value="A7">A7</option>
-												</select></div>';
-								echo '</div>';
+												</select></div>');
+								NEXForms_clean_echo( '</div>');
 				
 				
-				echo '<div class="row">';
-					echo '<div class="editor_wrapper">';
+				NEXForms_clean_echo( '<div class="row">');
+					NEXForms_clean_echo( '<div class="editor_wrapper">');
 						wp_editor( (($this->pdf_html) ? wp_unslash($this->pdf_html) : '' ), 'pdf_html');		
-					echo '</div>';
-				echo '</div>';
-			echo '</div>';
+					NEXForms_clean_echo( '</div>');
+				NEXForms_clean_echo( '</div>');
+			NEXForms_clean_echo( '</div>');
 		
 		}
 	
@@ -9103,7 +9119,7 @@ $output .= '<div class="inner-form-canvas">';
 												<li id="" class="tab always_current"><a class="emded_type active inline" href="#embed-inline-panel">'.__('Inline','nex-forms').'</a></li>
 												<li id="" class="tab always_current"><a class="emded_type popup" href="#embed-popup-panel">'.__('Popup','nex-forms').'</a></li>
 												<li id="" class="tab always_current"><a class="emded_type sticky" href="#embed-sticky-panel">'.__('Sticky','nex-forms').'</a></li>
-												-->
+												
 											  </ul>
 											</div>
 										 </nav>';
@@ -9111,36 +9127,7 @@ $output .= '<div class="inner-form-canvas">';
 					
 					
 						$output .= '<div class="inner row">';
-//LABEL SETTINGS //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////				
-						
-						
-							
-							
-							
-							/*$output .= '<div id="embed-inline-panel" class="form-settings row settings-section active">';
-							
-								$output .= '<div class="field-setting col-xs-12 s-all">';
-									$output .= '<div role="group" class="btn-group embed-form-style ">';
-										$output .= '<small>'.__('Form Style','nex-forms').'</small>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf normal active" type="button" data-style-tool="normal" title="Normal Inline Style"><i class="fa fa-file-invoice"></i></button>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf conversational " type="button" data-style-tool="conversational"  title="Conversational Style"><i class="fas fa-comment"></i></button>';
-										//$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf chat   " type="button" data-style-tool="chat"  title="Chat Style"><i class="fas fa-comments"></i></button>';
-									$output .= '</div>';
-								$output .= '</div>';
-							
-							$output .= '</div>';*/	
-							
-							//$output .= '<div id="embed-popup-panel" class="form-settings row settings-section">';
-							
-								/*$output .= '<div class="field-setting col-xs-12 s-all">';
-									$output .= '<div role="group" class="btn-group embed-form-style ">';
-										$output .= '<small>'.__('Form Style','nex-forms').'</small>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf normal active" type="button" data-style-tool="normal" title="Normal Inline Style"><i class="fa fa-file-invoice"></i></button>';
-										$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf conversational " type="button" data-style-tool="conversational"  title="Conversational Style"><i class="fas fa-comment"></i></button>';
-										//$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf chat   " type="button" data-style-tool="chat"  title="Chat Style"><i class="fas fa-comments"></i></button>';
-									$output .= '</div>';
-								$output .= '</div>';*/
-								
+
 								
 								$output .= '<div class="field-setting col-xs-12 s-all">';
 									$output .= '<div role="group" class="btn-group embed-poppup-trigger ">';
@@ -9294,10 +9281,10 @@ $output .= '<div class="inner-form-canvas">';
 								$output .= '<div class="input-group input-group-sm">';	
 									//LEFT
 									$output .= '<span class="input-group-addon action-btn set_popup_bg use_form active">';
-										$output .= '<span class="icon-text" data-toggle="tooltip_bs" data-placement="top" title="Applies the form Wrapper<br>Styling to the Popup">Inherit</span>';
+										$output .= '<span class="icon-text" data-toggle="tooltip_bs" data-placement="top" title="Applies form Wrapper Style">Inherit</span>';
 									$output .= '</span>';
 									$output .= '<span class="input-group-addon set_popup_bg action-btn use_custom">';
-										$output .= '<span class="icon-text" data-toggle="tooltip_bs" data-placement="top" title="Use a custom background<br>for the popup and keep<br>the form Wrapper in tact">Custom</span>';
+										$output .= '<span class="icon-text" data-toggle="tooltip_bs" data-placement="top" title="Use a custom background">Custom</span>';
 									$output .= '</span>';
 									$output .= '<span class="input-group-addon  action-btn color-picker" spellcheck="false"><input type="text" class="form-control popup-bg-color" name="popup-bg-color" id="bs-color" value="#ffffff"></span>';
 									
@@ -9577,7 +9564,7 @@ $output .= '<div class="inner-form-canvas">';
 $output .= '</div>';
 		
 		
-		echo $output;
+		NEXForms_clean_echo( $output);
 		}
 	
 	
