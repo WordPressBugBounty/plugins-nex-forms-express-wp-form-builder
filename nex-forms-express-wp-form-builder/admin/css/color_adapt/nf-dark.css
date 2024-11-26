@@ -1054,3 +1054,14 @@ background:#333 !important;
 .back-to-dash {
     border-right: 1px solid #212121 !important;
 }
+
+#nex-forms .form_attr_wrapper {
+    background: #333333;
+}
+#nex-forms button.add_hidden_field {
+    background: #333333 !important;
+}
+
+#nex-forms li.tab.preview-menu-item {
+    background: #333;
+}

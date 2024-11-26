@@ -2060,7 +2060,7 @@ iframe#ftp_content_ifr{
 }
 
 div#saved_hidden_fields{
-	margin-top: 10px;
+	/*margin-top: 10px;*/
 }
 
 button.add_hidden_field:hover{
@@ -2068,35 +2068,39 @@ button.add_hidden_field:hover{
 	border-color: #40C4FF !important;
 	color: #fff !important;
 	transition: all 0.2s ease 0s;
+	opacity:1;
 }
 
 button.add_hidden_field:hover:after{
-	content: "";
+	/*content: "";
 	position: absolute;
 	width: 100px;
 	height: 2px;
 	background: #40c4ff;
 	right: -100px;
 	transition: all 0.3s ease 0s;
-	opacity: 1;
+	opacity: 1;*/
 }
 
 button.add_hidden_field:after{
-	content: "";
+	/*content: "";
 	position: absolute;
 	width: 100px;
 	height: 2px;
 	background: #40c4ff;
 	right: 0px;
 	opacity: 0;
-	transition: all 0.3s ease 0s;
+	transition: all 0.3s ease 0s;*/
 }
 
-button.add_hidden_field{
-	background: #40C4FF !important;
-	color: #fff !important;
-	border: none !important;
-	margin-top: 3px;
+button.add_hidden_field {
+    background: #ffffff !important;
+    color: #40c4ff !important;
+    border: 2px solid #40C4FF !important;
+    margin-top: -1px !important;
+    opacity: 1;
+    border-radius: 50px !important;
+    padding: 1px 15px !important;
 }
 
 .input-group-addon.remove_hidden_field:hover{
@@ -2129,8 +2133,10 @@ button.add_hidden_field{
 	overflow-x: auto;
 }
 
-#saved_hidden_fields .material_box_head{
-	background: #fff;
+#saved_hidden_fields .material_box_head {
+    background: #f8f9fa;
+    padding: 32px 17px !important;
+    height: 77px !important;
 }
 
 #saved_hidden_fields select{
@@ -6038,12 +6044,16 @@ li.back-to-dashboard span{
 	margin: 0;
 }
 
-.form_attr_wrapper{
-	display: flex;
-	flex-direction: row;
-	margin-top: 22px;
+.form_attr_wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 22px;
+    background: #f8f9fa;
 }
-
+#nex-forms .CodeMirror-scroll{
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+}
 .fullscreen .form_attr_wrapper,
 .full_preview .form_attr_wrapper{
 	margin-top: -10px;
@@ -6215,7 +6225,7 @@ span.sidemenu_text{
 	flex: 5;
 	flex-direction: row;
 	position: relative;
-	border-bottom: 1px solid rgba(0,0,0,0.01);
+	border-bottom: 1px solid #ddd;
 	z-index: 1000;
 }
 
@@ -6264,11 +6274,17 @@ pre.CodeMirror-placeholder{
 	font-weight: normal !important;
 }
 
-.integration_form_label,
-.integration_form_field input{
+.integration_form_label{
 	border-bottom: none !important;
 }
-
+.integration_form_field input {
+    border-bottom: none !important;
+    outline: none !important;
+    border: none !important;
+    font-size: 13px;
+    padding: 11px;
+	color:#666;
+}
 .row.last .integration_form_label{
 }
 
@@ -6279,7 +6295,7 @@ pre.CodeMirror-placeholder{
 .integration_form_field.no_input{
 	background: #fff none repeat scroll 0 0;
 	border: none;
-	border-bottom: 1px solid rgb(237 237 238);
+	border-bottom: 1px solid #ddd;
 	align-items: center;
 }
 
@@ -10135,10 +10151,12 @@ input.form-control[readonly].sp-colorize{
 	left: 0 !important;
 }
 
-#nex-forms .CodeMirror{
-	margin: 0px;
-	border-top: 1px solid #ddd;
-	width: 100%;
+#nex-forms .CodeMirror {
+    margin: 0px;
+    /* border-top: 1px solid #ddd; */
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    /* height: 100%; */
 }
 
 .CodeMirror-linenumber.CodeMirror-gutter-elt{

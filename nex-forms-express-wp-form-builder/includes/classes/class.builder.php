@@ -8284,7 +8284,7 @@ $output .= '<div class="inner-form-canvas">';
 				NEXForms_clean_echo( '<ul>');
 					NEXForms_clean_echo( '<li class="active"><a class="show_on_submission_options sub-screen" data-screen="on_submission_settings"><span class="fa fa fa-send"></span> <span class="sidemenu_text">'.__('On Submit','nex-forms').'</span></a></li>');
 					NEXForms_clean_echo( '<li><a class="show_hidden_fields sub-screen" data-screen="saved_hidden_fields"><span class="fa fa-eye-slash"></span> <span class="sidemenu_text">'.__('Hidden Fields','nex-forms').'</span></a></li>');
-					NEXForms_clean_echo( '<li><a class="show_file_uploads_options sub-screen" data-screen="file_upload_settings"><span class="fa fa-cog"></span> <span class="sidemenu_text">'.__('Other','nex-forms').'</span></a></li>');
+					NEXForms_clean_echo( '<li><a class="show_file_uploads_options sub-screen" data-screen="file_upload_settings"><span class="fa fa-cog"></span> <span class="sidemenu_text">'.__('Form Settings','nex-forms').'</span></a></li>');
 				NEXForms_clean_echo( '</ul>');
 				NEXForms_clean_echo( '</div>');
 				
@@ -8315,7 +8315,7 @@ $output .= '<div class="inner-form-canvas">';
 							
 							
 							NEXForms_clean_echo(  '<div class="row submit_ajax_options '.((!$this->post_action || $this->post_action=='ajax') ? '' : 'hidden' ).'">');
-								NEXForms_clean_echo(  '<div class="integration_form_label ">'.__('After Form Submission','nex-forms').'</div>'); 
+								NEXForms_clean_echo(  '<div class="integration_form_label ">'.__('On Form Submission','nex-forms').'</div>'); 
 								NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_form_submit_setup_2">');
 									NEXForms_clean_echo(  '<input class="with-gap" name="on_form_submission" '.((!$this->on_form_submission || $this->on_form_submission=='message') ? 'checked="checked"' : '' ).' id="on_form_submission_message" value="message" type="radio">
 											<label for="on_form_submission_message">'.__('Show Success Message','nex-forms').'</label>
@@ -8353,7 +8353,14 @@ $output .= '<div class="inner-form-canvas">';
 							
 							
 							
-							
+							NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Google Tracking Code<br /><em>Example: ga(\'send\', \'event\', \'link\', \'click\', \'http://example.com\')','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_16">');
+													NEXForms_clean_echo(  '<input type="text"  class="form-control" name="google_analytics_conversion_code" id="google_analytics_conversion_code"  placeholder="'.__('Enter ga onclick code','nex-forms').'" value="'.(($this->google_analytics_conversion_code) ? $this->google_analytics_conversion_code : '').'" >');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
+										
+										
 										$save_to_db = '1';
 										if(isset($option_settings[0]['save_to_db']))
 											{
@@ -8371,35 +8378,26 @@ $output .= '<div class="inner-form-canvas">';
 															<label for="save_to_db_2">'.__('No','nex-forms').'</label>');
 												NEXForms_clean_echo(  '</div>');
 											NEXForms_clean_echo(  '</div>');	
+										
+										
+										
+										NEXForms_clean_echo(  '<div class="row">');
+										
+											NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Save Submitted Files to Server','nex-forms').'</div>');
+											NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_other_options_setup_1">');
+												NEXForms_clean_echo(  '<input class="with-gap" name="upload_to_server" '.((!$upload_settings[0]['upload_to_server'] || $upload_settings[0]['upload_to_server']=='true') ? 'checked="checked"' : '' ).' id="upload_to_server_yes" value="true" type="radio">
+														<label for="upload_to_server_yes">'.__('Yes','nex-forms').'</label>
+														
+														<input class="with-gap" name="upload_to_server" '.(($upload_settings[0]['upload_to_server'] =='false') ? 'checked="checked"' : '' ).' id="upload_to_server_no" value="false" type="radio">
+														<label for="upload_to_server_no">'.__('No','nex-forms').'</label>');
+											NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');
+										
 							
-										NEXForms_clean_echo(  '<div class="row">');
-												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Submission Limit','nex-forms').'</em></div>');
-												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_4">');
-													NEXForms_clean_echo(  '<input type="text" class="form-control" name="submit_limit" id="submit_limit"  placeholder="'.__('Leave Empty/Zero for unlimited submissions','nex-forms').'" value="'.(($option_settings[0]['submit_limit']) ? $option_settings[0]['submit_limit'] : '').'" >');
-												NEXForms_clean_echo(  '</div>');
-										NEXForms_clean_echo(  '</div>');	
-										
-												
 										
 										
 										NEXForms_clean_echo(  '<div class="row">');
-												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Limit Reached Message<br><em>Only applicable when you have set a submission limit.</em>','nex-forms').'</em></div>');
-												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_5">');
-													NEXForms_clean_echo(  '<textarea class="form-control" name="submit_limit_msg" id="submit_limit_msg"  placeholder="'.__('Leave blank to hide/remove the form without any message.','nex-forms').'">'.(($option_settings[0]['submit_limit_msg']) ? $option_settings[0]['submit_limit_msg'] : '').'</textarea>');
-												NEXForms_clean_echo(  '</div>');
-										NEXForms_clean_echo(  '</div>');	
-										
-										
-										
-										NEXForms_clean_echo(  '<div class="row">');
-												NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Google Tracking Code<br /><em>Example: ga(\'send\', \'event\', \'link\', \'click\', \'http://example.com\')','nex-forms').'</em></div>');
-												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_16">');
-													NEXForms_clean_echo(  '<input type="text"  class="form-control" name="google_analytics_conversion_code" id="google_analytics_conversion_code"  placeholder="'.__('Enter ga onclick code','nex-forms').'" value="'.(($this->google_analytics_conversion_code) ? $this->google_analytics_conversion_code : '').'" >');
-												NEXForms_clean_echo(  '</div>');
-										NEXForms_clean_echo(  '</div>');	
-										
-										NEXForms_clean_echo(  '<div class="row">');
-												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Before Submit JS<br><em>Custom JS to be executed before a submission.</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Custom JS Before Form Submission Success<br><em>Custom JS to be executed before a submission gets processed.</em>','nex-forms').'</em></div>');
 												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_17">');
 												if(isset($option_settings[0]['before_submit_js']))
 													{
@@ -8413,7 +8411,7 @@ $output .= '<div class="inner-form-canvas">';
 										NEXForms_clean_echo(  '</div>');	
 										
 										NEXForms_clean_echo(  '<div class="row last">');
-												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('After Submit JS<br><em>Custom JS to be executed when submission is successful.</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Custom JS After Form Submission Success<br><em>Custom JS to be executed when submission is successful.</em>','nex-forms').'</em></div>');
 												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_18">');
 												if(isset($option_settings[0]['after_submit_js']))
 													{
@@ -8445,7 +8443,7 @@ $output .= '<div class="inner-form-canvas">';
 							
 										
 										NEXForms_clean_echo(  '<div class="row">');
-											NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Save Form Progress?<br><em>Allow users to complete the form at a later stage</em>','nex-forms').'</em></div>');
+											NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Save Form Progress<br><em>Allow users to complete the form at a later stage</em>','nex-forms').'</em></div>');
 											NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_other_options_setup_3" style="padding: 15px 0px;">');
 												NEXForms_clean_echo(  '<input class="with-gap" name="save_form_progress" '.(($option_settings[0]['save_form_progress']=='true') ? 'checked="checked"' : '' ).' id="save_form_progress_yes" value="true" type="radio">
 														<label for="save_form_progress_yes">'.__('Enable','nex-forms').'</label>
@@ -8454,18 +8452,40 @@ $output .= '<div class="inner-form-canvas">';
 											NEXForms_clean_echo(  '</div>');
 										NEXForms_clean_echo(  '</div>');
 										
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Form Expiration Date<br><em>Use YYYY/MM/DD as the date format</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding ">');
+													NEXForms_clean_echo(  '<input type="text" class="form-control" name="form_expire" id="form_expire"  placeholder="'.__('FORMAT = YYYY/MM/DD - Leave empty for no Form Expiration Date','nex-forms').'" value="'.(($option_settings[0]['form_expire']) ? $option_settings[0]['form_expire'] : '').'" >');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');
+										
 										
 										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Form Submission Limit','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_4">');
+													NEXForms_clean_echo(  '<input type="number" class="form-control" name="submit_limit" id="submit_limit"  placeholder="'.__('Leave Empty/Zero for unlimited submissions','nex-forms').'" value="'.(($option_settings[0]['submit_limit']) ? $option_settings[0]['submit_limit'] : '').'" >');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
 										
-											NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Save Submitted Files to Server?','nex-forms').'</div>');
-											NEXForms_clean_echo(  '<div class="integration_form_field no_input tour_other_options_setup_1">');
-												NEXForms_clean_echo(  '<input class="with-gap" name="upload_to_server" '.((!$upload_settings[0]['upload_to_server'] || $upload_settings[0]['upload_to_server']=='true') ? 'checked="checked"' : '' ).' id="upload_to_server_yes" value="true" type="radio">
-														<label for="upload_to_server_yes">'.__('Yes','nex-forms').'</label>
-														
-														<input class="with-gap" name="upload_to_server" '.(($upload_settings[0]['upload_to_server'] =='false') ? 'checked="checked"' : '' ).' id="upload_to_server_no" value="false" type="radio">
-														<label for="upload_to_server_no">'.__('No','nex-forms').'</label>');
-											NEXForms_clean_echo(  '</div>');
-										NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '<div class="row">');
+												NEXForms_clean_echo(  '<div class="integration_form_label" >'.__('Entry Limit or Expiration Date Reached Message<br><em>Only applicable when you have set a Form Submission Limit or Form Expiration Date</em>','nex-forms').'</em></div>');
+												NEXForms_clean_echo(  '<div class="integration_form_field zero_padding tour_other_options_setup_5">');
+													NEXForms_clean_echo(  '<textarea class="form-control" name="submit_limit_msg" id="submit_limit_msg"  placeholder="'.__('Leave blank to remove the form without any message.','nex-forms').'">'.(($option_settings[0]['submit_limit_msg']) ? $option_settings[0]['submit_limit_msg'] : '').'</textarea>');
+												NEXForms_clean_echo(  '</div>');
+										NEXForms_clean_echo(  '</div>');	
+										
+										
+										
+										
+										
+										
+										
+											
+										
+										
+										
+										
+										
 										
 										
 										

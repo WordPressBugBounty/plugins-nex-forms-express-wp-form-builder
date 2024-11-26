@@ -34,10 +34,10 @@ if(!class_exists('NF5_Export_Forms'))
 		public function generate_form(){
 			global $wpdb;
 			
-				$form_data = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d ',sanitize_title($_REQUEST['nex_forms_Id']))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$form_data = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d ',sanitize_title($_REQUEST['nex_forms_Id']))); // DB Query
 				//$content = str_replace('\\','',$form_data->form_fields);
 				$content = '';
-				$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix ."wap_nex_forms"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix ."wap_nex_forms"); // DB Query
 				$field_array = array();
 				$count_fields = count($fields);
 				$i = 0;

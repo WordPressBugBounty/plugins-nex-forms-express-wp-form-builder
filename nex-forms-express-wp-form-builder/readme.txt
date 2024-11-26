@@ -4,8 +4,8 @@ Contributors: Basix
 Donate link: https://1.envato.market/zQ6de
 Tags: forms, contact form, form builder, wordpress form plugin, popup forms
 Requires at least: 4.0
-Tested up to: 6.7
-Stable tag: 8.7.10
+Tested up to: 6.7.1
+Stable tag: 8.7.11
 License: GPLv3 or later
 Author URI: https://codecanyon.net/user/basix/portfolio?ref=Basix
 Plugin URI: https://1.envato.market/zQ6de

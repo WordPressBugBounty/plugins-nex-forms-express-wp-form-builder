@@ -36,7 +36,7 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '8.7.9.1';
+	 $js_version = '8.7.11.1';
 	
 	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version);
@@ -92,7 +92,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '8.7.9.1';
+	$js_version = '8.7.11.1';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -190,6 +190,7 @@ function enqueue_nf_admin_scripts($hook) {
 			$cm_settings3['codeEditor'] = wp_enqueue_code_editor(array('type' => 'text/css'));
 			wp_localize_script('nex-forms-admin-functions', 'cm_settings_3', $cm_settings3);
 			
+			
 			}
 		}
 }
@@ -197,7 +198,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '8.7.9.1';
+	$js_version = '8.7.11.1';
 	
 	if(strstr($hook,'nex-forms'))
 		{
