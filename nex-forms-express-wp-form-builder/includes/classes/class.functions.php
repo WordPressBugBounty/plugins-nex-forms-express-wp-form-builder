@@ -1758,6 +1758,7 @@ $get_nf_functions = new NEXForms_Functions();
 function NEXForms_clean_echo($content){
 	$content = NEXForms_rgba2Hex($content);
 	echo wp_kses( $content, NEXForms_allowed_tags());
+	//echo $content;
 }
 
 function NEXForms_allowed_tags(){
@@ -1773,6 +1774,7 @@ function NEXForms_allowed_tags(){
             'style' 		=> true,
 			'name' 			=> true,
 			'value' 		=> true,
+			'label' 		=> true,
 			'val' 			=> true,
 			'tabindex'		=> true,
 			'role'			=> true,
@@ -1827,6 +1829,7 @@ function NEXForms_allowed_tags(){
 		'input'        		=> $default_attribs,
 		'select'        	=> $default_attribs,
 		'option'        	=> $default_attribs,
+		'optgroup'        	=> $default_attribs,
 		'textarea'        	=> $default_attribs,
 		'small'       	 	=> $default_attribs,
 		'label'        		=> $default_attribs,

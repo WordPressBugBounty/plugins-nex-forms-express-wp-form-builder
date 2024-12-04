@@ -790,3 +790,8 @@
 #nex-forms .nf_select-selection.nf_select-selection--multiple.input-lg .nf_select-search__field{
 	 margin-top: 12px;
 }
+
+#nex-forms .has_error .nf_select-selection--multiple,
+#nex-forms .has_error .nf_select-selection--single {
+    border-color: #f77b72 !important;
+}

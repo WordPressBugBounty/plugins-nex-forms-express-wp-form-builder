@@ -3063,7 +3063,7 @@ if(!class_exists('NEXForms_dashboard'))
 			$field_selection = (isset($_POST['field_selection'])) ? esc_sql(sanitize_text_field($_POST['field_selection'])) : '';
 			$search_params = (isset($_POST['search_params'])) ?  sanitize_text_field($_POST['search_params']) : '';
 			
-			$do_action = (isset($_POST['do_action'])) ? sanitize_title($_POST['do_action']) : $this->action;
+			$do_action = (isset($_POST['do_action'])) ? esc_sql(sanitize_title($_POST['do_action'])) : $this->action;
 			
 			$sort_by_table = '';
 			
@@ -3075,14 +3075,12 @@ if(!class_exists('NEXForms_dashboard'))
 					$sort_by_table = $wpdb->prefix.'wap_nex_forms_entries.';
 				}
 			
-			$sort_by = (isset($_POST['sort_by']) && $_POST['sort_by']!='') ? esc_sql(sanitize_title($_POST['sort_by'])) : 'Id';
-			
-			
+			$sort_by = (isset($_POST['sort_by']) && $_POST['sort_by']!='') ? $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['sort_by']))) : 'Id';
 			$sort_by = $sort_by_table.$sort_by;
-			
-			$sort_by_direction =(isset($_POST['sort_by_direction']) && $_POST['sort_by_direction']!='') ? esc_sql(sanitize_title($_POST['sort_by_direction'])) : 'DESC';
-			
-			$record_limit = (isset($_POST['record_limit'])) ? esc_sql(sanitize_title($_POST['record_limit'])) : $this->record_limit;
+			$sort_by = str_replace('\'','',$sort_by);
+			$sort_by_direction =(isset($_POST['sort_by_direction']) && $_POST['sort_by_direction']!='') ? $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['sort_by_direction']))) : 'DESC';
+			$sort_by_direction = str_replace('\'','',$sort_by_direction);
+			$record_limit = (isset($_POST['record_limit'])) ? $wpdb->prepare('%d',esc_sql(sanitize_title($_POST['record_limit']))) : $wpdb->prepare('%d',$this->record_limit);
 	
 			
 			if($header_params)
@@ -3130,13 +3128,14 @@ if(!class_exists('NEXForms_dashboard'))
 				$search_params = $this->search_params;
 			
 			if(isset($_POST['table']))
-				$table = esc_sql(sanitize_title($_POST['table']));
+				$table = $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['table'])));
 			else
-				$table = $this->table;
+				$table = $wpdb->prepare('%s',$this->table);
+			
+			$table = str_replace('\'','',$table);
 				
 			$where_str = '';
-			
-			$show_hide_field = (isset($_POST['showhide_fields'])) ? esc_sql(sanitize_text_field($_POST['showhide_fields'])) : '';
+			$show_hide_field = (isset($_POST['showhide_fields'])) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($_POST['showhide_fields'])))) : '';
 			
 			$show_cols = esc_sql(sanitize_text_field($show_hide_field));
 			
@@ -3148,9 +3147,9 @@ if(!class_exists('NEXForms_dashboard'))
 					if($clause['operator'] == 'LIKE' || $clause['operator'] == 'NOT LIKE')
 						$like = '%';
 					if($clause['value']=='NULL')
-						$where_str .= ' AND `'.$clause['column'].'` '.(($clause['operator']!='') ? esc_sql(sanitize_text_field($clause['operator'])) : '=').'  '.$like.esc_sql(sanitize_text_field($clause['value'])).$like.'';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$clause['column'])).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
 					else
-						$where_str .= ' AND `'.$clause['column'].'` '.(($clause['operator']!='') ? esc_sql(sanitize_text_field($clause['operator'])) : '=').'  "'.$like.esc_sql(sanitize_text_field($clause['value'])).$like.'"';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$clause['column'])).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
 					
 					}
 				}
@@ -3164,9 +3163,9 @@ if(!class_exists('NEXForms_dashboard'))
 					{
 					
 					if($j<count($field_selection))
-						 $select_fields .= '`'.esc_sql(sanitize_title($field_select)).'`,';
+						 $select_fields .= '`'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($field_select)))).'`,';
 					else
-						$select_fields .= '`'.esc_sql(sanitize_title($field_select)).'`';
+						$select_fields .= '`'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($field_select)))).'`';
 					$j++;
 					}
 				}
@@ -3189,9 +3188,9 @@ if(!class_exists('NEXForms_dashboard'))
 					foreach($search_params as $column)
 						{
 						if($loop_count==1)
-							$where_str .= '`'.$column.'` LIKE "%'.esc_sql(sanitize_title($search_term)).'%" ';
+							$where_str .= '`'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						else
-							$where_str .= ' OR `'.$column.'` LIKE "%'.esc_sql(sanitize_title($search_term)).'%" ';
+							$where_str .= ' OR `'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 							
 						$loop_count++;
 						}
@@ -3201,26 +3200,26 @@ if(!class_exists('NEXForms_dashboard'))
 					{
 					foreach($search_params as $column)
 						{
-						$where_str .= ' AND `'.$column.'` LIKE "%'.esc_sql(sanitize_title($search_term)).'%" ';
+						$where_str .= ' AND `'.$column.'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						}
 					}
 				}
 			
-			$entry_report_id = (isset($_POST['entry_report_id'])) ? esc_sql(sanitize_title($_POST['entry_report_id'])) : '';
-			$form_id = (isset($_POST['form_id'])) ? esc_sql(sanitize_title($_POST['form_id'])) : '';
-			$post_table = (isset($_POST['table'])) ? esc_sql(sanitize_title($_POST['table'])) : '';
+			$entry_report_id = (isset($_POST['entry_report_id'])) ? str_replace('\'','',$wpdb->prepare('%d',esc_sql(sanitize_title($_POST['entry_report_id'])))) : '';
+			$form_id = (isset($_POST['form_id'])) ? str_replace('\'','',$wpdb->prepare('%d',esc_sql(sanitize_title($_POST['form_id'])))) : '';
+			$post_table = (isset($_POST['table'])) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($_POST['table'])))) : '';
 			
-			$is_report = (isset($_POST['is_report'])) ? esc_sql(sanitize_text_field($_POST['is_report'])) : $this->is_report;
+			$is_report = (isset($_POST['is_report'])) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($_POST['is_report'])))) : $this->is_report;
 			
 			if($entry_report_id)
 				{
-				$where_str .= ' AND nex_forms_Id = '.esc_sql(sanitize_title($entry_report_id));
+				$where_str .= ' AND nex_forms_Id = '.$wpdb->prepare('%d',esc_sql(sanitize_title($entry_report_id)));
 				$nex_forms_id = esc_sql(sanitize_title($entry_report_id));
 				}
 			if($form_id)
 				{
-				$where_str .= ' AND nex_forms_Id = '.esc_sql(sanitize_title($form_id));
-				$nex_forms_id = esc_sql(sanitize_title($form_id));
+				$where_str .= ' AND nex_forms_Id = '.$wpdb->prepare('%d',esc_sql(sanitize_title($form_id)));
+				$nex_forms_id = $wpdb->prepare('%d',esc_sql(sanitize_title($form_id)));
 				}
 			
 			if($post_table)
@@ -3228,9 +3227,9 @@ if(!class_exists('NEXForms_dashboard'))
 		
 			
 			if($do_action=='print_entries')
-				$get_records = $wpdb->prepare('SELECT '.$select_fields.', title FROM '.$wpdb->prefix.$table.', '.$wpdb->prefix.'wap_nex_forms  WHERE '.$wpdb->prefix.$table.'.Id<>"" AND '.$wpdb->prefix.'wap_nex_forms.Id = '.$wpdb->prefix.$table.'.nex_forms_Id '.$where_str.' ORDER BY '.$sort_by.' '.$sort_by_direction.' LIMIT '.($page_num*$record_limit).',%d',$record_limit);
+				$get_records = 'SELECT '.$select_fields.', title FROM '.$wpdb->prefix.$table.', '.$wpdb->prefix.'wap_nex_forms WHERE '.$wpdb->prefix.$table.'.Id<>"" AND '.$wpdb->prefix.'wap_nex_forms.Id = '.$wpdb->prefix.$table.'.nex_forms_Id '.$where_str.' ORDER BY '.$sort_by.' '.$sort_by_direction.' LIMIT '.($page_num*$record_limit).','.$record_limit;
 			else
-				$get_records = $wpdb->prepare('SELECT '.$select_fields.' FROM '.$wpdb->prefix.$table.'  WHERE Id<>"" '.$where_str.' ORDER BY '.$sort_by.' '.$sort_by_direction.' LIMIT '.($page_num*$record_limit).',%d',$record_limit);
+				$get_records = 'SELECT '.$select_fields.' FROM '.$wpdb->prefix.$table.'  WHERE Id<>"" '.$where_str.' ORDER BY '.$sort_by.' '.$sort_by_direction.' LIMIT '.($page_num*$record_limit).','.$record_limit;
 			
 			//echo $get_records;
 			$records = $wpdb->get_results($get_records); // DB Query
@@ -3987,7 +3986,7 @@ if(!class_exists('NEXForms_dashboard'))
 			$output .= $report->print_record_table();
 					
 				$output .= '</div>';
-			NEXForms_clean_echo( $output);
+			echo $output;
 			die();
 		}
 		

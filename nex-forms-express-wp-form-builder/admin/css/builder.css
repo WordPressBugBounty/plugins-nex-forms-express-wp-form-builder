@@ -1227,7 +1227,7 @@ textarea#set_disabled_dates{
 }
 
 #nex-forms .settings-column-style .inner input[type="number"].form-control {
-    border-left: none !important;
+   /* border-left: none !important;*/
 }
 
 /* NEUMORPHISM */
@@ -6214,11 +6214,12 @@ span.sidemenu_text{
 }
 
 .integration_form_field input[type="text"]:hover,
-.integration_form_field select:hover,
-.integration_form_field textarea:hover,
-.integration_form_field.no_input:hover{
-	background: #fbfbfb none repeat scroll 0 0 !important;
-	border-color: #ddd;
+.integration_form_field input[type="number"]:hover, 
+.integration_form_field select:hover, 
+.integration_form_field textarea:hover, 
+.integration_form_field.no_input:hover {
+    background: #e8f0fe none repeat scroll 0 0 !important;
+    border-color: #ddd;
 }
 
 .integration_form_field{
@@ -11855,4 +11856,13 @@ span.top-icon.fas.fa-eye {
 .preview-notice.closing{
 	opacity:0;
 	transition:opacity 1s ease 3s;
+}
+
+#nex-forms  .form-control:hover, 
+#nex-forms  .form-control:focus {
+    outline: none !important;
+    transition: all 0s ease 0s !important;
+    box-shadow: none !important;
+    border-color: #ddd !important;
+   /* background: #e8f0fe52;*/
 }

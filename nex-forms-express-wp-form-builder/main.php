@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.11
+Version: 8.7.12
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -1813,7 +1813,14 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 								<div class="nf-timer '.$timer_size.'" data-timer-bg-width="'.$timer_bg_width.'" data-timer-fg-width="'.$timer_fg_width.'" data-timer-text-color="'.$timer_text_color.'" data-timer-inner-circle-color="'.$timer_inner_circle_color.'" data-timer-animation="'.$timer_animation.'" data-timer="30" data-timer-direction="'.$timer_direction.'" data-enabled-units="'.$enabled_units.'"  data-timer-hours="'.$timer_hours.'" data-timer-minutes="'.$timer_minutes.'" data-timer-seconds="'.$timer_seconds.'" data-timer-hours-label="'.$timer_hours_label.'" data-timer-minutes-label="'.$timer_minutes_label.'" data-timer-seconds-label="'.$timer_seconds_label.'" data-timer-hours-color="'.$timer_hours_color.'" data-timer-minutes-color="'.$timer_minutes_color.'" data-timer-seconds-color="'.$timer_seconds_color.'"></div>
 							</div>
 						</div>';
+						
+						//$output .= '<div class="timer_progress" style="background:'.$timer_inner_circle_color.';">
+									//	<div class="timer_fill" style="background:'.$timer_seconds_color.';"></div>
+									//</div>';
+						
 						}
+					
+					
 					if(isset($multi_step_total) && isset($multistep_settings[0]['bc_converted']))
 						{
 						$output .= '</div>';

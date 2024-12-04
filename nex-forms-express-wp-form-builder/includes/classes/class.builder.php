@@ -5165,7 +5165,16 @@ tiff</div></div></form>';
 										$output .= '</select>';
 								$output .= '</div> ';								  
 									
-								
+								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';	
+									$output .= ' <small>'.__('Text Transform','nex-forms').'</small>
+														<select id="text_transform" class="form-control" name="text_transform">
+															  <option value="none" selected="selected">None</option>
+															  <option value="uc">Uppercase</option>
+															  <option value="lc">Lowercase</option>
+															  <option value="ucf">Capitalize</option>
+															
+														  </select>';
+												$output .= '</div>';	
 								
 								
 								
@@ -5186,40 +5195,41 @@ tiff</div></div></form>';
 								
 								$output .= '<div class="field-setting col-xs-6 s-v-multi-selections">';	
 									$output .= '<small>'.__('Minimum Selections Required','nex-forms').'</small>';
-									$output .= '<input type="text" placeholder="Enter minimum required selections" id="set_min_selection" name="set_min_selection" class="form-control">';
+									$output .= '<input type="number" placeholder="Enter minimum required selections" id="set_min_selection" name="set_min_selection" class="form-control">';
 								$output .= '</div>';
 								
 								$output .= '<div class="field-setting col-xs-6 s-v-multi-selections">';	
 									$output .= '<small>'.__('Maximum Selections Allowed','nex-forms').'</small>';
-									$output .= '<input type="text" placeholder="Enter maximum allowed selections" id="set_max_selection" name="set_max_selection" class="form-control">';
+									$output .= '<input type="number" placeholder="Enter maximum allowed selections" id="set_max_selection" name="set_max_selection" class="form-control">';
 								$output .= '</div>';
-												
+								
+											
 								
 								
 								
 								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';	
 									$output .= '<small>'.__('Maximum Characters','nex-forms').'</small>';
-									$output .= '<input type="text" placeholder="Enter maximum allowed characters" id="set_max_val" name="set_max_val" class="form-control">';
+									$output .= '<input type="number" placeholder="Enter maximum allowed characters" id="set_max_val" name="set_max_val" class="form-control">';
 								$output .= '</div>';
 												
 								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';	
 									$output .= '<small>'.__('Minimum Characters','nex-forms').'</small>';
-									$output .= '<input type="text" placeholder="Enter minimum allowed characters" id="set_min_val" name="set_min_val" class="form-control">';
+									$output .= '<input type="number" placeholder="Enter minimum required characters" id="set_min_val" name="set_min_val" class="form-control">';
+								$output .= '</div>';
+								
+								
+								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';	
+									$output .= '<small>'.__('Maximum Words','nex-forms').'</small>';
+									$output .= '<input type="number" placeholder="Enter maximum allowed words" id="set_max_word_val" name="set_max_word_val" class="form-control">';
+								$output .= '</div>';
+												
+								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';	
+									$output .= '<small>'.__('Minimum Words','nex-forms').'</small>';
+									$output .= '<input type="number" placeholder="Enter minimum required words" id="set_min_word_val" name="set_min_word_val" class="form-control">';
 								$output .= '</div>';
 								
 								
 								
-								$output .= '<div class="field-setting col-xs-6 s-v-text s-v-textarea">';
-	/*** Animation Selection ***/	
-									$output .= ' <small>'.__('Text Transform','nex-forms').'</small>
-														<select id="text_transform" class="form-control" name="text_transform">
-															  <option value="none" selected="selected">None</option>
-															  <option value="uc">Uppercase</option>
-															  <option value="lc">Lowercase</option>
-															  <option value="ucf">Capitalize</option>
-															
-														  </select>';
-												$output .= '</div>';
 								
 								
 								$output .= '<div class="field-setting col-xs-6 s-v-text">';	
