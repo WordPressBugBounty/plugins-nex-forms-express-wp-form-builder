@@ -1708,7 +1708,8 @@ if(!class_exists('NEXForms_dashboard'))
 				
 			global $wpdb;
 
-			$db_table = sanitize_title($_POST['table']);
+			$db_table = $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['table'])));
+			$db_table = str_replace('\'','',$db_table);
 			
 			if(!strstr($db_table, 'nex_forms'))
 				wp_die();
@@ -1718,17 +1719,23 @@ if(!class_exists('NEXForms_dashboard'))
 				{		
 				foreach($_POST['selection'] as $key=>$val)
 					{
-					$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), array('trashed'=>'1'), array(	'Id' => sanitize_text_field($val)) ); // DB Query	 
+					$set_val = $wpdb->prepare('%d',esc_sql(sanitize_text_field($val)));
+					$set_val = str_replace('\'','',$set_val);
+					$update = $wpdb->update ( $wpdb->prefix . $db_table, array('trashed'=>'1'), array(	'Id'=>$set_val) ); // DB Query	 
+					
 					}
 				}
 			else
 				{
 				foreach($_POST['selection'] as $key=>$val)
 					{
-					$delete = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('Id'=>sanitize_text_field($val))); // DB Query
+					$set_val = $wpdb->prepare('%d',esc_sql(sanitize_text_field($val)));
+					$set_val = str_replace('\'','',$set_val);
+					$delete = $wpdb->delete($wpdb->prefix. $db_table,array('Id'=>$set_val)); // DB Query
 					}
 				}
-			
+			//$wpdb->show_errors();
+			//$wpdb->print_errors();
 			die();
 		}	
 		
@@ -1744,7 +1751,9 @@ if(!class_exists('NEXForms_dashboard'))
 			global  $wpdb;
 				foreach($_POST['selection'] as $key=>$val)
 					{
-					$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('trashed'=>NULL), array(	'Id' => sanitize_text_field($val)) ); // DB Query
+					$set_val = $wpdb->prepare('%d',esc_sql(sanitize_text_field($val)));
+					$set_val = str_replace('\'','',$set_val);
+					$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('trashed'=>NULL), array(	'Id' => $set_val) ); // DB Query
 					NEXForms_clean_echo( $update);
 					}
 
@@ -1765,13 +1774,16 @@ if(!class_exists('NEXForms_dashboard'))
 			$set_starred = ($_POST['starred']=='1' || $_POST['starred']==1) ? 0 : 1;
 			if($_POST['record_id'])
 				{
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('starred'=>$set_starred), array(	'Id' => sanitize_title($_POST['record_id'])) ); // DB Query
+				$record_id = $wpdb->prepare('%d',esc_sql(sanitize_text_field($_POST['record_id'])));
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('starred'=>$set_starred), array(	'Id' => $record_id) ); // DB Query
 				}
 			else
 				{
 				foreach($_POST['selection'] as $key=>$val)
 					{
-					$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('starred'=>$set_starred), array(	'Id' => sanitize_text_field($val)) ); // DB Query
+					$set_val = $wpdb->prepare('%d',esc_sql(sanitize_text_field($val)));
+					$set_val = str_replace('\'','',$set_val);
+					$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('starred'=>$set_starred), array(	'Id' => $set_val) ); // DB Query
 					}
 				}
 			
@@ -1793,7 +1805,9 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			foreach($_POST['selection'] as $key=>$val)
 				{
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('viewed'=>$set_read), array(	'Id' => $val) ); // DB Query
+				$set_val = $wpdb->prepare('%d',esc_sql(sanitize_text_field($val)));
+				$set_val = str_replace('\'','',$set_val);
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('viewed'=>$set_read), array(	'Id' => $set_val) ); // DB Query
 				}
 			wp_die();	
 		}
@@ -1808,23 +1822,28 @@ if(!class_exists('NEXForms_dashboard'))
 			}
 		public function remove_unwanted_styles(){
 			
-			$dashboard = new NEXForms_dashboard();
-			$dashboard->dashboard_checkout();
 			
-			global $wp_styles;
-			$include_style_array = array('colors','common','wp-codemirror', 'wp-theme-plugin-editor','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default','nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat','nex_forms-builder','google-roboto');
-		
-			NEXForms_clean_echo( '<div class="unwanted_css_array" style="display:none;">');
-			foreach($wp_styles->registered as $wp_style=>$array)
+			
+			$other_config = get_option('nex-forms-other-config');
+			$zero_conflict = isset($other_config['zero-con']) ? $other_config['zero-con'] : '1';
+			if($other_config['zero-con']=='1')
 				{
-				if(!in_array($array->handle,$include_style_array) && !strstr($array->handle,'nex-forms'))
+				$dashboard = new NEXForms_dashboard();
+				$dashboard->dashboard_checkout();
+				global $wp_styles;
+				$include_style_array = array('colors','common','wp-codemirror', 'wp-theme-plugin-editor','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default','nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat','nex_forms-builder','google-roboto');
+			
+				NEXForms_clean_echo( '<div class="unwanted_css_array" style="display:none;">');
+				foreach($wp_styles->registered as $wp_style=>$array)
 					{
-					NEXForms_clean_echo( '<div class="unwanted_css">'.$array->handle.'-css</div>');
-					}
-				}	
-			NEXForms_clean_echo( '</div>');
+					if(!in_array($array->handle,$include_style_array) && !strstr($array->handle,'nex-forms'))
+						{
+						NEXForms_clean_echo( '<div class="unwanted_css">'.$array->handle.'-css</div>');
+						}
+					}	
+				NEXForms_clean_echo( '</div>');
 			
-			
+				}
 				
 		}
 		
@@ -2122,8 +2141,11 @@ if(!class_exists('NEXForms_dashboard'))
 			global $wpdb;
 			$current_year = (int)date('Y');
 	
-					$year_selected = isset($_REQUEST['year_selected']) ? sanitize_text_field($_REQUEST['year_selected']) : (int)date('Y');
-					$month_selected =  isset($_REQUEST['month_selected']) ? sanitize_text_field($_REQUEST['month_selected']) : (int)date('m');
+					$year_selected = isset($_REQUEST['year_selected']) ? $wpdb->prepare('%s',esc_sql(sanitize_text_field($_REQUEST['year_selected']))) : (int)date('Y');
+					$year_selected = str_replace('\'','',$year_selected);
+					$month_selected =  isset($_REQUEST['month_selected']) ? $wpdb->prepare('%s',esc_sql(sanitize_text_field($_REQUEST['month_selected']))) : (int)date('m');
+					$month_selected = str_replace('\'','',$month_selected);
+					
 					$month_array = array('1'=>__('January','nex-forms'),'2'=>__('February','nex-forms'),'3'=>__('March','nex-forms'),'4'=>__('April','nex-forms'),'5'=>__('May','nex-forms'),'6'=>__('June','nex-forms'),'7'=>__('July','nex-forms'),'8'=>__('August','nex-forms'),'9'=>__('September','nex-forms'),'10'=>__('October','nex-forms'),'11'=>__('November','nex-forms'),'12'=>__('December','nex-forms'));
 					
 					
@@ -3649,7 +3671,8 @@ if(!class_exists('NEXForms_dashboard'))
 				wp_die();
 		global $wpdb;
 		
-		$edit_id = sanitize_text_field($_POST['form_entry_id']);
+		$edit_id = $wpdb->prepare('%d',esc_sql(sanitize_text_field($_POST['form_entry_id'])));
+		$edit_id = str_replace('\'','',$edit_id);
 		
 		unset($_POST['_wpnonce']);
 		unset($_POST['action']);
@@ -4302,7 +4325,28 @@ if(!class_exists('NEXForms_dashboard'))
 									</div>
 								</div>
 								
-								
+								<div class="row">
+									<div class="col-sm-6">'.__('Enable Zero Conflict Admin','nex-forms').'</div>
+									<div class="col-sm-6">
+										
+										
+										
+										
+										<input type="radio" class="with-gap" name="zero-con" id="zero-con01" value="1" '.(($other_config['zero-con']=='1' || !$other_config['zero-con']) ? 	'checked="checked"' : '').'>
+										<label for="zero-con01">'.__('Yes','nex-forms').'</label>
+										
+										
+										<input type="radio" class="with-gap" name="zero-con" id="zero-con02" value="0" '.(($other_config['zero-con']=='0' ) ? 'checked="checked"' : '').'>
+										<label for="zero-con02">'.__('No (Not Recomended)','nex-forms').'</label>
+										
+										
+										
+										
+										
+										
+										
+									</div>
+								</div>
 								
 								<div class="row">
 									<div class="col-sm-6">'.__('Enable NEX-Forms TinyMCE Button','nex-forms').'</div>

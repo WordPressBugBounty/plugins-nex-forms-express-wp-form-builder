@@ -6842,14 +6842,14 @@ button.start-button{
 .popover.tour .popover-content strong{
 }
 
-.popover.tour.tour-demo-popup h3.popover-title{
-	background: #cddc39 none repeat scroll 0 0 !important;
-	border-color: #cddc39 !important;
-	color: #000 !important;
-	text-shadow: 0 0 1px #fff;
-	font-size: 14px;
-	text-align: center;
-	text-transform: uppercase;
+.popover.tour.tour-demo-popup h3.popover-title {
+    background: #f52e2e none repeat scroll 0 0 !important;
+    border-color: #f52e2e !important;
+    color: #fff !important;
+    text-shadow: 0 0 1px #fff;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 .tour-demo-popup .popover-arrow{

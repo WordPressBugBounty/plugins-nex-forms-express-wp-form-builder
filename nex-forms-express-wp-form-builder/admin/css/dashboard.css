@@ -11416,7 +11416,8 @@ li.analytics_item{
     border-radius: 8px 8px 0 0 !important;
     font-weight: 800;
 }
-.popover.tour.tutorial-step-1.tour-2024-special-12-01 {
+.popover.tour.tutorial-step-1.tour-2024-special-12-01,
+.popover.tour.tutorial-step-1.tour-2024-special-12-02 {
     width: 36% !important;
     max-width: 700px !important;
     left: 32% !important;
@@ -11563,7 +11564,7 @@ span.menu-text{
     /* left: 0; */
     width: 100%;
     margin-left: -20px;
-    z-index: 100000;
+    z-index: 1000;
     height: 60px;
     display: flex;
     align-items: center;

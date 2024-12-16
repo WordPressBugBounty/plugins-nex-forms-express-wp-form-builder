@@ -5066,10 +5066,10 @@ tiff</div></div></form>';
 											$output .= '<div role="group" class="btn-group setting-responsive-grid">';
 												$output .= '<small>'.__('Grid Inline Responsiveness','nex-forms').'</small>';
 												$output .= '<small><em>'.__('The grid will hold its inline layout up to the device selected','nex-forms').'</em></small>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-xs" type="button" title="'.__('Grid stays inline no matter the device max width','nex-forms').'"><i class="fa fa-mobile"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-sm" type="button" title="'.__('If device max-width <= 480px - Break grids','nex-forms').'"><i class="fa fa-tablet"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-md" type="button" title="'.__('If device max-width <= 768px - Break grids','nex-forms').'"><i class="fa fa-laptop"></i></button>';
-												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-lg" type="button" title="'.__('If device max-width <= 1024px - Break grids','nex-forms').'"><i class="fa fa-desktop"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-xs" type="button" title="'.__('Grid always inline','nex-forms').'"><i class="fa fa-mobile"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-sm" type="button" title="'.__('Break grids if less 480px','nex-forms').'"><i class="fa fa-tablet"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-md" type="button" title="'.__('Break grids if less 768px','nex-forms').'"><i class="fa fa-laptop"></i></button>';
+												$output .= '<button class="btn btn-default waves-effect-nf waves-light-nf set-lg" type="button" title="'.__('Break grids if less 1024px','nex-forms').'"><i class="fa fa-desktop"></i></button>';
 												
 											$output .= '</div>';
 										$output .= '</div>';

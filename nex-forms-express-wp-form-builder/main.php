@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.12
+Version: 8.7.13
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -21,6 +21,7 @@ define('NF_TABLE_PREFIX','wap_');
 $other_config = get_option('nex-forms-other-config');
 	
 $user_level = isset($other_config['set-wp-user-level']) ? $other_config['set-wp-user-level'] : 'administrator';
+$zero_conflict = isset($other_config['zero-con']) ? $other_config['zero-con'] : '1';
 
 if($user_level == 'subscriber')
 	$nf_user_level = 'read';
@@ -42,13 +43,15 @@ if($theme->Name=='NEX-Forms Demo')
 	$nf_user_level = 'read';
 
 define('NF_USER_LEVEL',$nf_user_level);
-
-if($page=="nex-forms-main" || $page=="nex-forms-dashboard" || $page=="nex-forms-builder")
+if(strstr($page,'nex-forms'))
 	{
-	add_action( 'wp_print_scripts', 'NEXForms5_deregister_javascript',100);
-	add_action( 'wp_print_styles', 'NEXForms5_deregister_stylesheets',100);
-	add_action( 'init', 'NEXForms5_deregister_javascript',100);
-	add_action( 'init', 'NEXForms5_deregister_stylesheets',100);
+	if($zero_conflict=='1')	
+		{
+		add_action( 'wp_print_scripts', 'NEXForms5_deregister_javascript',100);
+		add_action( 'wp_print_styles', 'NEXForms5_deregister_stylesheets',100);
+		add_action( 'init', 'NEXForms5_deregister_javascript',100);
+		add_action( 'init', 'NEXForms5_deregister_stylesheets',100);
+		}
 	}
 add_action('widgets_init', 'NEXForms_widget::register_this_widget');
 
@@ -550,6 +553,111 @@ function NEXForms_test_page(){
 			echo ' \''.$array->handle.'\', ';
 			}	
 		}*/
+	
+	global $wpdb;
+		
+		$nf_functions = new NEXForms_Functions();
+		$content = '';
+		$tmp_csv_export = get_option('tmp_csv_export');
+		if($tmp_csv_export=='Not Allowed')
+			exit();
+		$get_sql = explode('LIMIT',$tmp_csv_export['query']);
+		$sql = $get_sql[0];
+		
+		$cols = $tmp_csv_export['cols'];
+		
+		$form_data = $wpdb->get_results($sql);  // DB Query
+		
+		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.'wap_nex_forms_temp_report'); // DB Query
+		
+		$nf_functions = new NEXForms_Functions();
+			
+		
+		$count_cols = 1;
+		foreach($table_fields as $column)
+			{
+			if(is_array($cols))
+				{
+				if(in_array($column->Field,$cols))
+					{
+					$columns_array[$column->Field] = $column->Field;
+					$content .= $nf_functions->unformat_name($column->Field).', ';
+					$count_cols ++;
+					}
+				}
+			else
+				{
+				$columns_array[$column->Field] = $column->Field;
+				$content .= $nf_functions->unformat_name($column->Field).', ';
+				$count_cols ++;
+				}
+			
+			}
+		$content = rtrim($content,', ');
+		$content .= '<br /><br />
+';
+			
+			$i = 1;
+			foreach($form_data as $value)
+				{
+				foreach($columns_array as $column)
+					{
+					$field_value = $value->$column;
+					$field_value = str_replace('\r\n',' ',$field_value);
+					$field_value = str_replace('\r',' ',$field_value);
+					$field_value = str_replace('\n',' ',$field_value);
+					$field_value = str_replace(',',';',$field_value);
+					$field_value = str_replace('
+					',' ',$field_value);
+					$field_value = str_replace('
+					
+					',' ',$field_value);
+					$field_value = str_replace(chr(10),' ',$field_value);
+					$field_value = str_replace(chr(13),' ',$field_value);
+					$field_value = str_replace(chr(266),' ',$field_value);
+					$field_value = str_replace(chr(269),' ',$field_value);
+					$field_value = str_replace(chr(522),' ',$field_value);
+					$field_value = str_replace(chr(525),' ',$field_value);
+					
+					if($nf_functions->isJson($value->$column))
+						{
+						$rep_content = json_encode($value->$column);
+						$rep_content_2 = json_decode($value->$column,true);
+						
+						if(is_array($rep_content_2))
+							{
+							foreach($rep_content_2 as $key=>$val)
+								{
+								foreach($val as $field_name => $field_val)
+									$content .= $nf_functions->unformat_name($field_name).' '.$key.':'.$field_val.'; ';
+								}
+								$content = rtrim($content,'; ');
+							}
+						else
+							$content .= $rep_content_2;
+							
+						$content .= ', ';
+						}
+					else
+						$content .= $field_value.', ';
+						
+					$i++;
+					}
+				if($i==$count_cols)
+					{
+					$content = rtrim($content,', ');
+					$content .= '<br /><br />
+';
+					$i = 1;	
+					}
+				}
+
+			
+			$database_actions = new NEXForms_Database_Actions();
+			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
+			echo $content;
+	
+	
 }
 
 
@@ -3303,13 +3411,12 @@ function NEXForms5_hex2RGB($hexStr, $returnAsString = true, $seperator = ',', $o
 
 class CSVExport
 	{
-
 	public function __construct()
-	{
+		{
 		$export_csv = isset($_REQUEST['export_csv']) ? sanitize_text_field($_REQUEST['export_csv']) : '';
 		if($export_csv)
 			$this->generate_csv();
-	}
+		}
 	public function generate_csv()
 		{
 		global $wpdb;
@@ -3349,7 +3456,9 @@ class CSVExport
 				$content .= $nf_functions->unformat_name($column->Field).', ';
 				$count_cols ++;
 				}
+			
 			}
+		$content = rtrim($content,', ');
 		$content .= '
 ';
 			
@@ -3359,8 +3468,6 @@ class CSVExport
 				foreach($columns_array as $column)
 					{
 					$field_value = $value->$column;
-					
-					
 					$field_value = str_replace('\r\n',' ',$field_value);
 					$field_value = str_replace('\r',' ',$field_value);
 					$field_value = str_replace('\n',' ',$field_value);
@@ -3377,11 +3484,33 @@ class CSVExport
 					$field_value = str_replace(chr(522),' ',$field_value);
 					$field_value = str_replace(chr(525),' ',$field_value);
 					
-					$content .= $field_value.', ';
+					if($nf_functions->isJson($value->$column))
+						{
+						$rep_content = json_encode($value->$column);
+						$rep_content_2 = json_decode($value->$column,true);
+						
+						if(is_array($rep_content_2))
+							{
+							foreach($rep_content_2 as $key=>$val)
+								{
+								foreach($val as $field_name => $field_val)
+									$content .= $nf_functions->unformat_name($field_name).' '.$key.':'.$field_val.'; ';
+								}
+								$content = rtrim($content,'; ');
+							}
+						else
+							$content .= $rep_content_2;
+							
+						$content .= ', ';
+						}
+					else
+						$content .= $field_value.', ';
+						
 					$i++;
 					}
 				if($i==$count_cols)
 					{
+					$content = rtrim($content,', ');
 					$content .= '
 ';
 					$i = 1;	
@@ -3395,13 +3524,12 @@ class CSVExport
 			header("content-type:application/csv;charset=UTF-8");
 			header("Content-Disposition: attachment; filename=\"report.csv\";" );
 			header("Content-Transfer-Encoding: base64");
-			NEXForms_clean_echo( esc_html("\xEF\xBB\xBF"));
+			echo esc_html("\xEF\xBB\xBF");
 			$database_actions = new NEXForms_Database_Actions();
 			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
-			NEXForms_clean_echo( $content);
+			echo $content;
 			update_option('tmp_csv_export',array('query'=>'','cols'=>'','form_Id'=>''));
 			exit;
-	
 	}
 }
 if(is_admin())
@@ -4887,8 +5015,10 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$bcc_user_mail 	= explode(',',$bcc_user_mail);
 		
 		$admin_body = wpautop($admin_body);
-		
 		$body = wpautop($body);
+		
+		$admin_body = wp_unslash($admin_body);
+		$body = wp_unslash($body);
 		
 		
 		//SETUP EMAIL FORMAT

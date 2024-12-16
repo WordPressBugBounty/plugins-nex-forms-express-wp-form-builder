@@ -2609,12 +2609,12 @@ if(!class_exists('NEXForms_Database_Actions'))
 																$output .= '<tr>';
 																foreach($val as $innerkey=>$innervalue)
 																	{
-																	if(array_key_exists('real_val__'.$innerkey.'',$val))
-																			{
-																			$realval = 'real_val__'.$innerkey;
-																			$innervalue = $val->$realval;	
+																	//if(array_key_exists('real_val__'.$innerkey.'',$val))
+																			//{
+																			//$realval = 'real_val__'.$innerkey;
+																			//$innervalue = $val->$realval;	
 																			
-																			}
+																			//}
 																	if(!strstr($innerkey,'real_val__'))
 																		{
 																	
@@ -3158,6 +3158,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		if(!array_key_exists('enable-tinymce',$_POST))
 			$_POST['enable-tinymce'] = '0';
+		if(!array_key_exists('zero-con',$_POST))
+			$_POST['zero-con'] = '0';
 		if(!array_key_exists('enable-widget',$_POST))
 			$_POST['enable-widget'] = '0';
 		if(!array_key_exists('enable-color-adapt',$_POST))
@@ -3167,6 +3169,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		
 		$enable_tinymce = sanitize_text_field($_POST['enable-tinymce']);
+		$enable_zero_con = sanitize_text_field($_POST['zero-con']);
 		$enable_widget = sanitize_text_field($_POST['enable-widget']);
 		$enable_color_adapt = sanitize_text_field($_POST['enable-color-adapt']);
 		$set_wp_user_level = sanitize_text_field($_POST['set-wp-user-level']);
@@ -3174,6 +3177,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		update_option('nex-forms-other-config',array
 			(
 			'enable-tinymce' 			=> sanitize_title($enable_tinymce),
+			'zero-con' 					=> sanitize_title($enable_zero_con),
 			'enable-widget' 			=> sanitize_title($enable_widget),
 			'enable-color-adapt' 		=> sanitize_title($enable_color_adapt),
 			'set-wp-user-level' 		=> sanitize_text_field($set_wp_user_level)

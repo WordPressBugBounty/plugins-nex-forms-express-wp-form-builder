@@ -13,7 +13,8 @@
 .notice-warning,
 .mom_modal_box, 
 .notice, #dolly, 
-.cts-tip-wrapper, .mce-notification-inner, .mce-notification-error, .sbi_notice, .cookiebot-admin-notice-container {
+.cts-tip-wrapper, .mce-notification-inner, .mce-notification-error, .sbi_notice, .cookiebot-admin-notice-container,
+.wpheaderandfooter-review-notice {
     display: none !important;
 }
 div.updated, .update-nag , div.error, #icl_als_help_popup, .wd-notice-body, .notice, .wp-ui-notification{display:none !important}
