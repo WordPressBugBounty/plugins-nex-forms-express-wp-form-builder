@@ -332,7 +332,8 @@ function NEXForms_reporting_page(){
 			  $output .= '<div id="plugins_url">'.plugins_url('/',__FILE__).'</div>';
 			  $output .= '<div id="load_entry">'.$dashboard->checkout.'</div>';
 			$output .= '</div>';
-					
+			$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
+			$output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';	
 		  //DASHBOARD
 				  $output .= '<div id="" class="reporting_panel">';
 			 
@@ -3063,6 +3064,17 @@ if(!class_exists('NEXForms_dashboard'))
 			return $output;
 		}	
 		public function get_table_records($additional_params=array(), $search_params=array(), $header_params=array(), $is_report=false){
+			
+			$do_ajax = (isset($_POST['do_ajax'])) ? sanitize_text_field($_POST['do_ajax']) : '';
+			$set_is_report = (isset($_POST['is_report'])) ? sanitize_text_field($_POST['is_report']) : $is_report;
+
+			if($do_ajax && !$set_is_report)
+				{
+				if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+					wp_die();
+					}
+				}
+			
 			if(!current_user_can( NF_USER_LEVEL ))	
 				wp_die();
 			global $wpdb;
@@ -3111,7 +3123,7 @@ if(!class_exists('NEXForms_dashboard'))
 				if(!is_array($set_header_params))
 					$header_params = json_decode(str_replace('\\','',$set_header_params),true);
 				else
-					$header_params = $set_header_params;
+					$header_params = $wpdb->prepare('%s',esc_sql(sanitize_title($set_header_params)));
 				}
 			else
 				$header_params = $this->table_headings;
@@ -3122,7 +3134,7 @@ if(!class_exists('NEXForms_dashboard'))
 				if(!is_array($set_params))
 					$additional_params = json_decode(str_replace('\\','',$set_params),true);
 				else
-					$additional_params = $set_params;
+					$additional_params = $wpdb->prepare('%s',esc_sql(sanitize_title($set_params)));
 				}
 			else
 				$additional_params = $this->additional_params;
@@ -3133,7 +3145,7 @@ if(!class_exists('NEXForms_dashboard'))
 				if(!is_array($set_field_selection))
 					$field_selection = json_decode(str_replace('\\','',$set_field_selection),true);
 				else
-					$field_selection = $set_field_selection;
+					$field_selection = $wpdb->prepare('%s',esc_sql(sanitize_title($set_field_selection)));
 				}
 			else
 				$field_selection = $this->field_selection;	
@@ -3144,7 +3156,7 @@ if(!class_exists('NEXForms_dashboard'))
 				if(!is_array($set_search_params))
 					$search_params = json_decode(str_replace('\\','',$set_search_params),true);
 				else
-					$search_params = $set_search_params;
+					$search_params = $wpdb->prepare('%s',esc_sql(sanitize_title($set_search_params)));
 				}
 			else
 				$search_params = $this->search_params;
