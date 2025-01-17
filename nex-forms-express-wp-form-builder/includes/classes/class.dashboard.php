@@ -3234,7 +3234,7 @@ if(!class_exists('NEXForms_dashboard'))
 					{
 					foreach($search_params as $column)
 						{
-						$where_str .= ' AND `'.$column.'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						}
 					}
 				}

@@ -19,6 +19,7 @@ if(!class_exists('NEXForms_Builder7')){
 		$on_screen_confirmation_message,
 		$on_screen_confirmation_message_admin,
 		$confirmation_page,
+		$form_url,
 		$send_user_mail,
 		$user_email_field,
 		$on_form_submission,
@@ -101,6 +102,7 @@ if(!class_exists('NEXForms_Builder7')){
 				$this->on_screen_confirmation_message = $form_attr->on_screen_confirmation_message;
 				$this->on_screen_confirmation_message_admin = $form_attr->on_screen_confirmation_message_admin;
 				$this->confirmation_page = $form_attr->confirmation_page;
+				$this->form_url = $form_attr->form_url;
 				$this->send_user_mail = $form_attr->send_user_mail;
 				$this->user_email_field = $form_attr->user_email_field;
 				$this->on_form_submission = $form_attr->on_form_submission;
@@ -8319,6 +8321,11 @@ $output .= '<div class="inner-form-canvas">';
 											
 											<input class="with-gap" '.(($set_code) ? '' : 'disabled="disabled"').' name="form_post_action" '.(($this->post_action =='custom') ? 'checked="checked"' : '' ).' id="post_action_custom" value="custom" type="radio">
 											<label for="post_action_custom">'.__('Custom (For developers)','nex-forms').'</label>');
+											if(function_exists('NEXForms_setup_multi_page_data'))
+												{
+												NEXForms_clean_echo(  '<input class="with-gap" name="form_post_action" '.(($this->post_action=='ftf') ? 'checked="checked"' : '' ).' id="ftf" value="ftf" type="radio">
+												<label for="ftf">'.__('Form to Form (Multi-Page Form)','nex-forms').'</label>');
+												}
 								NEXForms_clean_echo(  '</div>');
 							NEXForms_clean_echo(  '</div>');	
 							
@@ -8342,8 +8349,17 @@ $output .= '<div class="inner-form-canvas">';
 								NEXForms_clean_echo(  '</div>');
 							NEXForms_clean_echo(  '</div>');	
 							
+							if(function_exists('NEXForms_setup_multi_page_data'))
+								{
+								NEXForms_clean_echo(  '<div class="row submit_to_form '.(($this->post_action=='ftf') ? '' : 'hidden' ).'">');
+									NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Enter Form Page URL','nex-forms').'</div>');
+									NEXForms_clean_echo(  '<div class="integration_form_field">');
+										NEXForms_clean_echo(  '<input type="text" class="form-control" name="form_url" id="nex_form_url"  placeholder="'.__('Enter the URL of the Page containing the receiving NEX-Forms Form','nex-forms').'" value="'.(($this->form_url) ? $this->form_url : '').'" >');
+									NEXForms_clean_echo(  '</div>');
+								NEXForms_clean_echo(  '</div>');
+								}
 							
-							NEXForms_clean_echo(  '<div class="row submit_custom_options  '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">');
+							NEXForms_clean_echo(  '<div class="row submit_custom_options  '.((!$this->post_action || $this->post_action=='ajax' || $this->post_action=='ftf') ? 'hidden' : '' ).'">');
 								NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Post Method','nex-forms').'</div>');
 								NEXForms_clean_echo(  '<div class="integration_form_field no_input">');
 									NEXForms_clean_echo(  '<input class="with-gap" name="form_post_method" '.((!$this->post_type || $this->post_type=='POST') ? 'checked="checked"' : '' ).' id="form_post_method_post" value="POST" type="radio">
@@ -8353,7 +8369,7 @@ $output .= '<div class="inner-form-canvas">';
 											<label for="form_post_method_get">GET</label>');
 								NEXForms_clean_echo(  '</div>');
 							NEXForms_clean_echo(  '</div>');	
-							NEXForms_clean_echo(  '<div class="row submit_custom_options '.((!$this->post_action || $this->post_action=='ajax') ? 'hidden' : '' ).'">');
+							NEXForms_clean_echo(  '<div class="row submit_custom_options '.((!$this->post_action || $this->post_action=='ajax' || $this->post_action=='ftf') ? 'hidden' : '' ).'">');
 									NEXForms_clean_echo(  '<div class="integration_form_label">'.__('Submit Form To','nex-forms').'</div>');
 									NEXForms_clean_echo(  '<div class="integration_form_field">');
 										NEXForms_clean_echo(  '<input type="text" class="form-control" name="custum_url" id="on_form_submission_custum_url"  placeholder="'.__('Enter Custom URL','nex-forms').'" value="'.(($this->custom_url) ? $this->custom_url : '').'" >');
@@ -8662,6 +8678,7 @@ $output .= '<div class="inner-form-canvas">';
 						NEXForms_clean_echo( '	<div class="navigation" style="display:none;"><div class="nav-content">
 									<ul class="tabs_nf tri-menu">
 										<li class="tab show_pdf_setup_menu_item"><a class="active" href="#pdfcreator">'.__('PDF Creator','nex-forms').'</a></li>
+										<!--<li class="tab show_poll_setup_menu_item"><a class="active" href="#pollcreator">'.__('Poll Creator','nex-forms').'</a></li>-->
 										<li class="tab show_paypal_setup_menu_item"><a class="" href="#paypal_integration">'.__('PayPal','nex-forms').'</a></li>
 										<li class="tab show_zapier_setup_menu_item"><a class="" href="#zapier_integration">'.__('Zapier','nex-forms').'</a></li>
 										<li class="tab show_hubspot_setup_menu_item hidden"><a class="" href="#hubspot_integration">'.__('Hubspot','nex-forms').'</a></li>
@@ -8676,7 +8693,7 @@ $output .= '<div class="inner-form-canvas">';
 				NEXForms_clean_echo( '<div class="form_attr_left_menu aa_bg_sec aa_menu">');
 				NEXForms_clean_echo( '<ul>');
 					NEXForms_clean_echo( '<li class="active"><a class="show_pdf_setup sub-screen" data-screen="pdfcreator"><span class="fa fa-file-pdf-o"></span> <span class="sidemenu_text">'.__('PDF Creator','nex-forms').'</span></a></li>');
-					
+					//NEXForms_clean_echo( '<li class=""><a class="show_poll_setup sub-screen" data-screen="pollcreator"><span class="fa fa-regular fa-chart-bar"></span> <span class="sidemenu_text">'.__('Poll Creator','nex-forms').'</span></a></li>');
 					NEXForms_clean_echo( '<li class=""><a class="show_paypal_setup sub-screen" data-screen="paypal_integration"><span class="fa fa-paypal"></span> <span class="sidemenu_text">'.__('PayPal','nex-forms').'</span></a></li>');
 					NEXForms_clean_echo( '<li><a class="show_zapier_setup sub-screen" data-screen="zapier_integration"><span class="fa fa-asterisk"></span> <span class="sidemenu_text">'.__('Zapier','nex-forms').'</span></a></li>');
 					//NEXForms_clean_echo( '<li><a class="show_hubspot_setup sub-screen" data-screen="hubspot_integration"><span class="fa fas fa-project-diagram"></span> <span class="sidemenu_text">'.__('Hubspot','nex-forms').'</span></a></li>');
@@ -8692,7 +8709,13 @@ $output .= '<div class="inner-form-canvas">';
 				
 				NEXForms_clean_echo( '<div class="form_attr_settings_wrapper">');
 				
-						
+					
+					
+					//NEXForms_clean_echo( '<div id="pollcreator" class="integration nf-sub-screen hidden">');
+						//NEXForms_clean_echo('Polls');
+					//NEXForms_clean_echo( '</div>');
+					
+					
 					NEXForms_clean_echo( '<div id="zapier_integration" class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)

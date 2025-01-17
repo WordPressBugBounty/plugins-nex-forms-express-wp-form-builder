@@ -203,25 +203,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			if(strstr(get_option('siteurl'),'http://localhost/') && strstr(get_option('siteurl'),'wp6.2.2'))
-				{
-				$this->client_info = array(
-						'Id' => '2526991',
-						'item_code' => '7103891',
-						'purchase_code' => '*****************************',
-						'license_type' => 'Regular License',
-						'envato_user_name' => 'Basix',
-						'for_site'=>get_option('siteurl')
-					)	;
-				return true;
-				}
-				
-			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
-				 return false;
-			 }
-			$theme = wp_get_theme();
-			if($theme->Name=='NEX-Forms Demo')
-				return true;
+			
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
@@ -2908,7 +2890,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					if($clause['operator'] == 'IS' || $clause['operator'] == 'IS NOT')
 						$quote = '';
 					
-					$where_str .= ' AND `'.$clause['column'].'` '.(($clause['operator']) ? $clause['operator'] : '=').'  '.$quote.''.$like.$clause['value'].$like.''.$quote.'';
+					$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column'])))).'` '.(($clause['operator']) ? $clause['operator'] : '=').'  '.$quote.''.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['value'])))).$like.''.$quote.'';
 					}
 				}
 			
@@ -2922,9 +2904,9 @@ if(!class_exists('NEXForms_Database_Actions'))
 					foreach($search_params as $column)
 						{
 						if($loop_count==1)
-							$where_str .= '`'.$column.'` LIKE "%'.$search_term.'%" ';
+							$where_str .= '`'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						else
-							$where_str .= ' OR `'.$column.'` LIKE "%'.$search_term.'%" ';
+							$where_str .= ' OR `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 							
 						$loop_count++;
 						}
@@ -2934,17 +2916,17 @@ if(!class_exists('NEXForms_Database_Actions'))
 					{
 					foreach($search_params as $column)
 						{
-						$where_str .= ' AND `'.$column.'` LIKE "%'.$search_term.'%" ';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						}
 					}
 				}
 				
 			if($nex_forms_id)
-				$where_str .= ' AND nex_forms_Id='.$nex_forms_id;
+				$where_str .= ' AND nex_forms_Id='.str_replace('\'','',$wpdb->prepare('%d',esc_sql(sanitize_title($nex_forms_id))));
 			
-			$set_alias = isset($_POST['plugin_alias']) ? sanitize_text_field($_POST['plugin_alias']) : '';
+			$set_alias = isset($_POST['plugin_alias']) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($_POST['plugin_alias'])))) : '';
 			$tree = '';
-			$sql = 'SELECT count(*) FROM '.$wpdb->prefix . sanitize_text_field($table).' WHERE Id<>"" '. (($tree) ? ' AND parent_Id=0' : '').' '. ((sanitize_text_field($set_alias)) ? ' AND plugin="'.$set_alias.'"' : '').' '.$where_str;
+			$sql = 'SELECT count(*) FROM '.$wpdb->prefix . sanitize_title($table).' WHERE Id<>"" '. (($tree) ? ' AND parent_Id=0' : '').' '. ((sanitize_text_field($set_alias)) ? ' AND plugin="'.$set_alias.'"' : '').' '.$where_str;
 			
 			//echo $sql;
 			

@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.14
+Version: 8.7.15
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -132,81 +132,82 @@ class NEXForms5_Config{
 	/* Database table fields array */
 	public $plugin_db_table_fields = array
 			(
-			'title'								=>	'text',
-			'description'						=>	'text',
-			'mail_to'							=>  'text',
-			'confirmation_mail_body'			=>  'longtext',
-			'admin_email_body'					=>  'longtext',
-			'confirmation_mail_subject'			=>	'text',
-			'user_confirmation_mail_subject'	=>	'text',
-			'from_address'						=>  'text',
-			'from_name'							=>  'text',
-			'on_screen_confirmation_message'	=>  'longtext',
+			'title'									=>	'text',
+			'description'							=>	'text',
+			'mail_to'								=>  'text',
+			'confirmation_mail_body'				=>  'longtext',
+			'admin_email_body'						=>  'longtext',
+			'confirmation_mail_subject'				=>	'text',
+			'user_confirmation_mail_subject'		=>	'text',
+			'from_address'							=>  'text',
+			'from_name'								=>  'text',
+			'on_screen_confirmation_message'		=>  'longtext',
 			'on_screen_confirmation_message_admin'	=>  'longtext',
-			'confirmation_page'					=>  'text',
-			'form_fields'						=>	'longtext',
-			'clean_html'						=>	'longtext',
-			'visual_settings'					=>	'text',
-			'google_analytics_conversion_code'  =>  'text',
-			'colour_scheme'  					=>  'text',
-			'send_user_mail'					=>  'text',
-			'user_email_field'					=>  'text',
-			'on_form_submission'				=>  'text',
-			'upload_settings'					=>  'longtext',
-			'attachment_settings'				=>  'longtext',
-			'date_sent'							=>  'datetime',
-			'is_form'							=>  'text',
-			'is_template'						=>  'text',
-			'hidden_fields'						=>  'longtext',
-			'form_hidden_fields'				=>  'longtext',
-			'custom_url'						=>  'text',
-			'post_type'							=>  'text',
-			'post_action'						=>  'text',
-			'bcc'								=>  'text',
-			'bcc_user_mail'						=>  'text',
-			'custom_css'						=>  'longtext',
-			'is_paypal'							=>  'text',
-			'total_views'						=>  'text',
-			'time_viewed'						=>  'text',
-			'email_on_payment_success'			=>  'text',
-			'conditional_logic'					=>  'longtext',
-			'conditional_logic_array'			=>  'longtext',
-			'server_side_logic'					=>  'longtext',
-			'form_status'						=>  'text',
-			'currency_code'						=>  'text',
-			'products'							=>  'longtext',
-			'business'							=>  'text',
-			'cmd'								=>  'text',
-			'return_url'						=>  'text',
-			'cancel_url'						=>  'text',
-			'lc'								=>  'text',
-			'environment'						=>  'text',
-			'email_subscription'				=>  'longtext',
-			'mc_field_map'						=>  'longtext',
-			'mc_list_id'						=>  'text',
-			'gr_field_map'						=>  'longtext',
-			'gr_list_id'						=>  'text',
-			'mp_field_map'						=>  'longtext',
-			'mp_list_id'						=>  'text',
-			'ms_field_map'						=>  'longtext',
-			'ms_list_id'						=>  'text',
-			'pdf_html'							=>  'longtext',
-			'attach_pdf_to_email'				=>	'text',
-			'pdf_settings'						=>  'longtext',
-			'form_to_post_map'					=>  'longtext',
-			'is_form_to_post'					=>  'text',
-			'md_theme'							=>	'text',
-			'form_theme'						=>	'text',
-			'jq_theme'							=>	'text',
-			'form_style'						=>  'longtext',
-			'msg_style'							=>  'longtext',
-			'multistep_settings'				=>	'longtext',
-			'multistep_html'					=>	'longtext',
-			'paypal_client_Id'					=>  'longtext',
-			'paypal_client_secret'				=>  'longtext',
-			'payment_success_msg'				=>  'longtext',
-			'payment_failed_msg'				=>  'longtext',
-			'option_settings'					=>  'longtext',
+			'confirmation_page'						=>  'text',
+			'form_fields'							=>	'longtext',
+			'clean_html'							=>	'longtext',
+			'visual_settings'						=>	'text',
+			'google_analytics_conversion_code'  	=>  'text',
+			'colour_scheme'  						=>  'text',
+			'send_user_mail'						=>  'text',
+			'user_email_field'						=>  'text',
+			'on_form_submission'					=>  'text',
+			'upload_settings'						=>  'longtext',
+			'attachment_settings'					=>  'longtext',
+			'date_sent'								=>  'datetime',
+			'is_form'								=>  'text',
+			'is_template'							=>  'text',
+			'hidden_fields'							=>  'longtext',
+			'form_hidden_fields'					=>  'longtext',
+			'custom_url'							=>  'text',
+			'post_type'								=>  'text',
+			'post_action'							=>  'text',
+			'bcc'									=>  'text',
+			'bcc_user_mail'							=>  'text',
+			'custom_css'							=>  'longtext',
+			'is_paypal'								=>  'text',
+			'total_views'							=>  'text',
+			'time_viewed'							=>  'text',
+			'email_on_payment_success'				=>  'text',
+			'conditional_logic'						=>  'longtext',
+			'conditional_logic_array'				=>  'longtext',
+			'server_side_logic'						=>  'longtext',
+			'form_status'							=>  'text',
+			'currency_code'							=>  'text',
+			'products'								=>  'longtext',
+			'business'								=>  'text',
+			'cmd'									=>  'text',
+			'return_url'							=>  'text',
+			'cancel_url'							=>  'text',
+			'lc'									=>  'text',
+			'environment'							=>  'text',
+			'email_subscription'					=>  'longtext',
+			'mc_field_map'							=>  'longtext',
+			'mc_list_id'							=>  'text',
+			'gr_field_map'							=>  'longtext',
+			'gr_list_id'							=>  'text',
+			'mp_field_map'							=>  'longtext',
+			'mp_list_id'							=>  'text',
+			'ms_field_map'							=>  'longtext',
+			'ms_list_id'							=>  'text',
+			'pdf_html'								=>  'longtext',
+			'attach_pdf_to_email'					=>	'text',
+			'pdf_settings'							=>  'longtext',
+			'form_to_post_map'						=>  'longtext',
+			'is_form_to_post'						=>  'text',
+			'md_theme'								=>	'text',
+			'form_theme'							=>	'text',
+			'jq_theme'								=>	'text',
+			'form_style'							=>  'longtext',
+			'msg_style'								=>  'longtext',
+			'multistep_settings'					=>	'longtext',
+			'multistep_html'						=>	'longtext',
+			'paypal_client_Id'						=>  'longtext',
+			'paypal_client_secret'					=>  'longtext',
+			'payment_success_msg'					=>  'longtext',
+			'payment_failed_msg'					=>  'longtext',
+			'option_settings'						=>  'longtext',
+			'field_details'							=>  'longtext',
 			);
 	
 
@@ -924,6 +925,8 @@ function NEXForms5_run_instalation(){
 	$database_actions->alter_plugin_table('wap_nex_forms','hubspot_form_id','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','is_hubspot','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','last_update','timestamp');
+	$database_actions->alter_plugin_table('wap_nex_forms','field_details','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','form_url','longtext');
 	
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','nex_forms_Id','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_entries','page','text');
@@ -1522,7 +1525,10 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			}
 		
 		wp_add_inline_script('nex-forms-onload', $popup_scripts);
-			
+		
+		
+		
+		
 		//MAIN CONTAINER #NEX-FORMS (IF FORM TYPE IS POPUP)
 		$output .= '<div id="nex-forms" class="nex-forms '.$nf_functions->format_name($form_attr->title).' ">';
 		
@@ -1757,12 +1763,18 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 					
 					$current_url 		= home_url( add_query_arg( array(), $wp->request ) );
 					$set_post_action 		= ($post_action=='ajax' || !$post_action) ? admin_url('admin-ajax.php') : $form_attr->custom_url;
+					
+					if($post_action=='ftf')
+						$set_post_action = $form_attr->form_url;
+					
 					$set_ajax	 			= ($post_action=='ajax' || !$post_action) ? 'submit-nex-form' : 'send-nex-form';
-					$post_method 		= 'post';
+					$post_method 			= 'post';
 					
 					if($post_action!='ajax')
 						$post_method 	= ($post_type=='POST' || !$post_type) ? 'post' : 'get';
-						
+					
+					if($post_action=='ftf')
+						$post_method = 'post';	
 					
 					//PRINT MULTI-STEP BREADCRUMB (If outside Form Wrapper and position is top)
 					
@@ -1937,7 +1949,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 					
 					$set_confirmation_page = '';
 					if(isset($form_attr->confirmation_page))
-					$set_confirmation_page = $form_attr->confirmation_page;
+						$set_confirmation_page = $form_attr->confirmation_page;
 					
 					if(class_exists('NEXForms_Shortcode_Processor'))
 						{
@@ -2051,6 +2063,11 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 						//if(isset($multistep_settings[0]))
 						$output .= '<div class="v7_container form_type_'.$form_style.' '.$ms_back_disabled_class.' '.(($submit_limit) ? 'hidden' : '').' " style="'.(($background != 'use-form-background') ? $form_css_style : '').'">';
 						
+						
+						/*$field_details = json_decode($form_attr->field_details, true);
+						echo '<pre>';
+						print_r( $field_details);
+						echo '</pre>';*/
 						if($on_screen_confirmation_message_admin)
 							{
 							if($msg_position=='top' && $msg_placement=='inside')
@@ -2076,6 +2093,8 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 								$output .= '<input type="hidden" name="nex_forms_Id" value="'.$id.'">';
 								if($post_action=='ajax')
 									$output .= '<input type="hidden" name="page" value="'.sanitize_text_field($_SERVER['REQUEST_URI']).'">'; 
+								if($post_action=='ftf')
+									$output .= '<input type="hidden" name="nf_update_entry" value="true">';
 									
 								$output .= '<input type="hidden" name="ip" value="'.sanitize_text_field($_SERVER['REMOTE_ADDR']).'">';
 								$output .= '<input type="hidden" name="nf_page_id" value="'.get_the_ID().'">';
@@ -2095,9 +2114,9 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 										{	
 										if(get_option('nf_activated'))	
 											{
-											
 											if(
 												$key!='form_Id' &&
+												$key!='nf_update_entry' &&
 												$key!='nf_preview_id' &&
 												$key!='paypal_invoice' &&
 												$key!='paypal_return_url' &&
@@ -2127,8 +2146,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 												!strstr($key,'gu__')
 												)
 													{
-														
-													$output .= '<input type="hidden" name="'.$key.'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
+													$output .= '<input type="hidden" name="'.$key.'"  data-original-value="'.wp_unslash(sanitize_text_field($val)).'" value="'.wp_unslash(sanitize_text_field($val)).'">';	
 													}
 											}
 										}	
@@ -2463,8 +2481,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	$update_entry = isset($_REQUEST['nf_update_entry']) ? sanitize_title($_REQUEST['nf_update_entry']) : false;
 	$update_nex_forms_id = isset($_REQUEST['nex_forms_Id']) ? sanitize_title($_REQUEST['nex_forms_Id']) : false;
 	
-	if($update_entry || $create_entry)
-		{
+
 		if($update_entry)
 			{
 			$output .= '<div class="hidden" id="resend_email_nex_forms_Id" value="">'.$update_nex_forms_id.'</div>';
@@ -2472,14 +2489,16 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			$add_js = 'setTimeout(function(){ jQuery(document).ready(
 						function()
 							{
+							alert(\'mailing\');
 							nf_send_nf_email('.json_encode($_REQUEST).');
 							}
 					);
 					}, 1000);
 					';
+				wp_add_inline_script('nex-forms-onload', $add_js);
 			}
-			wp_add_inline_script('nex-forms-onload', $add_js);
-		}
+		
+		
 	
 	
 		
@@ -2733,6 +2752,7 @@ function submit_nex_form($entry_action = false){
 			{
 			if(
 			$key!='nf_entry_redirect_id' &&
+			$key!='nf_update_entry' &&
 			$key!='nf_preview_id' &&
 			$key!='nf_set_entry_update_id' &&
 			$key!='paypal_invoice' &&
@@ -4496,6 +4516,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			if($_POST['send_nf_email']=='1')
 				{
 				$nex_forms_id = sanitize_title($_POST['set_nex_forms_Id']);
+				$entry_id = sanitize_title($_POST['set_entry_update_id']);
 				$data_array = $_POST['data'];
 				}
 			
