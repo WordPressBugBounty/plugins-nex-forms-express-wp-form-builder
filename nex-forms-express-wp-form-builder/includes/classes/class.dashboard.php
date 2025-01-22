@@ -84,7 +84,7 @@ function NEXForms_entries_page(){
 	$output .= '<div class="admin_url" style="display:none;">'.admin_url().'</div>';
 	
 	$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
-	$output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+	$output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
 		
 	
 	$output .= '<div class="nf_context_menu nf_context_menu_2 aa_menu aa_bg_main">
@@ -333,7 +333,7 @@ function NEXForms_reporting_page(){
 			  $output .= '<div id="load_entry">'.$dashboard->checkout.'</div>';
 			$output .= '</div>';
 			$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
-			$output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';	
+			$output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';	
 		  //DASHBOARD
 				  $output .= '<div id="" class="reporting_panel">';
 			 
@@ -485,7 +485,7 @@ function NEXForms_attachments_page(){
 	
 	$output .= '<div class="admin_url" style="display:none;">'.admin_url().'</div>';
 	$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
-	$output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+	$output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
 	
 	$output .= '<div class="nf_context_menu nf_context_menu_2 aa_menu aa_bg_main">
 				
@@ -591,7 +591,7 @@ function NEXForms_global_setup_page(){
 	$dashboard->dashboard_checkout();
 	
 	$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
-	$output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+	$output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
 	
 	$output .= '<div class="nex_forms_admin_page_wrapper">';
 
@@ -1158,14 +1158,25 @@ function NEXForms_dashboard(){
 	if(!is_array(get_option('7103891')))
 		{
 		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
-		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
-		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
+		
+		if(is_array($response->errors))
+				{
+				foreach($response->errors as $error_type => $error)
+					{
+					NEXForms_clean_echo( '<br /><br /><div class="alert alert-danger"><strong>WP ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'<br />NEX-Forms can not verify your license as a result of this error. Please as your Hosting Provider to resolve this error. <a href="https://www.google.com/search?q='.$error[0].'" target="_blank">Here are some helpfull articles for your Host</a> </div><br /><br />&nbsp;');
+					}	
+				}
+		else
+			{		
+			update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+			}
 		} 
 	update_option('nf_activated',$dashboard->checkout);
 	 
 		 
 		 $nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
-		 $output .= '<div id="_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+		 $output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
 		 
 		  $output .= '<div id="dashboard_panel" class="dashboard_panel">';
 		  	  
@@ -1324,7 +1335,7 @@ function NEXForms_dashboard(){
 								//$output .= '<h5><strong>'.__('Create a new Blank Form','nex-forms').'</strong></h5>';
 								
 								$nonce_url = wp_create_nonce( 'nf_admin_new_form_actions' );
-		 						$output .= '<input name="_wpnonce" type="hidden" value="'.$nonce_url.'">';
+		 						$output .= '<input name="nex_forms_wpnonce" type="hidden" value="'.$nonce_url.'">';
 								
 								$output .= '<input name="title" id="form_title" placeholder="'.__('Enter new Form Title','nex-forms').'" class="form-control" type="text">';		
 						
@@ -1701,7 +1712,7 @@ if(!class_exists('NEXForms_dashboard'))
 		
 		public function delete_form_entry(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -1743,7 +1754,7 @@ if(!class_exists('NEXForms_dashboard'))
 		
 		public function restore_records(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -1764,7 +1775,7 @@ if(!class_exists('NEXForms_dashboard'))
 		
 		public function set_starred(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -1794,7 +1805,7 @@ if(!class_exists('NEXForms_dashboard'))
 		
 		public function set_read(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -3070,7 +3081,7 @@ if(!class_exists('NEXForms_dashboard'))
 
 			if($do_ajax && !$set_is_report)
 				{
-				if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+				if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 					wp_die();
 					}
 				}
@@ -3095,7 +3106,9 @@ if(!class_exists('NEXForms_dashboard'))
 			$header_params = (isset($_POST['header_params'])) ? sanitize_text_field($_POST['header_params']) : '';
 			$additional_params = (isset($_POST['additional_params'])) ?  sanitize_text_field($_POST['additional_params']) : '';
 			$field_selection = (isset($_POST['field_selection'])) ? esc_sql(sanitize_text_field($_POST['field_selection'])) : '';
-			$search_params = (isset($_POST['search_params'])) ?  sanitize_text_field($_POST['search_params']) : '';
+			$search_params = (isset($_POST['search_params'])) ?  esc_sql(sanitize_text_field($_POST['search_params'])) : '';
+			
+			
 			
 			$do_action = (isset($_POST['do_action'])) ? esc_sql(sanitize_title($_POST['do_action'])) : $this->action;
 			
@@ -3114,7 +3127,7 @@ if(!class_exists('NEXForms_dashboard'))
 			$sort_by = str_replace('\'','',$sort_by);
 			$sort_by_direction =(isset($_POST['sort_by_direction']) && $_POST['sort_by_direction']!='') ? $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['sort_by_direction']))) : 'DESC';
 			$sort_by_direction = str_replace('\'','',$sort_by_direction);
-			$record_limit = (isset($_POST['record_limit'])) ? $wpdb->prepare('%d',esc_sql(sanitize_title($_POST['record_limit']))) : $wpdb->prepare('%d',$this->record_limit);
+			$record_limit = (isset($_POST['record_limit'])) ? $wpdb->prepare('%d',esc_sql(sanitize_title($_POST['record_limit']))) : $wpdb->prepare('%d',esc_sql($this->record_limit));
 	
 			
 			if($header_params)
@@ -3150,6 +3163,8 @@ if(!class_exists('NEXForms_dashboard'))
 			else
 				$field_selection = $this->field_selection;	
 			
+			
+			
 			if($search_params)
 				{
 				$set_search_params = isset($search_params) ? $search_params : '';
@@ -3181,9 +3196,9 @@ if(!class_exists('NEXForms_dashboard'))
 					if($clause['operator'] == 'LIKE' || $clause['operator'] == 'NOT LIKE')
 						$like = '%';
 					if($clause['value']=='NULL')
-						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$clause['column'])).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column'])))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
 					else
-						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$clause['column'])).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column'])))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
 					
 					}
 				}
@@ -3207,7 +3222,7 @@ if(!class_exists('NEXForms_dashboard'))
 				{
 				$select_fields = '*';	
 				}
-			
+				
 			$count_search_params = 0;
 			
 			if(is_array($search_params))
@@ -3222,9 +3237,9 @@ if(!class_exists('NEXForms_dashboard'))
 					foreach($search_params as $column)
 						{
 						if($loop_count==1)
-							$where_str .= '`'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
+							$where_str .= '`'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						else
-							$where_str .= ' OR `'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
+							$where_str .= ' OR `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 							
 						$loop_count++;
 						}
@@ -3234,7 +3249,7 @@ if(!class_exists('NEXForms_dashboard'))
 					{
 					foreach($search_params as $column)
 						{
-						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',$column)).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($column)))).'` LIKE "%'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($search_term)))).'%" ';
 						}
 					}
 				}
@@ -3265,7 +3280,6 @@ if(!class_exists('NEXForms_dashboard'))
 			else
 				$get_records = 'SELECT '.$select_fields.' FROM '.$wpdb->prefix.$table.'  WHERE Id<>"" '.$where_str.' ORDER BY '.$sort_by.' '.$sort_by_direction.' LIMIT '.($page_num*$record_limit).','.$record_limit;
 			
-			//echo $get_records;
 			$records = $wpdb->get_results($get_records); // DB Query
 			
 			$get_temp_table_details = get_option('tmp_csv_export');
@@ -3275,9 +3289,6 @@ if(!class_exists('NEXForms_dashboard'))
 			$file_ext_array = array('doc','docx','mpg','mpeg','mp3','mp4','odt','odp','ods','pdf','ppt','pptx','txt','xls','xlsx');
 				foreach($records as $record)
 					{
-					//echo '<pre>';
-					//print_r($record);
-					//echo '</pre>';
 					$record_val = '';
 					$output .= '<tr class="form_record" id="'.$record->Id.'">';
 						$output .= '<td class="batch-actions"><input id="rs-check-all-'.$record->Id.'" name="record[]" value="'.$record->Id.'" type="checkbox"></td>';
@@ -3675,7 +3686,7 @@ if(!class_exists('NEXForms_dashboard'))
 		
 	public function do_form_entry_save(){
 		
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_do_form_entry_save' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_do_form_entry_save' ) ) {
 				wp_die();
 			}
 		
@@ -3686,7 +3697,7 @@ if(!class_exists('NEXForms_dashboard'))
 		$edit_id = $wpdb->prepare('%d',esc_sql(sanitize_text_field($_POST['form_entry_id'])));
 		$edit_id = str_replace('\'','',$edit_id);
 		
-		unset($_POST['_wpnonce']);
+		unset($_POST['nex_forms_wpnonce']);
 		unset($_POST['action']);
 		unset($_POST['submit']);
 		unset($_POST['form_entry_id']);
@@ -4043,7 +4054,7 @@ if(!class_exists('NEXForms_dashboard'))
 	public function	delete_pdf()
 		{
 		
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			

@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.7.15
+Version: 8.8.1
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -3825,7 +3825,7 @@ function NEXForms_dashboard_2(){
 			  $output .= '<div id="nf_dashboard_load">0</div>';
 			  $output .= '<div id="plugins_url">'.plugins_url('/',__FILE__).'</div>';
 			  $output .= '<div id="load_entry">'.$dashboard->checkout.'</div>';
-			  $output .= '<div id="_wpnonce">'.$nonce_url.'</div>';
+			  $output .= '<div id="nex_forms_wpnonce">'.$nonce_url.'</div>';
 		  $output .= '</div>';
 		  	
 		  //DASHBOARD
@@ -4413,7 +4413,7 @@ function NEXForms_form_builder(){
 		  NEXForms_clean_echo( '<div class="hidden">');
 			  NEXForms_clean_echo( '<div id="siteurl">'.get_option('siteurl').'</div>');
 			  NEXForms_clean_echo( '<div id="plugins_url">'.plugins_url('/',__FILE__).'</div>');
-			  NEXForms_clean_echo( '<div id="_wpnonce">'.$nonce_url.'</div>');
+			  NEXForms_clean_echo( '<div id="nex_forms_wpnonce">'.$nonce_url.'</div>');
 			   NEXForms_clean_echo( '<div id="wp_categories">');
 			   NEXForms_clean_echo( wp_list_categories());
 			   NEXForms_clean_echo( '</div>');

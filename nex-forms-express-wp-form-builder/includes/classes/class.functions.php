@@ -66,7 +66,7 @@ if(!class_exists('NEXForms_Functions'))
 								//$output .= '<h5><strong>'.__('Create a new Blank Form','nex-forms').'</strong></h5>';
 								
 								$nonce_url = wp_create_nonce( 'nf_admin_new_form_actions' );
-		 						$output .= '<input name="_wpnonce" type="hidden" value="'.$nonce_url.'">';
+		 						$output .= '<input name="nex_forms_wpnonce" type="hidden" value="'.$nonce_url.'">';
 								
 								$output .= '<input name="title" id="form_title" placeholder="'.__('Enter new Form Title','nex-forms').'" class="form-control" type="text">';		
 						

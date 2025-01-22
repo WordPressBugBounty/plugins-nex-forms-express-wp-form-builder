@@ -16,7 +16,7 @@ if(!class_exists('NF5_Preferences'))
 		}
 			
 		public function save_field_pref() {
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -35,7 +35,7 @@ if(!class_exists('NF5_Preferences'))
 			die();
 		}
 		public function save_validation_pref() {
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -58,7 +58,7 @@ if(!class_exists('NF5_Preferences'))
 			
 			
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	
@@ -85,7 +85,7 @@ if(!class_exists('NF5_Preferences'))
 			die();
 		}
 		public function save_other_pref() {
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			if(!current_user_can( NF_USER_LEVEL ))	

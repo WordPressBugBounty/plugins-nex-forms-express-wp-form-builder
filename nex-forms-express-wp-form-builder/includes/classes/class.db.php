@@ -203,7 +203,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
@@ -240,7 +239,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function insert_record(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_new_form_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_new_form_actions' ) ) {
 				wp_die();
 			}
 			if ( function_exists( 'activator_inject_plugins_filter' ) ) {
@@ -305,7 +304,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if ( function_exists( 'activator_admin_notice_plugin_install' ) ) {
 				 return false;
 			 }
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_update_record' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_update_record' ) ) {
 				wp_die();
 			}
 			if(!is_admin())
@@ -351,7 +350,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 
 	public function update_paypal(){
 		
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		if(!current_user_can( NF_USER_LEVEL ))	
@@ -703,7 +702,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 /* DUPLICATE */
 		public function duplicate_record(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			
@@ -767,7 +766,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 /* DELETE */
 		public function delete_record(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			
@@ -789,7 +788,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		}	
 		public function delete_file(){
 			
-			if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 			
@@ -2539,7 +2538,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 						 $output .= '<input type="hidden" name="action" value="do_form_entry_save">';
 						 
 						 $nonce_url = wp_create_nonce( 'nf_admin_do_form_entry_save' );
-		 				 $output .= '<input name="_wpnonce" type="hidden" value="'.$nonce_url.'">';
+		 				 $output .= '<input name="nex_forms_wpnonce" type="hidden" value="'.$nonce_url.'">';
 						 
 						 $output .= '<input type="hidden" name="form_entry_id" value="'.$form_entry_Id.'">';
 						 $output .= '<table class="highlight" id="form_entry_table">';
@@ -2926,7 +2925,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$set_alias = isset($_POST['plugin_alias']) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($_POST['plugin_alias'])))) : '';
 			$tree = '';
-			$sql = 'SELECT count(*) FROM '.$wpdb->prefix . sanitize_title($table).' WHERE Id<>"" '. (($tree) ? ' AND parent_Id=0' : '').' '. ((sanitize_text_field($set_alias)) ? ' AND plugin="'.$set_alias.'"' : '').' '.$where_str;
+			$sql = 'SELECT count(*) FROM '.$wpdb->prefix . esc_sql(sanitize_title($table)).' WHERE Id<>"" '. (($tree) ? ' AND parent_Id=0' : '').' '. ((sanitize_text_field($set_alias)) ? ' AND plugin="'.$set_alias.'"' : '').' '.$where_str;
 			
 			//echo $sql;
 			
@@ -2946,7 +2945,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 	
 	
 	public function save_mc_key() {
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		
@@ -2958,7 +2957,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		die();
 	}
 	public function save_gr_key() {
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		if(!current_user_can( NF_USER_LEVEL ))	
@@ -2970,7 +2969,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 	}
 	
 	public function save_email_config() {
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		if(!current_user_can( NF_USER_LEVEL ))	
@@ -3002,7 +3001,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 	}
 	
 	public function save_script_config() {
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		
@@ -3089,7 +3088,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 	
 	public function save_style_config() {
 		
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		
@@ -3134,7 +3133,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 	}
 	public function save_other_config() {
 		
-		if ( !wp_verify_nonce( $_REQUEST['_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
 		
