@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.1
+Version: 8.8.2
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -678,48 +678,50 @@ function NEXForms5_run_instalation(){
 	//PREFERENCES	
 	//'date_time'				=>  date('Y-m-d H:i:s'),
 	update_option('nf-first-run', true);
-	update_option('nex-forms-preferences',
-		array(
-			'field_preferences'=>
-				array(
-					'pref_label_align'		=>'top',
-					'pref_label_text_align'	=>'align_left',
-					'pref_label_size'		=>'',
-					'pref_sub_label'		=>'',
-					'pref_input_text_align'	=>'aling_left',
-					'pref_input_size'		=>'',
-				),
-			'validation_preferences'=>
-				array(
-					'pref_requered_msg'				=> __('Required','nex-forms'),
-					'pref_email_format_msg'			=> __('Invalid email address','nex-forms'),
-					'pref_phone_format_msg'			=> __('Invalid phone number','nex-forms'),
-					'pref_url_format_msg'			=> __('Invalid URL','nex-forms'),						
-					'pref_numbers_format_msg'		=> __('Only numbers are allowed','nex-forms'),
-					'pref_char_format_msg'			=> __('Only text are allowed','nex-forms'),
-					'pref_invalid_file_ext_msg'		=> __('Invalid file extension','nex-forms'),
-					'pref_max_file_exceded'			=> __('Maximum File Size of {x}MB Exceeded','nex-forms'),
-					'pref_min_file_exceded'			=> __('Minimum File Size of {x}MB Required','nex-forms'),
-					'pref_max_file_ul_exceded'		=> __('Only a maximum of {x} files can be uploaded','nex-forms'),
-					'pref_max_file_af_exceded'		=> __('Maximum Size for all files can not exceed {x}MB ','nex-forms'),
-				),
-			'email_preferences'=>
-				array(
-					'pref_email_from_address'	=> get_option('admin_email'),
-					'pref_email_from_name'		=> get_option('blogname'),
-					'pref_email_recipients'		=> get_option('admin_email'),
-					'pref_email_subject'		=> get_option('blogname').__(' - NEX-Forms Submission','nex-forms'),
-					'pref_email_body'			=> '{{nf_form_data}}',
-					'pref_user_email_subject'	=> get_option('blogname').__(' - NEX-Forms Submission','nex-forms'),
-					'pref_user_email_body'		=> __('Thank you for connecting with us. We will respond to you shortly.','nex-forms'),
-				),
-			'other_preferences'=>
-				array(
-					'pref_other_on_screen_message' =>  __('Thank you for connecting with us. We will respond to you shortly.','nex-forms'),
-				),
-			)
-		);
-		
+	if(!get_option('nex-forms-preferences'))
+		{
+		update_option('nex-forms-preferences',
+			array(
+				'field_preferences'=>
+					array(
+						'pref_label_align'		=>'top',
+						'pref_label_text_align'	=>'align_left',
+						'pref_label_size'		=>'',
+						'pref_sub_label'		=>'',
+						'pref_input_text_align'	=>'aling_left',
+						'pref_input_size'		=>'',
+					),
+				'validation_preferences'=>
+					array(
+						'pref_requered_msg'				=> __('Required','nex-forms'),
+						'pref_email_format_msg'			=> __('Invalid email address','nex-forms'),
+						'pref_phone_format_msg'			=> __('Invalid phone number','nex-forms'),
+						'pref_url_format_msg'			=> __('Invalid URL','nex-forms'),						
+						'pref_numbers_format_msg'		=> __('Only numbers are allowed','nex-forms'),
+						'pref_char_format_msg'			=> __('Only text are allowed','nex-forms'),
+						'pref_invalid_file_ext_msg'		=> __('Invalid file extension','nex-forms'),
+						'pref_max_file_exceded'			=> __('Maximum File Size of {x}MB Exceeded','nex-forms'),
+						'pref_min_file_exceded'			=> __('Minimum File Size of {x}MB Required','nex-forms'),
+						'pref_max_file_ul_exceded'		=> __('Only a maximum of {x} files can be uploaded','nex-forms'),
+						'pref_max_file_af_exceded'		=> __('Maximum Size for all files can not exceed {x}MB ','nex-forms'),
+					),
+				'email_preferences'=>
+					array(
+						'pref_email_from_address'	=> get_option('admin_email'),
+						'pref_email_from_name'		=> get_option('blogname'),
+						'pref_email_recipients'		=> get_option('admin_email'),
+						'pref_email_subject'		=> get_option('blogname').__(' - NEX-Forms Submission','nex-forms'),
+						'pref_email_body'			=> '{{nf_form_data}}',
+						'pref_user_email_subject'	=> get_option('blogname').__(' - NEX-Forms Submission','nex-forms'),
+						'pref_user_email_body'		=> __('Thank you for connecting with us. We will respond to you shortly.','nex-forms'),
+					),
+				'other_preferences'=>
+					array(
+						'pref_other_on_screen_message' =>  __('Thank you for connecting with us. We will respond to you shortly.','nex-forms'),
+					),
+				)
+			);
+		}
 	//EMAIL SETTINGS
 	if(!get_option('nex-forms-email-config'))
 		{
@@ -736,44 +738,53 @@ function NEXForms5_run_instalation(){
 		}
 	
 	//SCRIPT SETTINGS	
-	update_option('nex-forms-script-config',array(
-			'inc-jquery'=>'1',
-			'inc-jquery-ui-core'=>'1',
-			'inc-jquery-ui-autocomplete'=>'1',
-			'inc-jquery-ui-slider'=>'1',
-			'inc-jquery-form'=>'1',
-			'inc-bootstrap'=>'1',
-			'inc-onload'=>'1',
-			'inc-moment'=>'1',
-			'inc-datetime'=>'1',
-			'inc-math'=>'1',
-			'inc-colorpick'=>'1',
-			'inc-wow'=>'1',
-			'inc-raty'=>'1',
-			'inc-locals'=>'1',
-			'inc-sig'=>'0',
-			'enable-print-scripts'=>0	
-		));
+	if(!get_option('nex-forms-script-config'))
+		{
+		update_option('nex-forms-script-config',array(
+				'inc-jquery'=>'1',
+				'inc-jquery-ui-core'=>'1',
+				'inc-jquery-ui-autocomplete'=>'1',
+				'inc-jquery-ui-slider'=>'1',
+				'inc-jquery-form'=>'1',
+				'inc-bootstrap'=>'1',
+				'inc-onload'=>'1',
+				'inc-moment'=>'1',
+				'inc-datetime'=>'1',
+				'inc-math'=>'1',
+				'inc-colorpick'=>'1',
+				'inc-wow'=>'1',
+				'inc-raty'=>'1',
+				'inc-locals'=>'1',
+				'inc-sig'=>'0',
+				'enable-print-scripts'=>0	
+			));
+		}
 	//STYLE SETTINGS
-	update_option('nex-forms-style-config',array(
-			'incstyle-jquery'=>'1',
-			'incstyle-font-awesome'=>'1',
-			'incstyle-font-awesome-v4-shims'=>'1',
-			'incstyle-bootstrap'=>'1',
-			'incstyle-animations'=>'1',
-			'incstyle-custom'=>'1',
-			'enable-print-styles'=>1
-		));
+	if(!get_option('nex-forms-script-config'))
+		{
+		update_option('nex-forms-style-config',array(
+				'incstyle-jquery'=>'1',
+				'incstyle-font-awesome'=>'1',
+				'incstyle-font-awesome-v4-shims'=>'1',
+				'incstyle-bootstrap'=>'1',
+				'incstyle-animations'=>'1',
+				'incstyle-custom'=>'1',
+				'enable-print-styles'=>1
+			));
+		}
 	
 	//OTHER SETTINGS
-	update_option('nex-forms-other-config',array(
-			'enable-print-scripts'=>'0',
-			'enable-print-styles'=>'1',
-			'enable-tinymce'=>'1',
-			'enable-widget'=>'1',
-			'enable-color-adapt'=>'1',
-			'set-wp-user-level'=>'administrator'	
-		));
+	if(!get_option('nex-forms-other-config'))
+		{
+		update_option('nex-forms-other-config',array(
+				'enable-print-scripts'=>'0',
+				'enable-print-styles'=>'1',
+				'enable-tinymce'=>'1',
+				'enable-widget'=>'1',
+				'enable-color-adapt'=>'1',
+				'set-wp-user-level'=>'administrator'	
+			));
+		}
 	
 	
 	
@@ -1138,6 +1149,9 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	$unigue_form_Id 	= ($unigue_form_Id) ? $unigue_form_Id : rand(0,99999);
 	$output 			= '';
 	$output 			.= '<style type="text/css">#nex-forms{display:none;}</style>';
+	
+	
+	
 	if(is_array($atts))
 		{
 		$atts = shortcode_atts(array(
@@ -1151,8 +1165,8 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			'text' 					=> 'open',
 			'make_sticky' 			=> 'no',
 			'paddel_text' 			=> 'Contact Us',
-			'paddel_color'			=>'btn-light-blue',
-			'button_color'			=>'btn-light-blue',
+			'paddel_color'			=> 'btn-light-blue',
+			'button_color'			=> 'btn-light-blue',
 			'position' 				=> 'right',
 			'field_default_values' 	=> '',
 			'form_style' 			=> 'normal',
@@ -1250,7 +1264,6 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	$padding_right 		=  (strstr($padding_right,'px')) ? $padding_right : $padding_right.'%';
 	$padding_top		=  (strstr($padding_top,'px')) ? $padding_top : $padding_top.'%';
 	$padding_bottom 	=  (strstr($padding_bottom,'px')) ? $padding_bottom : $padding_bottom.'%';
-	
 	
 	
 	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // DB Query
@@ -1556,7 +1569,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		
 			//PRINT POPUP BUTTON OR LINK 
 			if($type == 'button')
-				$output .= '<button class="btn mb-btn waves-effect waves-light '.esc_html($button_color).' open_nex_forms_popup" data-ufid="'.esc_attr($unigue_form_Id).'" data-default-values="'.esc_attr($field_default_values).'" data-popup-id="'.esc_attr($id).'">'.esc_html($text).'</button>';
+				$output .= '<button class="btn mb-btn waves-effect waves-light '.esc_html($button_color).' open_nex_forms_popup" data-ufid="'.esc_attr($unigue_form_Id).'" data-default-values="'.esc_attr($field_default_values).'" data-popup-id="'.esc_attr($id).'"><span class="button_text">'.esc_html($text).'</span></button>';
 			else if($type == 'link')
 				$output .= '<a href="#" class="open_nex_forms_popup" data-ufid="'.$unigue_form_Id.'" data-default-values="'.$field_default_values.'" data-popup-id="'.$id.'">'.esc_html($text).'</a>';
 			else
@@ -2629,7 +2642,35 @@ if($update_entry || $create_entry)
 		submit_nex_form($entry_action = 'update_entry');	
 	}
 	
+function NEXForms_create_htaccess_file() {
+    // Get the uploads directory
+    $upload_dir = wp_upload_dir();
+    $target_dir = $upload_dir['basedir']; // Path to wp-content/uploads/
+    $htaccess_file = $target_dir . '/.htaccess';
 
+    // Define the .htaccess content
+    $htaccess_content = '# Prevent directory listing
+Options -Indexes';
+
+    // Check if the .htaccess file already exists
+    if ( file_exists( $htaccess_file ) ) {
+        // Optionally append or overwrite
+        $current_content = file_get_contents( $htaccess_file );
+        if ( strpos( $current_content, 'Prevent directory listing' ) === false ) {
+            $htaccess_content = $current_content . "\n" . $htaccess_content;
+        } else {
+            return; // File already contains your rules
+        }
+    }
+
+    // Write the .htaccess file
+    if ( file_put_contents( $htaccess_file, $htaccess_content ) === false ) {
+       // wp_die( __( 'Failed to create the .htaccess file.', 'nex-forms' ) );
+    }
+
+    // Set proper permissions
+    @chmod( $htaccess_file, 0644 );
+}
 function submit_nex_form($entry_action = false){
 	
 	//ANTI SPAM
@@ -2651,92 +2692,108 @@ function submit_nex_form($entry_action = false){
 
 	$insert_file_array = array();
 	
-	foreach($_FILES as $key=>$file)
+	if(is_array($_FILES))
 		{
+		//echo 'FILE UPLOADING IN THIS FORM';
+		}
+	else
+		{
+		//echo 'NO FILE UPLOADING IN THIS FORM';
+		}
+	
+	NEXForms_create_htaccess_file();
+	foreach($_FILES as $key => $file) {
 		$multi_file_array = array();
-		if(is_array($_FILES[$key]['name']))
-			{
-				$group_array  = '';
-			if(strstr($key,'gu__'))
-				{
-				$group_name = str_replace('gu__','',$key);
-				$group_name = explode('__',$group_name);
-				}
-				foreach($_FILES[$key]['name'] as $mkey => $mval)
-					{
-					
-					
-					
-						$multi_file_array[$key.'_'.$mkey] = array(
-							'name'=>sanitize_text_field($_FILES[$key]['name'][$mkey]),
-							'type'=>sanitize_text_field($_FILES[$key]['type'][$mkey]),
-							'tmp_name'=>sanitize_text_field($_FILES[$key]['tmp_name'][$mkey]),
-							'error'=>sanitize_text_field($_FILES[$key]['error'][$mkey]),
-							'size'=>sanitize_text_field($_FILES[$key]['size'][$mkey])
-							);
-						
-					}
-					$file_names = '';
-					$group_num = 1;
-					foreach($multi_file_array as $ukey=>$ufile)
-						{
-						$uploadedfile = $multi_file_array[$ukey];
-						$upload_overrides = array( 'test_form' => false );
-						
-						$movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
-						
-						if ( $movefile )
-							{
-							if($movefile['file'])
-								{
-								$insert_file_array[$uploadedfile['name']] = array(
-									'name' 		=> $uploadedfile['name'],
-									'type' 		=> $uploadedfile['type'],
-									'size' 		=> $uploadedfile['size'],
-									'location' 	=> $movefile['file'],
-									'url' 		=> $movefile['url'],
-									);		
-								$set_file_name = str_replace(ABSPATH,'',$movefile['file']);
-								$file_names .= get_option('siteurl').'/'.$set_file_name. ',';
-								$files[] = $movefile['file'];
-								$filenames[] = get_option('siteurl').'/'.$set_file_name;
-								$_POST[$group_name[0]][$group_num][$group_name[1]] = get_option('siteurl').'/'.$set_file_name;
-								$group_num++;
-								}
-							}
-						}
-						
-			$_POST[$key] = $file_names;
+	
+		if (is_array($_FILES[$key]['name'])) {
+			$group_array  = '';
+	
+			if (strstr($key, 'gu__')) {
+				$group_name = str_replace('gu__', '', $key);
+				$group_name = explode('__', $group_name);
 			}
-		else
-			{
-			
+	
+			foreach ($_FILES[$key]['name'] as $mkey => $mval) {
+				$multi_file_array[$key . '_' . $mkey] = array(
+					'name' => sanitize_text_field($_FILES[$key]['name'][$mkey]),
+					'type' => sanitize_text_field($_FILES[$key]['type'][$mkey]),
+					'tmp_name' => sanitize_text_field($_FILES[$key]['tmp_name'][$mkey]),
+					'error' => sanitize_text_field($_FILES[$key]['error'][$mkey]),
+					'size' => sanitize_text_field($_FILES[$key]['size'][$mkey])
+				);
+			}
+	
+			$file_names = '';
+			$group_num = 1;
+	
+			foreach ($multi_file_array as $ukey => $ufile) {
+				$uploadedfile = $multi_file_array[$ukey];
+				$upload_overrides = array('test_form' => false);
+	
+				// Generate a unique filename
+				$upload_dir = wp_upload_dir();
+				$file_ext = pathinfo($uploadedfile['name'], PATHINFO_EXTENSION);
+				$random_filename = uniqid('nex_forms_file_') . '.' . $file_ext;
+				$unique_filename = wp_unique_filename($upload_dir['path'], $random_filename);
+	
+				// Rename file before upload
+				$uploadedfile['name'] = $unique_filename;
+	
+				$movefile = wp_handle_upload($uploadedfile, $upload_overrides);
+	
+				if ($movefile && !isset($movefile['error'])) {
+					if ($movefile['file']) {
+						$insert_file_array[$uploadedfile['name']] = array(
+							'name' => $uploadedfile['name'],
+							'type' => $uploadedfile['type'],
+							'size' => $uploadedfile['size'],
+							'location' => $movefile['file'],
+							'url' => $movefile['url'],
+						);
+						$set_file_name = str_replace(ABSPATH, '', $movefile['file']);
+						$file_names .= get_option('siteurl') . '/' . $set_file_name . ',';
+						$files[] = $movefile['file'];
+						$filenames[] = get_option('siteurl') . '/' . $set_file_name;
+						$_POST[$group_name[0]][$group_num][$group_name[1]] = get_option('siteurl') . '/' . $set_file_name;
+						$group_num++;
+					}
+				}
+			}
+	
+			$_POST[$key] = $file_names;
+		} else {
 			$uploadedfile = $_FILES[$key];
-			$upload_overrides = array( 'test_form' => false );
-			//if($upload_to_server=='true')
-				$movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
-			
-			if ( $movefile )
-				{
-				if($movefile['file'])
-					{
+			$upload_overrides = array('test_form' => false);
+	
+			// Generate a unique filename
+			$upload_dir = wp_upload_dir();
+			$file_ext = pathinfo($uploadedfile['name'], PATHINFO_EXTENSION);
+			$random_filename = uniqid('nex_forms_file_') . '.' . $file_ext;
+			$unique_filename = wp_unique_filename($upload_dir['path'], $random_filename);
+	
+			// Rename file before upload
+			$uploadedfile['name'] = $unique_filename;
+	
+			$movefile = wp_handle_upload($uploadedfile, $upload_overrides);
+	
+			if ($movefile && !isset($movefile['error'])) {
+				if ($movefile['file']) {
 					$insert_file_array[$uploadedfile['name']] = array(
-						'name' 		=> $uploadedfile['name'],
-						'type' 		=> $uploadedfile['type'],
-						'size' 		=> $uploadedfile['size'],
-						'location' 	=> $movefile['file'],
-						'url' 		=> $movefile['url'],
-						);	
-					$set_file_name = str_replace(ABSPATH,'',$movefile['file']);
-					$set_file_name = str_replace(ABSPATH,'',$movefile['file']);
-					$_POST[$key] = get_option('siteurl').'/'.$set_file_name;
+						'name' => $uploadedfile['name'],
+						'type' => $uploadedfile['type'],
+						'size' => $uploadedfile['size'],
+						'location' => $movefile['file'],
+						'url' => $movefile['url'],
+					);
+					$set_file_name = str_replace(ABSPATH, '', $movefile['file']);
+					$_POST[$key] = get_option('siteurl') . '/' . $set_file_name;
 					$files_array[$key] = $movefile['file'];
 					$files[] = $movefile['file'];
-					$filenames[] = get_option('siteurl').'/'.$set_file_name;
-					}
+					$filenames[] = get_option('siteurl') . '/' . $set_file_name;
 				}
 			}
 		}
+	}
 	
 
 /*******************************************************************************************************/
@@ -5714,7 +5771,7 @@ function nf_add_action_links( $actions, $plugin_file ) {
 		if ( !get_option('nf_activated') ) {
 			$action_links['nf-pp pro_upgrade'] =
 				array(
-					'label' => __( '<span class="dashicons-before dashicons-unlock"></span>Upgrade today and save $270', 'nex-forms' ),
+					'label' => __( '<span class="dashicons-before dashicons-unlock"></span>Upgrade today and save $300', 'nex-forms' ),
 					'url'   => 'https://1.envato.market/zQ6de',
 
 				);
@@ -5736,7 +5793,7 @@ global $wp_meta_boxes;
 }
  
 function nex_forms_dashboard() {
-NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>14 premium add-ons worth $270 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $270</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
+NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>15 premium add-ons worth $300 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $300</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>Multi-Page Forms &bull; PayPal PRO &bull; PDF Creator &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
 }
 
 

@@ -1196,37 +1196,7 @@ function NEXForms_dashboard(){
 							$output .= $dashboard->license_setup();
 				$output .= '</div>';
 			$output .= '</div>';
-						//NEX-Forms is not registered and as such some key features will be disabled. To activate these features you will need to upgrade to the pro-version
-						/*$output .= '<div class="col-sm-3">';
-							$output .= '<div class="license_reg">
-							
-								<div class="dashboard-box database_table">';
-								$output .= '<div class="dashboard-box-header aa_bg_main"><div class="table_title font_color_1 "><span class="label label-danger"><span class="fa fa-info"></span></span>&nbsp;&nbsp;NEX-Forms is NOT Registered </div></div>
-											
-											
-											<div class="dashboard-box-content">
-													Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://1.envato.market/zQ6de" target="_blank"><strong>upgrade to the pro-version</strong></a>
-												<div class="call-to-action">
-												
-													
-												
-													<a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings" class="col-2 register-now">
-														<div class="dashboard-box database_table wap_nex_forms new-forms">
-															I already own a license.<br />Regiter NEX-Forms now 
-														</div>
-													</a>
-													
-													<a href="https://1.envato.market/6vWmb" target="_blank" class="col-2 buy-now">
-														<div class="dashboard-box database_table wap_nex_forms new-forms">
-															Buy NEX-Forms now 
-														</div>
-													</a>
-											</div>	
-										</div>		
-								</div>
-							
-							</div>';
-						$output .= '</div>';*/
+						
 						
 						$output .= '<div class="col-sm-2">';
 					
