@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.2
+Version: 8.8.3
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -678,8 +678,7 @@ function NEXForms5_run_instalation(){
 	//PREFERENCES	
 	//'date_time'				=>  date('Y-m-d H:i:s'),
 	update_option('nf-first-run', true);
-	if(!get_option('nex-forms-preferences'))
-		{
+	if (false === get_option('nex-forms-preferences')) {
 		update_option('nex-forms-preferences',
 			array(
 				'field_preferences'=>
@@ -723,8 +722,7 @@ function NEXForms5_run_instalation(){
 			);
 		}
 	//EMAIL SETTINGS
-	if(!get_option('nex-forms-email-config'))
-		{
+	if (false === get_option('nex-forms-email-config')) {
 		update_option('nex-forms-email-config',array(
 				'email_method'=>'php_mailer', 
 				'email_content'=>'html', 
@@ -738,8 +736,7 @@ function NEXForms5_run_instalation(){
 		}
 	
 	//SCRIPT SETTINGS	
-	if(!get_option('nex-forms-script-config'))
-		{
+	if (false === get_option('nex-forms-script-config')) {
 		update_option('nex-forms-script-config',array(
 				'inc-jquery'=>'1',
 				'inc-jquery-ui-core'=>'1',
@@ -760,8 +757,7 @@ function NEXForms5_run_instalation(){
 			));
 		}
 	//STYLE SETTINGS
-	if(!get_option('nex-forms-script-config'))
-		{
+	if (false === get_option('nex-forms-style-config')) {
 		update_option('nex-forms-style-config',array(
 				'incstyle-jquery'=>'1',
 				'incstyle-font-awesome'=>'1',
@@ -774,8 +770,7 @@ function NEXForms5_run_instalation(){
 		}
 	
 	//OTHER SETTINGS
-	if(!get_option('nex-forms-other-config'))
-		{
+	if (false === get_option('nex-forms-other-config')) {
 		update_option('nex-forms-other-config',array(
 				'enable-print-scripts'=>'0',
 				'enable-print-styles'=>'1',
@@ -785,6 +780,7 @@ function NEXForms5_run_instalation(){
 				'set-wp-user-level'=>'administrator'	
 			));
 		}
+	
 	
 	
 	
@@ -1149,9 +1145,6 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	$unigue_form_Id 	= ($unigue_form_Id) ? $unigue_form_Id : rand(0,99999);
 	$output 			= '';
 	$output 			.= '<style type="text/css">#nex-forms{display:none;}</style>';
-	
-	
-	
 	if(is_array($atts))
 		{
 		$atts = shortcode_atts(array(
@@ -1165,8 +1158,8 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			'text' 					=> 'open',
 			'make_sticky' 			=> 'no',
 			'paddel_text' 			=> 'Contact Us',
-			'paddel_color'			=> 'btn-light-blue',
-			'button_color'			=> 'btn-light-blue',
+			'paddel_color'			=>'btn-light-blue',
+			'button_color'			=>'btn-light-blue',
 			'position' 				=> 'right',
 			'field_default_values' 	=> '',
 			'form_style' 			=> 'normal',
@@ -1264,6 +1257,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	$padding_right 		=  (strstr($padding_right,'px')) ? $padding_right : $padding_right.'%';
 	$padding_top		=  (strstr($padding_top,'px')) ? $padding_top : $padding_top.'%';
 	$padding_bottom 	=  (strstr($padding_bottom,'px')) ? $padding_bottom : $padding_bottom.'%';
+	
 	
 	
 	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // DB Query
@@ -1569,7 +1563,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		
 			//PRINT POPUP BUTTON OR LINK 
 			if($type == 'button')
-				$output .= '<button class="btn mb-btn waves-effect waves-light '.esc_html($button_color).' open_nex_forms_popup" data-ufid="'.esc_attr($unigue_form_Id).'" data-default-values="'.esc_attr($field_default_values).'" data-popup-id="'.esc_attr($id).'"><span class="button_text">'.esc_html($text).'</span></button>';
+				$output .= '<button class="btn mb-btn waves-effect waves-light '.esc_html($button_color).' open_nex_forms_popup" data-ufid="'.esc_attr($unigue_form_Id).'" data-default-values="'.esc_attr($field_default_values).'" data-popup-id="'.esc_attr($id).'">'.esc_html($text).'</button>';
 			else if($type == 'link')
 				$output .= '<a href="#" class="open_nex_forms_popup" data-ufid="'.$unigue_form_Id.'" data-default-values="'.$field_default_values.'" data-popup-id="'.$id.'">'.esc_html($text).'</a>';
 			else
@@ -2642,35 +2636,7 @@ if($update_entry || $create_entry)
 		submit_nex_form($entry_action = 'update_entry');	
 	}
 	
-function NEXForms_create_htaccess_file() {
-    // Get the uploads directory
-    $upload_dir = wp_upload_dir();
-    $target_dir = $upload_dir['basedir']; // Path to wp-content/uploads/
-    $htaccess_file = $target_dir . '/.htaccess';
 
-    // Define the .htaccess content
-    $htaccess_content = '# Prevent directory listing
-Options -Indexes';
-
-    // Check if the .htaccess file already exists
-    if ( file_exists( $htaccess_file ) ) {
-        // Optionally append or overwrite
-        $current_content = file_get_contents( $htaccess_file );
-        if ( strpos( $current_content, 'Prevent directory listing' ) === false ) {
-            $htaccess_content = $current_content . "\n" . $htaccess_content;
-        } else {
-            return; // File already contains your rules
-        }
-    }
-
-    // Write the .htaccess file
-    if ( file_put_contents( $htaccess_file, $htaccess_content ) === false ) {
-       // wp_die( __( 'Failed to create the .htaccess file.', 'nex-forms' ) );
-    }
-
-    // Set proper permissions
-    @chmod( $htaccess_file, 0644 );
-}
 function submit_nex_form($entry_action = false){
 	
 	//ANTI SPAM
@@ -2692,16 +2658,6 @@ function submit_nex_form($entry_action = false){
 
 	$insert_file_array = array();
 	
-	if(is_array($_FILES))
-		{
-		//echo 'FILE UPLOADING IN THIS FORM';
-		}
-	else
-		{
-		//echo 'NO FILE UPLOADING IN THIS FORM';
-		}
-	
-	NEXForms_create_htaccess_file();
 	foreach($_FILES as $key => $file) {
 		$multi_file_array = array();
 	
@@ -4041,7 +3997,7 @@ function NEXForms_dashboard_2(){
 				else
 					{
 					if(!get_option('nf_activated'))
-						$output .= '<div class="row"><div class="col-sm-12"><div class="alert alert-info"><h3>SALE NOW ON!</h3>We are celebrating 12 000+ Sales! <a href="https://1.envato.market/zQ6de">Buy NEX-forms today</a> and all these add-ons worth $210 absolutely FREE!.</div></div></div>';
+						$output .= '<div class="row"><div class="col-sm-12"><div class="alert alert-info"><h3>SALE NOW ON!</h3>We are celebrating 12 000+ Sales! <a href="https://1.envato.market/zQ6de">Buy NEX-forms today</a> and all these add-ons worth $300 absolutely FREE!.</div></div></div>';
 					}
 			
 				//ZAPIER
@@ -5793,7 +5749,7 @@ global $wp_meta_boxes;
 }
  
 function nex_forms_dashboard() {
-NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>15 premium add-ons worth $300 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $300</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>Multi-Page Forms &bull; PayPal PRO &bull; PDF Creator &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
+NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>15 premium add-ons worth $300 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $300</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Multi-Page Forms &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
 }
 
 

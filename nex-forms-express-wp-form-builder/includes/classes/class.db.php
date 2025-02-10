@@ -2654,11 +2654,13 @@ if(!class_exists('NEXForms_Database_Actions'))
 												}
 											else
 												{	
+												
 												if(is_numeric(str_replace(',','',$field_value)))
 													$isnum = true;
 												else
 													$isnum = false;
-													
+												
+											
 												if(strstr($field_value,',') && !strstr($field_value,'data:image') && !$isnum)
 													{
 													$is_array = explode(',',$field_value);
@@ -3695,15 +3697,14 @@ function NEXForms_get_entry_data_preview($Id='',$table=''){
 	$form_data = json_decode($set_form_data,1);
 	$set_data = '';
 	$i= 0;
-if(is_array($form_data))
-	{
 	foreach($form_data as $data)
 		{
 		if($i<2)
 			{
-			$field_name = ((isset($data['field_name'])) ? $data['field_name'] : '');
-			$field_value = ((isset($data['field_value'])) ? $data['field_value'] : '');
+			$field_name = $data['field_name'];
+			$field_value = $data['field_value'];
 			if(!is_array($field_value)){
+	
 				if(!strstr($field_value,'data:image'))
 					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value">'.$field_value.'</span> | ';
 				else
@@ -3712,7 +3713,6 @@ if(is_array($form_data))
 			}
 		$i++;
 		}
-	}
 		
 		$set_data = rtrim($set_data,' | ');
 	return '<div class="entry_data_summary" data-title="View Entry" title="View Entry" data-toggle="tooltip_bs2" data-placement="bottom"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-submissions&entry_id='.$Id.'" >'.str_replace('\\','',$set_data).'...<span class="txt-blue">more</span></a></div>';
