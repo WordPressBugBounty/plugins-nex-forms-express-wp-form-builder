@@ -4,8 +4,8 @@ Contributors: Basix
 Donate link: https://1.envato.market/zQ6de
 Tags: forms, contact form, form builder, wordpress form plugin, popup forms
 Requires at least: 4.0
-Tested up to: 6.7.1
-Stable tag: 8.8.3
+Tested up to: 6.7.2
+Stable tag: 8.8.4
 License: GPLv3 or later
 Author URI: https://codecanyon.net/user/basix/portfolio?ref=Basix
 Plugin URI: https://1.envato.market/zQ6de
@@ -18,9 +18,11 @@ Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, S
 ### THE ONLY TRUE ALL IN ONE WORDPRESS FORM BUILDER
 NEX-Forms is the best WordPress Form Builder plugin for creating simple to complex forms. With tons off add-ons and features NEX-Forms is a complete online form and forms builder solution.
 
-### **[See live Demo](https://basixonline.net/nex-forms-wordpress-form-builder-demo/ "The Ultimate WordPress Form Builder")**
-### **[Documentation](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation")**
-### **[Download FREE Add-ons](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder")**
+https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
+
+
+**Useful Links**
+🚀[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
 
 
 **NEX-Forms** is a **high quality** and simple to use drag and drop/single click **form creator** offering a wide range of customizability, flexibility, design and usability.

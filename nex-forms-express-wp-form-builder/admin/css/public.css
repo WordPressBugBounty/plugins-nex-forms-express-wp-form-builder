@@ -96,20 +96,21 @@ iframe#TB_iframeContent {
 
 
 #new_form_setup.modal {
-    height: calc(100vh - 67px) !important;
-    z-index: 1000001 !important;
+    height: calc(100vh - 33px) !important;
+    z-index: 105 !important;
     border-radius: 0 !important;
     overflow: hidden;
     box-shadow: none;
     outline: none !important;
     background: transparent;
-    width: calc(100% - 160px);
+    width: calc(100% - 47px);
     border: none !important;
     opacity: 1 !important;
     transform: scale(1) !important;
-    top: 92px !important;
+    top: 60px !important;
     right: 0;
-    left: unset;
+    left: 46px;
+    position: absolute;
 }
 
 .folded #new_form_setup.modal {
@@ -174,8 +175,11 @@ iframe#TB_iframeContent {
     float: left;
     position: fixed;
 	border-right: 1px solid #ccc;
+	z-index: 1;
 }	
-
+#new_form_setup i.modal-close {
+    display: none;
+}
 #new_form_setup .new-form-sidebar ul {
     margin: 0;
 }
@@ -185,7 +189,7 @@ iframe#TB_iframeContent {
 
 #new_form_setup .new-form-sidebar ul li a {
     display: block;
-    font-size: 15px;
+    font-size: 13px;
     cursor: pointer;
     border-radius: 50px 0px 0px 50px;
     display: flex;
@@ -210,9 +214,9 @@ iframe#TB_iframeContent {
 #new_form_setup .new-form-panel {
     display: none;
     float: left;
-    width: 80%;
+    width: calc(100% - 260px);
     padding: 35px 90px;
-    margin-left: 20%;
+    margin-left: 260px;
 }
 #new_form_setup .new-form-panel.ajax_loading.active {
     display: flex;
@@ -247,17 +251,21 @@ iframe#TB_iframeContent {
     font-weight: bold;
     font-size: 15px;
 }
-#new_form_setup .new-form-panel input.form-control {
+#new_form_setup .new-form-panel input.form-control,
+.new-report-panel input#report_title.form-control {
     padding: 24px;
     border: 1px solid #ddd;
     margin-bottom: 30px;
+}
+.new-report-panel input#report_title.form-control{
+	margin-bottom: 0px;
 }
 #new_form_setup .btn:hover {
     box-shadow: none !important;
     opacity: 1;
 }
-#new_form_setup .btn {
-    color: #fff !important;
+#new_form_setup .btn.form-control {
+  	color: #fff !important;
     height: 46px !important;
     opacity: 0.8;
     border: none !important;
@@ -279,6 +287,7 @@ iframe#TB_iframeContent {
     color: #555;
     text-align: center;
     margin-top: 10px;
+	display: none;
     /* position: absolute; */
     /* bottom: -39px; */
 }
@@ -289,34 +298,41 @@ iframe#TB_iframeContent {
 	background:#fff;
 }
 #new_form_setup a.template_box {
-    /* box-shadow: 9px 9px 29px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.6); */
-    transform: scale(0.97);
+    box-shadow: 9px 9px 29px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.6);
+    transform: scale(1);
     transition: all 0.15s;
     padding: 19px;
     display: block;
     cursor: pointer;
     height: 160px;
     margin-bottom: 39px;
-    border-radius: 4px;
-    background: #f2f2f2;
-    border: 1px solid #ddd;
+    /* border-radius: 4px; */
+    /* background: #e8f0fe; */
+    /* border: 1px solid #ddd; */
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
 }
 #new_form_setup a.template_box .img {
     text-align: center;
 }
 #new_form_setup a.template_box img {
-    width: 100px;
-    border-radius: 9px;
-    border: 5px solid #f3f3f3;
+    /* width: 100px; */
+    /* border-radius: 9px; */
+    /* border: 2px solid #e7e7e7; */
+    box-shadow: -9px 8px 103px rgb(163, 177, 198, 0.6), -9px -9px 16px rgba(255, 255, 255, 0.6);
 }
 #new_form_setup a.template_box:hover * {
     color: #fff;
 }
 #new_form_setup a.template_box:hover {
-    transform: scale(1);
+    transform: scale(1.03);
     transition: all 0.2s;
-    background: #40c4ff;
+    /*background: #f1f6ff;*/
+    box-shadow: 9px 9px 35px rgb(163, 177, 198, 1.6), -9px -9px 25px rgba(255, 255, 255, 0.6);
 }
+
 
 
 #new_form_setup .lds-ellipsis {
@@ -363,7 +379,7 @@ iframe#TB_iframeContent {
     box-shadow: 3px 4px 30px rgba(0,0,0,0.3) !important;
 }
 #new_form_setup .tut_wrapper .col-xs-12 {
-    margin: 15px;
+    margin: 0 15px;
     display: flex;
     padding: 30px 15px 30px 0px;
     border-radius: 8px;

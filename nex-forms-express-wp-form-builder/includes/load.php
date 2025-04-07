@@ -1,6 +1,5 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-
 ini_set('display_errors', '0');
 error_reporting(0);
 
@@ -36,7 +35,7 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '8.8.3.1';
+	 $js_version = '8.8.4.1';
 	
 	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version);
 	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version);
@@ -92,7 +91,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '8.8.3.1';
+	$js_version = '8.8.4.1';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -133,10 +132,10 @@ function enqueue_nf_admin_scripts($hook) {
 			}
 		else
 			{
-		
-			if($user_config['enable-color-adapt']=='2')
+		    $enable_color_adapt = (isset($user_config['enable-color-adapt'])) ? $user_config['enable-color-adapt'] : '';
+			if($enable_color_adapt=='2')
 				wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-light.css',dirname(__FILE__)),'',$js_version);
-			else if($user_config['enable-color-adapt']=='3')
+			else if($enable_color_adapt=='3')
 				wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-dark.css',dirname(__FILE__)),'',$js_version);
 			else
 				{
@@ -198,7 +197,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '8.8.3.1';
+	$js_version = '8.8.4.1';
 	
 	if(strstr($hook,'nex-forms'))
 		{
@@ -215,9 +214,12 @@ function enqueue_nf_admin_styles($hook) {
 				}
 			else
 				{
-				if($user_config['enable-color-adapt']=='2')
+				
+				$enable_color_adapt = (isset($user_config['enable-color-adapt'])) ? $user_config['enable-color-adapt'] : '';
+				
+				if($enable_color_adapt=='2')
 					wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-light.css',dirname(__FILE__)),'',$js_version);
-				else if($user_config['enable-color-adapt']=='3')
+				else if($enable_color_adapt=='3')
 					wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-dark.css',dirname(__FILE__)),'',$js_version);
 				else
 					{
@@ -240,6 +242,12 @@ function enqueue_nf_admin_styles($hook) {
 		wp_enqueue_style('nex-forms-entries',plugins_url('/admin/css/'.NF_PATH.'entries.css',dirname(__FILE__)),'',$js_version);	
 		}
 	if($hook=='nex-forms_page_nex-forms-page-reporting')
+		{
+		wp_enqueue_style('nex-forms-dashboard',plugins_url('/admin/css/'.NF_PATH.'dashboard.css',dirname(__FILE__)),'',$js_version);	
+		wp_enqueue_style('nex-forms-entries',plugins_url('/admin/css/'.NF_PATH.'entries.css',dirname(__FILE__)),'',$js_version);	
+		}
+	
+	if($hook=='nex-forms_page_nex-forms-page-submission-reporting')
 		{
 		wp_enqueue_style('nex-forms-dashboard',plugins_url('/admin/css/'.NF_PATH.'dashboard.css',dirname(__FILE__)),'',$js_version);	
 		wp_enqueue_style('nex-forms-entries',plugins_url('/admin/css/'.NF_PATH.'entries.css',dirname(__FILE__)),'',$js_version);	

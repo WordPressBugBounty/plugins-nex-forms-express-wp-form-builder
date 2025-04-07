@@ -17,7 +17,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			add_action('wp_ajax_nf_delete_record', array($this,'delete_record'));
 			add_action('wp_ajax_nf_duplicate_record', array($this,'duplicate_record'));
 			add_action('wp_ajax_nf_delete_file', array($this,'delete_file'));
-			
+			add_action('wp_ajax_nf_delete_db_table', array($this,'delete_db_table'));
 			
 			add_action('wp_ajax_preview_nex_form', array($this,'preview_nex_form'));
 			add_action('wp_ajax_nf_get_forms', array($this,'get_forms'));
@@ -203,25 +203,82 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
+			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
+				 return false;
+			 }
+			
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
+				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 				$this->deactivate_license();
 				return false;
 				}
 			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
 				 $api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
+				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 				$this->deactivate_license();
 				return false;
 			 }
 			$api_params = array( 'check_key' => 1,'ins_data'=>get_option('7103891'));
-			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
-
+			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
+			
 			if(isset($response->errors))
 				{
-				return false;		
+				$api_url = 'https://basixonline.net/activate-license-new-api-v3';
+				$api_params = http_build_query(array(
+					'check_key' => 1,
+					'ins_data'  => get_option('7103891')
+				));
+				$options = array(
+					'http' => array(
+						'method'  => 'POST',
+						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+						'content' => $api_params,
+						'timeout' => 10, // Reduce timeout
+					)
+				);
+				$context = stream_context_create($options);
+				$response = file_get_contents($api_url, false, $context);
+				
+				if ($response === FALSE)
+					{
+					$url = "https://basixonline.net/activate-license-new-api-v3";
+					$params = array('check_key' => 1, 'ins_data' => get_option('7103891'));
+					$response = NEXForms_send_license_request($url, $params);
+					if($response)
+						{
+						$response = preg_replace('/^[0-9a-fA-F]+\r\n/', '', $response); // Remove chunk sizes
+						$response = preg_replace("/\r\n0\r\n$/", '', $response); // Remove final chunk indicator
+						$response = trim($response, " \t\n\r\0\x0B0");
+						$get_response = json_decode($response, true);
+					
+						$get_response = json_decode($response, true);
+						$this->client_info = $get_response['client_info'];
+						$this->license_info = $get_response['license_info'];
+						if($get_response['ver']!='true')
+							{
+							$this->deactivate_license();	
+							}
+						return ($get_response['ver']=='true') ? true : false;
+						}
+					else
+						{
+						return false;
+						}
+					} 
+				else 
+					{
+					$get_response = json_decode($response, true);
+					$this->client_info = $get_response['client_info'];
+					$this->license_info = $get_response['license_info'];
+					if($get_response['ver']!='true')
+						{
+						$this->deactivate_license();	
+						}
+					return ($get_response['ver']=='true') ? true : false;
+					} 
+					
 				}
 			else
 				{
@@ -783,7 +840,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$record_id = sanitize_title($_POST['Id']);
 			
 			$delete = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$delete_draft = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('draft_Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			//$delete_draft = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('draft_Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			wp_die();
 		}	
 		public function delete_file(){
@@ -809,7 +866,24 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			die();
 		}
-
+		public function delete_db_table(){
+			
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+				wp_die();
+			}
+			
+			if(!current_user_can( NF_USER_LEVEL ))	
+				wp_die();
+			global $wpdb;
+			
+			$record_id = sanitize_title($_POST['Id']);
+			$get_db_table = $wpdb->prepare('SELECT db_table FROM ' .$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$db_table = $wpdb->get_var($get_db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			
+			$drop_table = $wpdb->query('DROP TABLE `'.$db_table.'`');
+			
+			die();
+		}
 		public function NEXForms_get_data(){
 				
 			
@@ -2573,6 +2647,10 @@ if(!class_exists('NEXForms_Database_Actions'))
 										
 										}
 									}
+								
+								/*echo '<pre>';
+									print_r($form_data);
+								echo '</pre>';*/
 									
 								if($data->field_name!='' && $data->field_name!='math_result' && $data->field_name!='paypal_invoice'){
 									$output .= '<tr>';
@@ -2602,19 +2680,14 @@ if(!class_exists('NEXForms_Database_Actions'))
 																	foreach($val as $innerkey=>$innervalue)
 																		{
 																		if(!strstr($innerkey,'real_val__'))	
-																			$output .= '<td style="border-bottom:1px solid #ddd;border-right:1px solid #ddd;"><strong>'.$nf_functions->unformat_records_name($innerkey).'</strong></td>';
+																			$output .= '<td style="border-bottom:1px solid #ddd;border-right:1px solid #ddd;"><strong>'.ucfirst($nf_functions->unformat_records_name($innerkey)).'</strong></td>';
 																		}
 																	$output .= '</tr>';
 																	}
 																$output .= '<tr>';
 																foreach($val as $innerkey=>$innervalue)
 																	{
-																	//if(array_key_exists('real_val__'.$innerkey.'',$val))
-																			//{
-																			//$realval = 'real_val__'.$innerkey;
-																			//$innervalue = $val->$realval;	
-																			
-																			//}
+																	
 																	if(!strstr($innerkey,'real_val__'))
 																		{
 																	
@@ -2676,7 +2749,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 													$output .= '<input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
 													}
 												else if(strstr($field_value,'data:image'))
-													$output .= '<img src="'.$field_value.'"><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
+													$output .= '<img class="sig" src="data:'.$field_value.'"><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
 												else if(in_array($nf_functions->get_ext(trim($field_value)),$img_ext_array))
 													$output .= '<div class="col-xs-6"><img class="materialboxed" width="100%" src="'.$field_value.'" style="margin-bottom:15px;"></div><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
 												else
@@ -2827,7 +2900,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				{
 				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view entries. Go to global settings above and follow registration procedure.</div>';	
 				}
-			NEXForms_clean_echo(  $output);
+			echo $output;
 			
 			die();	
 		}
@@ -3205,7 +3278,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			global $wpdb;
 			$delete = $wpdb->query('DELETE FROM '.$wpdb->prefix.'options WHERE option_name LIKE "1983017%"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$api_params = array( 'client_deactivate_license' => 1,'key'=>get_option('7103891'));
-			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
+			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 			update_option( 'nf_activated', false );
 			}
 	}
@@ -3361,7 +3434,7 @@ You are using '.$email_config['email_method'].' as your emailing method';
 					
 					//$request = new WP_Http();
 					//$response = $request->post( 'https://basixonline.net/activate-license-new-api-v3', array( 'timeout'   => 30, 'body' => $api_params ) );
-					$response = wp_remote_post( 'https://basixonline.net/mail-api/', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
+					$response = wp_remote_post( 'https://basixonline.net/mail-api/', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 					//echo $response['body'];
 				}
 			else if($email_config['email_method']=='smtp' || $email_config['email_method']=='php_mailer')
@@ -3701,10 +3774,9 @@ function NEXForms_get_entry_data_preview($Id='',$table=''){
 		{
 		if($i<2)
 			{
-			$field_name = $data['field_name'];
-			$field_value = $data['field_value'];
+			$field_name = ((isset($data['field_name'])) ? $data['field_name'] : '');
+			$field_value = ((isset($data['field_value'])) ? $data['field_value'] : '');
 			if(!is_array($field_value)){
-	
 				if(!strstr($field_value,'data:image'))
 					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value">'.$field_value.'</span> | ';
 				else
@@ -3799,7 +3871,107 @@ function NEXForms_download_file($url,$table=''){
 				}
 			
 			return '<a href="'.$url.'" class="export_form" download="'.$url.'"><i class="fa fa-cloud-download" data-title="Download" data-toggle="tooltip_bs2" data-placement="bottom" data-original-title="" title=""></i></a>';
-		}		
+		}
+function NEXForms_send_license_request($url, $params) {
+    $parsed_url = parse_url($url);
+    $host = $parsed_url['host'];
+    $port = ($parsed_url['scheme'] == 'https') ? 443 : 80;
+    $scheme = ($port == 443) ? 'ssl://' : '';
+
+    $fp = fsockopen($scheme . $host, $port, $errno, $errstr, 30);
+
+    if (!$fp) {
+        return false;
+    }
+
+    $post_data = http_build_query($params);
+    
+    $headers = "POST " . $parsed_url['path'] . " HTTP/1.1\r\n";
+    $headers .= "Host: $host\r\n";
+    $headers .= "Content-Type: application/x-www-form-urlencoded\r\n";
+    $headers .= "Content-Length: " . strlen($post_data) . "\r\n";
+    $headers .= "Connection: Close\r\n\r\n";
+    $headers .= $post_data;
+
+    fwrite($fp, $headers);
+    
+    $response = '';
+    while (!feof($fp)) {
+		$response .= fgets($fp, 1024);
+	}
+	fclose($fp);
+	
+// Extract JSON by removing headers
+$json_start = strpos($response, "\r\n\r\n"); // Find the start of the body
+if ($json_start !== false) {
+    $response = substr($response, $json_start + 4); // Skip the header part
+}
+ 
+    return $response;
+}
+
+function NEXForms_run_calling(){
+	
+	$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+	$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
+	
+	$set_error = '';
+	$error_code = 0;
+	
+	if(is_array($response->errors))
+		{
+		foreach($response->errors as $error_type => $error)
+			{
+			$set_error = strtoupper($error_type).' - '.$error[0];
+			$error_code = 1;
+			}
+			
+		$api_url = 'https://basixonline.net/activate-license-new-api-v3';
+		$api_params = http_build_query(array(
+			'check_key' => 1,
+			'ins_data'  => get_option('7103891')
+		));
+		$options = array(
+			'http' => array(
+				'method'  => 'POST',
+				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				'content' => $api_params,
+				'timeout' => 10, // Reduce timeout
+			)
+		);
+		$context = stream_context_create($options);
+		$response = file_get_contents($api_url, false, $context);
+		
+		if ($response === FALSE)
+			{
+			$error_code = 2;
+			$url = "https://basixonline.net/activate-license-new-api-v3";
+			$params = array('check_key' => 1, 'ins_data' => get_option('7103891'));
+			$response = NEXForms_send_license_request($url, $params);
+			if($response)
+				{
+				$response = preg_replace('/^[0-9a-fA-F]+\r\n/', '', $response);
+				$response = preg_replace("/\r\n0\r\n$/", '', $response); 
+				$response = trim($response, " \t\n\r\0\x0B0");
+				update_option( '7103891' , array( $response,mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+				}
+			else
+				{
+				$error_code = 3;
+				return '<div class="col-sm-12"><div class="alert alert-danger"><strong>WP ERROR - CODE '.$error_code.': </strong>'.$set_error.'<br />NEX-Forms can not verify your license as a result of this error. Consult your Hosting Provider to resolve this error.</div></div>';
+				}	
+			}
+		else 
+			{
+			update_option( '7103891' , array( $response,mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+			}
+		}
+	else
+		{		
+		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+		}	
+}
+
 function NEXForms_sanitize_array( $array=array() ) {
 	foreach ( $array as $key => $val ) {
 		if(is_array($val))

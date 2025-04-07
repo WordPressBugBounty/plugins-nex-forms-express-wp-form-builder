@@ -54,8 +54,7 @@ if(!class_exists('NEXForms_Functions'))
 				$output .= '</div>';
 				$output .= '<div class="new-form-panel panel-1 active">';
 					$output .= '<div class="row">';
-					$output .= '<div class="col-sm-2"></div>';
-						$output .= '<div class="col-sm-8">';
+						$output .= '<div class="col-sm-12">';
 							$output .= '<div class="dashboard-box database_table wap_nex_forms">
 							
 							<div class="dashboard-box-header aa_bg_main"><div class="table_title font_color_1 ">Create a new Blank Form</div></div>
@@ -76,7 +75,7 @@ if(!class_exists('NEXForms_Functions'))
 							$output .= '</div></div>';
 						$output .= '</div>';
 						
-						$output .= '<div class="col-sm-2"></div>';
+						/*$output .= '<div class="col-sm-2"></div>';*/
 					$output .= '</div>';
 					
 					
@@ -86,6 +85,7 @@ if(!class_exists('NEXForms_Functions'))
 					//$output .= '<h5><strong>'.__('Form Templates','nex-forms').'</strong></h5>';
 					//$output .= '<p>'.__('Select any of the pre-made form demo templates below to quick start your form. ','nex-forms').'</p>';
 					$output .= '<div class="row">';
+					$output .= '<div class="col-sm-12">';
 					if(!$args)
 						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to gain access to pre-made templates as per <a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/" target="_blank">http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/</a>','nex-forms').'</strong></div>';	
 					else
@@ -141,7 +141,7 @@ if(!class_exists('NEXForms_Functions'))
 						}*/
 					}	
 						$output .= '</div>';
-						
+						$output .= '</div>';
 				$output .= '</div>';
 				
 				$output .= '<div class="new-form-panel panel-3">';
@@ -313,6 +313,7 @@ if(!class_exists('NEXForms_Functions'))
 			return $output;
 		
 	}
+	
 		
 	
 	public function code_to_country( $code, $get_list=false ){
@@ -633,6 +634,8 @@ if(!class_exists('NEXForms_Functions'))
 			$str = str_replace('¿','',$str);
 			$str = str_replace('  ',' ',$str);
 			$str = str_replace(' ','_',$str);
+			$str = str_replace('-','_',$str);
+			$str = str_replace(':','_',$str);
 			
 			//$str = str_replace(':','',$str);
 			
@@ -660,9 +663,24 @@ if(!class_exists('NEXForms_Functions'))
 				'/ /'           =>   ' ', // nonbreaking space (equiv. to 0x160)
 			);
 			
-			$str = preg_replace(array_keys($utf8), array_values($utf8), $str);
+			$str = strtr($str, array(
+    'á' => 'a', 'à' => 'a', 'â' => 'a', 'ã' => 'a', 'ª' => 'a', 'ä' => 'a',
+    'Á' => 'A', 'À' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+    'Í' => 'I', 'Ì' => 'I', 'Î' => 'I', 'Ï' => 'I',
+    'í' => 'i', 'ì' => 'i', 'î' => 'i', 'ï' => 'i',
+    'é' => 'e', 'è' => 'e', 'ê' => 'e', 'ë' => 'e',
+    'É' => 'E', 'È' => 'E', 'Ê' => 'E', 'Ë' => 'E',
+    'ó' => 'o', 'ò' => 'o', 'ô' => 'o', 'õ' => 'o', 'º' => 'o', 'ö' => 'o',
+    'Ó' => 'O', 'Ò' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O',
+    'ú' => 'u', 'ù' => 'u', 'û' => 'u', 'ü' => 'u',
+    'Ú' => 'U', 'Ù' => 'U', 'Û' => 'U', 'Ü' => 'U',
+    'ç' => 'c', 'Ç' => 'C',
+    'ñ' => 'n', 'Ñ' => 'N',
+    '–' => '_', '’' => '_', '‘' => '_', '‹' => '_', '›' => '_', '‚' => '_',
+    '“' => '_', '”' => '_', '«' => '_', '»' => '_', '„' => '_',
+));
 			
-			$colname = substr($str,0,50);
+			$colname = substr($str,0,64);
 			
 			return $colname;
 		}
@@ -679,6 +697,15 @@ if(!class_exists('NEXForms_Functions'))
 			$str = str_replace('[','',$str);
 			$str = str_replace(']','',$str);
 			$str = ucfirst(trim($str));
+			
+			$str = str_replace('nr','Nr.',$str);
+			$str = str_replace('art ','Art. ',$str);
+			$str = str_replace('Art ','Art. ',$str);
+			$str = str_replace('eur','EUR',$str);
+			$str = str_replace('Eur','EUR',$str);
+			$str = str_replace('Chf','CHF',$str);
+			$str = str_replace('chf','CHF',$str);
+			
 			if($chars)
 				$str = substr($str,0,$chars);
 			return trim($str);
@@ -1757,8 +1784,8 @@ $get_nf_functions = new NEXForms_Functions();
 
 function NEXForms_clean_echo($content){
 	$content = NEXForms_rgba2Hex($content);
-	echo wp_kses( $content, NEXForms_allowed_tags());
-	//echo $content;
+	//echo wp_kses( $content, NEXForms_allowed_tags());
+	echo $content;
 }
 
 function NEXForms_allowed_tags(){

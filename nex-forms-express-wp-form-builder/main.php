@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.3
+Version: 8.8.4
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -239,6 +239,20 @@ class NEXForms5_Config{
 			'saved_user_email'		=>	'longtext',
 			'saved_user_email_address'	=>	'text',
 			);
+			
+	public $saved_reports_fields = array
+			(
+			'nex_forms_Id'			=>	'text',
+			'report_title'			=>	'text',
+			'report_fields'			=>	'longtext',
+			'report_params'			=>	'longtext',
+			'report_settings'		=>	'longtext',
+			'last_export'			=>	'datetime',
+			'export_count'			=>	'text',
+			'db_table'				=>  'text',
+			'auto_update'			=>  'text',
+			'status'				=>  'text',
+			);
 	
 	public $email_table_fields = array
 			(
@@ -342,7 +356,7 @@ function NEXForms5_main_menu(){
 	
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Builder','Dashboard', NF_USER_LEVEL, 'nex-forms-dashboard', 'NEXForms_dashboard');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Entries','Form Entries', NF_USER_LEVEL, 'nex-forms-page-submissions', 'NEXForms_entries_page');
-	add_submenu_page( 'nex-forms-dashboard', 'NF-Reporting','Reporting', NF_USER_LEVEL, 'nex-forms-page-reporting', 'NEXForms_reporting_page');
+	add_submenu_page( 'nex-forms-dashboard', 'NF-Reporting','Reporting', NF_USER_LEVEL, 'nex-forms-page-submission-reporting', 'NEXForms_reporting_page_new');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Analytics','Analytics',NF_USER_LEVEL, 'nex-forms-page-analytics', 'NEXForms_stats_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-File Uploads','File Uploads', NF_USER_LEVEL, 'nex-forms-page-file-uploads', 'NEXForms_attachments_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_add_ons_page');
@@ -554,27 +568,55 @@ function NEXForms_test_page(){
 			echo ' \''.$array->handle.'\', ';
 			}	
 		}*/
-	
+	$content = '';
 	global $wpdb;
 		
 		$nf_functions = new NEXForms_Functions();
-		$content = '';
-		$tmp_csv_export = get_option('tmp_csv_export');
-		if($tmp_csv_export=='Not Allowed')
-			exit();
-		$get_sql = explode('LIMIT',$tmp_csv_export['query']);
-		$sql = $get_sql[0];
 		
-		$cols = $tmp_csv_export['cols'];
 		
-		$form_data = $wpdb->get_results($sql);  // DB Query
-		
-		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.'wap_nex_forms_temp_report'); // DB Query
-		
-		$nf_functions = new NEXForms_Functions();
+		$records = $wpdb->get_results('SELECT `form_data` FROM `wp_wap_nex_forms_entries` WHERE `nex_forms_Id`=6 LIMIT 1000 OFFSET 5000');
+
+
+
+
 			
+		/*print_r($records);*/
+		foreach($records as $data)
+				{
+				$form_values = json_decode($data->form_data);
+				
+				$header_array['entry_Id'] = $data->Id;
+				
+				$header_array['date_time'] = $data->date_time;
+				
+				foreach($form_values as $field)
+					{
+					if(is_array($field_selection))
+						{
+						if(in_array($field->field_name,$field_selection))
+							{
+							$header_array_filters[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
+							}
+						}
+					else
+						{
+						$header_array_filters[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
+						}
+					$header_array[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
+					}
+				}
 		
-		$count_cols = 1;
+		
+		$header_array2 = array_unique($header_array);
+			$col_array_unique = array();
+			foreach($header_array2 as $key => $val){
+				if($key)
+					$col_array_unique[$nf_functions->format_column_name($key)] = $nf_functions->format_column_name($key);
+			}
+		
+		print_r($col_array_unique);
+		
+		/*$count_cols = 1;
 		foreach($table_fields as $column)
 			{
 			if(is_array($cols))
@@ -653,9 +695,9 @@ function NEXForms_test_page(){
 					}
 				}
 
-			
-			$database_actions = new NEXForms_Database_Actions();
-			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
+			*/
+			//$database_actions = new NEXForms_Database_Actions();
+			//$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
 			echo $content;
 	
 	
@@ -807,6 +849,15 @@ function NEXForms5_run_instalation(){
 	$instalation->db_table_fields		=  $config->form_entry_table_fields;
 	$instalation->db_table_primary_key	=  $config->plugin_db_primary_key;
 	$instalation->install_component_table();	
+	
+	$instalation = new NF5_Instalation();
+	$instalation->component_prefix 		=  $config->plugin_prefix;
+	$instalation->component_alias		=  'nex_forms_reports';
+	$instalation->db_table_fields		=  $config->saved_reports_fields;
+	$instalation->db_table_primary_key	=  $config->plugin_db_primary_key;
+	$instalation->install_component_table();	
+	
+	
 	
 	/* Email Table */
 	$instalation = new NF5_Instalation();
@@ -993,6 +1044,9 @@ function NEXForms5_run_instalation(){
 	$database_actions->alter_plugin_table('wap_nex_forms_files','entry_Id','text');
 	$database_actions->alter_plugin_table('wap_nex_forms_files','trashed','text');
 	
+	
+	$database_actions->alter_plugin_table('wap_nex_forms_reports','date_time','datetime');
+	$database_actions->alter_plugin_table('wap_nex_forms_reports','report_params','longtext');
 	//MIGRATE ATTACHMENT DATA
 	if(get_option('nf_set_attachments')!='1')
 			{
@@ -1025,6 +1079,7 @@ function NEXForms5_run_instalation(){
 					'products'							=>  $paypal_data->products,
 					'business'							=>  $paypal_data->business,
 					'cmd'								=>  $paypal_data->cmd,
+
 					'return_url'						=>  $paypal_data->return_url,
 					'cancel_url'						=>  $paypal_data->cancel_url,
 					'lc'								=>  $paypal_data->lc,
@@ -1577,7 +1632,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 				}
 				
 		//OPEN POPUP MODAL
-				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? esc_attr($form_css_style) : 'background:'.esc_attr($background)).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).' !important;height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
+				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? esc_attr($form_css_style) : 'background:'.esc_attr($background)).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).';height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
 					
 				$output .= '<span data-bs-dismiss="modal" data-dismiss="modal" class="modal-action modal-close '.esc_attr($button_color).'"><i class="material-icons fa fa-close"></i></span>';
 				$output .= '<div class="modal-content" id="nf_form_'.esc_attr($unigue_form_Id).'">';	
@@ -1687,6 +1742,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 				$set_theme = $form_attr->jq_theme;
 			
 			
+
 			//SET THEME
 			$output .= '<div class="set_form_theme theme-'.$set_theme.'">';
 				//AJAX ON-SCREEN SUCCESS MESSAGE
@@ -2240,17 +2296,17 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 								$get_user_id	 		= get_current_user_id();
 								
 								//SET DEAFAULT VALUES FOR LOGGED IN USERS
-								if($get_user_first_name)
+								//if($get_user_first_name)
 									$set_form_html = str_replace('{{nf_user_first_name}}',$get_user_first_name,$set_form_html);
-								if($get_user_last_name)
+								//if($get_user_last_name)
 									$set_form_html = str_replace('{{nf_user_last_name}}',$get_user_last_name,$set_form_html);
-								if($get_user_name)
+								//if($get_user_name)
 									$set_form_html = str_replace('{{nf_user_name}}',$get_user_name,$set_form_html);
-								if($get_user_id)
+								//if($get_user_id)
 									$set_form_html = str_replace('{{nf_user_id}}',$get_user_id,$set_form_html);
-								if($get_user_user_email)
+								//if($get_user_user_email)
 									$set_form_html = str_replace('{{nf_user_email}}',$get_user_user_email,$set_form_html);
-								if($get_user_user_url)
+								//if($get_user_user_url)
 									$set_form_html = str_replace('{{nf_user_url}}',$get_user_user_url,$set_form_html);
 								
 								//RUN 3rd party shortcodes on HTML if add-on is enabled
@@ -2711,6 +2767,7 @@ function submit_nex_form($entry_action = false){
 						$files[] = $movefile['file'];
 						$filenames[] = get_option('siteurl') . '/' . $set_file_name;
 						$_POST[$group_name[0]][$group_num][$group_name[1]] = get_option('siteurl') . '/' . $set_file_name;
+
 						$group_num++;
 					}
 				}
@@ -3441,7 +3498,115 @@ function NEXForms5_hex2RGB($hexStr, $returnAsString = true, $seperator = ',', $o
 }
 
 
+/*use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+class ExcelExport
+{
+    public function __construct()
+    {
+        $export_excel = isset($_REQUEST['export_excel']) ? sanitize_text_field($_REQUEST['export_excel']) : '';
+        if ($export_excel) {
+            $this->generate_excel();
+        }
+    }
+
+    public function generate_excel()
+    {
+        global $wpdb;
+
+        $nf_functions = new NEXForms_Functions();
+        $tmp_csv_export = get_option('tmp_csv_export');
+
+        if ($tmp_csv_export == 'Not Allowed') {
+            exit();
+        }
+
+        $get_sql = explode('LIMIT', $tmp_csv_export['query']);
+        $sql = $get_sql[0];
+
+        $cols = $tmp_csv_export['cols'];
+        $form_data = $wpdb->get_results($sql);
+        $table_fields = $wpdb->get_results('SHOW FIELDS FROM ' . $wpdb->prefix . 'wap_nex_forms_temp_report');
+
+        // Create a new Spreadsheet
+		if(class_exists('Spreadsheet'))
+			{
+			$spreadsheet = new Spreadsheet();
+			$sheet = $spreadsheet->getActiveSheet();
+	
+			// Add column headers
+			$columnIndex = 1;
+			$columns_array = [];
+	
+			foreach ($table_fields as $column) {
+				if (is_array($cols)) {
+					if (in_array($column->Field, $cols)) {
+						$columns_array[$column->Field] = $column->Field;
+						$sheet->setCellValueByColumnAndRow($columnIndex, 1, $nf_functions->unformat_name($column->Field));
+						$columnIndex++;
+					}
+				} else {
+					$columns_array[$column->Field] = $column->Field;
+					$sheet->setCellValueByColumnAndRow($columnIndex, 1, $nf_functions->unformat_name($column->Field));
+					$columnIndex++;
+				}
+			}
+	
+			// Add row data
+			$rowIndex = 2;
+			foreach ($form_data as $value) {
+				$columnIndex = 1;
+				foreach ($columns_array as $column) {
+					$field_value = $value->$column;
+					$field_value = str_replace(["\r\n", "\r", "\n", ","], [" ", " ", " ", ";"], $field_value);
+	
+					if ($nf_functions->isJson($field_value)) {
+						$decoded_value = json_decode($field_value, true);
+						if (is_array($decoded_value)) {
+							$formatted_value = '';
+							foreach ($decoded_value as $key => $val) {
+								if (is_array($val)) {
+									foreach ($val as $field_name => $field_val) {
+										$formatted_value .= $nf_functions->unformat_name($field_name) . " $key: $field_val; ";
+									}
+								} else {
+									$formatted_value .= "$key: $val; ";
+								}
+							}
+							$field_value = rtrim($formatted_value, '; ');
+						}
+					}
+	
+					$sheet->setCellValueByColumnAndRow($columnIndex, $rowIndex, $field_value);
+					$columnIndex++;
+				}
+				$rowIndex++;
+			}
+	
+			// Set Headers for Excel download
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment; filename="report.xlsx"');
+			header('Cache-Control: max-age=0');
+	
+			$writer = new Xlsx($spreadsheet);
+			$writer->save('php://output');
+	
+			update_option('tmp_csv_export', array('query' => '', 'cols' => '', 'form_Id' => ''));
+        	exit;
+			}
+		else
+			{
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			header('Content-Disposition: attachment; filename="report.xlsx"');
+			header('Cache-Control: max-age=0');	
+			}
+    }
+}
+
+if (is_admin()) {
+    $excelExport = new ExcelExport();
+}*/
 class CSVExport
 	{
 	public function __construct()
@@ -3456,17 +3621,38 @@ class CSVExport
 		
 		$nf_functions = new NEXForms_Functions();
 		$content = '';
-		$tmp_csv_export = get_option('tmp_csv_export');
-		if($tmp_csv_export=='Not Allowed')
+		$report_id = isset($_REQUEST['report_Id']) ? sanitize_title($_REQUEST['report_Id']) : 0;
+		if(!$report_id)
 			exit();
-		$get_sql = explode('LIMIT',$tmp_csv_export['query']);
-		$sql = $get_sql[0];
 		
-		$cols = $tmp_csv_export['cols'];
 		
-		$form_data = $wpdb->get_results($sql);  // DB Query
+		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($report_id)));
+
+		$db_table = $report->db_table;
+		$additional_params = json_decode($report->report_params,true);
 		
-		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.'wap_nex_forms_temp_report'); // DB Query
+		$where_str = '';
+		if(is_array($additional_params))
+				{
+				foreach($additional_params as $clause)
+					{
+					$like = '';
+					if($clause['operator'] == 'LIKE' || $clause['operator'] == 'NOT LIKE')
+						$like = '%';
+					if($clause['value']=='NULL')
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column'])))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
+					else
+						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column'])))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
+					
+					}
+				}
+			
+			
+			$form_data = $wpdb->get_results('SELECT * FROM '.$db_table.'  WHERE Id<>"" '.$where_str.' ORDER BY Id DESC');
+			
+			
+		//echo $form_data;
+		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$db_table); // DB Query
 		
 		$nf_functions = new NEXForms_Functions();
 			
@@ -3474,7 +3660,7 @@ class CSVExport
 		$count_cols = 1;
 		foreach($table_fields as $column)
 			{
-			if(is_array($cols))
+			/*if(is_array($cols))
 				{
 				if(in_array($column->Field,$cols))
 					{
@@ -3484,11 +3670,14 @@ class CSVExport
 					}
 				}
 			else
-				{
-				$columns_array[$column->Field] = $column->Field;
-				$content .= $nf_functions->unformat_name($column->Field).', ';
-				$count_cols ++;
-				}
+				{*/
+				if($column->Field!='Id')
+					{
+					$columns_array[$column->Field] = $column->Field;
+					$content .= $nf_functions->unformat_name($column->Field).', ';
+					$count_cols ++;
+					}
+				/*}*/
 			
 			}
 		$content = rtrim($content,', ');
@@ -3559,9 +3748,8 @@ class CSVExport
 			header("Content-Transfer-Encoding: base64");
 			echo esc_html("\xEF\xBB\xBF");
 			$database_actions = new NEXForms_Database_Actions();
-			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
+			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to CSV. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
 			echo $content;
-			update_option('tmp_csv_export',array('query'=>'','cols'=>'','form_Id'=>''));
 			exit;
 	}
 }
@@ -4195,6 +4383,7 @@ function NEXForms_dashboard_2(){
 							
 							if(function_exists('nexforms_ms_test_api'))
 								{
+
 								$output .= '<div class="installed"><span class="fa fa-check"></span> Installed</div>';		
 								}
 							else
@@ -4386,6 +4575,7 @@ function NEXForms_dashboard_2(){
 	$output .= '</div>';
 	
 	NEXForms_clean_echo( esc_html( $output ) );
+
 	
 	
 	global $wp_styles;
@@ -4645,7 +4835,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
 												{
 												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
-													$admin_val .= '<td style="border-right:1px solid #ddd;"><img src="'.rtrim($innervalue,', ').'" style="max-width:150px;" /></td>';
+													$admin_val .= '<td style="border-right:1px solid #ddd;"><span style="max-width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" /></span></td>';
 												else
 													$admin_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
 												}
@@ -4705,7 +4895,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 										{
 											
 										if(in_array($nf_functions->get_ext(trim($setval)),$img_ext_array))
-											$set_val .= '<a href="'.$setval.'" target="_blank"><img src="'.$setval.'"></a><br />
+											$set_val .= '<a href="'.$setval.'" target="_blank"><span style="max-width:100px;"><img src="'.$setval.'"></span></a><br />
 	';									else
 											$set_val .= '<a href="'.$setval.'" target="_blank">'.$setval.'</a><br>';	
 										}
@@ -4888,18 +5078,66 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$_REQUEST[$key] = get_option('siteurl').'/wp-content/'.$file_dir[1];
 			}
 		
+		
+		
 		//SETUP VALUEPLACEHOLDER - USER EMAIL
 		preg_match_all($pattern, $body, $matches);
+		
+		
+		
 			foreach($matches[0] as $match)
 				{
 				$the_val = '';
+				
 				if(is_array($_REQUEST[$nf_functions->format_name($match)]))
 					{
-					foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
+					$k = 1;
+				
+					if(array_key_exists('real_val__'.$nf_functions->format_name($match),$_REQUEST))
 						{
-						$the_val .='<span class="fa fa-check"></span> '. $value.' ';	
+							
+							$the_val = $_REQUEST['real_val__'.$nf_functions->format_name($match)][0];	
+							
 						}
-					$the_val = str_replace('Array','',$the_val);
+					else
+						{
+						$the_val 	.= '<table width="100%" cellpadding="10" cellspacing="0" style="border:1px solid #ddd; border-bottom:none;margin-left:-10px;margin-top:-10px;margin-bottom:-10px;margin-right:-20px;">';
+						foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
+							{				
+							if($k==1)
+											{
+											$the_val .= '<tr>';
+											foreach($value as $innerkey=>$innervalue)
+												{
+												if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
+													$the_val .= '<td style="background-color:#f5f5f5;border-bottom:1px solid #ddd;border-right:1px solid #ddd;">'.$nf_functions->unformat_name($innerkey).'</td>';
+												}
+											$the_val .= '</tr>';
+											}
+											
+										$the_val .= '<tr>';
+										foreach($value as $innerkey=>$innervalue)
+											{
+											
+											if(array_key_exists('real_val__'.$innerkey,$value))
+													{
+													$innervalue = rtrim($value['real_val__'.$innerkey.''],', ');	
+													
+													}
+											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
+												{
+												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
+													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>';
+												else
+													$the_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
+												}
+											}
+										$the_val .= '</tr>';
+												
+							$k++;
+							}
+						$the_val .= '</table><br /><br />';
+						}
 					$body = str_replace($match,$the_val,$body);
 					}
 				else
@@ -4912,23 +5150,69 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 						{
 						if($_REQUEST[$nf_functions->format_name($match)]!='--- Select ---')
 							$body = str_replace($match,$_REQUEST[$nf_functions->format_name($match)],$body);	
-						}
+						}	
 					}
 				}
 				
 		//SETUP VALUEPLACEHOLDER - ADMIN EMAIL
 		
 		preg_match_all($pattern, $admin_body, $matches2);
+		
+		
+		
 			foreach($matches2[0] as $match)
 				{
 				$the_val = '';
+				
 				if(is_array($_REQUEST[$nf_functions->format_name($match)]))
 					{
-					foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
+					$k = 1;
+				
+					if(array_key_exists('real_val__'.$nf_functions->format_name($match),$_REQUEST))
 						{
-						$the_val .='- '. $value.' ';	
+							
+							$the_val = $_REQUEST['real_val__'.$nf_functions->format_name($match)][0];	
+							
 						}
-					$the_val = str_replace('Array','',$the_val);
+					else
+						{
+						$the_val 	.= '<table width="100%" cellpadding="10" cellspacing="0" style="border:1px solid #ddd; border-bottom:none;margin-left:-10px;margin-top:-10px;margin-bottom:-10px;margin-right:-20px;">';
+						foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
+							{				
+							if($k==1)
+											{
+											$the_val .= '<tr>';
+											foreach($value as $innerkey=>$innervalue)
+												{
+												if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
+													$the_val .= '<td style="background-color:#f5f5f5;border-bottom:1px solid #ddd;border-right:1px solid #ddd;">'.$nf_functions->unformat_name($innerkey).'</td>';
+												}
+											$the_val .= '</tr>';
+											}
+											
+										$the_val .= '<tr>';
+										foreach($value as $innerkey=>$innervalue)
+											{
+											
+											if(array_key_exists('real_val__'.$innerkey,$value))
+													{
+													$innervalue = rtrim($value['real_val__'.$innerkey.''],', ');	
+													
+													}
+											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
+												{
+												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
+													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>';
+												else
+													$the_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
+												}
+											}
+										$the_val .= '</tr>';
+												
+							$k++;
+							}
+						$the_val .= '</table><br /><br />';
+						}
 					$admin_body = str_replace($match,$the_val,$admin_body);
 					}
 				else
@@ -4944,6 +5228,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 						}	
 					}
 				}
+			//echo $admin_body;
 		//EMAIL ATTR TAGS
 		preg_match_all($pattern, $from_address, $matches3);
 		foreach($matches3[0] as $match)
@@ -5067,6 +5352,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			
 			$admin_body = $entry_attr->saved_admin_email;
 			$admin_body = str_replace('<span class="payment_status">'.__('pending','nex-forms').'</span>','<span class="payment_status">'.$entry_attr->payment_status.'<span class="payment_status">',$admin_body);
+
 			$admin_body = str_replace('<span class="payment_status">'.__('payed','nex-forms').'</span>','<span class="payment_status">'.$entry_attr->payment_status.'<span class="payment_status">',$admin_body);
 			$admin_body = str_replace('<span class="payment_status">'.__('failed','nex-forms').'</span>','<span class="payment_status">'.$entry_attr->payment_status.'<span class="payment_status">',$admin_body);
 			

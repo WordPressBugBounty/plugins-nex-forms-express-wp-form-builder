@@ -1410,6 +1410,147 @@ function NEXForms_dashboard(){
 
 
 
+function NEXForms_reporting_page_new(){
+	
+	global $wpdb;
+	$theme = wp_get_theme();
+	$output = '';
+	
+	$nf_function = new NEXForms_functions();
+
+	$config = new NEXForms5_Config();
+	
+	$dashboard = new NEXForms_dashboard();
+	$dashboard->dashboard_checkout();
+	$dashboard->color_adapt = true;
+	
+	//MY FORMS
+	$saved_forms = new NEXForms_dashboard();
+	$saved_forms->table = 'wap_nex_forms_reports';
+	$saved_forms->table_header = 'Saved Reports';
+	$saved_forms->table_header_icon = 'insert_drive_file';
+	$saved_forms->table_headings = array('Id',  array('heading'=>__('title','nex-forms'), 'user_func'=>'link_report_title', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id','sort_by'=>'title'), array('heading'=>__('Total Records','nex-forms'), 'user_func'=>'get_total_report_records', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'db_table'), array('heading'=>__('Last Update','nex-forms'), 'user_func'=>'report_last_update', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'date_time','sort_by'=>'date_time'), array('heading'=>'Export CSV', 'user_func'=>'quick_report_csv', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'), array('heading'=>'Export PDF', 'user_func'=>'quick_report_pdf', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'), array('heading'=>'View/Edit', 'user_func'=>'link_report_title2', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'));
+	$saved_forms->show_headings=true;
+	$saved_forms->extra_classes = 'my-forms chart-selection';
+	$saved_forms->search_params = array('Id','title');
+	$saved_forms->checkout = $dashboard->checkout;
+	$saved_forms->color_adapt = true;
+	$saved_forms->show_delete = true;
+	
+	
+	$output .= '<div class="nex_forms_admin_page_wrapper">';
+	$output .= NEXForms_new_report_setup();
+    $output .= '<div class="hidden">';
+	$output .= $dashboard->dashboard_menu('Dashboard');
+	$output .= '</div>';
+	
+	
+	if(!is_array(get_option('7103891')))
+		{
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
+		
+		if(is_array($response->errors))
+				{
+				foreach($response->errors as $error_type => $error)
+					{
+					NEXForms_clean_echo( '<br /><br /><div class="alert alert-danger"><strong>WP ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'<br />NEX-Forms can not verify your license as a result of this error. Please as your Hosting Provider to resolve this error. <a href="https://www.google.com/search?q='.$error[0].'" target="_blank">Here are some helpfull articles for your Host</a> </div><br /><br />&nbsp;');
+					}	
+				}
+		else
+			{		
+			update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+			}
+		} 
+		update_option('nf_activated',$dashboard->checkout);
+	 
+		 
+		 $nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
+		 $output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+		 
+		  $output .= '<div id="dashboard_panel" class="dashboard_panel nf_reporting">';
+			$output .= $dashboard->new_menu('dashboard');
+			  	$output .= '<div class="col-sm-2">';
+					
+					$output .= '<div class="dashboard-box database_table create_new_form new_report wap_nex_forms new-forms">';
+						$output .= '<div class=""><span class="icon fas fa-database"></span><br />'.__('Create a New Report','nex-forms').'</div></div>';	
+					$output .= '</div>';
+					
+					$output .= '<div class="col-sm-10">';
+						$output .= $saved_forms->print_record_table();
+					$output .= '</div>';
+					
+			  $output .= '</div>';
+		  $output .= '</div>';
+		$output .= '</div>';  	
+	 $output .= '</div>'; //nex_forms_admin_page_wrapper
+ 
+	 NEXForms_clean_echo( $output);
+	 $dashboard->remove_unwanted_styles();
+	 
+}
+
+
+
+function NEXForms_new_report_setup(){
+
+		$output = '';
+		
+		
+		global $wpdb;
+		$dashboard = new NEXForms_dashboard();
+		$dashboard->dashboard_checkout();
+		$database_actions = new NEXForms_Database_Actions();
+		
+		
+		
+		
+		$nonce_url = wp_create_nonce( 'nf_admin_new_form_actions' );
+		$output .= '<div id="new_form_setup" class="modal animated fadeInDown">';
+			//HEADER 
+			//$theme = wp_get_theme();
+			
+			$output .= '<div class="modal-header aa_bg_main">';
+				$output .= '<div class="modal-close back-to-dash reporting"><span class="fas fa-arrow-left"></span></div><h4><div class="report-bc">'.__('New Report','nex-forms').'</div> - <div class="sub-heading"></div><div class="report-name"></div></h4>';
+				$output .= '<i class="modal-action modal-close"><i class="fa fa-close"></i></i>';
+			$output .= '</div>';
+			//CONTENT
+			$output .= '<div class="modal-content">';
+
+				$output .= '<div class="new-report-container" >';
+					$output .= '<div class="dash-left-col">';
+					$output .= '<div class="new-form-sidebar2 aa_bg_sec aa_menu" >';
+						$output .= '<ul>';
+								
+								$output .= '<li class="db_tab menu-item-has-children active"><a class="" data-panel="panel-1" data-sub-heading="'.__('1. Report Setup','nex-forms').'"><span class="top-icon fa-solid fa-wrench"></span> <span class="menu-text">'.__('Report Setup','nex-forms').'</span></a></li>';
+								$output .= '<li class="db_tab menu-item-has-children disabled"><a class="" data-panel="panel-2" data-sub-heading="'.__('2. Reporting Field Selection','nex-forms').'"><span class="top-icon fa-solid fa-file-circle-plus"></span> <span class="menu-text">'.__('Reporting Fields','nex-forms').'</span></a></li>';
+								$output .= '<li class="db_tab menu-item-has-children disabled"><a class="" data-panel="panel-3" data-sub-heading="'.__('','nex-forms').'"><span class="top-icon fa-solid fa-diagram-next"></span> <span class="menu-text">'.__('Generate Report','nex-forms').'</span></a></li>';
+	
+						$output .= '<ul>';
+					$output .= '</div>';
+					$output .= '</div>';
+					
+					//BLANK
+				$output .= '<div class="rep-center-col">';
+					$output .= '<div class="new-form-panel ajax_loading"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div></div>';
+					$output .= '<div class="new-form-panel ajax_error_response">';
+					$output .= '<div class="alert alert-danger">'.__('Sorry, something went wrong while reading the import file. Please try MANUAL IMPORT instead.','nex-forms').'</div>';
+					$output .= '</div>';
+					$output .= '<input name="title2" id="form_title" placeholder="'.__('Enter new Form Title','nex-forms').'" class="hidden" type="text">';	
+					$output .= '<form class="new_nex_form_report" name="new_nex_form_report" id="new_nex_form_report" method="post" action="'.admin_url('admin-ajax.php').'">';
+						$output .= '<input name="nex_forms_wpnonce" type="hidden" value="'.$nonce_url.'">';
+						$output .= '<div class="report_steps">';
+							$output .= $dashboard->edit_report();
+						$output .= '</div>';
+					$output .= '</form>';
+				$output .= '</div>';
+				$output .= '</div>';
+			$output .= '</div>';				  
+				
+			return $output;
+		
+	}
+
 if(!class_exists('NEXForms_dashboard'))
 	{
 	class NEXForms_dashboard{
@@ -1447,7 +1588,10 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			add_action('wp_ajax_get_table_records', array($this,'get_table_records'));
 			add_action('wp_ajax_do_form_entry_save', array($this,'do_form_entry_save'));
-			add_action('wp_ajax_submission_report', array($this,'submission_report'));
+			add_action('wp_ajax_nf_report_get_additional_params', array($this,'report_get_additional_params'));
+			
+			add_action('wp_ajax_submission_report2', array($this,'submission_report2'));
+			
 			add_action('wp_ajax_nf_print_chart', array($this,'print_chart'));
 			
 			add_action('wp_ajax_nf_delete_form_entry', array($this,'delete_form_entry'));
@@ -1462,6 +1606,14 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			add_action('wp_ajax_nf_print_to_pdf', array($this,'print_to_pdf'));
 			add_action('wp_ajax_nf_delete_pdf', array($this,'delete_pdf'));
+			
+			
+			
+			
+			add_action('wp_ajax_nf_create_new_report', array($this,'create_report'));
+			add_action('wp_ajax_nf_edit_report', array($this,'edit_report'));
+
+			
 			//add_action('wp_ajax_nopriv_nf_print_to_pdf', array($this,'print_to_pdf'));
 			
 			add_action('wp_ajax_nf_print_report_to_pdf', array($this,'print_report_to_pdf'));
@@ -1486,6 +1638,488 @@ if(!class_exists('NEXForms_dashboard'))
 			$this->action				= $action;
 			$this->sortable_columns		= $sortable_columns;
 			}
+		
+		public function edit_report(){
+	
+		global $wpdb;
+		$dashboard = new NEXForms_dashboard();
+		$dashboard->dashboard_checkout();
+		$database_actions = new NEXForms_Database_Actions();
+		$nf_function = new NEXForms_functions();
+		$nf_functions = new NEXForms_functions();
+		$report_id = (isset($_POST['report_update_id'])) ? sanitize_title($_POST['report_update_id']) : 0;
+		$output = '';
+		$report_title = '';
+		$report_form = '';
+		$get_report = false;
+		if($report_id)
+			{
+			$get_report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d',$report_id)); // DB Query	
+			
+			
+			$report_title 	= $get_report->report_title;
+			$report_form 	= $get_report->nex_forms_Id;
+			$output .= '<div id="report-edit-Id" style="display:none;">'.$report_id.'</div>';
+			
+			$output .= '<div id="report-status" style="display:none;">'.$get_report->status.'</div>';
+			}
+		
+		$output .= '<div class="new-report-panel new-report panel-1 active">';
+									$output .= '<br /><br /><div class="row">';
+						$output .= '<div class="col-sm-1"></div>';
+							$output .= '<div class="col-sm-10">';
+								$output .= '<div class="dashboard-box database_table wap_nex_forms">
+								
+								<div class="dashboard-box-header aa_bg_main"><div class="table_title font_color_1 ">'.__('Create a new Submission Report','nex-forms').'</div></div>
+								<div class="dashboard-box-content ">
+								';
+								
+									//$output .= '<h5><strong>'.__('Create a new Blank Form','nex-forms').'</strong></h5>';
+									
+									$output .= '<div class="row">';
+										$output .= '<div class="col-sm-2">';
+											$output .= '<div class="report-setting-label">'.__('Report Title','nex-forms').'</div>';
+										$output .= '</div>';
+										$output .= '<div class="col-sm-10">';
+											$output .= '<input name="report_title" id="report_title" value="'.$report_title.'" maxlength="35" placeholder="'.__('Enter Report Title','nex-forms').'" class="form-control" type="text">';		
+										$output .= '</div>';
+									$output .= '</div>';
+									
+									$forms = $wpdb->get_results('SELECT Id, title FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC'); // DB Query
+										
+										
+									$output .= '<div class="row">';
+										$output .= '<div class="col-sm-2">';
+											$output .= '<div class="report-setting-label">'.__('Reporting Form','nex-forms').'</div>';
+										$output .= '</div>';
+										$output .= '<div class="col-sm-10">';
+											
+											$output .= '<select name="form_selection" class="form-control form_selection" data-selected="'.$report_form.'">';
+											$output .= '<option value="0" selected="selected">'.__('No Form Selected','nex-forms').'</option>';	
+											foreach($forms as $form)
+												{
+												$total_entries = $database_actions->get_total_records('wap_nex_forms_entries',array(array('column'=>'trashed','operator'=>'IS','value'=>'NULL')),$form->Id);	
+												
+												if($total_entries>0)	
+													$output .= '<option class="reporting_item form_id_'.$form->Id.'" data-form-id="'.$form->Id.'" value="'.$form->Id.'">'.$form->title.' - '.$total_entries.' '.__('Entries','nex-forms').'</option>';	
+												}
+											$output .= '</select>';
+													
+										$output .= '</div>';
+									$output .= '</div>';	
+	
+									
+									
+									$output .= '<div class="row">';
+										$output .= '<div class="col-sm-2">';
+										
+										
+										
+										
+										$output .= '</div>';
+										$output .= '<div class="col-sm-10">';
+											$output .= '<input type="button" class="form-control create_new_report btn blue "  value="SAVE">';
+										$output .= '</div>';
+									$output .= '</div>';
+									
+									
+								
+									
+									
+									
+								$output .= '</div></div>';
+							$output .= '</div>';
+							
+							$output .= '<div class="col-sm-1"></div>';
+							$output .= '</div>';
+						$output .= '</div>';
+						
+						$output .= '<div class="new-report-panel new-report panel-2">';
+						
+								if($get_report)
+									{			
+									$form_Id = $report_form;
+									$get_form_fields = $wpdb->get_row($wpdb->prepare('SELECT title,field_details FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d',sanitize_title($form_Id)));
+									
+									//$wpdb->show_errors();
+									//$wpdb->print_errors();
+									$set_form_fields = json_decode($get_form_fields->field_details,true);		
+									$get_report_fields  = 	json_decode($get_report->report_fields,true);
+											
+											$output .= '<div class="report_field_row header">';
+					
+													$output .= '<div class="col-1">';
+														$output .= '<input type="checkbox" name="toggel_field_selection" class="toggel_field_selection" checked="checked" value="">';
+													$output .= '</div>';
+													
+													
+													$output .= '<div class="col-2">';
+														$output .= __('Field Name','nex-forms');
+													$output .= '</div>';
+													
+													$output .= '<div class="col-3">';
+														$output .= __('Database Column Name','nex-forms');
+													$output .= '</div>';
+												$output .= '</div>';
+										
+										$output .= '<div class="report_field_selection">';
+										
+										$output .= '<div class="report_field_row">';
+											$output .= '<div class="col-1">';
+												$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array('entry_id',$get_report_fields)) ? 'checked="checked"' : '').' value="entry_id">';
+											$output .= '</div>';
+											$output .= '<div class="col-2">';
+												$output .= 'Entry Id';
+											$output .= '</div>';
+											
+											$output .= '<div class="col-3">';
+												$output .= 'entry_id';
+											$output .= '</div>';
+										$output .= '</div>';
+										
+										
+												
+										$output .= '<div class="report_field_row">';
+											$output .= '<div class="col-1">';
+												$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array('date_time',$get_report_fields)) ? 'checked="checked"' : '').' value="date_time">';
+											$output .= '</div>';
+											$output .= '<div class="col-2">';
+												$output .= 'Date Time';
+											$output .= '</div>';
+											$output .= '<div class="col-3">';
+												$output .= 'date_time';
+											$output .= '</div>';
+										$output .= '</div>';
+										
+										
+										$records = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.$wpdb->prefix.'wap_nex_forms_entries` WHERE `nex_forms_Id`=%d ORDER BY `last_update` DESC LIMIT 500 OFFSET 0', sanitize_text_field($report_form)));
+			
+			
+											foreach($records as $data)
+												{
+												$form_values = json_decode($data->form_data);
+												
+												foreach($form_values as $field)
+													{
+													$header_array[$field->field_name] = $nf_functions->format_column_name($field->field_name);
+													}
+												};
+													
+											$i = 0;
+											foreach($header_array as $key=>$field)
+												{
+												
+												if($field)
+													{
+													//if(in_array(
+													$output .= '<div class="report_field_row">';
+													
+														$output .= '<div class="col-1">';
+															$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array($nf_functions->format_column_name(str_replace('[]','',$field)),$get_report_fields)) ? 'checked="checked"' : '').' value="'.$nf_functions->format_column_name(str_replace('[]','',$field)).'">';
+														$output .= '</div>';
+														
+														
+														$output .= '<div class="col-2">';
+															$output .= $nf_functions->unformat_name($key);
+															$output .= '<input type="hidden" name="field_selection['.$i.'][field_name]" value="'.$nf_functions->format_column_name(str_replace('[]','',$field)).'">';
+														$output .= '</div>';
+														
+														$output .= '<div class="col-3">';
+															$output .= '<input type="text" class="form-control" name="field_selection['.$i.'][col_name]" maxlength="64" value="'.$nf_functions->format_column_name(str_replace('[]','',$field)).'">';
+														$output .= '</div>';
+													$output .= '</div>';
+													}
+												$i++;
+												}
+										
+										
+													
+									/*$i = 0;
+										foreach($set_form_fields as $key=>$field)
+											{
+											
+											if($field['field_name'])
+												{
+												$output .= '<div class="report_field_row">';
+												
+													$output .= '<div class="col-1">';
+														$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array($nf_function->format_column_name(str_replace('[]','',$field['field_name'])),$get_report_fields)) ? 'checked="checked"' : '').' value="'.$nf_function->format_column_name(str_replace('[]','',$field['field_name'])).'">';
+													$output .= '</div>';
+													
+													
+													$output .= '<div class="col-2">';
+														$output .= $nf_function->unformat_name($field['field_name']);
+														$output .= '<input type="hidden" name="field_selection['.$i.'][field_name]" value="'.$nf_function->format_column_name(str_replace('[]','',$field['field_name'])).'">';
+													$output .= '</div>';
+													
+													$output .= '<div class="col-3">';
+														$output .= '<input type="text" class="form-control" name="field_selection['.$i.'][col_name]" maxlength="64" value="'.$nf_function->format_column_name(str_replace('[]','',$field['field_name'])).'">';
+													$output .= '</div>';
+												$output .= '</div>';
+												}
+											$i++;
+											}*/
+											
+										$output .= '</div>';	
+									}
+						
+						$output .= '<div class="report_field_row footer">';
+				$output .= '<div class="">';
+					$output .= '<input type="button" class="form-control set_field_selection btn blue" value="Generate Report">';
+				$output .= '</div>';
+			$output .= '</div>';
+						$output .= '</div>';
+						
+						
+						$output .= '<div class="new-report-panel new-report panel-3">';
+						
+						
+							if($get_report)
+									{
+									
+									 
+							
+										$output .= '<div class="add_clause">';
+											$output .= '<a class="nf_button aa_bg_sec_btn add_new_where_clause2"><i class="fa fa-plus"></i> Add Filter </a>';
+											$output .= '<a class="nf_button aa_bg_sec_btn run_query_2 run_query" id="'.sanitize_text_field($report_form).'"><i class="fa fa-file-import"></i> Run Query </a>';
+											$output .= '<div class="close_filters"><span class="fas fa-arrow-left"></span></div>';
+										$output .= '</div>';
+										
+										$output .= '<div class="right-col-top">';
+											
+											$output .= $dashboard->report_get_additional_params(true,$report_id);
+										
+										$output .= '</div>';
+									
+									
+									
+									$output .= '<div class="right-bottom">';
+									$output .= '</div>';
+									
+									}
+						$output .= '</div>';
+						
+						
+						$output .= '</div>';
+					
+					$do_ajax = (isset($_POST['do_ajax'])) ? sanitize_text_field($_POST['do_ajax']) : '';
+	
+			if($do_ajax)
+				{
+				NEXForms_clean_echo($output);
+				wp_die();
+				}
+			else
+				return $output;
+	
+}
+		
+		
+		public function create_report(){
+			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+				wp_die();
+			}
+			if(!current_user_can( NF_USER_LEVEL ))	
+				wp_die();
+				
+			global $wpdb;
+			
+			
+			$nf_function = new NEXForms_functions();	
+			$nf_functions = new NEXForms_functions();			
+			$table_name = $wpdb->prefix.'nex_forms_'.$nf_function->format_column_name(sanitize_title($_POST['report_title']));
+			
+			$update_id = sanitize_title($_POST['report_update_id']);
+			
+			
+			$output = '';
+			
+			$tz = wp_timezone();
+			$set_date = new DateTime("now", $tz);	
+			
+			if($update_id!=0)
+				{
+				$get_existing_table = $wpdb->get_var($wpdb->prepare('SELECT db_table FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$update_id));
+				$update = $wpdb->update ( $wpdb->prefix.'wap_nex_forms_reports', array
+					(
+					'report_title'=>sanitize_text_field($_POST['report_title']),
+					'nex_forms_Id'=>sanitize_text_field($_POST['report_form']),
+					'db_table'=>$table_name,
+					'date_time'			=> $set_date->format('Y-m-d H:i:s'),
+					), array(	'Id' => $update_id) ); 
+					
+				if($get_existing_table != $table_name)
+					{
+					if($wpdb->get_var("show tables like '".$get_existing_table."'"))
+						{
+						$wpdb->query("RENAME TABLE `".$get_existing_table."` TO `".$table_name."`");
+						}
+					}
+				$output .= '<div id="report-edit-Id" style="display:none;">'.$update_id.'</div>';
+				}
+			else
+				{
+				$table_exists = $wpdb->get_var($wpdb->prepare('SELECT db_table FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE db_table = %s',$table_name));
+
+				if($table_exists)
+					{
+					echo 'Report <strong>'.sanitize_text_field($_POST['report_title']).'</strong> already exists. Please choose another report title.';
+					wp_die();
+					}
+				$insert = $wpdb->insert ( $wpdb->prefix.'wap_nex_forms_reports',  array
+					(
+					'report_title'=>sanitize_text_field($_POST['report_title']),
+					'nex_forms_Id'=>sanitize_text_field($_POST['report_form']),
+					'db_table'=>$table_name,
+					'date_time'			=> $set_date->format('Y-m-d H:i:s'),
+					'status'=>2
+					) ); 
+				$insert_id = $wpdb->insert_id;
+				$output .= '<div id="report-edit-Id" style="display:none;">'.$insert_id.'</div>';
+				}
+					
+			$form_Id = sanitize_title($_POST['report_form']);
+			$get_form_fields = $wpdb->get_row($wpdb->prepare('SELECT title,field_details FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d',sanitize_title($form_Id)));
+			
+			//$wpdb->show_errors();
+			//$wpdb->print_errors();
+			$set_form_fields = json_decode($get_form_fields->field_details,true);
+									
+			if(!$set_form_fields)
+				{
+				$output .= '<div class="erro_msg_panel alert alert-danger">'.__('This form needs to be resaved to made ready for reporting 2.0','nex-forms').'<a href="'.get_admin_url().'admin.php?page=nex-forms-builder&open_form='.$form_Id.'" class="form_title"   title="Edit - '.$title.'" data-title="'.__('Edit Form','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom">'.__(' RE-SAVE ', 'nex-forms').$get_form_fields->title.' '.__('form now', 'nex-forms').'.</a></div>';	
+				}
+			
+			//echo '<pre>';
+			//print_r($set_form_fields);
+			//echo '<pre>';
+			
+			$output .= '<div class="report_field_row header">';
+					
+						$output .= '<div class="col-1">';
+							$output .= '<input type="checkbox" name="toggel_field_selection" class="toggel_field_selection" checked="checked" value="">';
+						$output .= '</div>';
+						
+						
+						$output .= '<div class="col-2">';
+							$output .= __('Field Name','nex-forms');
+						$output .= '</div>';
+						
+						$output .= '<div class="col-3">';
+							$output .= __('Database Column Name','nex-forms');
+						$output .= '</div>';
+					$output .= '</div>';
+			
+			$output .= '<div class="report_field_selection">';
+			
+			$records = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.$wpdb->prefix.'wap_nex_forms_entries` WHERE `nex_forms_Id`=%d ORDER BY `last_update` DESC LIMIT 500 OFFSET 0', sanitize_text_field($_POST['report_form'])));
+			
+			
+			foreach($records as $data)
+				{
+				$form_values = json_decode($data->form_data);
+				
+				foreach($form_values as $field)
+					{
+					$header_array[$field->field_name] = $nf_functions->format_column_name($field->field_name);
+					}
+				};
+			//$get_submitted_fields = json_decode($records['form_data'],true);
+			//echo '####<pre>';
+				//print_r($header_array);
+			//echo '</pre>';
+			
+			$field_selection = $header_array;
+			
+			
+			if($update_id!=0)
+				{
+				$get_field_selection = $wpdb->get_var($wpdb->prepare('SELECT report_fields FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$update_id));
+				
+				$field_selection = json_decode($get_field_selection,true);
+				
+				}
+			
+			
+			$output .= '<div class="report_field_row">';
+				$output .= '<div class="col-1">';
+					$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array('entry_id',$field_selection)) ? 'checked="checked"' : '').' value="entry_id">';
+				$output .= '</div>';
+				$output .= '<div class="col-2">';
+					$output .= 'Entry Id';
+				$output .= '</div>';
+				
+				$output .= '<div class="col-3">';
+					$output .= 'entry_id';
+				$output .= '</div>';
+			$output .= '</div>';
+			
+			
+					
+			$output .= '<div class="report_field_row">';
+				$output .= '<div class="col-1">';
+					$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array('date_time',$field_selection)) ? 'checked="checked"' : '').' value="date_time">';
+				$output .= '</div>';
+				$output .= '<div class="col-2">';
+					$output .= 'Date Time';
+				$output .= '</div>';
+				$output .= '<div class="col-3">';
+					$output .= 'date_time';
+				$output .= '</div>';
+			$output .= '</div>';
+			
+			
+			
+			
+			
+			
+			
+			$i = 0;
+			
+			foreach($header_array as $key=>$field)
+				{
+				
+				if($field)
+					{
+					//if(in_array(
+					$output .= '<div class="report_field_row">';
+					
+						$output .= '<div class="col-1">';
+							$output .= '<input type="checkbox" name="showhide_fields[]" '.((in_array($nf_functions->format_column_name(str_replace('[]','',$field)),$field_selection)) ? 'checked="checked"' : '').' value="'.$nf_function->format_column_name(str_replace('[]','',$field)).'">';
+						$output .= '</div>';
+						
+						
+						$output .= '<div class="col-2">';
+							$output .= $nf_function->unformat_name($key);
+							$output .= '<input type="hidden" name="field_selection['.$i.'][field_name]" value="'.$nf_function->format_column_name(str_replace('[]','',$field)).'">';
+						$output .= '</div>';
+						
+						$output .= '<div class="col-3">';
+							$output .= '<input type="text" class="form-control" name="field_selection['.$i.'][col_name]" maxlength="64" value="'.$nf_function->format_column_name(str_replace('[]','',$field)).'">';
+						$output .= '</div>';
+					$output .= '</div>';
+					}
+				$i++;
+				}
+			
+			
+			
+			
+			
+			$output .= '</div>';
+			
+			$output .= '<div class="report_field_row footer">';
+				$output .= '<div class="">';
+					$output .= '<input type="button" class="form-control set_field_selection btn blue" value="Generate Report">';
+				$output .= '</div>';
+			$output .= '</div>';	
+			
+			echo $output;
+			wp_die();
+			
+		}
+		
+		
 		public function entries_menu(){
 			
 			global $wpdb;
@@ -1863,7 +2497,7 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			$other_config = get_option('nex-forms-other-config');
 			$zero_conflict = isset($other_config['zero-con']) ? $other_config['zero-con'] : '1';
-			if($other_config['zero-con']=='1')
+			if($zero_conflict=='1')
 				{
 				$dashboard = new NEXForms_dashboard();
 				$dashboard->dashboard_checkout();
@@ -1926,7 +2560,7 @@ if(!class_exists('NEXForms_dashboard'))
 										$output .= '<li class="db_tab '.(($_REQUEST['page']=='nex-forms-dashboard') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-dashboard" data-title="'.__('Dashboard','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-dashboard') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-home"></span> <span class="menu-text">'.__('Dashboard','nex-forms').'</span></a></li>';
 										
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-submissions') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-submissions"  data-placement="bottom" data-title="'.__('Form Entries','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-submissions') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-inbox"></span> <span class="menu-text">'.__('Form Entries','nex-forms').'</span></a></li>';
-										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-reporting') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-reporting"  data-placement="bottom" data-title="'.__('Reporting','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-reporting') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-database"></span> <span class="menu-text">'.__('Reporting','nex-forms').'</span></a></li>';
+										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-submission-reporting') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-submission-reporting"  data-placement="bottom" data-title="'.__('Reporting','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-submission-reporting') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-database"></span> <span class="menu-text">'.__('Reporting','nex-forms').'</span></a></li>';
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-analytics') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-analytics"  data-placement="bottom" data-title="'.__('Analytics','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-analytics') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-chart-bar"></span> <span class="menu-text">'.__('Analytics','nex-forms').'</span></a></li>';
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-file-uploads') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-file-uploads"  data-placement="bottom" data-title="'.__('File Uploads','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-file-uploads') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-file-upload"></span> <span class="menu-text">'.__('File Uploads','nex-forms').'</span></a></li>';
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').'" style="position: absolute;bottom: 90px;"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings"  data-placement="bottom" data-title="'.__('Global Settings','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-cog"></span> <span class="menu-text">'.__('Settings','nex-forms').'</span></a></li>';
@@ -3229,6 +3863,33 @@ if(!class_exists('NEXForms_dashboard'))
 				}
 			
 			$select_fields = '*';
+			if($is_report)
+				{
+				$set_field_selection = array();
+				$table_fields = $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.$table); // DB Query
+				$db_cols = array();
+				foreach($table_fields as $col)
+					{
+						if($col->Field!='Id')
+							{
+							if(in_array($col->Field,$field_selection))
+								$set_field_selection[] = $col->Field;
+							}
+					}
+				$diff = array_diff($field_selection,$set_field_selection);
+				$field_selection = $set_field_selection;
+				/*if(!empty($diff))
+					{
+					foreach($diff as $no)
+						{
+						$unconverted_fields .= ' '.$no.',';
+						}
+					echo '<div class="alert alert-info">The following fields could not be converted into MySQL table columns: '.$unconverted_fields.'</div>';
+					//	print_r($diff);
+					//echo '</pre>';
+					}*/
+				}
+			
 			if(is_array($field_selection))
 				{
 				$j=1;
@@ -3242,10 +3903,6 @@ if(!class_exists('NEXForms_dashboard'))
 						$select_fields .= '`'.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_title($field_select)))).'`';
 					$j++;
 					}
-				}
-			else
-				{
-				$select_fields = '*';	
 				}
 				
 			$count_search_params = 0;
@@ -3343,10 +4000,10 @@ if(!class_exists('NEXForms_dashboard'))
 								
 								if($nf_functions->isJson($record_val) && !is_numeric($record_val))
 										{
-										$output .= '<td class="'.$val.'" style="overflow-x:auto;overflow-y:auto;">';
+										$output .= '<td class="'.$val.'" style="">';
 										$json = json_decode($record_val,1);
 										
-										$output .= '<table width="100%" class="highlight" cellpadding="3" cellspacing="0" style="border-bottom:1px solid #ddd; border-left:1px solid #ddd; border-top:1px solid #ddd;">';
+										$output .= '<table width="100%" class="highlight inner-data-table" cellpadding="3" cellspacing="0" style="border-bottom:1px solid #ddd; border-left:1px solid #ddd; border-top:1px solid #ddd;">';
 										$i = 1;
 										foreach($json as $value)
 											{
@@ -3359,7 +4016,7 @@ if(!class_exists('NEXForms_dashboard'))
 														foreach($value as $innerkey=>$innervalue)
 															{
 															if(!strstr($innerkey,'real_val__'))	
-																$output .= '<td style="border-bottom:1px solid #ddd;border-right:1px solid #ddd;"><strong>'.$nf_functions->unformat_records_name($innerkey).'</strong></td>';
+																$output .= '<td style="border-bottom:1px solid #ddd;border-right:1px solid #ddd;"><strong>'.ucfirst($nf_functions->unformat_records_name($innerkey)).'</strong></td>';
 															}
 														$output .= '</tr>';
 														}
@@ -3367,7 +4024,7 @@ if(!class_exists('NEXForms_dashboard'))
 													$output .= '<tr>';
 													foreach($value as $innerkey=>$innervalue)
 														{
-														if(array_key_exists('real_val__'.$innerkey.'',$val))
+														if(array_key_exists('real_val__'.$innerkey,$value))
 																{
 																$realval = 'real_val__'.$innerkey;
 																$innervalue = $val->$realval;	
@@ -3601,6 +4258,9 @@ if(!class_exists('NEXForms_dashboard'))
 			return ($set_count>0) ? '<a href="'.get_admin_url().'admin.php?page=nex-forms-page-submissions&folder='.$id.'" ><span data-title="View Form Entries" title="View Form Entries" data-toggle="tooltip_bs2" data-placement="bottom" class="total_entries_display menu_badge">'.$set_count.'</span></a>' : '<span class="total_entries_display">'.$set_count.'</span>';
 		}
 		
+		
+		
+		
 		public function duplicate_record($form_Id){
 			global  $wpdb;
 			
@@ -3626,6 +4286,31 @@ if(!class_exists('NEXForms_dashboard'))
 			return '<a href="'.get_admin_url().'admin.php?page=nex-forms-builder&open_form='.$set_form_id.'"  class="edit_record" title="'.__('Edit Form','nex-forms').'"><i class="fa fa-edit" data-title="'.__('Edit Form','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"></i></a>';
 		}
 		
+		public function report_last_update($date_time){
+			global  $wpdb;
+			
+			if(is_array($date_time))
+				$date_time = $date_time[0];
+			
+			
+			return $date_time;
+		}
+		public function get_total_report_records($db_table){
+			global  $wpdb;
+			
+			if(is_array($db_table))
+						$db_table = $db_table[0];
+			if($wpdb->get_var("show tables like '".$db_table."'") == $db_table) // DB Query
+					{
+					
+					$total_entries = $wpdb->get_var('SELECT count(*) FROM '.$db_table); // DB Query
+					return '<span class="total_entries_display menu_badge">'.$total_entries.'</span>';
+					}
+				else
+					{
+					return '<span class="total_entries_display menu_badge">0</span>';
+					}
+		}
 		public function link_form_title_2($form_Id){
 			global  $wpdb;
 			
@@ -3642,6 +4327,100 @@ if(!class_exists('NEXForms_dashboard'))
 			$title = sanitize_text_field( $title );
 			
 			return '<a href="'.get_admin_url().'admin.php?page=nex-forms-builder&open_form='.$set_form_id.'" class="form_title"   title="Edit - '.$title.'" data-title="'.__('Edit Form','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom">'.$title.'</a>';
+		}
+		
+		public function link_report_title($report_Id){
+			global  $wpdb;
+			
+			if(is_array($report_Id))
+				$set_report_id = $report_Id[0];
+			$title = $wpdb->get_var('SELECT report_title FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id='.$set_report_id); // DB Query
+
+			$title= wp_unslash($title);
+			$title= str_replace('\"','',$title);
+			$title= str_replace('"','',$title);
+			$title= str_replace("\'",'',$title);
+			$title= str_replace("'",'',$title);
+			$title= str_replace('/','',$title);
+			$title = sanitize_text_field( $title );
+			
+			return '<a href="#" class="form_title open_report" id="'.$set_report_id.'"  title="Edit - '.$title.'" data-title="'.__('Edit Report','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom">'.$title.'</a>';
+		}
+		
+		public function link_report_title2($report_Id){
+			global  $wpdb;
+			
+			if(is_array($report_Id))
+				$set_report_id = $report_Id[0];
+			$title = $wpdb->get_var('SELECT report_title FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id='.$set_report_id); // DB Query
+
+			$title= wp_unslash($title);
+			$title= str_replace('\"','',$title);
+			$title= str_replace('"','',$title);
+			$title= str_replace("\'",'',$title);
+			$title= str_replace("'",'',$title);
+			$title= str_replace('/','',$title);
+			$title = sanitize_text_field( $title );
+			
+			return '<a href="#" class="form_title open_report" id="'.$set_report_id.'"  title="Edit - '.$title.'" data-title="'.__('Edit Report','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"><i class="fa fa-edit"></i></a>';
+		}
+		
+		public function quick_report_csv($report_Id){
+			global  $wpdb;
+			
+			if(is_array($report_Id))
+				$set_report_id = $report_Id[0];
+			
+			
+			$report = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id='.$set_report_id); // DB Query
+
+			if($report->status=='3')
+				{
+				return '<a href="'.admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true&amp;&amp;report_Id='.$set_report_id.'" class="form_title open_report" id="'.$set_report_id.'"  title="Edit -" data-title="'.__('Export Report to CSV (Excell)','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"><i class="fa-regular fa-file-excel"></i></a>';
+				}
+			else
+				{
+				return '<i class="disabled fa-regular fa-file-excel"></i>';
+				}
+			
+			
+		}
+		
+		public function quick_report_pdf($report_Id){
+			global  $wpdb;
+			
+			if(is_array($report_Id))
+				$set_report_id = $report_Id[0];
+			
+			$report = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id='.$set_report_id); // DB Query
+
+			if($report->status=='3')
+				{
+				return '<a href="#" class="quickprint_report_to_pdf" id="'.$set_report_id.'"  title="" data-title="'.__('Export Report to PDF','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"><i class="fa-regular fa-file-pdf"></i></a>';
+				}
+			else
+				{
+				return '<i class="disabled fa-regular fa-file-pdf"></i>';
+				}
+			
+		}
+		
+		public function link_form_title_3($form_Id){
+			global  $wpdb;
+			
+			if(is_array($form_Id))
+				$set_form_id = $form_Id[0];
+			$title = $wpdb->get_var('SELECT title FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id='.$set_form_id); // DB Query
+
+			$title= wp_unslash($title);
+			$title= str_replace('\"','',$title);
+			$title= str_replace('"','',$title);
+			$title= str_replace("\'",'',$title);
+			$title= str_replace("'",'',$title);
+			$title= str_replace('/','',$title);
+			$title = sanitize_text_field( $title );
+			
+			return '<a href="#" id="'.$set_form_id.'" class="form_title get_form_fields"   title="Generate Report from - '.$title.'" data-title="'.__('Generate Report from - '.$title.'','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom">'.$title.'</a>';
 		}
 		
 		public function get_form_shortcode($form_Id){
@@ -3752,17 +4531,21 @@ if(!class_exists('NEXForms_dashboard'))
 			$nf_functions = new NEXForms_Functions();
 			
 			if($_POST['field_selection'])
-					{
-					$field_selection = isset($_POST['field_selection']) ? $_POST['field_selection'] : '';
-					}
+				{
+				$field_selection = isset($_POST['field_selection']) ? $_POST['field_selection'] : '';
+				}
 				
-			
-			$get_records = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id=%d', sanitize_text_field($_POST['form_Id']));
-			$records = $wpdb->get_results($get_records); // DB Query
+			//echo '<pre>test 1';
+			//print_r($field_selection);
+			//echo '</pre>';
+			$records = $wpdb->get_results($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id=%d', sanitize_text_field($_POST['form_Id'])));
 			
 			
 			$get_temp_table_details = get_option('tmp_csv_export');
 			update_option('tmp_csv_export',array('query'=>$get_temp_table_details['query'],'cols'=>$get_temp_table_details['cols'],'form_Id'=>sanitize_text_field($_POST['form_Id'])));
+			
+			
+			
 			
 			foreach($records as $data)
 				{
@@ -3788,6 +4571,10 @@ if(!class_exists('NEXForms_dashboard'))
 					$header_array[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
 					}
 				};
+				
+			
+			
+			
 			if($wpdb->get_var("show tables like '".$wpdb->prefix."wap_nex_forms_temp_report'") == $wpdb->prefix.'wap_nex_forms_temp_report') // DB Query
 				{
 				$drop_table = 'DROP TABLE '.$wpdb->prefix.'wap_nex_forms_temp_report'; // DB Query
@@ -3823,7 +4610,9 @@ if(!class_exists('NEXForms_dashboard'))
 					) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4';
 				
 				$wpdb->query($sql); // DB Query
-				
+			
+			
+			
 			  $table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.'wap_nex_forms_temp_report'); // DB Query
 			
 			  foreach($records as $data)
@@ -3884,6 +4673,7 @@ if(!class_exists('NEXForms_dashboard'))
 			  $report->table_headings = $set_headers;
 			  $report->show_headings=true;
 			  $report->search_params = $set_search;
+			  //$report->extra_buttons = array( 'Excel'=>array('class'=>'export-csv', 'type'=>'link','link'=>admin_url().'admin.php?page=nex-forms-dashboard&amp;export_excel=true', 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel','nex-forms').''), 'Export'=>array('class'=>'export-csv', 'type'=>'link','link'=>admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true', 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel(CSV)','nex-forms').''), 'PDF'=>array('class'=>'print_report_to_pdf', 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-file-pdf"></span> '.__('Export to PDF','nex-forms').'')); //'Report'=>array('class'=>'run_query', 'id'=>$_POST['form_Id'], 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-filter"></span> '.__('Build Report','nex-forms').''),
 			  $report->extra_buttons = array( 'Export'=>array('class'=>'export-csv', 'type'=>'link','link'=>admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true', 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel(CSV)','nex-forms').''), 'PDF'=>array('class'=>'print_report_to_pdf', 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-file-pdf"></span> '.__('Export to PDF','nex-forms').'')); //'Report'=>array('class'=>'run_query', 'id'=>$_POST['form_Id'], 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-filter"></span> '.__('Build Report','nex-forms').''),
 			  $report->checkout = $database->checkout();
 			  $report->is_report = true;
@@ -4060,6 +4850,432 @@ if(!class_exists('NEXForms_dashboard'))
 			echo $output;
 			die();
 		}
+	
+	
+	public function submission_report2(){
+			if(!current_user_can( NF_USER_LEVEL ))	
+				wp_die();
+			global $wpdb;
+			
+			$set_additional_params = array();
+			$nf_functions = new NEXForms_Functions();
+			
+			if($_POST['field_selection'])
+				{
+				$field_selection = isset($_POST['field_selection']) ? $_POST['field_selection'] : '';
+				}
+			
+			$refresh = isset($_POST['refresh_data']) ? true : false;
+				
+			$db_table = $wpdb->get_var($wpdb->prepare('SELECT db_table FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($_POST['report_update_id'])));
+			
+			
+			
+			$db_table = str_replace($wpdb->prefix,'',$db_table);
+			
+			/*echo '<pre>';
+			print_r($field_selection);
+			echo '</pre>';	*/
+			
+			$set_report_id = (isset($_POST['report_update_id'])) ? $wpdb->prepare('%d',esc_sql(sanitize_title($_POST['report_update_id']))) : false;
+			
+			$tz = wp_timezone();
+			$set_date = new DateTime("now", $tz);
+			
+			if($set_report_id)
+				{
+				$update = $wpdb->update ( $wpdb->prefix.'wap_nex_forms_reports', array
+					(
+					'report_fields'=>json_encode($field_selection),
+					'status'=>'3',
+					'date_time'			=> $set_date->format('Y-m-d H:i:s'),
+					), array(	'Id' => $set_report_id) ); 
+					
+				}
+			$records = $wpdb->get_results($wpdb->prepare('SELECT * FROM `'.$wpdb->prefix.'wap_nex_forms_entries` WHERE `nex_forms_Id`=%d ORDER BY `last_update` DESC LIMIT 500 OFFSET 0', sanitize_text_field($_POST['form_Id'])));
+			
+			
+			$count_records = $wpdb->get_var($wpdb->prepare('SELECT count(*) FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id=%d', sanitize_text_field($_POST['form_Id'])));
+			
+			
+			$get_temp_table_details = get_option('tmp_csv_export');
+			update_option('tmp_csv_export',array('query'=>$get_temp_table_details['query'],'cols'=>$get_temp_table_details['cols'],'form_Id'=>sanitize_text_field($_POST['form_Id'])));
+			
+			
+			
+			
+			foreach($records as $data)
+				{
+				$form_values = json_decode($data->form_data);
+				
+				$header_array['entry_Id'] = $data->Id;
+				
+				$header_array['date_time'] = $data->date_time;
+				
+				$header_array_filters['entry_Id'] = $data->Id;
+				
+				$header_array_filters['date_time'] = $data->date_time;
+				
+				foreach($form_values as $field)
+					{
+					if(is_array($field_selection))
+						{
+						//echo $nf_functions->format_name($field->field_name).'<br />';
+						if(in_array($nf_functions->format_column_name($field->field_name),$field_selection))
+							{
+							$header_array_filters[$field->field_name] = $nf_functions->format_column_name($field->field_name);
+							}
+						}
+					else
+						{
+						$header_array_filters[$field->field_name] = $nf_functions->format_column_name($field->field_name);
+						}
+					$header_array[$field->field_name] = $nf_functions->format_column_name($field->field_name);
+					}
+				};
+				
+			
+			
+			
+			
+			$nf_functions = new NEXForms_Functions();
+			
+			$header_array2 = array_unique($header_array_filters);
+			$col_array_unique = array();
+			foreach($header_array2 as $key => $val){
+				if($key)
+					{
+					$col_array_unique[$nf_functions->format_column_name($key)] = $nf_functions->format_column_name($key);
+					
+					}
+			}
+			
+			
+			/*echo '<pre>';
+			print_r($header_array_filters);
+			echo '</pre>';*/
+			$sql = '';
+			if(!$refresh)
+				{
+				if($wpdb->get_var("show tables like '".$wpdb->prefix.$db_table."'") == $wpdb->prefix.$db_table) // DB Query
+					{
+					$drop_table = 'DROP TABLE '.$wpdb->prefix.$db_table; // DB Query
+					$wpdb->query($drop_table); // DB Query
+					}
+				$charset_collate = $wpdb->get_charset_collate();
+				
+				$sql .= 'CREATE TABLE `'.$wpdb->prefix.$db_table.'` (';	
+						
+						$sql .= '`Id` BIGINT(255) unsigned NOT NULL AUTO_INCREMENT,';
+					
+						foreach($col_array_unique as $key => $val){
+							
+							$col_name = $nf_functions->format_column_name($key);
+							
+							if($col_name!='')
+								{
+								if($col_name=='entry_id')
+									$sql .= '`'.$col_name.'` BIGINT(255),';
+								else
+									$sql .= '`'.$col_name.'` longtext,';
+								}
+						}
+					$sql .= 'PRIMARY KEY (`Id`)
+						) '.$charset_collate.';';
+					
+					$wpdb->query($sql); // DB Query
+				
+				// echo '##########'.$sql;
+				
+				  $table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.$db_table); // DB Query
+					
+				  $itteration = round(($count_records/100)+1);
+				  
+				  for($i=0;$i<=$itteration;$i++)
+					{
+					$records = $wpdb->get_results($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id=%d LIMIT 100 OFFSET '.($i*100).'', sanitize_text_field($_POST['form_Id'])));
+					
+					foreach($records as $data)
+						{
+						$form_fields = json_decode($data->form_data);
+						
+						$column_array = array();
+						
+						$column_array['entry_Id'] = $data->Id;
+						
+						$column_array['date_time'] = $data->date_time;
+						
+						foreach($table_fields as $table_field)
+							{
+							foreach($form_fields as $form_field)
+								{
+								$form_field_name = $nf_functions->format_column_name($form_field->field_name);
+								$table_field_col = $nf_functions->format_column_name($table_field->Field);
+								$array_field_val = '';
+								if(is_array($form_field->field_value) || is_object($form_field->field_value))
+									{
+									foreach($form_field->field_value as $field => $val)
+										{
+											if (is_object($val) || is_array($val)) {
+												$val = json_encode($val); // Convert object/array to a JSON string
+											}
+											$array_field_val .= $val.' - ';    
+										}
+									$form_field->field_value = rtrim($array_field_val,' - ');
+									}
+								if($form_field_name==$table_field_col)
+									{
+									$column_array[$table_field_col] = $form_field->field_value;
+									}
+								}
+							}
+						
+						$insert = $wpdb->insert ( $wpdb->prefix . $db_table , $column_array ); // DB Query
+						//$insert_id = $wpdb->insert_id;
+						}
+					}
+				}
+			else
+				{
+				if($set_report_id)
+					{
+					$update = $wpdb->update ( $wpdb->prefix.'wap_nex_forms_reports', array
+						(
+						'report_params'=>json_encode($_POST['additional_params']),
+						
+						), array(	'Id' => $set_report_id) ); 
+						
+					}	
+				}
+				
+				
+			  foreach($col_array_unique as $key=>$val)
+			  	{
+				if(is_array($field_selection))
+					{
+					if(in_array($key,$field_selection))
+						{
+						$set_headers[$key]	= $key;
+						$set_search[$key]	= $key;
+						}
+					}
+				else
+					{
+					$set_headers[$key]	= $key;
+					$set_search[$key]	= $key;
+					}
+				}
+			
+			  $database = new NEXForms_Database_Actions();
+
+			  $report = new NEXForms_dashboard();
+			  $report->table = $db_table;
+			  $report->extra_classes = 'wap_nex_forms_entries'; 
+			  $report->table_header = '';
+			  $report->table_resize = true;
+			  $report->table_header_icon = 'view_list';
+			  $report->action_button = 'add';
+			  $report->table_headings = $set_headers;
+			  $report->show_headings=true;
+			  $report->search_params = $set_search;
+			  $report->extra_buttons = array(  'Filters'=>array('class'=>'open_reporting_filters', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-filter"></span> '.__('Filters','nex-forms').' <span class="total_filters"></span>'), 'Export'=>array('class'=>'export-csv', 'type'=>'link','link'=>admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true&amp;report_Id='.$set_report_id, 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel(CSV)','nex-forms').''), 'PDF'=>array('class'=>'print_report_to_pdf', 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-file-pdf"></span> '.__('Export to PDF','nex-forms').'')); //'Report'=>array('class'=>'run_query', 'id'=>$_POST['form_Id'], 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-filter"></span> '.__('Build Report','nex-forms').''),
+			  $report->checkout = $database->checkout();
+			  $report->is_report = true;
+			  $report->show_delete = false;
+			  $report->color_adapt = true;
+			  $report->record_limit = 100;
+			  
+			  
+			  $set_field_selection = array();
+				
+				$db_cols = array();
+				foreach($table_fields as $col)
+					{
+						if($col->Field!='Id')
+							{
+							if(in_array($col->Field,$field_selection))
+								$set_field_selection[] = $col->Field;
+							}
+					}
+				$field_selection = $set_field_selection;
+				if(!empty($diff))
+					{
+					foreach($diff as $no)
+						{
+						$unconverted_fields .= ' '.$no.',';
+						}
+					echo '<div class="alert alert-info">The following fields could not be converted into MySQL table columns: '.$unconverted_fields.'</div>';
+					//	print_r($diff);
+					//echo '</pre>';
+					}
+				
+			  
+			  if($_POST['field_selection'])
+			 	 $report->field_selection = $field_selection;
+				 
+			  $report->additional_params = $_POST['additional_params'];
+			 	
+				$output .= '<div class="add_clause">';
+					$output .= '<a class="nf_button aa_bg_sec_btn add_new_where_clause2"><i class="fa fa-plus"></i> Add Filter </a>';
+					$output .= '<a class="nf_button aa_bg_sec_btn run_query_2 run_query" id="'.sanitize_text_field($_POST['form_Id']).'"><i class="fa fa-file-import"></i> Run Query </a>';
+					$output .= '<div class="close_filters"><span class="fas fa-arrow-left"></span></div>';
+				$output .= '</div>';
+				
+				$output .= '<div class="right-col-top">';
+				$output .= '</div>';
+			/*echo '<pre>';
+				print_r($field_selection);
+			echo '</pre>';*/
+			
+			
+			if($_POST['field_selection'])
+			 	 $report->field_selection = $_POST['field_selection'];
+			  $report->additional_params = $_POST['additional_params'];
+			 
+			
+			
+			
+			
+			
+			
+			$output .= '<div class="right-bottom">';
+			
+			
+			if(!$database->checkout())
+				{
+				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view submission reports. Go to global settings above and follow registration procedure.</div>'	;
+				}
+			else
+				{
+				$output .= $report->print_record_table();
+				}
+			$output .= '</div>';
+			
+			echo $output;
+			wp_die();
+		}
+	
+	public function report_get_additional_params($return = false, $update_id = 0)
+		{
+		
+		$nf_functions = new NEXForms_Functions();
+		global $wpdb;
+		$output = '';
+		
+		$set_update_id = ($update_id) ? $update_id : sanitize_title($_POST['report_update_id']); 
+		
+		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', $set_update_id));
+		
+		$additional_params = ($set_update_id) ? json_decode($report->report_params,true) : $_POST['additional_params']; 
+		
+		
+		 $header_array_filters = json_decode($report->report_fields,true);
+		 
+		 
+		/* echo '<pre>';
+		 	print_r($header_array_filters);
+		 echo '</pre>';*/
+		 
+			 	$output .= '<div class="right-col-inner aa_bg_tri">'; 
+			 
+				
+				$output .= '<div class="reporting_controls">';
+				
+				
+				 
+				
+				$output .= '<div class="clause_container col-sm-12">';
+				if(isset($additional_params))
+					{	
+					foreach($additional_params as $key=>$val)
+						{
+							
+						$output .= '<div class="new_clause">';
+						$output .= '<div class="col-xs-4 zero_padding">';
+							$output .= '<select class="post_ajax_select aa_bg_main_input form_control" name="column">
+										  <option value="">'.__('--- Select field ---','nex-forms').'</option>';
+											foreach($header_array_filters as $key2=>$val2)
+												$output .= ' <option value="'.$val2.'" '.(($val['column']==$val2) ? 'selected="selected"' : '').'>'.$nf_functions->unformat_name($val2).'</option>';
+							$output .= '</select>';	
+						 $output .= '</div>';
+						 
+						 $output .= '<div class="col-xs-3">';
+							$output .= '
+										<select class="post_ajax_select aa_bg_main_input form_control" name="operator">
+										  <option value="=" 		'.(($val['operator']=='=') 			? 'selected="selected"' : '').'>'.__('Equal to','nex-forms').'</option>
+										  <option value="<>" 		'.(($val['operator']=='<>') 		? 'selected="selected"' : '').'>'.__('Not equal','nex-forms').'</option>
+										  <option value=">" 		'.(($val['operator']=='>') 			? 'selected="selected"' : '').'>'.__('Greater than','nex-forms').'</option>
+										  <option value="<" 		'.(($val['operator']=='<') 			? 'selected="selected"' : '').'>'.__('Less than','nex-forms').'</option>
+										  <option value="LIKE" 		'.(($val['operator']=='LIKE') 		? 'selected="selected"' : '').'>'.__('Contains','nex-forms').'</option>
+										  <option value="NOT LIKE" 	'.(($val['operator']=='NOT LIKE') 	? 'selected="selected"' : '').'>'.__('Does not contain','nex-forms').'</option>
+										  ';
+							$output .= '</select>';	
+						$output .= '</div>';
+						
+						$output .= '<div class="col-xs-4 zero_padding">';
+							$output .= '<input name="column_value" class="form-control aa_bg_main_input" placeholder="'.__('Value','nex-forms').'" value="'.$val['value'].'">';	
+						 $output .= '</div>';
+						 
+						 $output .= '<div class="col-xs-1 zero_padding">';
+							$output .= '<a class="btn remove_where_clause">X</a>';	
+						 $output .= '</div>';
+						$output .= '</div>';
+							
+						$set_additional_params[$val['column']] = $val['value'];
+						}
+					}
+				
+				$output .= '</div>';
+				
+
+				$output .= '<div class="clause_replicator hidden">';
+					$output .= '<div class="col col-xs-4 zero_padding">';
+						$output .= '<select class="post_ajax_select form_control aa_bg_main_input" name="column">
+									  <option value="" selected="selected">'.__('--- Select field ---','nex-forms').'</option>';
+										foreach($header_array_filters as $key=>$val)
+											$output .= ' <option value="'.$val.'">'.$nf_functions->unformat_name($val).'</option>';
+						$output .= '</select>';	
+					 $output .= '</div>';
+					 
+					 $output .= '<div class="col col-xs-3">';
+						$output .= '
+									<select class="post_ajax_select form_control aa_bg_main_input" name="operator">
+									  <option value="=">'.__('Equal to','nex-forms').'</option>
+									  <option value="<>">'.__('Not equal','nex-forms').'</option>
+									  <option value=">">'.__('Greater than','nex-forms').'</option>
+									  <option value="<">'.__('Less than','nex-forms').'</option>
+									  <option value="LIKE">'.__('Contains','nex-forms').'</option>
+									  <option value="NOT LIKE">'.__('Does not contain','nex-forms').'</option>
+									  ';
+						$output .= '</select>';	
+					$output .= '</div>';
+					
+					$output .= '<div class="col col-xs-4 zero_padding">';
+						$output .= '<input name="column_value" class="form-control aa_bg_main_input" placeholder="'.__('Value','nex-forms').'">';	
+					 $output .= '</div>';
+					 
+					 $output .= '<div class="col col-xs-1 zero_padding">';
+						$output .= '<a class="btn remove_where_clause">X</a>';	
+					 $output .= '</div>';
+				$output .= '</div>';
+				
+				$output .= '</div>';
+				
+				  
+				$output .= '</div>';
+					
+				$output .= '</div>';
+				
+			
+			if($return)
+				return $output;
+			else
+				{
+				echo $output;
+				wp_die();
+				}
+		}
+	
 		
 	public function	print_to_pdf()
 		{
@@ -4106,7 +5322,7 @@ if(!class_exists('NEXForms_dashboard'))
 				wp_die();
 		if (function_exists('NEXForms_report_to_PDF'))
 			{
-			NEXForms_clean_echo( NEXForms_report_to_PDF());
+			NEXForms_clean_echo( NEXForms_report_to_PDF(sanitize_title($_POST['report_Id'])));
 			}
 		else
 			{
