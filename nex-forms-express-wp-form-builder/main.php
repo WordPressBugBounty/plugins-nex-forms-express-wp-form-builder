@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.4
+Version: 8.8.5
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -62,7 +62,7 @@ function enqueue_nf_jquery(){
 	wp_enqueue_script('jquery-form');
 }
 
-add_action( 'wp_enqueue_scripts', 'enqueue_nf_jquery' );
+//add_action( 'wp_enqueue_scripts', 'enqueue_nf_jquery' );
 
 
 require( dirname(__FILE__) . '/includes/load.php');
@@ -381,7 +381,7 @@ function NEXForms_my_menu_pages() {
 		global $wpdb; 
 		
 		$get_entry 	= $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($_REQUEST['entry_Id']));
-		$entry 	= $wpdb->get_row($get_entry); // DB Query
+		$entry 	= $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		if($_REQUEST['emial-preview']=='admin')
 			NEXForms_clean_echo( $entry->saved_admin_email);
@@ -445,48 +445,48 @@ function NEXForms_my_menu_pages() {
 		
 		
 	if($styles_config['incstyle-bootstrap']=='1' || !array_key_exists('incstyle-bootstrap',$styles_config))
-		wp_enqueue_style('nex-forms-bootstrap-ui', plugins_url( '/public/css/min/ui-bootstrap.css',__FILE__),'',$css_js_version);
+		wp_enqueue_style('nex-forms-bootstrap-ui', plugins_url( '/public/css/min/ui-bootstrap.css',__FILE__),'',$css_js_version, true);
 		
-	wp_enqueue_style('nex-forms-ui', plugins_url( '/public/css/'.NF_PATH.'ui.css?v=7.2.7',__FILE__),'',$css_js_version);
+	wp_enqueue_style('nex-forms-ui', plugins_url( '/public/css/'.NF_PATH.'ui.css?v=7.2.7',__FILE__),'',$css_js_version, true);
 		
 	if($styles_config['incstyle-animations']=='1' || !array_key_exists('incstyle-animations',$styles_config))
-		wp_enqueue_style('nex-forms-animations', plugins_url( '/public/css/min/animate.css',__FILE__),'',$css_js_version);		
+		wp_enqueue_style('nex-forms-animations', plugins_url( '/public/css/min/animate.css',__FILE__),'',$css_js_version, true);		
 
-	wp_enqueue_style('nex-forms-material-theme-amber', plugins_url( '/public/css/themes/amber.css',__FILE__),'',$css_js_version);
-	wp_enqueue_style('nex-forms-materialize', plugins_url( '/public/css/min/materialize-ui.css',__FILE__),'',$css_js_version);
-	wp_enqueue_style('nex-forms-preview', plugins_url( '/admin/css/preview.css',__FILE__),'',$css_js_version);	
+	wp_enqueue_style('nex-forms-material-theme-amber', plugins_url( '/public/css/themes/amber.css',__FILE__),'',$css_js_version, true);
+	wp_enqueue_style('nex-forms-materialize', plugins_url( '/public/css/min/materialize-ui.css',__FILE__),'',$css_js_version, true);
+	wp_enqueue_style('nex-forms-preview', plugins_url( '/admin/css/preview.css',__FILE__),'',$css_js_version, true);	
 	
-	wp_enqueue_style('nex-forms-selects-css', plugins_url( '/public/css/min/nex-select.css',__FILE__),'',$css_js_version);
+	wp_enqueue_style('nex-forms-selects-css', plugins_url( '/public/css/min/nex-select.css',__FILE__),'',$css_js_version, true);
 		
 /* UI SCRIPT REGISTRATION */
 	if($script_config['inc-bootstrap']=='1' || !$script_config['inc-bootstrap'])
-		wp_enqueue_script('nex-forms-bootstrap.min',  plugins_url( '/public/js/min/bootstrap.min.js',__FILE__),'',$css_js_version);
+		wp_enqueue_script('nex-forms-bootstrap.min',  plugins_url( '/public/js/min/bootstrap.min.js',__FILE__),'',$css_js_version, true);
 	if($script_config['inc-wow']=='1' || !$script_config['inc-wow'])
-		wp_enqueue_script('nex-forms-wow',  plugins_url( '/libs/wow.min.js',__FILE__),'',$css_js_version);
+		wp_enqueue_script('nex-forms-wow',  plugins_url( '/libs/wow.min.js',__FILE__),'',$css_js_version, true);
 	if($script_config['inc-raty']=='1' || !$script_config['inc-raty'])
-		wp_enqueue_script('nex-forms-raty-fa',  plugins_url( '/public/js/min/jquery.raty-fa.js',__FILE__),'',$css_js_version);
+		wp_enqueue_script('nex-forms-raty-fa',  plugins_url( '/public/js/min/jquery.raty-fa.js',__FILE__),'',$css_js_version, true);
 	
-	wp_enqueue_script('nex-forms-input-mask', plugins_url( '/public/js/min/jquery.inputmask.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-sigs', plugins_url( '/public/js/min/jquery.sig.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-tags', plugins_url( '/public/js/min/jquery.tags.js',__FILE__),'',$css_js_version);
+	wp_enqueue_script('nex-forms-input-mask', plugins_url( '/public/js/min/jquery.inputmask.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-sigs', plugins_url( '/public/js/min/jquery.sig.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-tags', plugins_url( '/public/js/min/jquery.tags.js',__FILE__),'',$css_js_version, true);
 	
-	wp_enqueue_script('nex-forms-timer',  plugins_url( '/public/js/min/jquery.timer.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-materialize.min',  plugins_url( '/libs/materialize.min.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-onload', plugins_url( '/public/js/'.NF_PATH.'nexf-onload-ui.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-math.min',  plugins_url( '/libs/math.min.js',__FILE__),'',$css_js_version);
+	wp_enqueue_script('nex-forms-timer',  plugins_url( '/public/js/min/jquery.timer.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-materialize.min',  plugins_url( '/libs/materialize.min.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-onload', plugins_url( '/public/js/'.NF_PATH.'nexf-onload-ui.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-math.min',  plugins_url( '/libs/math.min.js',__FILE__),'',$css_js_version, true);
 	
-	wp_enqueue_script('nex-forms-moment.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-locales.min', plugins_url( '/libs/locales.min.js',__FILE__),'',$css_js_version);
-	wp_enqueue_script('nex-forms-bootstrap-datetimepicker', plugins_url( '/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',__FILE__),'',$css_js_version);
+	wp_enqueue_script('nex-forms-moment.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-locales.min', plugins_url( '/libs/locales.min.js',__FILE__),'',$css_js_version, true);
+	wp_enqueue_script('nex-forms-bootstrap-datetimepicker', plugins_url( '/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',__FILE__),'',$css_js_version, true);
 	
-	wp_enqueue_script('nex-forms-bootstrap-touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',__FILE__),'',$css_js_version);
+	wp_enqueue_script('nex-forms-bootstrap-touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',__FILE__),'',$css_js_version, true);
 	
-	wp_enqueue_script('nex-forms-selects-js', plugins_url( '/libs/nex-select.js',__FILE__),'',$css_js_version);
+	wp_enqueue_script('nex-forms-selects-js', plugins_url( '/libs/nex-select.js',__FILE__),'',$css_js_version, true);
 	
 	
 	wp_enqueue_script('jquery-ui-slider');
 	
-	//wp_enqueue_script('nex-forms-jquery-ui',  plugins_url( '/public/js/min/jquery-ui.js',__FILE__),'',$css_js_version);
+	//wp_enqueue_script('nex-forms-jquery-ui',  plugins_url( '/public/js/min/jquery-ui.js',__FILE__),'',$css_js_version, true);
 	 
 	$extra_script = '';
 	
@@ -508,13 +508,13 @@ function NEXForms_my_menu_pages() {
 	 
 	$unigue_form_Id 	= rand(0,99999);
 	   
-	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']))); // DB Query
+	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	
 	$theme_settings = json_decode($form_attr->md_theme,true);
 	$set_theme 		= ($theme_settings['0']['theme_name']!='') 	? $theme_settings['0']['theme_name'] 	: 'default';
 	
 	if($form_attr->form_theme=='m_design' || $form_attr->form_theme=='neumorphism')
-		wp_enqueue_style('nex-forms-material-theme-'.$set_theme, plugins_url( '/public/css/themes/'.$set_theme.'.css',__FILE__),'',$css_js_version);
+		wp_enqueue_style('nex-forms-material-theme-'.$set_theme, plugins_url( '/public/css/themes/'.$set_theme.'.css',__FILE__),'',$css_js_version, true);
 	
 	$option_settings = json_decode($form_attr->option_settings,true);
 	
@@ -568,137 +568,6 @@ function NEXForms_test_page(){
 			echo ' \''.$array->handle.'\', ';
 			}	
 		}*/
-	$content = '';
-	global $wpdb;
-		
-		$nf_functions = new NEXForms_Functions();
-		
-		
-		$records = $wpdb->get_results('SELECT `form_data` FROM `wp_wap_nex_forms_entries` WHERE `nex_forms_Id`=6 LIMIT 1000 OFFSET 5000');
-
-
-
-
-			
-		/*print_r($records);*/
-		foreach($records as $data)
-				{
-				$form_values = json_decode($data->form_data);
-				
-				$header_array['entry_Id'] = $data->Id;
-				
-				$header_array['date_time'] = $data->date_time;
-				
-				foreach($form_values as $field)
-					{
-					if(is_array($field_selection))
-						{
-						if(in_array($field->field_name,$field_selection))
-							{
-							$header_array_filters[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
-							}
-						}
-					else
-						{
-						$header_array_filters[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
-						}
-					$header_array[$field->field_name] = $nf_functions->unformat_records_name($field->field_name);
-					}
-				}
-		
-		
-		$header_array2 = array_unique($header_array);
-			$col_array_unique = array();
-			foreach($header_array2 as $key => $val){
-				if($key)
-					$col_array_unique[$nf_functions->format_column_name($key)] = $nf_functions->format_column_name($key);
-			}
-		
-		print_r($col_array_unique);
-		
-		/*$count_cols = 1;
-		foreach($table_fields as $column)
-			{
-			if(is_array($cols))
-				{
-				if(in_array($column->Field,$cols))
-					{
-					$columns_array[$column->Field] = $column->Field;
-					$content .= $nf_functions->unformat_name($column->Field).', ';
-					$count_cols ++;
-					}
-				}
-			else
-				{
-				$columns_array[$column->Field] = $column->Field;
-				$content .= $nf_functions->unformat_name($column->Field).', ';
-				$count_cols ++;
-				}
-			
-			}
-		$content = rtrim($content,', ');
-		$content .= '<br /><br />
-';
-			
-			$i = 1;
-			foreach($form_data as $value)
-				{
-				foreach($columns_array as $column)
-					{
-					$field_value = $value->$column;
-					$field_value = str_replace('\r\n',' ',$field_value);
-					$field_value = str_replace('\r',' ',$field_value);
-					$field_value = str_replace('\n',' ',$field_value);
-					$field_value = str_replace(',',';',$field_value);
-					$field_value = str_replace('
-					',' ',$field_value);
-					$field_value = str_replace('
-					
-					',' ',$field_value);
-					$field_value = str_replace(chr(10),' ',$field_value);
-					$field_value = str_replace(chr(13),' ',$field_value);
-					$field_value = str_replace(chr(266),' ',$field_value);
-					$field_value = str_replace(chr(269),' ',$field_value);
-					$field_value = str_replace(chr(522),' ',$field_value);
-					$field_value = str_replace(chr(525),' ',$field_value);
-					
-					if($nf_functions->isJson($value->$column))
-						{
-						$rep_content = json_encode($value->$column);
-						$rep_content_2 = json_decode($value->$column,true);
-						
-						if(is_array($rep_content_2))
-							{
-							foreach($rep_content_2 as $key=>$val)
-								{
-								foreach($val as $field_name => $field_val)
-									$content .= $nf_functions->unformat_name($field_name).' '.$key.':'.$field_val.'; ';
-								}
-								$content = rtrim($content,'; ');
-							}
-						else
-							$content .= $rep_content_2;
-							
-						$content .= ', ';
-						}
-					else
-						$content .= $field_value.', ';
-						
-					$i++;
-					}
-				if($i==$count_cols)
-					{
-					$content = rtrim($content,', ');
-					$content .= '<br /><br />
-';
-					$i = 1;	
-					}
-				}
-
-			*/
-			//$database_actions = new NEXForms_Database_Actions();
-			//$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to PDF. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
-			echo $content;
 	
 	
 }
@@ -1050,14 +919,14 @@ function NEXForms5_run_instalation(){
 	//MIGRATE ATTACHMENT DATA
 	if(get_option('nf_set_attachments')!='1')
 			{
-			$get_files = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files'); // DB Query
+			$get_files = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	
 			foreach($get_files as $file)
 				{
 				$data_array = array(
 					'attachments'	=>  1
 					);
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', $data_array, array(	'Id' => $file->entry_Id) ); // DB Query
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', $data_array, array(	'Id' => $file->entry_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				}
 			update_option('nf_set_attachments','1');
 			}
@@ -1065,12 +934,12 @@ function NEXForms5_run_instalation(){
 	
 	
 	//MIGRATE PAYPAL DATA FOR BACKWARD COMPATIBILITY
-	$get_paypal_table = $wpdb->get_var("show tables like '".$wpdb->prefix."wap_nex_forms_paypal"."'"); // DB Query
+	$get_paypal_table = $wpdb->get_var("show tables like '".$wpdb->prefix."wap_nex_forms_paypal"."'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	if($get_paypal_table)
 		{
 		if(get_option('convert_paypal')!='1')
 			{
-			$get_paypal = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_paypal'); // DB Query
+			$get_paypal = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_paypal'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	
 			foreach($get_paypal as $paypal_data)
 				{
@@ -1085,7 +954,7 @@ function NEXForms5_run_instalation(){
 					'lc'								=>  $paypal_data->lc,
 					'environment'						=>  $paypal_data->environment
 					);
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', $data_array, array(	'Id' => $paypal_data->nex_forms_Id) ); // DB Query
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', $data_array, array(	'Id' => $paypal_data->nex_forms_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				}
 			update_option('convert_paypal','1');
 			}
@@ -1121,7 +990,7 @@ function NEXForms_form_preview(){
 	
 	global $wpdb;
 	$get_form = $wpdb->prepare('SELECT md_theme FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']));
-	$theme_settings = $wpdb->get_var($get_form); // DB Query
+	$theme_settings = $wpdb->get_var($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	$theme_settings = json_decode($theme_settings,true);
 	//remove WP elements from preview
 	NEXForms_clean_echo( '	<style type="text/css">
@@ -1142,7 +1011,7 @@ function NEXForms_form_preview(){
 
 function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=''){
 	
-	
+	//$defaults = '';
 	if($atts==0)
 		{
 		wp_enqueue_script('nex-forms-bootstrap.min');
@@ -1315,7 +1184,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	
 	
 	
-	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // DB Query
+	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 	$default_field_array = explode(',',$field_default_values);
 	$set_default_field_array= array();
@@ -1342,7 +1211,8 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		$form_css_style = str_replace('\\','',$form_attr->form_style);
 		$form_css_style = str_replace('"','\'',$form_css_style);
 		}
-	
+	$background = str_replace('\\','',$background);
+	$background = str_replace('"','\'',$background);
 	
 	$enqueue_array = '';
 	if(isset($form_attr->enqueue_array))
@@ -1625,14 +1495,13 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 				$output .= '';
 			
 			
-			 
 			if(NEXForms_isMobile())
 				{
 				$width = '100%';
 				}
 				
 		//OPEN POPUP MODAL
-				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? esc_attr($form_css_style) : 'background:'.esc_attr($background)).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).';height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
+				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? $form_css_style : 'background-image:'.$background).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).';height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
 					
 				$output .= '<span data-bs-dismiss="modal" data-dismiss="modal" class="modal-action modal-close '.esc_attr($button_color).'"><i class="material-icons fa fa-close"></i></span>';
 				$output .= '<div class="modal-content" id="nf_form_'.esc_attr($unigue_form_Id).'">';	
@@ -2088,7 +1957,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 							{
 							if($option_settings[0]['submit_limit']>0)
 								{
-									$get_count 	= $wpdb->get_var('SELECT COUNT(*) FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id = '.$id); // DB Query
+									$get_count 	= $wpdb->get_var('SELECT COUNT(*) FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id = '.$id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 									if($get_count==$option_settings[0]['submit_limit'])
 										{
 										if($option_settings[0]['submit_limit_msg'])
@@ -2296,17 +2165,17 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 								$get_user_id	 		= get_current_user_id();
 								
 								//SET DEAFAULT VALUES FOR LOGGED IN USERS
-								//if($get_user_first_name)
+								if($get_user_first_name)
 									$set_form_html = str_replace('{{nf_user_first_name}}',$get_user_first_name,$set_form_html);
-								//if($get_user_last_name)
+								if($get_user_last_name)
 									$set_form_html = str_replace('{{nf_user_last_name}}',$get_user_last_name,$set_form_html);
-								//if($get_user_name)
+								if($get_user_name)
 									$set_form_html = str_replace('{{nf_user_name}}',$get_user_name,$set_form_html);
-								//if($get_user_id)
+								if($get_user_id)
 									$set_form_html = str_replace('{{nf_user_id}}',$get_user_id,$set_form_html);
-								//if($get_user_user_email)
+								if($get_user_user_email)
 									$set_form_html = str_replace('{{nf_user_email}}',$get_user_user_email,$set_form_html);
-								//if($get_user_user_url)
+								if($get_user_user_url)
 									$set_form_html = str_replace('{{nf_user_url}}',$get_user_user_url,$set_form_html);
 								
 								//RUN 3rd party shortcodes on HTML if add-on is enabled
@@ -2507,7 +2376,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	if(function_exists('nf_not_found_notice_ft'))
 		wp_enqueue_style('nex-forms-jq-ui-theme-'.$form_attr->jq_theme);
 		
-	//wp_enqueue_style('nex-forms-materialize', plugins_url( '/public/css/materialize-ui.css',__FILE__),'',$css_js_version);	
+	//wp_enqueue_style('nex-forms-materialize', plugins_url( '/public/css/materialize-ui.css',__FILE__),'',$css_js_version, true);	
 	
 	//SEND EMAIL BASED ON PAYPAL PAYMENT FAIL/SUCCESS (if paypal is enabled)
 	$paypal_transaction = isset($_REQUEST['nf-paypal-transaction']) ? sanitize_text_field($_REQUEST['nf-paypal-transaction']) : '';
@@ -2568,7 +2437,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	//PRINT OUTPUT
 	//$output = NEXForms_rgba2Hex($output);
 	if($echo){
-		echo $output;
+		NEXForms_clean_echo( $output);
 	}
 	else
 		return $output;	
@@ -2651,7 +2520,7 @@ function NEXForms_add_view(){
 	$set_date = new DateTime("now", $tz);
 	
 	$id = sanitize_title($_POST['nex_forms_id']);
-	$add_view = $wpdb->insert($wpdb->prefix.'wap_nex_forms_views',  // DB Query
+	$add_view = $wpdb->insert($wpdb->prefix.'wap_nex_forms_views',  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		array(								
 			'time_viewed'		=> time(),
 			'nex_forms_Id'		=> sanitize_text_field($id),
@@ -2672,7 +2541,7 @@ function NEXForms_add_form_interaction(){
 	$tz = wp_timezone();
 	$set_date = new DateTime("now", $tz);
 	
-	$add_interaction = $wpdb->insert($wpdb->prefix.'wap_nex_forms_stats_interactions', // DB Query
+	$add_interaction = $wpdb->insert($wpdb->prefix.'wap_nex_forms_stats_interactions', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		array(								
 			'time_interacted'	=> time(),
 			'nex_forms_Id'		=> sanitize_text_field($id),
@@ -2706,7 +2575,7 @@ function submit_nex_form($entry_action = false){
 	
 	$nex_forms_id = isset($_REQUEST['nex_forms_Id']) ? sanitize_title($_POST['nex_forms_Id']) : '';
 	
-	$form_attr = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id)); // DB Query
+	$form_attr = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	
 	$upload_settings = json_decode($form_attr->upload_settings, true);
 	$upload_to_server 	= ($upload_settings['0']['upload_to_server']) ? $upload_settings['0']['upload_to_server'] 	: 'true';
@@ -2923,13 +2792,13 @@ function submit_nex_form($entry_action = false){
 		
 		if($check_entry_redirect_update)
 			{
-			$get_data = $wpdb->get_var($wpdb->prepare('SELECT form_data FROM '. $wpdb->prefix .'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($check_entry_redirect_update))); // DB Query
+			$get_data = $wpdb->get_var($wpdb->prepare('SELECT form_data FROM '. $wpdb->prefix .'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($check_entry_redirect_update))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$set_data = json_decode($get_data);
 			
 			$merge_data = array_merge($set_data,$data_array);
 			
-			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // DB Query
+			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			array(								
 				'nex_forms_Id'			=>	$set_nex_forms_id,
 				'page'					=>	sanitize_text_field($_POST['page']),
@@ -2953,9 +2822,9 @@ function submit_nex_form($entry_action = false){
 				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
 				), array(	'Id' => sanitize_text_field($check_entry_redirect_update))
 			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // DB Query
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // DB Query
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$entry_id = $check_entry_redirect_update;
 				
@@ -2963,7 +2832,7 @@ function submit_nex_form($entry_action = false){
 		
 		else if($check_entry_update)
 			{
-			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // DB Query
+			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			array(								
 				'nex_forms_Id'			=>	$set_nex_forms_id,
 				'page'					=>	sanitize_text_field($_POST['page']),
@@ -2987,16 +2856,16 @@ function submit_nex_form($entry_action = false){
 				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
 				), array(	'Id' => sanitize_text_field($check_entry_update))
 			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // DB Query
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // DB Query
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$entry_id = $check_entry_update;
 				
 			}
 		else
 			{
-			$insert = $wpdb->insert($wpdb->prefix.'wap_nex_forms_entries', // DB Query
+			$insert = $wpdb->insert($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				array(								
 					'nex_forms_Id'			=>	$set_nex_forms_id,
 					'page'					=>	sanitize_text_field($_POST['page']),
@@ -3020,9 +2889,9 @@ function submit_nex_form($entry_action = false){
 					'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
 					)
 			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // DB Query
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // DB Query
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$entry_id = $wpdb->insert_id;
 			}
@@ -3058,7 +2927,7 @@ function submit_nex_form($entry_action = false){
 		
 		foreach($setup_file_insert_array as $insert_file)
 			{
-			$wpdb->insert($wpdb->prefix.'wap_nex_forms_files',$insert_file); // DB Query
+			$wpdb->insert($wpdb->prefix.'wap_nex_forms_files',$insert_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			}
 		}
 	
@@ -3172,11 +3041,11 @@ function submit_nex_form($entry_action = false){
 			<?php
 		}
 		else if(function_exists('nf_not_found_notice_pp') && $checked=='true'){
-			$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // DB Query
+			$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			if(!$get_result->products)
 				{
-				$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms_paypal WHERE nex_forms_Id = %d ',sanitize_text_field($form_attr->Id)));	 // DB Query
+				$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms_paypal WHERE nex_forms_Id = %d ',sanitize_text_field($form_attr->Id)));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				}
 			
 			$output = '<form id="nf_paypal" name="nf_paypal" action="https://www'.((!$get_result->environment || $get_result->environment=='sandbox') ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr" method="post" target="_top" class="hidden">
@@ -3406,7 +3275,7 @@ function submit_nex_form($entry_action = false){
 					{
 					if(strstr($_REQUEST[$nf_functions->format_name($match)],'data:image') && $match!='{{nf_form_data}}')
 						{
-						$ftp_body = str_replace($match,'<img src="'.sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]).'">',$ftp_body);	
+						$ftp_body = str_replace($match,'<img src="'.sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]).'">',$ftp_body);	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						}
 					else
 						{	
@@ -3626,7 +3495,7 @@ class CSVExport
 			exit();
 		
 		
-		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($report_id)));
+		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($report_id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 		$db_table = $report->db_table;
 		$additional_params = json_decode($report->report_params,true);
@@ -3648,11 +3517,11 @@ class CSVExport
 				}
 			
 			
-			$form_data = $wpdb->get_results('SELECT * FROM '.$db_table.'  WHERE Id<>"" '.$where_str.' ORDER BY Id DESC');
+			$form_data = $wpdb->get_results('SELECT * FROM '.$db_table.'  WHERE Id<>"" '.$where_str.' ORDER BY Id DESC'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			
 		//echo $form_data;
-		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$db_table); // DB Query
+		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		$nf_functions = new NEXForms_Functions();
 			
@@ -3749,7 +3618,7 @@ class CSVExport
 			echo esc_html("\xEF\xBB\xBF");
 			$database_actions = new NEXForms_Database_Actions();
 			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to CSV. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
-			echo $content;
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			exit;
 	}
 }
@@ -3786,7 +3655,7 @@ function gavickpro_add_tinymce_plugin($plugin_array) {
 
 	   global $wpdb;
 
-		$results	= $wpdb->get_results('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC '); // DB Query
+		$results	= $wpdb->get_results('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC '); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 		if($results)
 			{			
@@ -3890,12 +3759,12 @@ function NEXForms_dashboard_2(){
 	
 	
 	add_option('nf_interactions_converted', false);
-	$interactions_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_stats_interactions"'); // DB Query
+	$interactions_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_stats_interactions"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 	if($interactions_table && get_option('nf_interactions_converted')!='converted')
 		{
 		$get_interactions = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_stats_interactions';
-		$form_interactions = $wpdb->get_results($get_interactions);	 // DB Query
+		$form_interactions = $wpdb->get_results($get_interactions);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		foreach($form_interactions as $interaction)
 			{
@@ -3904,16 +3773,16 @@ function NEXForms_dashboard_2(){
 			$month = (int)substr($date,5,2);
 			$day = (int)substr($date,8,2);
 			//echo 	'#'.$interaction->time_interacted.' - '.date('Y-m-d H:i:s',$interaction->time_interacted).'<br />';
-			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_stats_interactions', array('date_time'=>date('Y-m-d H:i:s',$interaction->time_interacted)), array(	'Id' => $interaction->Id) ); // DB Query
+			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_stats_interactions', array('date_time'=>date('Y-m-d H:i:s',$interaction->time_interacted)), array(	'Id' => $interaction->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			}
 		update_option('nf_interactions_converted', 'converted');
 		}
 	add_option('nf_views_converted', false);	
-	$views_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_views"'); // DB Query
+	$views_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_views"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	if($views_table && get_option('nf_views_converted')!='converted')
 		{
 		$get_views = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_views';
-		$form_views = $wpdb->get_results($get_views);	 // DB Query
+		$form_views = $wpdb->get_results($get_views);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		foreach($form_views as $view)
 			{
@@ -3921,7 +3790,7 @@ function NEXForms_dashboard_2(){
 			$year = substr($date,0,4);
 			$month = (int)substr($date,5,2);
 			$day = (int)substr($date,8,2);
-			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_views', array('date_time'=>date('Y-m-d H:i:s',$view->time_viewed)), array(	'Id' => $view->Id) ); // DB Query
+			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_views', array('date_time'=>date('Y-m-d H:i:s',$view->time_viewed)), array(	'Id' => $view->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			}
 		update_option('nf_views_converted', 'converted');
 		}
@@ -4192,7 +4061,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/zapier-integration/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-zapier.png', __FILE__).'"></a>';	
+							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/zapier-integration/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-zapier.png', __FILE__).'"></a>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Zapier Integration</h3>';
@@ -4216,7 +4085,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-themes/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-themes.png', __FILE__).'"></a>';	
+							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-themes/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-themes.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Form Themes/Color Schemes</h3>';
@@ -4241,7 +4110,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/paypal-pro/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/paypal-pro/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>PayPal Pro</h3>';
@@ -4267,7 +4136,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/pdf-creator/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/pdf-creator/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>PDF Creator</h3>';
@@ -4291,7 +4160,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/super-select-form-field/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-super-select.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/super-select-form-field/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-super-select.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Super Selection Form Field</h3>';
@@ -4347,7 +4216,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>MailChimp</h3>';
@@ -4373,7 +4242,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Mailster</h3>';
@@ -4399,7 +4268,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>MailPoet</h3>';
@@ -4426,7 +4295,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/getresponse/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/getresponse/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>GetRepsonse</h3>';
@@ -4453,7 +4322,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/digital-signatures/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/digital-signatures/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Digital Signatures</h3>';
@@ -4478,7 +4347,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-to-post-or-page/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-to-post-or-page.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-to-post-or-page/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-to-post-or-page.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Form to POST / PAGE</h3>';
@@ -4510,7 +4379,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/conditional-content-blocks/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-conditional-content-blocks.png', __FILE__).'"></a>';	
+							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/conditional-content-blocks/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-conditional-content-blocks.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Conditional Content Blocks</h3>';
@@ -4536,7 +4405,7 @@ function NEXForms_dashboard_2(){
 				$output .= '<div class="col-sm-2">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/shortcode-processor/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-shortcode-processor.png', __FILE__).'"></a>';	
+							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/shortcode-processor/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-shortcode-processor.png', __FILE__).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Shorcode Processor</h3>';
@@ -4726,10 +4595,10 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			
 			global $wpdb;
 			$get_form = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id);
-			$form_attr = $wpdb->get_row($get_form); // DB Query
+			$form_attr = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 
 			$get_entry = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id = %d',$entry_id);
-			$entry_attr = $wpdb->get_row($get_entry); // DB Query
+			$entry_attr = $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			
 			$nf_functions = new NEXForms_Functions();
@@ -4835,7 +4704,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
 												{
 												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
-													$admin_val .= '<td style="border-right:1px solid #ddd;"><span style="max-width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" /></span></td>';
+													$admin_val .= '<td style="border-right:1px solid #ddd;"><span style="max-width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" /></span></td>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 												else
 													$admin_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
 												}
@@ -4882,7 +4751,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 									$val = $_POST['real_val__'.$key];
 									}
 								if(strstr($admin_val,'data:image'))
-									$admin_val = '<img src="'.$admin_val.'" />';
+									$admin_val = '<img src="'.$admin_val.'" />'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 								
 								$set_val = '';
 								
@@ -4895,8 +4764,8 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 										{
 											
 										if(in_array($nf_functions->get_ext(trim($setval)),$img_ext_array))
-											$set_val .= '<a href="'.$setval.'" target="_blank"><span style="max-width:100px;"><img src="'.$setval.'"></span></a><br />
-	';									else
+											$set_val .= '<a href="'.$setval.'" target="_blank"><span style="max-width:100px;"><img src="'.$setval.'"></span></a><br />'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage									
+										else
 											$set_val .= '<a href="'.$setval.'" target="_blank">'.$setval.'</a><br>';	
 										}
 									
@@ -5127,7 +4996,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
 												{
 												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
-													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>';
+													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 												else
 													$the_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
 												}
@@ -5144,7 +5013,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 					{
 					if(strstr($_REQUEST[$nf_functions->format_name($match)],'data:image') && $match!='{{nf_form_data}}')
 						{
-						$body = str_replace($match,'<img src="'.$_REQUEST[$nf_functions->format_name($match)].'">',$body);	
+						$body = str_replace($match,'<img src="'.$_REQUEST[$nf_functions->format_name($match)].'">',$body);	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						}
 					else
 						{
@@ -5202,7 +5071,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 											if(!strstr($innerkey,'real_val__') && $nf_functions->unformat_name($innerkey)!='Undefined')
 												{
 												if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
-													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>';
+													$the_val .= '<td style="border-right:1px solid #ddd;max-width:100px; width:100px;"><span style="max-width:100px; width:100px;"><img src="'.rtrim($innervalue,', ').'" style="max-width:100px;" width="100" /></span></td>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 												else
 													$the_val .= '<td style="border-right:1px solid #ddd;">'.rtrim($innervalue,', ').'</td>';
 												}
@@ -5219,7 +5088,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 					{
 					if(strstr($_REQUEST[$nf_functions->format_name($match)],'data:image') && $match!='{{nf_form_data}}')
 						{
-						$admin_body = str_replace($match,'<img src="'.$_REQUEST[$nf_functions->format_name($match)].'">',$admin_body);	
+						$admin_body = str_replace($match,'<img src="'.$_REQUEST[$nf_functions->format_name($match)].'">',$admin_body);	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						}
 					else
 						{
@@ -5364,7 +5233,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$send_user_email = $entry_attr->saved_user_email_address;
 			}
 		if(!$resent)
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('saved_admin_email'=>$admin_body,'saved_user_email'=>$body,'saved_user_email_address'=>$send_user_email), array(	'Id' => $entry_id )); // DB Query
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('saved_admin_email'=>$admin_body,'saved_user_email'=>$body,'saved_user_email_address'=>$send_user_email), array(	'Id' => $entry_id )); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		if (function_exists('NEXForms_export_to_PDF') &&  $form_attr->attach_pdf_to_email!='' )
 			$pdf_attached_path = NEXForms_export_to_PDF($entry_id, true, false, true);
@@ -5869,8 +5738,8 @@ function nf_prefix_register_resources(){
 /* UI STYLE REGISTRATION */		
 	if($styles_config['incstyle-font-awesome']=='1' || !array_key_exists('incstyle-font-awesome',$styles_config))
 		{
-		//wp_register_style('nex-forms-font-awesome-5',plugins_url( '/public/css/fa5/css/all.min.css',__FILE__),'',$css_js_version);
-		//wp_register_style('nex-forms-font-awesome-4-shims',plugins_url( '/public/css/fa5/css/v4-shims.min.css',__FILE__),'',$css_js_version);
+		//wp_register_style('nex-forms-font-awesome-5',plugins_url( '/public/css/fa5/css/all.min.css',__FILE__),'',$css_js_version, true);
+		//wp_register_style('nex-forms-font-awesome-4-shims',plugins_url( '/public/css/fa5/css/v4-shims.min.css',__FILE__),'',$css_js_version, true);
 		
 		wp_register_style('nex-forms-font-awesome-6',plugins_url( '/public/css/fa6/css/all.min.css',__FILE__),'',$css_js_version);
 		wp_register_style('nex-forms-font-awesome-4-shims',plugins_url( '/public/css/fa6/css/v4-shims.min.css',__FILE__),'',$css_js_version);
@@ -5931,33 +5800,33 @@ function nf_prefix_register_resources(){
 
 /* UI SCRIPT REGISTRATION */
 	if($script_config['inc-bootstrap']=='1' || !$script_config['inc-bootstrap'])
-		wp_register_script('nex-forms-bootstrap.min',  plugins_url( '/public/js/min/bs.min.js',__FILE__),'',$css_js_version);
+		wp_register_script('nex-forms-bootstrap.min',  plugins_url( '/public/js/min/bs.min.js',__FILE__),'',$css_js_version, true);
 	if($script_config['inc-wow']=='1' || !$script_config['inc-wow'])
-		wp_register_script('nex-forms-wow',  plugins_url( '/libs/wow.min.js',__FILE__),'',$css_js_version);
+		wp_register_script('nex-forms-wow',  plugins_url( '/libs/wow.min.js',__FILE__),'',$css_js_version, true);
 	if($script_config['inc-raty']=='1' || !$script_config['inc-raty'])
-		wp_register_script('nex-forms-raty-fa',  plugins_url( '/public/js/min/jquery.raty-fa.js',__FILE__),'',$css_js_version);
+		wp_register_script('nex-forms-raty-fa',  plugins_url( '/public/js/min/jquery.raty-fa.js',__FILE__),'',$css_js_version, true);
 	
-	wp_register_script('nex-forms-modal',  plugins_url( '/libs/nf-modal.js',__FILE__),'',$css_js_version);	
+	wp_register_script('nex-forms-modal',  plugins_url( '/libs/nf-modal.js',__FILE__),'',$css_js_version, true);	
 	
-	wp_register_script('nex-forms-selects-js',  plugins_url( '/libs/nex-select.js',__FILE__),'',$css_js_version);	
-	wp_register_script('nex-forms-var',  plugins_url( '/public/js/min/var.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-input-mask',  plugins_url( '/public/js/min/jquery.inputmask.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-sigs',  plugins_url( '/public/js/min/jquery.sig.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-tags',  plugins_url( '/public/js/min/jquery.tags.js',__FILE__),'',$css_js_version);
+	wp_register_script('nex-forms-selects-js',  plugins_url( '/libs/nex-select.js',__FILE__),'',$css_js_version, true);	
+	wp_register_script('nex-forms-var',  plugins_url( '/public/js/min/var.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-input-mask',  plugins_url( '/public/js/min/jquery.inputmask.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-sigs',  plugins_url( '/public/js/min/jquery.sig.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-tags',  plugins_url( '/public/js/min/jquery.tags.js',__FILE__),'',$css_js_version, true);
 	
-	wp_register_script('nex-forms-timer',  plugins_url( '/public/js/min/jquery.timer.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-materialize.min',  plugins_url( '/libs/materialize.min.js',__FILE__),'',$css_js_version);
+	wp_register_script('nex-forms-timer',  plugins_url( '/public/js/min/jquery.timer.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-materialize.min',  plugins_url( '/libs/materialize.min.js',__FILE__),'',$css_js_version, true);
 	
 	
 	
-	wp_register_script('nex-forms-onload', plugins_url( '/public/js/'.NF_PATH.'nexf-onload-ui.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-math.min',  plugins_url( '/libs/math.min.js',__FILE__),'',$css_js_version);
+	wp_register_script('nex-forms-onload', plugins_url( '/public/js/'.NF_PATH.'nexf-onload-ui.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-math.min',  plugins_url( '/libs/math.min.js',__FILE__),'',$css_js_version, true);
 	
-	wp_register_script('nex-forms-moment.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-locales.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version);
-	wp_register_script('nex-forms-bootstrap-datetimepicker', plugins_url( '/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',__FILE__),'',$css_js_version);
+	wp_register_script('nex-forms-moment.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-locales.min', plugins_url( '/libs/moment.min.js',__FILE__),'',$css_js_version, true);
+	wp_register_script('nex-forms-bootstrap-datetimepicker', plugins_url( '/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',__FILE__),'',$css_js_version, true);
 	
-	wp_register_script('nex-forms-bootstrap-touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',__FILE__),'',$css_js_version);
+	wp_register_script('nex-forms-bootstrap-touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',__FILE__),'',$css_js_version, true);
 	
 	
 	

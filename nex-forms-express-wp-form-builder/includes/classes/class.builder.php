@@ -85,7 +85,7 @@ if(!class_exists('NEXForms_Builder7')){
 				
 				$this->tut_id = sanitize_title($tut_id);
 				
-				$form_attr = $wpdb->get_row('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id='.$this->form_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$form_attr = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d', $this->form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				
 				$plugin_data = new NEXForms5_Config();
 				$this->plugin_version = $plugin_data->plugin_version;
@@ -5573,7 +5573,7 @@ tiff</div></div></form>';
 			if($set_jq_theme=='base')
 				$set_jq_theme = 'default';
 			
-			NEXForms_clean_echo( '<link class="jquery_ui_theme" name="jquery_ui_theme" rel="stylesheet" type="text/css" href="'.(($set_form_theme!='m_design') ? plugins_url( '/nex-forms-themes-add-on7/css/'.$set_jq_theme.'/jquery.ui.theme.css',dirname(dirname(dirname(__FILE__)))) : '' ).'"/>');
+			NEXForms_clean_echo( '<link class="jquery_ui_theme" name="jquery_ui_theme" rel="stylesheet" type="text/css" href="'.(($set_form_theme!='m_design') ? plugins_url( '/nex-forms-themes-add-on7/css/'.$set_jq_theme.'/jquery.ui.theme.css',dirname(dirname(dirname(__FILE__)))) : '' ).'"/>'); // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 
 			$output .= '<div class="form-canvas-area form-editor-view '.$set_theme_shade.'" data-sec-pre-class=".inner-form-canvas">';
 				$output .= '<div class="form-canvas-area-mask"></div>';
@@ -6976,7 +6976,7 @@ tiff</div></div></form>';
 																	
 																	case 'date' :
 																		$output .= '<div class="'.$input_width.'  input_container">';
-																			$output .= '<div class="input-group date" id="datetimepicker" data-format="'.(($preferences['field_preferences']['pref_date_picker_format']) ? $preferences['field_preferences']['pref_date_picker_format'] : 'DD/MM/YYYY').'" data-language="'.(($preferences['field_preferences']['pref_date_picker_lang']) ? $preferences['field_preferences']['pref_date_picker_lang'] : 'en').'">';
+																			$output .= '<div class="input-group date" id="datetimepicker" data-format="'.((isset($preferences['field_preferences']['pref_date_picker_format'])) ? $preferences['field_preferences']['pref_date_picker_format'] : 'DD/MM/YYYY').'" data-language="'.((isset($preferences['field_preferences']['pref_date_picker_lang'])) ? $preferences['field_preferences']['pref_date_picker_lang'] : 'en').'">';
 																				$output .= '<span class="input-group-addon prefix"><span class="fa fa-calendar-o"></span></span>';
 																				$output .= '<input type="text" name="date" class="error_message form-control the_input_element '.$preferences['field_preferences']['pref_input_size'].' '.$preferences['field_preferences']['pref_input_text_align'].' " data-onfocus-color="#66AFE9" data-drop-focus-swadow="1" data-placement="bottom" data-content="'.$preferences['validation_preferences']['pref_requered_msg'].'" title="" />';
 																			$output .= '</div>';
@@ -7695,20 +7695,18 @@ tiff</div></div></form>';
 					$form_padding = "30";
 					$form_border_radius = "4";
 					
-					if($preferences['other_preferences']['pref_form_bg'])
-						$form_bg = $preferences['other_preferences']['pref_form_bg'];
-						
-					if($preferences['other_preferences']['pref_form_padding'])
-						$form_padding = $preferences['other_preferences']['pref_form_padding'];
-						
-					if($preferences['other_preferences']['pref_form_border_radius'])
-						$form_border_radius = $preferences['other_preferences']['pref_form_border_radius'];
+					//if(isset($preferences['other_preferences']['pref_form_bg']))
+					$form_bg = (isset($preferences['other_preferences']['pref_form_bg'])) ? $preferences['other_preferences']['pref_form_bg'] : '#fff';
+					$form_padding = (isset($preferences['other_preferences']['pref_form_padding'])) ? $preferences['other_preferences']['pref_form_padding'] : '30';
+					$form_border_radius = (isset($preferences['other_preferences']['pref_form_border_radius'])) ? $preferences['other_preferences']['pref_form_border_radius'] : '0';
 					
-					if($preferences['other_preferences']['pref_form_shadow']=='light')
+					$pref_shadow = (isset($preferences['other_preferences']['pref_form_shadow'])) ? $preferences['other_preferences']['pref_form_shadow'] : 'light';
+					
+					if($pref_shadow=='light')
 						$form_shadow = "rgba(0, 0, 0, 0.2)";
-					if($preferences['other_preferences']['pref_form_shadow']=='dark')
+					if($pref_shadow=='dark')
 						$form_shadow = "rgba(0, 0, 0, 0.6)";
-					if($preferences['other_preferences']['pref_form_shadow']=='none')
+					if($pref_shadow=='none')
 						$form_shadow = "rgba(0, 0, 0, 0)";
 					
 					
@@ -8733,8 +8731,23 @@ $output .= '<div class="inner-form-canvas">';
 													
 													
 													NEXForms_clean_echo( '<div class="row">');
+														NEXForms_clean_echo( '<div class="row2">');
+														
 														NEXForms_clean_echo( '<br /><div class="alert alert-info">
-														1. Use <a href="https://zapier.com/developer/public-invite/161949/d12842cda054f597d0b94260c4c6b53b/" target="_blank"><strong>THIS LINK</strong></a> to go to Zapier.com.<br />2. Hit Make a Zap! button. This will take you to the setup screen.<br />3. Under Choose a Trigger App, select NEX-Forms, and choose New Form Entry as the trigger. <br />4. On the Test this Setup screen, you will find a Webhook URL. Copy this URL and paste it in the field below.</div>');
+														1. Use <a href="https://zapier.com/developer/public-invite/222264/0d60854910b13833ee1ce1cca5233189/" target="_blank"><strong>THIS LINK</strong></a> to go to Zapier.com.<br />
+														<br />2. Accept the invite
+3. Click on Create (top left corner)<br />
+4. Select Zap<br />
+5. Click on Trigger<br />
+6. Search NEX-Forms<br />
+7. Click on top most NEX-Forms 1.0<br />
+8. Click on the trigger and set the Trigger event to New Form Entry<br />
+9. Click on Test<br />
+10. Copy the WEBHOOK URL<br />
+11. Past it in your NEX-Forms backend Zapier integration setup<br />
+12. Create your action<br />
+														
+														</div>');
 													NEXForms_clean_echo( '</div>');
 													
 													NEXForms_clean_echo( '<div class="row">');

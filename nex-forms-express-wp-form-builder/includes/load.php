@@ -35,33 +35,33 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '8.8.4.1';
+	 $js_version = '8.8.5.1';
 	
-	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-charts',plugins_url( '/admin/js/min/chart.min.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-materialize.min',plugins_url('/libs/materialize.min.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-dashboard',plugins_url('/admin/js/'.NF_PATH.'dashboard.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-bootstrap-admin',plugins_url('/admin/js/min/bootstrap-admin.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-builder',plugins_url('/admin/js/'.NF_PATH.'builder.js',dirname(__FILE__)),'',$js_version);		
-	wp_register_script('nex-forms-field-settings-recall',plugins_url('/admin/js/'.NF_PATH.'field-settings-recall.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-field-settings',plugins_url('/admin/js/'.NF_PATH.'field-settings.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-admin-tour',plugins_url('/admin/js/'.NF_PATH.'tour.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-tinymce',includes_url( '/js/tinymce/tinymce.min.js'),'',$js_version);
-	wp_register_script('nex-forms-drag-and-drop',plugins_url('/admin/js/drag-and-drop.js',dirname(__FILE__)),'',$js_version);
+	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-charts',plugins_url( '/admin/js/min/chart.min.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-materialize.min',plugins_url('/libs/materialize.min.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-dashboard',plugins_url('/admin/js/'.NF_PATH.'dashboard.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-bootstrap-admin',plugins_url('/admin/js/min/bootstrap-admin.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-builder',plugins_url('/admin/js/'.NF_PATH.'builder.js',dirname(__FILE__)),'',$js_version, true);		
+	wp_register_script('nex-forms-field-settings-recall',plugins_url('/admin/js/'.NF_PATH.'field-settings-recall.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-field-settings',plugins_url('/admin/js/'.NF_PATH.'field-settings.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-admin-tour',plugins_url('/admin/js/'.NF_PATH.'tour.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-tinymce',includes_url( '/js/tinymce/tinymce.min.js'),'',$js_version, true);
+	wp_register_script('nex-forms-drag-and-drop',plugins_url('/admin/js/drag-and-drop.js',dirname(__FILE__)),'',$js_version, true);
 
 	//FRONT+BACK
 	  
 	// BS DATETIME
-	wp_register_script('nex-forms-locales.min', plugins_url('/libs/locales.min.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-moment.min', plugins_url('/libs/moment.min.js',dirname(__FILE__)),'',$js_version);
-	//wp_register_script('nex-forms-nex-select', plugins_url('/libs/nex-select.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-date-time',plugins_url('/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',dirname(__FILE__)),'',$js_version);
+	wp_register_script('nex-forms-locales.min', plugins_url('/libs/locales.min.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-moment.min', plugins_url('/libs/moment.min.js',dirname(__FILE__)),'',$js_version, true);
+	//wp_register_script('nex-forms-nex-select', plugins_url('/libs/nex-select.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-date-time',plugins_url('/public/js/'.NF_PATH.'bootstrap-datetimepicker.js',dirname(__FILE__)),'',$js_version, true);
 	
-	wp_register_script('nex-forms-raty',plugins_url('/public/js/min/jquery.raty-fa.js',dirname(__FILE__)),'',$js_version);
-	wp_register_script('nex-forms-fields',plugins_url('/admin/js/min/fields.js',dirname(__FILE__)),'',$js_version);
+	wp_register_script('nex-forms-raty',plugins_url('/public/js/min/jquery.raty-fa.js',dirname(__FILE__)),'',$js_version, true);
+	wp_register_script('nex-forms-fields',plugins_url('/admin/js/min/fields.js',dirname(__FILE__)),'',$js_version, true);
 
-	wp_register_script('nex-forms-bootstrap.touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',dirname(__FILE__)),'',$js_version);
+	wp_register_script('nex-forms-bootstrap.touchspin', plugins_url( '/public/js/min/jquery.bootstrap-touchspin.js',dirname(__FILE__)),'',$js_version, true);
 
 	wp_register_style('nex-forms-material-theme-amber', plugins_url( '/public/css/themes/amber.css',dirname(__FILE__)),'',$js_version);
 	wp_register_style('nex-forms-material-theme-blue-gray', plugins_url( '/public/css/themes/blue-gray.css',dirname(__FILE__)),'',$js_version);
@@ -91,7 +91,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '8.8.4.1';
+	$js_version = '8.8.5.1';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -140,7 +140,7 @@ function enqueue_nf_admin_scripts($hook) {
 			else
 				{
 				wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-light.css',dirname(__FILE__)),'',$js_version);
-				//wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/'.get_user_option( 'admin_color' ).'.css',dirname(__FILE__)),'',$js_version);
+				//wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/'.get_user_option( 'admin_color' ).'.css',dirname(__FILE__)),'',$js_version, true);
 				}
 			}
 		}
@@ -197,7 +197,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '8.8.4.1';
+	$js_version = '8.8.5.1';
 	
 	if(strstr($hook,'nex-forms'))
 		{
@@ -224,10 +224,10 @@ function enqueue_nf_admin_styles($hook) {
 				else
 					{
 					wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/nf-light.css',dirname(__FILE__)),'',$js_version);
-					//wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/'.get_user_option( 'admin_color' ).'.css',dirname(__FILE__)),'',$js_version);
+					//wp_enqueue_style('nex-forms-admin-color-adapt',  plugins_url( '/admin/css/color_adapt/'.get_user_option( 'admin_color' ).'.css',dirname(__FILE__)),'',$js_version, true);
 					}
 				}
-		//wp_enqueue_style('nex-forms-overall-styles',plugins_url('/admin/css/'.NF_PATH.'nex-forms.css',dirname(__FILE__)),'',$js_version);	
+		//wp_enqueue_style('nex-forms-overall-styles',plugins_url('/admin/css/'.NF_PATH.'nex-forms.css',dirname(__FILE__)),'',$js_version, true);	
 		}
 	
 	if($hook=='toplevel_page_nex-forms-dashboard' || strstr($hook,'nex-forms-page'))
@@ -267,7 +267,7 @@ function enqueue_nf_admin_styles($hook) {
 	if($hook=='nex-forms_page_nex-forms-page-global-settings')
 		{
 		wp_enqueue_style('nex-forms-materialize.min',plugins_url('/public/css/min/materialize-ui.css',dirname(__FILE__)),'',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-light-blue','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-light-blue','','',$js_version);
 		}
 	
 	if($hook=='toplevel_page_nex-forms-dashboard' || strstr($hook,'nex-forms-page'))
@@ -296,25 +296,25 @@ function enqueue_nf_admin_styles($hook) {
 		
 		wp_enqueue_style('nex-forms-materialize.min',plugins_url('/public/css/min/materialize-ui.css',dirname(__FILE__)),'',$js_version);
 
-		wp_enqueue_style('nex-forms-material-theme-amber','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-blue-gray','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-blue','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-brown','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-cyan','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-deep-purple','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-default','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-gray','',$js_version); 
-		wp_enqueue_style('nex-forms-material-theme-green','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-indigo','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-light-blue','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-light-green','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-lime','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-orange','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-pink','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-purple','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-red','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-teal','',$js_version);
-		wp_enqueue_style('nex-forms-material-theme-yellow','',$js_version);	
+		wp_enqueue_style('nex-forms-material-theme-amber','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-blue-gray','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-blue','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-brown','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-cyan','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-deep-purple','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-default','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-gray','','',$js_version); 
+		wp_enqueue_style('nex-forms-material-theme-green','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-indigo','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-light-blue','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-light-green','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-lime','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-orange','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-pink','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-purple','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-red','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-teal','','',$js_version);
+		wp_enqueue_style('nex-forms-material-theme-yellow','','',$js_version);	
 		
 		add_action('admin_bar_menu', 'custom_toolbar_link', 999);
 		}

@@ -17,6 +17,10 @@ div#nex_forms_widget {
   /*  border-bottom-color: #8bc34a;
 	background:#8bc34a;*/
 }
+/*table.xdebug-error.xe-notice {
+    position: relative;
+    z-index: 1000000000000000;
+}*/
 #nex_forms_widget .inside {
     background: linear-gradient(238deg, #f4e8ff 0%, #9ee2ff 100%) !important;
     margin-top: 0px;

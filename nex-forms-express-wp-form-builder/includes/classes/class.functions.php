@@ -113,7 +113,7 @@ if(!class_exists('NEXForms_Functions'))
 										{
 										$output .= '<div class="col-sm-3">';
 											$output .= '<a class="template_box new_form_option load_template" data-nex-step="creating_new_form" data-template-name="'.$get_file_name.'" data-template-dir="'.$dir.'">';
-											$output .= '<div class="img"><img src="https://basixonline.net/demo_templates/images_v7.6.5/'.$this->format_name($get_file_name).'.jpg"></div>';
+											$output .= '<div class="img"><img src="https://basixonline.net/demo_templates/images_v7.6.5/'.$this->format_name($get_file_name).'.jpg"></div>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 											$output .= '<div class="description">'.str_replace('%20',' ',$set_template_title[1]).'</div></a>';
 										$output .= '</div>';
 										}
@@ -1783,9 +1783,11 @@ function NEXForms_time_elapsed_string($datetime, $full = false) {
 $get_nf_functions = new NEXForms_Functions();
 
 function NEXForms_clean_echo($content){
+	
+	
 	$content = NEXForms_rgba2Hex($content);
-	//echo wp_kses( $content, NEXForms_allowed_tags());
-	echo $content;
+	echo wp_kses( $content, NEXForms_allowed_tags());
+	//echo $content;
 }
 
 function NEXForms_allowed_tags(){
@@ -1940,6 +1942,35 @@ function NEXForms_allowed_tags(){
 	);
 	return $allowed_tags;
 }
+
+function NEXForms_safe_user_functions(){
+	$whitelist_func = array(
+	'NEXForms_starred',
+	'NEXForms_get_attachment',
+	'NEXForms_entry_status',
+	'NEXForms_get_title3',
+	'NEXForms_time_elapsed_string',
+	'NEXForms_get_title',
+	'NEXForms_download_file',
+	'link_form_title_2',
+	'get_form_shortcode',
+	'get_total_entries_3',
+	'link_form_title',
+	'duplicate_record',
+	'print_export_form_link',
+	'NEXForms_get_entry_data_preview',
+	'link_report_title',
+	'get_total_report_records',
+	'report_last_update',
+	'quick_report_csv',
+	'quick_report_pdf',
+	'link_report_title2',
+	'get_total_entries',
+	'NEXForms_paypal_payment_status',
+	);
+	return $whitelist_func;
+}
+
 function NEXForms_isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }

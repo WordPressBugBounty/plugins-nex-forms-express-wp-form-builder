@@ -203,9 +203,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
-				 return false;
-			 }
+			
 			
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
@@ -215,7 +213,13 @@ if(!class_exists('NEXForms_Database_Actions'))
 				return false;
 				}
 			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
-				 $api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
+				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
+				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
+				$this->deactivate_license();
+				return false;
+			 }
+			 if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
+				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
 				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 				$this->deactivate_license();
 				return false;
@@ -326,7 +330,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					else
 						{
 						$_POST[$field->Field] = NEXForms_rgba2Hex($_POST[$field->Field]);
-						$field_array[$field->Field] = $_POST[$field->Field];
+						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags());
 						}
 					}	
 				}
@@ -395,7 +399,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					else
 						{
 						$_POST[$field->Field] = NEXForms_rgba2Hex($_POST[$field->Field]);
-						$field_array[$field->Field] = $_POST[$field->Field];
+						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags());
 						}
 					}	
 				}
@@ -880,7 +884,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$get_db_table = $wpdb->prepare('SELECT db_table FROM ' .$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			$db_table = $wpdb->get_var($get_db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
-			$drop_table = $wpdb->query('DROP TABLE `'.$db_table.'`');
+			$drop_table = $wpdb->query('DROP TABLE `'.$db_table.'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			die();
 		}
@@ -2700,7 +2704,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 																		else
 																			{
 																			if(in_array($nf_functions->get_ext($innervalue),$img_ext_array))
-																				$output .= '<td style="border-right:1px solid #ddd;border-bottom:1px solid #eee;"><img class="materialboxed" src="'.rtrim($innervalue,', ').'" /></td>';
+																				$output .= '<td style="border-right:1px solid #ddd;border-bottom:1px solid #eee;"><img class="materialboxed" src="'.rtrim($innervalue,', ').'" /></td>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 																			else
 																				$output .= '<td style="border-right:1px solid #ddd;border-bottom:1px solid #eee;">'.rtrim($innervalue,', ').'</td>';
 																			}
@@ -2740,8 +2744,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 													foreach($is_array as $item)
 														{
 														if(in_array($nf_functions->get_ext($item),$img_ext_array))
-															$output .= '<div class="col-xs-12" style="margin-bottom:15px;"><img class="materialboxed" width="100%" src="'.$item.'"></div>
-	';													else if(in_array($nf_functions->get_ext(trim($item)),$file_ext_array))
+															$output .= '<div class="col-xs-12" style="margin-bottom:15px;"><img class="materialboxed" width="100%" src="'.$item.'"></div>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+														else if(in_array($nf_functions->get_ext(trim($item)),$file_ext_array))
 															$output .= '<div class="col-xs-12" style="margin-bottom:15px;"><a class="file_ext_data" href="'.$item.'" target="_blank">'.$item.'</a></div>';
 														else
 															$output .= $item;
@@ -2749,9 +2753,9 @@ if(!class_exists('NEXForms_Database_Actions'))
 													$output .= '<input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
 													}
 												else if(strstr($field_value,'data:image'))
-													$output .= '<img class="sig" src="data:'.$field_value.'"><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
+													$output .= '<img class="sig" src="data:'.$field_value.'"><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 												else if(in_array($nf_functions->get_ext(trim($field_value)),$img_ext_array))
-													$output .= '<div class="col-xs-6"><img class="materialboxed" width="100%" src="'.$field_value.'" style="margin-bottom:15px;"></div><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">';
+													$output .= '<div class="col-xs-6"><img class="materialboxed" width="100%" src="'.$field_value.'" style="margin-bottom:15px;"></div><input type="hidden" name="'.$data->field_name.'" value="'.$field_value.'">'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 												else
 													{
 													if($edit_entry)
@@ -2876,7 +2880,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 													if(!strstr($data['field_value'],'data:image'))
 														$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($data['field_name']).'</span> : <span class="entry_data_value">'.$data['field_value'].'</span> | ';
 													else
-														$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($data['field_name']).'</span> : <span class="entry_data_value"><img src="'.$data['field_value'].'" width="50"/></span> | ';
+														$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($data['field_name']).'</span> : <span class="entry_data_value"><img src="'.$data['field_value'].'" width="50"/></span> | '; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 													}
 												}
 											$set_data = rtrim($set_data,' | ');
@@ -2900,7 +2904,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				{
 				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view entries. Go to global settings above and follow registration procedure.</div>';	
 				}
-			echo $output;
+			echo( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			
 			die();	
 		}
@@ -3780,7 +3784,7 @@ function NEXForms_get_entry_data_preview($Id='',$table=''){
 				if(!strstr($field_value,'data:image'))
 					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value">'.$field_value.'</span> | ';
 				else
-					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value"><img src="'.$field_value.'" width="50"/></span> | ';
+					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value"><img src="'.$field_value.'" width="50"/></span> | '; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 				}
 			}
 		$i++;
