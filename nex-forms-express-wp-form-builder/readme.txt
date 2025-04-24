@@ -5,9 +5,9 @@ Donate link: https://1.envato.market/zQ6de
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 8.8.6
+Stable tag: 8.8.7
 License: GPLv3 or later
-Author URI: https://codecanyon.net/user/basix/portfolio?ref=Basix
+Author URI: https://basixonline.net
 Plugin URI: https://1.envato.market/zQ6de
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -15,7 +15,7 @@ Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes,
 
 == Description ==
 
-**NEX-Forms is the ultimate WordPress form builder plugin** for creating interactive, multi-functional, and beautiful responsive forms. Whether you need contact forms, survey forms, booking forms, or even payment-integrated forms, NEX-Forms lets you build them quickly with a powerful drag & drop form builder – no coding required!
+**NEX-Forms is the ultimate WordPress form builder plugin** for creating interactive, multi-functional, and beautiful responsive forms. Whether you need contact forms, survey forms, booking forms, or even payment-integrated forms, NEX-Forms lets you build them quickly with a powerful drag & drop form builder – no coding required! 
 
 
 ### ✅ Highlights:

@@ -1412,14 +1412,14 @@ nav.dashboard-box-nav li a{
 	padding: 0 10px !important;
 }
 
-nav.dashboard-box-nav{
-	margin-top: 0 !important;
-	position: relative;
-	clear: both;
-	top: 0;
-	margin: 0;
-	height: 31px;
-	width: 100%;
+nav.dashboard-box-nav {
+    margin-top: 0 !important;
+    position: relative;
+    clear: both;
+    top: 18px;
+    margin: 0;
+    height: 31px;
+    width: 100%;
 }
 
 .dashboard-box-content form{
@@ -9914,8 +9914,9 @@ li.analytics_item{
 	line-height: 16px;
 }
 
-.global_settings_page .dashboard-box-content{
-	padding: 25px 10px 15px 10px;
+.global_settings_page .dashboard-box-content {
+    padding: 25px 10px 15px 10px;
+    height: unset;
 }
 
 @-webkit-keyframes blue-fade-in-out{

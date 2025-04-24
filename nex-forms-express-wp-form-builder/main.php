@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.6
+Version: 8.8.7
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms

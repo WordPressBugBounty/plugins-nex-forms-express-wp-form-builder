@@ -3391,7 +3391,8 @@ if(!class_exists('NEXForms_dashboard'))
 				
 							$chart_type = isset($_REQUEST['chart_type']) ? sanitize_text_field($_REQUEST['chart_type']) : '';
 							
-									
+								if($checkin)
+									{	
 								$output .= '
     										<script type="text/javascript">
 											 google.charts.load(\'current\', {
@@ -3435,7 +3436,7 @@ if(!class_exists('NEXForms_dashboard'))
 												gchart.draw(data, options);
 											  }
 											</script>';
-							
+									}
 							
 							
 							/*$output .= '
