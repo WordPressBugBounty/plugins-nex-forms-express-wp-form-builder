@@ -230,9 +230,43 @@ function NEXForms_stats_page(){
 		$output .= '<div class="entries_wrapper">';
 			
 			$output .= '<div class="left-col aa_bg_main">';
-					
-				$output .= $dashboard->analytics_menu();
+				$output .= '<div class="stat-controls">';		
+				//$output .= $dashboard->analytics_menu();
+				$output .= '
+							<label>Select Form</label>
+							<select class="form_control aa_bg_main_input" name="stats_per_form" style="display:block">';
+								$output .= '<option value="0" selected>'.__('All Forms','nex-forms').'</option>';
+								$get_forms = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template<>1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC';
+								
+								$forms = $wpdb->get_results($get_forms);
+								foreach($forms as $form)
+									$output .= '<option value="'.$form->Id.'">'.str_replace('\\','',$form->title).'</option>';
+							$output .= '</select>';
+				$output .= '
+							<label>Year</label>
+							<select class="form_control aa_bg_main_input" name="stats_per_year" style="display:block">';
+								$current_year = (int)date('Y');
+								$output .= '<option value="'.$current_year.'" selected>'.$current_year.'</option>';
+								for($i=($current_year-1);$i>=($current_year-20);$i--)
+									{
+									if($i>=2015)
+										$output .= '<option value="'.$i.'">'.$i.'</option>';
+									}
+							$output .= '</select>';
 				
+				$output .= '
+							<label>Month</label>
+							<select class="form_control aa_bg_main_input" name="stats_per_month" style="display:block">';
+							$month_array = array('01'=>'January','02'=>'February','03'=>'March','04'=>'April','05'=>'May','06'=>'June','07'=>'July','08'=>'August','09'=>'September','10'=>'October','11'=>'November','12'=>'December');
+								$output .= '<option value="0">'.__('All Year','nex-forms').'</option>';
+								$current_month = (int)date('m');
+								foreach($month_array as $key=>$val)
+									{
+									$output .= '<option value="'.$key.'" '.(($key==$current_month) ? 'selected' : '' ).'>'.$val.'</option>';
+									
+									}
+							$output .= '</select>';
+				$output .= '</div>';
 			$output .= '</div>';
 			
 			$output .= '<div class="right-col">';
@@ -244,25 +278,76 @@ function NEXForms_stats_page(){
 			  $output .= '<div id="plugins_url">'.plugins_url('/',__FILE__).'</div>';
 			  $output .= '<div id="load_entry">'.$dashboard->checkout.'</div>';
 			$output .= '</div>';
-	
+	  
 				
 					 
 					  $output .= '<div class="form_analytics_panel">';
-					  
-						  $output .= '<div class="row row_zero_margin ">';
-						  
-								
-								$output .= '<div  class="col-sm-9">';
-									$output .= $dashboard->form_analytics();
-								$output .= '</div>';
-								
-								
-						  $output .= '</div>';
-						  
-						 
-						  
-					  $output .= '</div>';
-		  
+					  	
+						$output .= '<div class="stats-title-main">';
+						
+						
+						$output .= '<div class="head_text">'.__('Form Analytics','nex-forms').'&nbsp;-&nbsp;<span class="analytics_form">All Forms</span></div>';
+						$output .= '<div class="sub_head_text"><span class="analytic_month">'.$month_array['0'.$current_month].'</span> <span class="analytic_year">'.$current_year.'</span></div>';
+							
+							
+							
+							
+							
+						
+						
+					$output .= '</div>';
+						
+						$output .= '<div class="stats_container">';
+							
+							  
+							  
+							  /*$output .= '<div class="row">';
+									$output .= '<div  class="col-sm-9">';
+										$output .= ' <div id="curve_chart" style="width: 900px; height: 500px"></div>';
+									$output .= '</div>';
+							  $output .= '</div>';*/
+							 
+							  
+							  $output .= '<div class="row">';
+							  		$output .= '<div class="col-sm-4">';
+										$output .= '<div class="stats_summary_container">';
+										$output .= '<div class="geo_heading">'.__('Overview','nex-forms').'</div>';
+												$output .= '<div class="stats_summary_container2"><div class="row stats aa_bg_sec header_stats"><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#60a1e1">Form Views</label> </div><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#8BC34A">Form Interactions</label> </div><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#F57C00">Form Submissions</label> </div><div class="col-xs-3"><span class="big_txt">0.00%</span> <label>Conversion</label> </div></div></div>';	
+										$output .= '</div>';
+										
+										
+										$output .= '<div class="top_performing_form">';
+										$output .= '<div class="geo_heading">'.__('Top Forms by submissions','nex-forms').'</div>';
+										$output .= '<div class="top_forms_container"></div>';
+										$output .= '</div>';
+										
+									$output .= '</div>';
+							  
+									$output .= '<div  class="col-sm-8">';
+										$output .= '<div class="geo_heading">'.__('Form Events','nex-forms').'</div>';
+										$output .= $dashboard->form_analytics();
+									$output .= '</div>';
+							  $output .= '</div>';
+							  
+							  
+							  $output .= '<div class="row">';
+									$output .= '<div class="col-sm-9">';
+										$output .= '<div class="geo_heading">'.__('Global Form Submissions','nex-forms').'</div>';
+										$output .= '<div id="regions_div" style="width: 100%;"></div>';
+									$output .= '</div>';
+									
+									$output .= '<div class="col-sm-3">';
+										$output .= '<div class="geo_heading">'.__('Top Countries','nex-forms').'</div>';
+										$output .= '<div class="geo_stats_container"><ul class="top_countries"></ul></div>';
+										
+										
+									$output .= '</div>';
+									
+							  $output .= '</div>';
+							  
+							  
+					 		$output .= '</div>';
+		  				$output .= '</div>';
 		  $output .= '</div>';
 		 $output .= '</div>';  	
 	 $output .= '</div>'; //nex_forms_admin_page_wrapper
@@ -2716,63 +2801,33 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			$output = '';
 			
-			$output .= '<div class="dashboard-box form_analytics '.(($print_chart=='summary') ? 'summary_stats' : '' ).'">';
-			
-			
-				$output .= '<div class="dashboard-box-header '.(($this->color_adapt) ? 'aa_bg_main': '' ).'">';
-					if(($print_chart=='summary'))
-						$output .= '<div class="table_title '.(($this->color_adapt) ? 'font_color_1': '' ).'">'.__('Form Entry Analytics for the last 7 Days','nex-forms').'</div>';
-					
-					if($print_chart!='summary')
+			if($print_chart!='summary')
 						{
 					$output .= '<div class="controls">';
-						/*$output .= '<div class="col-xs-3">';
-							$output .= '<select class="form_control aa_bg_main_input" name="stats_per_form">';
-								$output .= '<option value="0" selected>'.__('All Forms','nex-forms').'</option>';
-								$get_forms = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template<>1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC';
-								
-								$forms = $wpdb->get_results($get_forms);
-								foreach($forms as $form)
-									$output .= '<option value="'.$form->Id.'">'.str_replace('\\','',$form->title).'</option>';
-							$output .= '</select>';
-							
-						$output .= '</div>';*/
 						
-						$output .= '<div class="col-xs-2">';
-							$output .= '<select class="form_control aa_bg_main_input" name="stats_per_year">';
-								$current_year = (int)date('Y');
-								$output .= '<option value="'.$current_year.'" selected>'.$current_year.'</option>';
-								for($i=($current_year-1);$i>=($current_year-20);$i--)
-									{
-									if($i>=2015)
-										$output .= '<option value="'.$i.'">'.$i.'</option>';
-									}
-							$output .= '</select>';
-						$output .= '</div>';
 						
-						$output .= '<div class="col-xs-2">';
-							$output .= '<select class="form_control aa_bg_main_input" name="stats_per_month">';
-							$month_array = array('01'=>'January','02'=>'February','03'=>'March','04'=>'April','05'=>'May','06'=>'June','07'=>'July','08'=>'August','09'=>'September','10'=>'October','11'=>'November','12'=>'December');
-								//$output .= '<option value="0">'.__('Month','nex-forms').'</option>';
-								$current_month = (int)date('m');
-								foreach($month_array as $key=>$val)
-									{
-									$output .= '<option value="'.$key.'" '.(($key==$current_month) ? 'selected' : '' ).'>'.$val.'</option>';
-									
-									}
-							$output .= '</select>';
-						$output .= '</div>';
 						
-							//$output .= '<button class="btn waves-effect waves-light switch_chart" data-chart-type="global"><i class="fa fa-globe"></i></button>';
-							$output .= '<button class="btn aa_bg_sec_btn nf_button switch_chart" data-chart-type="radar"><i class="fa fa-spider"></i></button>';
-							$output .= '<button class="btn aa_bg_sec_btn nf_button switch_chart" data-chart-type="polarArea"><i class="fa fa-bullseye"></i></button>';
-							$output .= '<button class="btn aa_bg_sec_btn nf_button switch_chart" data-chart-type="doughnut"><i class="fa fa-pie-chart"></i></button>';
-							$output .= '<button class="btn aa_bg_sec_btn nf_button switch_chart" data-chart-type="bar"><i class="fa fa-bar-chart"></i></button>';
-							$output .= '<button class="btn aa_bg_sec_btn nf_button switch_chart active" data-chart-type="line"><i class="fa fa-line-chart"></i></button>';
+						
+							$output .= '<div class="switch_chart active" data-chart-type="line"><i class="fa fa-line-chart"></i></div>';
+						$output .= '<div class="switch_chart" data-chart-type="bar"><i class="fa fa-bar-chart"></i></div>';
+						$output .= '<div class="switch_chart" data-chart-type="doughnut"><i class="fa fa-pie-chart"></i></div>';
+						$output .= '<div class="switch_chart" data-chart-type="polarArea"><i class="fa fa-bullseye"></i></div>';
+						$output .= '<div class="switch_chart" data-chart-type="radar"><i class="fa fa-spider"></i></div>';
 						
 						
 					$output .= '</div>';
 				}
+			
+			$output .= '<div class="dashboard-box form_analytics '.(($print_chart=='summary') ? 'summary_stats' : '' ).'">';
+			
+			if(($print_chart=='summary'))
+				{
+				$output .= '<div class="dashboard-box-header '.(($this->color_adapt) ? 'aa_bg_main': '' ).'">';
+					
+						$output .= '<div class="table_title '.(($this->color_adapt) ? 'font_color_1': '' ).'">'.__('Form Entry Analytics for the last 7 Days','nex-forms').'</div>';
+				}
+					
+				if(($print_chart=='summary'))
 				$output .= '</div>';
 				
 				
@@ -2786,7 +2841,7 @@ if(!class_exists('NEXForms_dashboard'))
 					
 					$output .= '<div class="chart-container"><div class="data_set">'.$this->print_chart($this->checkout, $print_chart).'</div>
 					
-					<canvas id="chart_canvas" height="196px" ></canvas>
+					<canvas id="chart_canvas" class="'.$print_chart.'"></canvas>
 					</div>';
 					
 					
@@ -2798,7 +2853,7 @@ if(!class_exists('NEXForms_dashboard'))
 					if($print_chart=='summary')
 						{
 						$output .='<div class="chart_legend">';
-							$output .= '<a href="'.get_admin_url().'admin.php?page=nex-forms-page-analytics" class="more_button">MORE INSIGHTS <span class="fa fa-chevron-right"></span></a>';
+							$output .= '<a href="'.get_admin_url().'admin.php?page=nex-forms-page-analytics" class="more_button">More Insights <span class="fa fa-arrow-right"></span></a>';
 						$output .= '</div>';
 						}
 				$output .= '</div>';
@@ -2811,14 +2866,18 @@ if(!class_exists('NEXForms_dashboard'))
 				wp_die();
 			global $wpdb;
 			$current_year = (int)date('Y');
-	
+					
+					$set_chart_view = (isset($_REQUEST['is_summary'])) ? $_REQUEST['is_summary'] : '';
+					
+					if($set_chart_view=='summary')
+						$chart_view = 'summary';
+					
 					$year_selected = isset($_REQUEST['year_selected']) ? $wpdb->prepare('%s',esc_sql(sanitize_text_field($_REQUEST['year_selected']))) : (int)date('Y');
 					$year_selected = str_replace('\'','',$year_selected);
 					$month_selected =  isset($_REQUEST['month_selected']) ? $wpdb->prepare('%s',esc_sql(sanitize_text_field($_REQUEST['month_selected']))) : (int)date('m');
 					$month_selected = str_replace('\'','',$month_selected);
 					
 					$month_array = array('1'=>__('January','nex-forms'),'2'=>__('February','nex-forms'),'3'=>__('March','nex-forms'),'4'=>__('April','nex-forms'),'5'=>__('May','nex-forms'),'6'=>__('June','nex-forms'),'7'=>__('July','nex-forms'),'8'=>__('August','nex-forms'),'9'=>__('September','nex-forms'),'10'=>__('October','nex-forms'),'11'=>__('November','nex-forms'),'12'=>__('December','nex-forms'));
-					
 					
 					$today = (int)date('j');
 					
@@ -2849,10 +2908,12 @@ if(!class_exists('NEXForms_dashboard'))
 					if($chart_view=='summary')
 						$where_str .= ' AND date_time >= DATE(NOW()) - INTERVAL 7 DAY';
 					else
-						$where_str .= ' AND Year(date_time)=Year("'.$current_year.'-'.$month_selected.'-01") AND Month(date_time)= Month("'.$current_year.'-'.$month_selected.'-01") ';
+						$where_str .= ' AND YEAR(date_time)=YEAR("'.$current_year.'-'.$month_selected.'-01") ';
 								
 					
 					$form_entries = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE '.$where_str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					
+					//echo 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE '.$where_str;
 					
 					$form_views = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_views WHERE '.$where_str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 					
@@ -3290,6 +3351,9 @@ if(!class_exists('NEXForms_dashboard'))
 					
 					
 					
+					
+					
+					
 					$output.= '<div class="row stats aa_bg_sec">';
 						if(!$checkin)
 							{
@@ -3298,9 +3362,9 @@ if(!class_exists('NEXForms_dashboard'))
 							}
 							
 							
-							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_views : $set_form_views).'</span> <label style="cursor:default;color:#60a1e1;">'.__('Views','nex-forms').'</label> </div>';
-							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_interactions : $set_form_interactions).'</span> <label style="cursor:default;color:#8BC34A;">'.__('Interactions','nex-forms').'</label> </div>';
-							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_entries : $set_form_entries).'</span> <label style="cursor:default;color:#F57C00;">'.__('Submissions','nex-forms').'</label> </div>';
+							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_views : $set_form_views).'</span> <label style="cursor:default;color:#90b5f1;">'.__('Form Views','nex-forms').'</label> </div>';
+							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_interactions : $set_form_interactions).'</span> <label style="cursor:default;color:#6ca6e5;">'.__('Form Interactions','nex-forms').'</label> </div>';
+							$output.= '<div class="col-xs-3" ><span class="big_txt">'.(($checkin) ? $total_form_entries : $set_form_entries).'</span> <label style="cursor:default;color:#1875d0;">'.__('Form Submissions','nex-forms').'</label> </div>';
 							
 							if($total_form_entries==0 || $total_form_views==0)
 								$output.= '<div class="col-xs-3" ><span class="big_txt">0%</span> <label style="cursor:default;">Conversion</label> </div>';
@@ -3312,20 +3376,33 @@ if(!class_exists('NEXForms_dashboard'))
 							$output.= '</div>';
 							
 							$get_countries = $nf7_functions->code_to_country('',1);
-							$opacity = 0.1;
+							$opacity = 0.4;
+							
+							$entries_bg_color = '#1976D2';
+							$entries_brd_color = '#0074A6';	
+							
+							$interactions_bg_color = '#a6cde8';
+							$interactions_brd_color = '#5196E1';	
+							
+							$views_bg_color = '#E8F0FE';
+							$views_brd_color = '#97BCFB';	
+				
+							$brd_width = 1;
+				
 							$chart_type = isset($_REQUEST['chart_type']) ? sanitize_text_field($_REQUEST['chart_type']) : '';
-							if($chart_type=='global')
-								{
+							
 									
-								$output .= '<script type="text/javascript">
-											  google.charts.load(\'current\', {\'packages\':[\'geochart\']});
+								$output .= '
+    										<script type="text/javascript">
+											 google.charts.load(\'current\', {
+        \'packages\':[\'geochart\'],
+      });
 											  google.charts.setOnLoadCallback(drawRegionsMap);
 										
 											  function drawRegionsMap() {
 										
 												var data = google.visualization.arrayToDataTable([
 												  [\'Country\', \'Submissions\'],
-												  
 												  ';
 												  if($checkin)
 												  	{
@@ -3344,23 +3421,72 @@ if(!class_exists('NEXForms_dashboard'))
 												  $output .= '
 												]);
 										
-												var options = {};
+												var options = {
+													colorAxis: {
+													  colors: [\'#d6e6fb\', \'#0074a6\'] // Light to dark (custom gradient)
+													},
+													backgroundColor: \'#ffffff\',
+													datalessRegionColor: \'#fff\', // Color for regions without data
+													defaultColor: \'#cccccc\'        // Default country color (if not specified)
+												  };
 										
 												var gchart = new google.visualization.GeoChart(document.getElementById(\'regions_div\'));
 										
 												gchart.draw(data, options);
 											  }
 											</script>';
-									$output .= '<div id="regions_div" style="width: 900px; height: 500px;"></div>';
-								}
-							if($chart_type=='bar')
-								$opacity = 0.2;
 							
+							
+							
+							/*$output .= '
+    										<script type="text/javascript">
+											  google.charts.load(\'current\', {\'packages\':[\'corechart\']});
+      
+											  google.charts.setOnLoadCallback(drawChart);
+										
+											  function drawChart() {
+													var data = google.visualization.arrayToDataTable([
+													  [\'Views\', \'Interactions\', \'Submissions\'],
+													  [\'2004\',  1000,      2355],
+													  [\'2005\',  1170,      460],
+													  [\'2006\',  660,       1120],
+													  [\'2007\',  1030,      540]
+													]);
+											
+													var options = {
+													  title: \'Company Performance\',
+													  curveType: \'function\',
+													  legend: { position: \'bottom\' }
+													};
+											
+													var chart = new google.visualization.LineChart(document.getElementById(\'curve_chart\'));
+											
+													chart.draw(data, options);
+												  }
+											</script>';*/
+							
+									
+								
+							if($chart_type=='bar')
+								{
+								$opacity = 1;
+								
+								$entries_bg_color = '#0074A6';
+								$entries_brd_color = '#0074A6';	
+								
+								$interactions_bg_color = '#5196E1';
+								$interactions_brd_color = '#5196E1';	
+								
+								$views_bg_color = '#97BCFB';
+								$views_brd_color = '#97BCFB';
+								$brd_width = 0;
+								}
+								
 							if($chart_type=='doughnut' || $chart_type=='polarArea')
 								{
-								$opacity = 0.3;
+								$opacity = 0.9;
 								$output .= '<script>
-									randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+									//randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 									
 									var lineChartData = {
 											labels: [
@@ -3372,14 +3498,14 @@ if(!class_exists('NEXForms_dashboard'))
 										{
 											data: ['.(($checkin) ? $total_form_views : $set_form_views).', '.(($checkin) ? $total_form_interactions : $set_form_interactions).', '.(($checkin) ? $total_form_entries : $set_form_entries).'],
 											backgroundColor: [
-												"'.NEXForms5_hex2RGB('#1976D2',true,',',$opacity).'",
-												"'.NEXForms5_hex2RGB('#8BC34A',true,',',$opacity).'",
-												"'.NEXForms5_hex2RGB('#F57C00',true,',',$opacity).'"
+												"'.NEXForms5_hex2RGB('#e8f0fe',true,',',$opacity).'",
+												"'.NEXForms5_hex2RGB('#a6cde8',true,',',$opacity).'",
+												"'.NEXForms5_hex2RGB('#1976D2',true,',',$opacity).'"
 											],
 											hoverBackgroundColor: [
-												"#1976D2",
-												"#8BC34A",
-												"#F57C00"
+												"#e8f0fe",
+												"#a6cde8",
+												"#1976D2"
 											],
 											borderColor : [
 												"#fff",
@@ -3415,7 +3541,7 @@ if(!class_exists('NEXForms_dashboard'))
 											}	
 											
 								$output.= '<script>
-									randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+									//randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 									lineChartData = {
 										labels : [';
 										$stop_count = 1;
@@ -3438,54 +3564,63 @@ if(!class_exists('NEXForms_dashboard'))
 												$stop_count++;		
 												}
 											}
+											
+										
+											
+											
+											
+											
+											
+											
+											
 										$output.= '],
 										datasets : [
 											{
-												label: "'.__('Form Views','nex-forms').'",
-												backgroundColor : "'.NEXForms5_hex2RGB('#1976d2',true,',',$opacity).'",
-												borderColor : "#1976d2",
-												borderWidth : 1,
-												pointBackgroundColor : "#1976d2",
-												pointHoverBorderWidth : 5,
+												label: "'.__('Form Submissions','nex-forms').'",
+												backgroundColor : "'.NEXForms5_hex2RGB($entries_bg_color,true,',',$opacity).'",
+												borderColor : "'.$entries_brd_color.'",
+												borderWidth : '.$brd_width.',
+												pointBackgroundColor : "'.$entries_bg_color.'",
+												pointHoverBorderWidth : 8,
 												fill:true,
 												data : [
 												';
 												if($month_selected && $month_selected!='0')
 													{
-													$counter2 = 1;
-													foreach($view_array_pm as $views)
+													$counter = 1;
+													foreach($submit_array_pm as $submissions)
 														{
-														if($counter2>=$days_back)
-															{	
-															$output.= $views;
-															if($counter2<$days_in_month)
+														if($counter>=$days_back)
+															{
+															$output.= $submissions;
+															if($counter<$days_in_month)
 																$output.= ',';
 															}
-															$counter2++;		
+															$counter++;		
+															
 														}
 													}
 												else
 													{
-													$counter2 = 1;
-													foreach($view_array as $views)
+													$counter = 1;
+													foreach($submit_array as $submissions)
 														{
-														$output.= $views;
-														if($counter2<12)
+														$output.= $submissions;
+														if($counter<12)
 															$output.= ',';
-														$counter2++;				
+														$counter++;		
 														}
 													}
 											$output.= '
 													]
 											},
-											
 											{
 												label: "'.__('Form Interactions','nex-forms').'",
-												backgroundColor : "'.NEXForms5_hex2RGB('#8BC34A',true,',',$opacity).'",
-												borderColor : "#8BC34A",
-												borderWidth : 1,
-												pointBackgroundColor : "#8BC34A",
-												pointHoverBorderWidth : 5,
+												backgroundColor : "'.NEXForms5_hex2RGB($interactions_bg_color,true,',',$opacity).'",
+												borderColor : "'.$interactions_brd_color.'",
+												borderWidth : '.$brd_width.',
+												pointBackgroundColor : "'.$interactions_bg_color.'",
+												pointHoverBorderWidth : 8,
 												fill:true,
 												data : [
 												';
@@ -3519,50 +3654,102 @@ if(!class_exists('NEXForms_dashboard'))
 													]
 											},
 											{
-												label: "'.__('Form Entries','nex-forms').'",
-												backgroundColor : "'.NEXForms5_hex2RGB('#F57C00',true,',',$opacity).'",
-												borderColor : "#F57C00",
-												borderWidth : 1,
-												pointBackgroundColor : "#F57C00",
-												pointHoverBorderWidth : 5,
+												label: "'.__('Form Views','nex-forms').'",
+												backgroundColor : "'.NEXForms5_hex2RGB($views_bg_color,true,',',$opacity).'",
+												borderColor : "'.$views_brd_color.'",
+												borderWidth : '.$brd_width.',
+												pointBackgroundColor : "'.$views_bg_color.'",
+												pointHoverBorderWidth : 8,
 												fill:true,
 												data : [
 												';
 												if($month_selected && $month_selected!='0')
 													{
-													$counter = 1;
-													foreach($submit_array_pm as $submissions)
+													$counter2 = 1;
+													foreach($view_array_pm as $views)
 														{
-														if($counter>=$days_back)
-															{
-															$output.= $submissions;
-															if($counter<$days_in_month)
+														if($counter2>=$days_back)
+															{	
+															$output.= $views;
+															if($counter2<$days_in_month)
 																$output.= ',';
 															}
-															$counter++;		
-															
+															$counter2++;		
 														}
 													}
 												else
 													{
-													$counter = 1;
-													foreach($submit_array as $submissions)
+													$counter2 = 1;
+													foreach($view_array as $views)
 														{
-														$output.= $submissions;
-														if($counter<12)
+														$output.= $views;
+														if($counter2<12)
 															$output.= ',';
-														$counter++;		
+														$counter2++;				
 														}
 													}
 											$output.= '
 													]
-											}
+											},
+											
+											
+											
 										]
 									}
 								  </script>
 								  ';
 								}
 						$ajax = isset($_REQUEST['ajax']) ? sanitize_text_field($_REQUEST['ajax']) : '';
+						
+						
+						
+						arsort($array_countries);
+
+						// Get the top 10 entries
+						$top10 = array_slice($array_countries, 0, 10, true);
+						
+						$set_total = (int) 0;
+						foreach ($top10 as $countryCode => $count) {
+							$set_total += $count;
+						}
+						
+						// Output the top 10
+						$output .= '<div class="top_countries">';
+						foreach ($top10 as $countryCode => $count) {
+							if($count!=0)
+								{
+								$output .= '<div class="p_holder">';
+								$output .= '<div class="progress-label">'.$nf7_functions->code_to_country_flag($countryCode).' '.$nf7_functions->code_to_country($countryCode).'</div>';
+								$output .= '<div class="total_votes">'.$count.'</div>';
+									$output .= '<div class="progress">';
+										$output .= '<div class="progress-bar nf-vote loading-vote" role="progressbar" style="width: '.(($count/$set_total)*100).'%; background:#1a73e8;" data-value="'.(($count/$set_total)*100).'" aria-valuenow="'.(($count/$set_total)*100).'" aria-valuemin="0" aria-valuemax="100">';
+										$output .= '</div>';
+									$output .= '</div>';
+								$output .= '</div>';
+								}
+						}
+						$output .= '</div>';
+						
+						
+						
+						//GET BEST FORMS
+						//SELECT nex_forms_Id, COUNT(*) AS total_entries FROM wp_wap_nex_forms_entries WHERE YEAR(date_time) = 2025 GROUP BY nex_forms_Id ORDER BY total_entries DESC LIMIT 0, 10;
+						if($month_selected && $month_selected!='0')
+							$add_month = $wpdb->prepare('AND MONTH(date_time) = %d',$month_selected);
+						
+						$top_forms = $wpdb->get_results($wpdb->prepare('SELECT nex_forms_Id, COUNT(*) AS total_entries FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE YEAR(date_time) = %d '.$add_month.' GROUP BY nex_forms_Id ORDER BY total_entries DESC LIMIT 0, 5', sanitize_text_field($current_year))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+						
+						$output .= '<div class="top_forms">';
+						foreach($top_forms as $top_form)
+							{
+							$output .= '<div class="top_form_item">';
+								$output .= '<div class="top_form_title">'.NEXForms_get_title($top_form->nex_forms_Id,'wap_nex_forms').'</div>';
+								$output .= '<div class="top_form_total">'.$top_form->total_entries.'</div>';	
+							$output .= '</div>';
+							}
+						$output .= '</div>';
+						
+						
 						if($ajax)
 							{
 							NEXForms_clean_echo( $output);
@@ -3723,7 +3910,7 @@ if(!class_exists('NEXForms_dashboard'))
 							';	
 							}	
 						if($this->show_more_link){
-							$output .= '<a href="'.$this->show_more_link['link'].'" class="show_more_button">'.$this->show_more_link['text'].' <span class="fa fa-chevron-right"></span></a>';
+							$output .= '<a href="'.$this->show_more_link['link'].'" class="show_more_button">'.$this->show_more_link['text'].' <span class="fa fa-arrow-right"></span></a>';
 						}
 						$output .= '</div>';
 						

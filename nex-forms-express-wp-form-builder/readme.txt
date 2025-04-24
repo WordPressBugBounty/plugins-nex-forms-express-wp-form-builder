@@ -1,22 +1,34 @@
-=== NEX-Forms - Ultimate Form Builder - Contact forms and much more ===
-Plugin Name: NEX-Forms - Ultimate WordPress Form Builder - Contact forms and much more
+=== NEX-Forms – Ultimate Forms Plugin for WordPress ===
+Plugin Name: NEX-Forms – Ultimate Forms Plugin for WordPress
 Contributors: Basix
 Donate link: https://1.envato.market/zQ6de
-Tags: forms, contact form, form builder, wordpress form plugin, popup forms
+Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
-Tested up to: 6.7.2
-Stable tag: 8.8.5
+Tested up to: 6.8
+Stable tag: 8.8.6
 License: GPLv3 or later
 Author URI: https://codecanyon.net/user/basix/portfolio?ref=Basix
 Plugin URI: https://1.envato.market/zQ6de
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, Survey Forms, Payment Forms, Booking Forms, Quiz Forms and more.
+Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes, booking forms, payments, popups & more with NEX-Forms...
 
 == Description ==
 
-### THE ONLY TRUE ALL IN ONE WORDPRESS FORM BUILDER
-NEX-Forms is the best WordPress Form Builder plugin for creating simple to complex forms. With tons off add-ons and features NEX-Forms is a complete online form and forms builder solution.
+**NEX-Forms is the ultimate WordPress form builder plugin** for creating interactive, multi-functional, and beautiful responsive forms. Whether you need contact forms, survey forms, booking forms, or even payment-integrated forms, NEX-Forms lets you build them quickly with a powerful drag & drop form builder – no coding required!
+
+
+### ✅ Highlights:
+- Contact Forms, Booking Forms, Surveys, Quizzes, Polls
+- Drag-and-drop Form Builder – Easy to Use!
+- Multi-Step Forms & Interactive Logic
+- Popups, Sticky Forms & On-Click Display
+- Conditional Logic for Smart Workflows
+- File Uploads, Autoresponders & Admin Notifications
+- Built-In Anti-spam Control, Email Setup, and Confirmation Messages
+- Fully Responsive – Works on all devices
+- Supports PayPal Payments Integration
+
 
 https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
 
@@ -25,12 +37,35 @@ https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
 🚀[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
 
 
-**NEX-Forms** is a **high quality** and simple to use drag and drop/single click **form creator** offering a wide range of customizability, flexibility, design and usability.
+✅ Create any type of form you can imagine and embed it anywhere on your site with ease -> Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, Survey Forms, Payment Forms, Booking Forms, Quiz Forms and more.
+
+**Trusted by thousands of websites** and built to deliver flexibility, performance, and stunning design.
+
+🎯 Perfect for:
+- Contact & Support Forms  
+- Surveys & Feedback Forms  
+- Event Booking & Appointment Forms  
+- Order & Payment Forms (with PayPal)  
+- Newsletter Signups  
+- Quizzes & Exams  
+- File Upload Forms  
+- Popup Forms and Sticky Forms  
+- Conditional Logic Forms
+
+### 💡 Why Choose NEX-Forms?
+NEX-Forms offers one of the most comprehensive and feature-rich experiences available for form creation in WordPress. Its visual builder, real-time previews, advanced options, and flexible display settings make it ideal for both beginners and developers.
+
+You can display forms in:
+- Standard page/post content
+- Modal popups
+- Sliding forms
+- Sticky side tabs
+- On-click or automatic timed displays
 
 ### Build any type of form
 
 = Interactive Forms =
-Personalise your forms using live form input by your users. In essence this gives your forms a realtime conversational feel.
+Personalise your forms using live form input by your users. In essence this gives your forms a real-time conversational feel.
 <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/interactive-forms/?ref=wp">See Interactive Forms Examples</a>
 
 = Contact Forms =
@@ -46,7 +81,7 @@ Conversational forms eliminates the overwhelming nature of a form by focusing yo
 <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/conversational-forms/?ref=wp">See Conversational Forms Examples</a>
 
 = Payment Forms or PayPal Forms =
-Recieve payments via PayPal directly from your forms built with NEX-Forms.
+Receive payments via PayPal directly from your forms built with NEX-Forms.
 <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/payment-forms/?ref=wp">See Payment Form or PayPal Forms Examples</a>
 
 = Quiz Forms or Questionnaire Forms =
@@ -83,7 +118,7 @@ Add any form to your site's top, right, bottom and/or left borders. Slides open 
 
 = Popup Forms =
 * Automatically popup any form on a specified time delay. <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-1/?ref=wp">See Auto Popup Form Example</a>
-* Popup forms from preset bootstrap or material design styled buttons, your theme's built-in buttons, your own custom buttons or any element(s) or your page.<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-2/?ref=wp">See Popup Form from buttons Example</a>
+* Popup forms from bootstrap or material design styled buttons, your theme's built-in buttons, your own custom buttons or any element(s) or your page.<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-2/?ref=wp">See Popup Form from buttons Example</a>
 * Popup forms from any links within your page. <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-3/?ref=wp">See Popup Form from link Example</a>
 * Automatically popup any form when a users scrolls to a specified dept on your page. <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-4/?ref=wp">See Auto Scroll Popup Form Example</a>
 * Automatically popup any form when a user tries to leave your page. <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-5/?ref=wp">See Exit Intent Popup Form Example</a>
@@ -92,114 +127,106 @@ Add any form to your site's top, right, bottom and/or left borders. Slides open 
 
 
 ### Features include:
-= RESPONSIVE DEVELOPMENT =
+= ✅ RESPONSIVE DEVELOPMENT =
 Built using the latest web technologies like html5, css3, and jQuery, rest assured NEX-Forms will look smashing on every device.
-= 30+ FORM ELEMENTS =
+= ✅ 30+ FORM ELEMENTS =
 Make use of 30+ Bootstrap styled fields with pixel perfect precision! More for less!
-= MODERN DESIGN =
+= ✅ MODERN DESIGN =
 Designed with modern trends and techniques in mind, NEX-Forms will help you connect with your customers in a whole new and exciting way.
-= DRAG &amp; DROP =
-Add and sort form elements with simple drag and drop. If you can play solitare you can build stunning web forms without a single line of code!
-= FULL GRID SYSTEM =
+= ✅ DRAG &amp; DROP =
+Add and sort form elements with simple drag and drop. If you can play solitaire you can build stunning web forms without a single line of code!
+= ✅ FULL GRID SYSTEM =
 Create any form layout with one of a kind draggable grid system! Includes unlimited grid nesting!
-= MULTI-STEP FORMS =
-Break your forms down into managable steps. Includes the ability to create online questionares!
-= MATH LOGIC =
+= ✅ MULTI-STEP FORMS =
+Break your forms down into manageable steps. Includes the ability to create online questionaries!
+= ✅ MATH LOGIC =
 Perform simple and complex math equations from user selections and input.
-= CONDITIONAL LOGIC =
+= ✅ CONDITIONAL LOGIC =
 Turn complex and cluttered forms into interactive user friendly forms by showing and hiding fields based on the user's selections and input.
-= FORM ANIMATIONS =
+= ✅ FORM ANIMATIONS =
 Catch your users eye with 70+ super smooth animations.
-= TONS OF ICONS =
-Make use of 660+ icons that can be added to form fields. Font Awesome icons are vectors, which mean they're gorgeous on high-resolution displays.
-= INTEGRATED WITH GOOGLE FONTS =
+= ✅ TONS OF ICONS =
+Make use of 2000+ icons that can be added to form fields. Font Awesome icons are vectors, which mean they're gorgeous on high-resolution displays.
+= ✅ INTEGRATED WITH GOOGLE FONTS =
 Allows you to easily add fonts from the Google Font Directory to use in your forms. Over 1200 fonts are made available in NEX-Forms.
-= ANTI-SPAM CONTROL =
-Whith NEX-forms built-in Anti-spam you will never receive an unwanted email. No captchas needed to prove your users are in fact human!
-= EMAIL AUTORESPONDER =
+= ✅ ANTI-SPAM CONTROL =
+With NEX-forms built-in Anti-spam you will never receive an unwanted email. No captchas needed to prove your users are in fact human!
+= ✅ EMAIL AUTORESPONDER =
 Receive all your form data in fully customisable emails. Send admin emails to multiple recipients and/or send confirmation emails to end users!
-= SUBMISSIONS STORAGE AND EXPORT =
+= ✅ SUBMISSIONS STORAGE AND EXPORT =
 All form submissions are stored in your database and can be viewed from the admin panel. Entries can also be exported to Excel!
-= FORM EXPORT =
+= ✅ FORM EXPORT =
 Export form with a single click. Includes all form settings and can be imported into any NEX-forms installation.
-= SURVEY FIELDS =
+= ✅ SURVEY FIELDS =
 Create beautiful surveys with thumb rating, star rating and smiley rating fields!
-= PRE POPULATE FIELDS =
+= ✅ PRE POPULATE FIELDS =
 Set default field values! Auto-fill fields from other forms! Auto-fill fields from URL parameters!
-= POPUP AND STICKY FORMS =
+= ✅ POPUP AND STICKY FORMS =
 Use a NEX-Forms button or link or trigger the popup form using an existing element on the page. Add sticky-paddle/slide-in froms to any side of your site!
-= SAME PAGE FORMS =
+= ✅ SAME PAGE FORMS =
 You can have as many forms on a single page as you need without any conflict!
-= AJAX POWERED =
+= ✅ AJAX POWERED =
 Submit forms without page refreshing!
-= SIDEBAR WIDGET =
+= ✅ SIDEBAR WIDGET =
 Add forms into your sidebars with WordPress Widgets.
-= FILE UPLOADER FIELDS =
-Receive files as email attahcments. Can also be viewed and downloaded from the backend. Includes file type validation and live image preview.
-= HIDDEN FIELDS =
+= ✅ FILE UPLOADER FIELDS =
+Receive files as email attachments. Can also be viewed and downloaded from the backend. Includes file type validation and live image preview.
+= ✅ HIDDEN FIELDS =
 Add dynamic and/or static hidden fields to your forms for extra admin info from form submissions.
-= THUMB SELECTION FIELDS =
+= ✅ THUMB SELECTION FIELDS =
 Showcase your products in single and multi-selection fields.
-= STYLING TOOLBAR =
+= ✅ STYLING TOOLBAR =
 Style your forms with ease using our one of a kind styling toolbar similar to popular tools such as Photoshop, Fireworks, MS Paint, etc.
-= TASKBAR =
-Work on multiple forms at the same time. Easily switch between task windows from the taskbar. A real time saver!
-= PERSONAL PREFERENCES =
+= ✅ PERSONAL PREFERENCES =
 Save time by setting up personal preferences to be used as defaults for all new forms!
-= FORM VALIDATION =
+= ✅ FORM VALIDATION =
 Make fields required and your validate fields as: Any Format, Email, Phone Number, URL, Numbers Only or Text only.
-= MAX/MIN CHARACTER LIMITING =
+= ✅ MAX/MIN CHARACTER LIMITING =
 Limit characters in multi-line text areas and single-line text fields by setting maximum/minimum characters allowed. Includes total character count indicator.
-= KEYBOARD SHORTCUTS =
+= ✅ KEYBOARD SHORTCUTS =
 Save time using built-in keyboard shortcuts. For example, save a form by hitting CTRL+ALT+S.
-= LIVE FORM PREVIEWER =
-Preview your form in realtime, at anytime, while you are busy building it!
-= DUPLICATE FORMS =
+= ✅ LIVE FORM PREVIEWER =
+Preview your form in real-time, at anytime, while you are busy building it!
+= ✅ DUPLICATE FORMS =
 Duplicate existing forms with a single click! Duplicated forms include all the original form's settings!
-= FORM TEMPLATES =
+= ✅ FORM TEMPLATES =
 Create your very own custom form templates to be re-used time and time again!
-= UNLIMITED FORMS =
+= ✅ UNLIMITED FORMS =
 There is no limit to how many forms you can have on your website
-= PERSONALIZED ADMIN PANEL =
+= ✅ PERSONALIZED ADMIN PANEL =
 Create and save your very own personalized NEX-Forms admin panel layouts!
-= TONS OF FIELD SETTINGS =
+= ✅ TONS OF FIELD SETTINGS =
 Customize your form fields with a huge variety of easy to use settings!
-= FIELD DUPLICATION =
-Copy fields, grids, panels and any form element so that you dont have to do any double work!
-= EMBED OPTIONS =
+= ✅ FIELD DUPLICATION =
+Copy fields, grids, panels and any form element so that you don't have to do any double work!
+= ✅ EMBED OPTIONS =
 Embed/Use forms in post, pages, sidebars and/or theme template files! Use NEX-Forms page/post editor button to generate shortcodes.
-= REDIRECT AFTER SUBMISSION =
+= ✅ REDIRECT AFTER SUBMISSION =
 You can redirect your users to a specified URL after a form is submitted. For example to your own custom "Thank you" page, etc.
-= SEND DATA TO CUSTOM URL =
+= ✅ SEND DATA TO CUSTOM URL =
 Send submitted form data to a custom URL by using GET or POST method. Perfect for sending data to an alternative database!
-= AJAX POWERED ADMIN PANEL =
-NEX-Forms admin panel will give you a real desktop apllication feel with no page resfreshing. Everything is done and found in a single versitile admin tool!
-= WP COLOR SCHEME ADAPT =
-NEX-Forms admin panel will adapt to the colors of your selected WordPress color scheme!
-= GLOBAL CONFIGURATION =
+= ✅ AJAX POWERED ADMIN PANEL =
+NEX-Forms admin panel will give you a real desktop application feel with no page refreshing. Everything is done and found in a single versatile admin tool!
+= ✅ WP COLOR SCHEME ADAPT =
+NEX-Forms admin panel will adapt to the colours of your selected WordPress colour scheme!
+= ✅ GLOBAL CONFIGURATION =
 For example, you can disable the NEX-Forms widget so it does no show up on your WP widgets page...
-= MULTIPLE EMAIL METHODS =
+= ✅ MULTIPLE EMAIL METHODS =
 Choose your own mailing delivery methods from secure SMTP to normal WordPress Mail!
-= ZERO CONFLICT ADMIN PANEL =
+= ✅ ZERO CONFLICT ADMIN PANEL =
 3rd Party plugins and themes that include javascript and stylesheets will not affect the NEX-Forms admin panel! NEX-Forms will not affect any other plugin or theme.
 
 = 30+ form elements that includes amazing field types =
-Text, Textarea, Select, Muli-Select, Radio buttons, Check boxes, Star rating, Sliders, Spinners, Tags input, Autocomplete, Color palet, Datetime, Date, Time, File uploader, Image uploader, headings, paragraphs, dividers, Panels and more...
+Text, Textarea, Select, Multi-Select, Radio buttons, Check boxes, Star rating, Sliders, Spinners, Tags input, Autocomplete, Colour pallet, Datetime, Date, Time, File uploader, Image uploader, headings, paragraphs, dividers, Panels and more...
 
 = Conditional logic for form fields =
-Show and hide fields plus form elements based on conditions with effects:
- 
-* Fade In / Fade Out
-* Slide Down / Slide Up
-* Show / Hide
-
-Add Conditions to be triggered from the following form fields: Text fields, Textarea, Select, Muli-Select, Radio buttons, Check boxes, Star rating, Sliders, Spinners, Autocomplete, Color palet, Datetime, Date and Time fields
+Show and hide fields plus form elements based on user selection and/or input:
 
 = Create custom form fields =
-Create custom form fields with over 400 icons and can be validated as url, email, phone number, text only or digits only.
+Create custom form fields with over 2000+ icons and can be validated as url, email, phone number, text only or digits only.
 
 = Autoresponder =
-Receive form submmision in your inbox and send confirmation mails to end users!
+Receive form submission in your inbox and send confirmation mails to end users!
 
 = Simple drag and drop or single click =
 Building forms is easier then playing solitaire ;) 
@@ -207,14 +234,14 @@ Building forms is easier then playing solitaire ;)
 = Ajax forms =
 Validate and submit forms without page refreshing.
 
-= Over 660 icons to use in form fields! =
-Thats right, use over 660 retina ready Font Awesome icons in radios, checks, sliders, spinners, custom form fields and more...
+= Over 2000 icons to use in form fields! =
+That's right, use over 660 retina ready Font Awesome icons in radios, checks, sliders, spinners, custom form fields and more...
 
-= Over 1200 fonts to be used =
-Use over 1200 google fonts to make you forms look even more impressive!
+= Over 1500 fonts to be used =
+Use over 1500 google fonts to make you forms look even more impressive!
 
 = Grid layout system =
-Use a draggable grid sytem to create just about any form layout you can think of. Includes unlimited nesting!
+Use a draggable grid system to create just about any form layout you can think of. Includes unlimited nesting!
 
 = Form entry storage and export =
 All form submissions are stored in your WP (WordPress) database and can be exported.
@@ -223,7 +250,7 @@ All form submissions are stored in your WP (WordPress) database and can be expor
 NEX-Forms contain anti-spam protection.
 
 = No programming needed to create awesome forms =
-You dont need to know any kind of programming. Build and style forms by simply clicking.
+You don't need to know any kind of programming. Build and style forms by simply clicking.
 
 = Fully Responsive form =
 While creating forms you are able to preview your forms on all the different devices and see exactly how they will behave on small and large screens with the live form previewer
@@ -233,20 +260,20 @@ While creating forms you are able to preview your forms on all the different dev
 * This is with out a doubt the best form builder I have ever used. You can literally build an awesome looking form in a few seconds. - Eugene1984 
 * This simply must be the very best form builder available for Wordpress  - pbcunningham 
 * Great job and great responses to my questions. - BradDaca 
-* I have tried multiple plugins over the last 2 years, but this has the most unique design, feel and you can drag&drop fields and edit them in the easiest way of them all! :D - LChief 
+* I have tried multiple plugins over the last 2 years, but this has the most unique design, feel and you can drag & drop fields and edit them in the easiest way of them all! :D - LChief 
 * Fantastic support and advice from the Basix crew! Comprehensive documentation and an easy implementation, a joy to work with +++ - graffig
 * Benefiting from the input field icons and visual editor. Basix has provided EXCELLENT support to ensure the product was compatible with the installed WordPress theme - thank you! - michelbayard  
 * Best excellent support and best plugin form exist - fortunatod 
 * NEX-Forms is a really great plugin which i have been longing for long time! - ympark2000
 * Great usability, Design and Support! - HITMILK
-* I have tried manny many form builders and was so happy I stumbled on this one - themisters 
+* I have tried many many form builders and was so happy I stumbled on this one - themisters 
 * Great support in a few minutes!! :) - Grafitec1
 * Not only is form creator the best I have ever used but also the support is excellent. 5 Stars for both. Keep up the great work. - Mirakan
 * A very good plugin if you want to easily and quickly create beautiful forms!  - chriskon
 * Thank you for this plugin and the support! It looks and works awesome! Thank you very much! - henriett
-* Nex-forms is without doubt the best Form Builder Plugin for Wordpress. - quatroweb
+* NEX-Forms is without doubt the best Form Builder Plugin for Wordpress. - quatroweb
 
-
+<a href="https://codecanyon.net/item/nexforms-the-ultimate-wordpress-form-builder/reviews/7103891">View more testimonials</a>
 
 == Installation ==
 
@@ -260,26 +287,26 @@ There are 2 ways to install NEX-Forms. Please follow the steps for your NEX-Form
 3. Click on *Add new*
 4. Click on *Upload*
 5. Browse to the directory you downloaded the plugin to and click *Install Now*
-6. After Wordpress has finished unpacking the file click on *Activate Plugin*
+6. After WordPress has finished unpacking the file click on *Activate Plugin*
 7. After the plugin has been activated you will notice a new menu item on the left hand navigation labelled NEX-Form
-8. Done. Start creating froms!
+8. Done. Start creating forms!
 
 = VIA FTP =
 1. After your download unzip Nex-Forms from your download .zip
 2. Open your FTP client
 3. Browse to /your_wp_instalation/wp-content/plugins/ on your hosting server
-4. Uplaod Nex-Forms into this directory
+4. Upload Nex-Forms into this directory
 5. Go to your wordpress admin panel
 6. Go to plugins and activate NEX-Forms
 7. After the plugin has been activated you will notice a new menu item on the left hand navigation labelled NEX-Forms
-8. Done. Start creating froms!
+8. Done. Start creating forms!
 
 == Screenshots ==
 
 1. NEX Forms WordPress Form Builder - All New Version 7
 2. Cost Estimation and Calculation Forms by NEX-Forms - WordPress Forms Builder
 3. Interactive / Conversational Forms by NEX-Forms - WordPress Forms Builder
-4. Payment Forms with Paypal Integration by NEX-Forms - WordPress Forms Builder
+4. Payment Forms with PayPal Integration by NEX-Forms - WordPress Forms Builder
 5. Online Questionnaire Forms by NEX-Forms - WordPress Forms Builder
 6. Booking and Order Forms by NEX-Forms - WordPress Forms Builder
 7. Application Forms by NEX-Forms - WordPress Forms Builder
@@ -292,7 +319,7 @@ There are 2 ways to install NEX-Forms. Please follow the steps for your NEX-Form
 
 == Changelog ==
 = NEX Forms 8.5.10 =
-NEW: Added the ability to output the submission entry ID in the on-screen success messsage using data tag {{nf_entry_id}} inside your success messsage body.
+NEW: Added the ability to output the submission entry ID in the on-screen success message using data tag {{nf_entry_id}} inside your success message body.
 FIX: Styling on Form Timer Settings in the form editor
 FIX: Checkboxes recall issue for SAVE FORM PROGRESS feature
 FIX: Slider recall issue for SAVE FORM PROGRESS feature
@@ -315,11 +342,11 @@ FIX: PayPal Payments (paid, pending, unpaid) inbox
 FIX: Form Importing issue when using google fonts
 
 = NEX Forms 8.5.5 =
-NEW: Digital Signature Setting - Change Signature Background Color
-NEW: Digital Signature Setting - Change Signature Stroke Color
+NEW: Digital Signature Setting - Change Signature Background Colour
+NEW: Digital Signature Setting - Change Signature Stroke Colour
 NEW: Digital Signature Setting - Change Stroke Width
 NEW: Digital Signature Setting - Set to Auto Fit Parent Container
-NEW: Digital Signature Setting - Change Signature Border Color
+NEW: Digital Signature Setting - Change Signature Border Colour
 NEW: Digital Signature Setting - Position Signature canvas left/center/right.
 NEW: Upload Field Validation Setting - Set minimum file size requirement
 
@@ -370,7 +397,7 @@ FIX: Date picker language setting issue
 
 = NEX Forms 8.2 =
 FIX: Onscreen success message issue
-FIX: Math logic calculation issue when using Europian format with re-used calculations
+FIX: Math logic calculation issue when using European format with re-used calculations
 
 = NEX Forms 8.1 =
 NEW: Complete new Dashboard Design
@@ -410,16 +437,16 @@ NEW: Complete new Design for file/attachments manager
 NEW: Column sorting received files
 NEW: Download file directly from the backend with a single click (no need to open the file and save as)
 IMPROVED: File search
-NEW: NEX-Forms LIGHT color scheme for the NEX-Forms admin interfaces
-NEW: NEX-Forms DARK color scheme for the NEX-Forms admin interfaces
-IMPROVED: Admin color adaption for the NEX-Forms admin interfaces (if admin color adaption is chosen)
+NEW: NEX-Forms LIGHT colour scheme for the NEX-Forms admin interfaces
+NEW: NEX-Forms DARK colour scheme for the NEX-Forms admin interfaces
+IMPROVED: Admin colour adaption for the NEX-Forms admin interfaces (if admin colour adaption is chosen)
 IMPROVED: Overall global setting admin page design
 NEW: Reply-to setting for email setup per form.
 IMPROVED: Overall security
 FIX: PHP 8 compatibility issues
 FIX: WP 6.1.1 compatibility issues
 FIX: Reported 3rd party styling interference
-FIX: Reported javascript interference
+FIX: Reported JavaScript interference
 FIX: Conditional logic issue with date pickers
 FIX: How to use Math logic interactive tutorial
 FIX: How to create multi-step forms tutorial
@@ -434,7 +461,7 @@ FIX: PHP 8 Compatibility issues
 FIX: Minor corrections and improvements
 
 = NEX Forms 7.9.4 =
-FIX: Color setting recall when editing fields
+FIX: Colour setting recall when editing fields
 FIX: Spacer field resizing
 
 = NEX Forms 7.9.3 =
@@ -605,7 +632,7 @@ IMPROVED: Using conditional logic to show hide multisteps
 
 = NEX Forms 7.5.20 =
 FIXED: Image field issue
-FIXED: Reported confict with some 3rd party scripts
+FIXED: Reported conflict with some 3rd party scripts
 
 = NEX Forms 7.5.19 =
 IMPROVED: Drag and drop Builder system
@@ -849,423 +876,7 @@ NEW: Multi-step Breadcrumb with 5 variations (Basic, Triangular, Rectangular, Do
 NEW: Overall Form Styling
 NEW: Overall back-end look and feel
 
-= NEX Forms 6.7.3 =
-FIXED: Multiple forms on single page conditional logic
-FIXED: Multiple forms on single page multi-step back button
-ENHANCED: Overall performance
-ENHANCED: Validation error messages styling 
-
-= NEX Forms 6.7.2 =
-FIXED: Math logic JS error
-FIXED: Headers already sent errors
-
-= NEX Forms 6.1.6 =
-FIXED: PHP 7.1+ compatibility issues
-
-
-
-= NEX Forms 6.1.5 =
-FIXED: PHP 7.x compatibility issues
-FIXED: PHP warnings when config.php wp_debug was set to true
-ENHANCED: Optimised the plugin to half of the original size. Was 3.4mb and now only 1.7mb
-
-= NEX Forms 6.1.4 =
-ADDED: Interactive Forms
-
-= NEX Forms 6.1.3 =
-ADDED: Compatibility for Form to Post add-on.
-
-= NEX Forms 6.1.2 =
-FIXED: Template forms saving and recall
-ADDED: Popup form on Exit intent
-ADDED: Time based popup - Have a form popup after a specified time 
-ADDED: Page scroll popup - Have a form popup when a users scrolls to a specified depth on your page
-ADDED: Decimal math setting - Specify total decimal places for math logic
-ADDED: {{nf_form_data}} to PDF Creator - Show data table as per in emails
-ADDED: WP User levels - Specify what level of user can access NEX-Forms admin area
-ADDED: Hidden fields were missing in dropdowns like mailchimp field mapping
-CHANGED: License Deactivation - No longer will a license be freed up when deactivating the plugin on an unused site but from the push of a button found in the admin panel (Edit->License->Press button)
-
-= NEX Forms 6.1.1 =
-ADDED: Multi-File Uploader.
-ADDED: Max file size restriction per file and custom error message
-ADDED: Max file size restriction for all files as a whole and custom error message
-ADDED: Upload limit of total files allowed and custom error message
-ADDED: New preferences for new validation messages
-FIXED: Styling issues on a few installs.
-
-= NEX Forms 6.1 =
-FIXED: Icons in fields
-FIXED: Import/ Export forms
-FIXED: Image upload settings
-FIXED: Stylesheet troubleshooting option saving
-ADDED: New dynamic hidden field selection
-
-= NEX Forms 6.0.9 =
-ADDED: Integration for the new PDF Creator add-on (previously know as Export to PDF)
-FIXED: Email port when using SSL + SMTP settings with PHPMailer
-
-= NEX Forms 6.0.8 =
-ADDED: New field settings 
-ADDED: ADmin Color adaption 
-ADDED: New troubleshooting options for javascript 
-ADDED: New troubleshooting options for stylesheets 
-ADDED: GetResponse integration 
-ADDED: Ability to reset your license to re-use
-FIXED: WP Mail method
-FIXED: Mail format 
-FIXED: Import/Export for forms
-
-= NEX Forms 6.0.6 =
-FIX: Activation problem
-
-= NEX Forms 6.0.5 =
-FIX: TinyMCE button in the WP editor
-
-= NEX Forms 6.0.2 =
-FIX: Various minor fixes
-
-
-<h2>Change log</h2>
-= NEX Forms 6.0.1 =
-FIX: Plugin Activation
-FIX: PHPMailer problem
-
-= NEX Forms 6.0 =
-NEW: Back end design
-NEW: Conditional settings (includes advanced and simple logic switching for each rule)
-NEW: Menu accessibility to easily navigate to anything for forms and global settings
-NEW: Keyboard Shortcuts. For example, you can now save a form with CTRL+ALT+S and many more useful shortcuts.
-NEW: Interactive backend tour
-NEW: Built-in documentation
-NEW: Built-in tutorial videos
-NEW: Styling tool bar. Tool select to point to click to style form elements with the new styling tools.
-NEW: Taskbar. Work on multiple forms at the same time!
-NEW: Thumb rating Field
-NEW: Smiley rating Field
-NEW: Star rating field with icons and not images.
-NEW: Tags input Field. Good for replacing comma separated fields
-NEW: Color picker Field. 
-NEW: Preset fields
-NEW: Paragraph form element (HTML enabled)
-NEW: Divider form element
-NEW: Field replication by user. Allows users to replicate a field to enter more of the same thing like, names of attendants etc
-NEW: Signature field (requires Digital signature for NEX-Forms) Signatures are sent in your emails and saved in your received form data.
-NEW: Multi-Step settings. Switch between steps to focus your step design.
-NEW: Full screen mode. 
-NEW: Preferences. Setup your default field layouts, email setup, validation messages and other overall settings.
-NEW: Notification history.
-NEW: Custom admin Layout. Create your own admin layouts that works best for you to create your forms.
-NEW: Preset admin layouts.
-NEW: Export forms. Forms are exported entirely with everything from conditional logic to email setup and not just the form HTML. This can also now be done from a Form menu.
-NEW: Import Forms. Import the form entirely as per export. Not just the form HTML
-NEW: Dynamic hidden fields.Now you can add server variables to hidden fields.
-NEW: Overall field settings.
-NEW: Maximum and minimum values for text fields and textareas
-NEW: Form Validation redesign. 
-NEW: Grid settings
-Hope that is all of it :)
-
-
-= NEX Forms 5.3 =
-FIX: WordPress 4.5 compatibility
-
-
-= NEX Forms 5.2 =
-FIX: NaN in email headings 
-FIX: Decimals with math logic problem 
-FIX: Emailer problems
-FIX: #### Displaying after form submissions 
-FIX: Popup bottom position problem 
-FIX: Conditional logic save and recall 
-FIX: PayPal items save and recall 
-FIX: All Global settings 
-FIX: Various styling conflicts with some specific themes
-NEW: Language settings for Image uploader 
-NEW: Math logic field (pre-populated math result tag) 
-ENHANCEMENT: Auto close sticky form when another sticky form opens
-
-
-= NEX Forms 5.1 =
-FIX: The word "Array" displaying in emails 
-FIX: Export to CSV headings (comma problem)
-FIX: Multi-step next and prev buttons 
-ADDED: Show/hide panels, html, paragraphs and headings with conditional logic 
-ADDED: Tags/value placeholders for emails 
-ADDED: New rich text editor for emails 
-ENHANCED: Namespaced AJAX calls to avoid 3rd party conflict.
-
-
-= NEX Forms 5 =
-NEW: Total redesign of the backend
-NEW: Total Code re-write. This optimisation of code increased load speed to under 1.5 sec!
-NEW: Conditional logic. All new conditional logic enables you to have unlimited rules and each rule to have multiple conditions and actions. Logic is not set per field as in old versions but per form!
-NEW: Color pickers. Easily set colors with the new color picker with new features like opacity!
-
-
-= NEX Forms 4.6.1 =
-FIX: Scrolling problem
-FIX: Height Problem with Multi-Steps
-FIX: Array problem with CSV exports
-FIX: wp_scripts error
-FIX: z-index issue with color setting for spinner fields
-ADDED: Ability to use placeholders in from address (reply-to address)
-
-
-= NEX Forms 4.6 =
-NEW: 75 Animations for form elements!
-NEW: Auto fill fields from POST and GET
-NEW: Set field Id's
-NEW: Date file placeholder setting
-FIX: Multi-step issues
-FIX: Problems with autoresponder on some specific servers
-FIX: Various small issues
-
-
-= NEX Forms 4.5 =
-ADDED: New API mail method. This is a guarantied method to ensure mailing.  
-ADDED: New security measures throughout NEX-Forms for your ongoing full protection.
-
-= NEX Forms 4.4 =
-READDED: WP Mail method for outgoing admin and confirmation mail 
-READDED: Normal PHP Mail method for outgoing admin and confirmation mail 
-NEW: Zero conflict admin panel. Script and styles from 3rd party plugin and themes will never again affect NEX-Forms admin panel!!! 
-NEW: WordPress Admin colors are adapted by NEX-Forms admin panel to fit your chosen color scheme for that personal touch. 
-FIXED: Emailing problems with some selective servers
-
-= NEX Forms 4.3 =
-NEW: Import and Export Forms
-NEW: PayPal Add-on compatibility
-
-
-= NEX Forms 4.2 =
-FIXED: Various JavaScript issues
-FIXED: Overall Styling Issues
-FIXED: Recall settings for form fields
-FIXED: Export to CSV
-FIXED: Form saving issues
-FIXED: Not able to edit field
-FIXED: Not able to delete field
-FIXED: Not able to change default select option
-FIXED: Admin menu display problems
-FIXED: JavaScript bug with modernizer.js
-ENHANCEMENT: Form field validation has been redone.
-ENHANCED: Made admin interface responsive (scalable) to even use with a Tablet
-ENHANCED: Overall speed and performance
-ADDED: Preset fields with preset validation. Build a contact form literately under 10 seconds!
-ADDED: New overall styling settings for field inputs
-
-= NEX Forms 4 =
-ENHANCED: Overall redesign and reprogramming
-NEW: Math Logic
-NEW: Material Design Fields with different effects
-NEW: Classic Fields
-NEW: Overall Styling
-NEW: Add custom CSS
-NEW: Rich text editor for admin and user emails (TinyMCE)
-NEW: Customize admin email
-NEW: Placeholders for server data in user and admin emails
-NEW: Save Forms as templates for re-use
-NEW: Show/hide panel headings
-NEW: Resize grid system (using bootstrap grid)
-NEW: Resize field label and input containers (using bootstrap grid)
-NEW: Start a new form instantly, no need to create it before you can add fields.
-NEW: Live documentation from the nex-forms admin page
-
-= NEX Forms 3.4 =
-FIXED: HTTPS problem with loading styles and scripts 
-FIXED: UTF-8 issue with mail methods that sent garbage characters in autoreponder emails and admin emails
-FIXED: Autoresponder not retrieving saved data
-ADDED: Password Field
-ADDED: Date format settings for date-picker (save form or preview to see effect on field)
-ADDED: Language selection for date-picker (save form or preview to see effect on field)
-ADDED: Ability to have same name labels but different field names vie new field name setting
-ENHANCED: Conditional logic. Panel/grid selection is now possible as well as single field selection for targeting
-
-= NEX Forms 3.3 =
-NEW FEATURE: Export to PDF via new add-on
-FIXED: Saving new form issue
-FIXED: Saving Auto responder issue
-
-
-= NEX Forms 3.2 =
-NEW MAIN FEATURE: Sticky Forms - Add sticky paddels to hide and show forms (top, left, right and bottom) Found in widgets section.
-NEW MAIN FEATURE: Thumbs Single Selection Field - Add images (ie: product) to be used to select in a form.
-NEW MAIN FEATURE: Thumbs Multi Selection Field - Choose more then one thumbnail selection.
-NEW MAIN FEAUTRE: Email Setup - Configure emailing with SMTP, PHP Mailer, WordPress Mailer or striaght PHP mailing function. SMTP includes optional authentication settings
-NEW MAIN FEAUTRE: Form entries page - View and export all form entries from all forms
-NEW MAIN FEAUTRE: Global settings page - Configure various settings
-NEW FEATURE: Add unlimited hidden fields
-NEW FEATURE: Custom form action or ajax
-NEW FEATURE: Custom form method
-NEW FEATURE: Javascript Trouble Shooter - enqueue/dequeue scipts in case of javascript confict with 3rd party plugins or themes.
-NEW FEATURE: Styling Trouble Shooter - enqueue/dequeue styles in case of display interference from 3rd party plugins or themes.
-NEW FEATURE: Admin Config - Includes settings involving nex-forms admin inclusions like widgets
-NEW FEATURE: Form duplication with a single click
-NEW FEATURE: Popup forms for widgets
-NEW FEATURE: Popup forms button color selection (bootstrap style)
-NEW FEATURE: Forms selection for view and export
-NEW FEATURE: Ajax pagination for Form entries
-NEW FEATURE: Ajax Column sorting for form entries
-ADDED: Date Time display for forms entries - Shows date and time the form was submmited
-ADDED: User field for form entries - show the usernamke if logged in when completing a form
-ADDED: User IP field for form entries - Shows IP address
-ADDED: Page field for form entries - Shows where the form was submmited from
-ADDED: Form name field for form entries - Shows the form name that was submmited
-ADDED: Bath delete form entries
-ADDED: Modal popup display for form entry data
-ADDED: Tabbed selection for settings
-ADDED: Ajax saving for global settings
-ADDED: Thumb Size selection
-ADDED: Icon selection for thumb selection
-ADDED: Column selection for thumbs display
-ADDED: Drag handel to field on form canvas
-FIXED: Popup displaying when tabing on none required fields
-FIXED: Overl grid style display
-ENHANCED: Optimised DOM to make use of minimum output
-ENHANCED: Optimised scripts and styles for page load performance
-ENHANCED: Page load - YSlow raking = NEX Forms 89/100 with 10+ forms on a single page!, YSlow raking = 94/100 with 1 form on a page!!
-ENHANCED: Admin load speed - no external calls are made
-
-
-= NEX Forms 3.1 =
-ADDED: Custom Background image up-loader for form fields and bootstrap panels
-ADDED: Background settings: background-position, background-size, background-repeat
-ADDED: Instant preview for form themes add-on to try before buy
-ADDED: NEW HTML Field - Embed HTML into forms
-ENHANCED: Back-end usability with a few styling changes
-ENHANCED: Overall speed and performance and CSS. 
-FIXED: Multi-step forms functionality - next and previous buttons that sometimes skipped steps
-FIXED: Multi-step forms styling - next and previous buttons that were vertically off line
-FIXED: Auto populate countries, us states and languages
-FIXED: Auto populate allowed file type extensions for file up-loaders
-FIXED: Grid styling when it comes to panels, steps and extreme nesting
-FIXED: Label to top (bootstrap class col-sm-12 not col-sm-10)
-FIXED: Check box issue only submitting one value instead of an array
-FIXED: Some styling interference from themes
-
-= NEX Forms 3.0.1 =
-FIXED: Default bootstrap styling issue regarding grids
-
-
-= NEX Forms 3.0 =
-FIXED: "Form title can not be empty" bug
-FIXED: Overcome styling interference from themes
-FIXED: Styling issues relating to overall theme compatibility
-ENHANCEMENT: Overall performance
-ENHANCEMENT: Added compatibility backbone for "Form Themes for NEX-Forms" add-on
-REMOVED: Splash screen...load time is fast enough now so no need for this
-NOTE: Skipped to version 3 from 2.4 as NEX-Forms is in a new era now with add-on capability
-
-
-= NEX Forms 2.4 =
-FIXED:  Form entries CSV export path
-
-
-= NEX Forms 2.3 =
-FIXED: Styling compatibility issues relating to a few reported themes
-FIXED: a few JavaScript compatibility issues regarding a few themes
-
-
-= NEX Forms 2.2 =
-FIXED: AJAX URL for form submissions
-FIXED: a few JavaScript compatibility issues relating to a few reported themes
-
-
-= NEX Forms 2.1 =
-ENHANCEMENT: Complete re-write of AJAX form submissions.
-ENHANCEMENT: Form preview.
-ENHANCEMENT: More code optimization to increase performance
-ADDED: Multiple forms on a single page/post
-
-
-= NEX Forms 2.0 =
-ENHANCEMENT: Includes a complete redesign of the back-end to increase usability
-ENHANCEMENT: Overall code optimization to increase performance
-ENHANCEMENT: Reduced plugin with more then a 3rd of version 1.2 making it feature packed and yet light
-ENHANCEMENT: Increased form load speed to be exponentially faster by rewriting user interface output
-ADDED: Module popups for forms
-ADDED: Multistep Forms and extra button control
-ADDED: All new form manager to enhance user control over existing and new forms
-ADDED: Field filters to ensure quick access to all fields
-FIXED: Some JavaScript validation issues
-FIXED: Reported back-end bugs
-FIXED: Styling issues relating to overall theme compatibility
-FIXED: Numerous small JS issues
-FIXED: Numerous small styling issues
-
-
-= NEX Forms 1.2 =
-FIXED: UTF8 Character encoding in emails
-FIXED: Java-script validation issues
-FIXED: Styling issues relating to ensure overall theme compatibility
-ADDED: Extra control over field editing and deletion
-
-
-= NEX Forms 1.1 =
-ADDED: New Feature - Conditional Logic
-FIXED: Back-end styling issues
-
-
-= NEX Forms 1.0.6 =
-Fixed: WordPress version 3.9 "insert into post" problem
-
-
-= NEX Forms 1.0.5 =
-Fixed: Auto-responder single line placeholders
-
-
-= NEX Forms 1.0.4 =
-Fixed: Styling issues in chrome/web-kit. All Cross browser styling now resolved!
-
-
-= NEX Forms 1.0.3 =
-Fixed: Front end compatibility issues. forms are now not affected and do not effect any other styling on themes)
-Fixed: Email auto responder problems
-Fixed: Back-end icons not showing
-Added: Email Attachments: File uploads are now sent as attachments
-Added: Default admin email: Specified email addresses receive a default email containing all form values as well as the attachments.
-Added: Redirect to URL after form submission. Display message or redirect to a thank you page  (submission are saved and emails are sent either way)
-Enhanced: User Confirmation mails to be sent to users after completing the form
-Enhanced: Overall back-end details.
-
-
-= NEX Forms 1.0.2 =
-Fixed: Safari compatibility issues
-Fixed: Form visibility (in some cases did not display in relation to form animations)
-
-
-= NEX Forms 1.0.1 =
-Fixed: Styling issues
-Fixed: Check boxes (back-end)
-Fixed: Multi-select (back-end)
-Enhanced: Admin panel responsiveness
-
-
-= NEX Forms 1.0 =
-First release
-
-
-= Default Form CSS =
-
-Note: Forms uses Bootstrap, Font Awsome (fontawesome) and jQuery UI styling frameworks
-
-
-= Javascript =
-
-This form plugin uses the following javascript libraries:
-
-* jQuery
-* Bootstrap
-* Backbone
-* Underscore
-* JSON
-* Forms validation function
-* Form Ajax submit functions
-* Custom form functions
-
-Locations of all Javascript files included:
-/wp-content/plugins/Nex-Forms/js/
+<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/change-log/">View full changelog</a>
 
 == Frequently Asked Questions ==
 
@@ -1278,3 +889,18 @@ Go to http://basix.ticksy.com for any support needs
 
 = Is there any documentation for this plugin? =
 Yes, go to https://basixonline.net/nex-forms-docs/ or view the interactive tutorial to help you on your way to create forms
+
+= Can I create multi-step forms? =
+Yes, NEX-Forms has built-in multi-step (wizard-style) form support with progress indicators.
+
+= Is NEX-Forms responsive? =
+Absolutely. All forms created with NEX-Forms are fully responsive and mobile-ready.
+
+= Does it support conditional logic? =
+Yes. You can easily show/hide fields, entire sections, or steps based on user input.
+
+= Can I collect payments? =
+Yes, NEX-Forms supports PayPal payment integration for order and booking forms.
+
+= Can I embed forms in popups? =
+Yes, you can display any form in modal popups, sticky side tabs, or timed/triggered displays.

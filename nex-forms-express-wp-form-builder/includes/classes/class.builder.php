@@ -8730,9 +8730,7 @@ $output .= '<div class="inner-form-canvas">';
 													
 													
 													
-													NEXForms_clean_echo( '<div class="row">');
-														NEXForms_clean_echo( '<div class="row2">');
-														
+													NEXForms_clean_echo( '<div class="row2">');
 														NEXForms_clean_echo( '<br /><div class="alert alert-info">
 														1. Use <a href="https://zapier.com/developer/public-invite/222264/0d60854910b13833ee1ce1cca5233189/" target="_blank"><strong>THIS LINK</strong></a> to go to Zapier.com.<br />
 														<br />2. Accept the invite
@@ -8745,9 +8743,7 @@ $output .= '<div class="inner-form-canvas">';
 9. Click on Test<br />
 10. Copy the WEBHOOK URL<br />
 11. Past it in your NEX-Forms backend Zapier integration setup<br />
-12. Create your action<br />
-														
-														</div>');
+12. Create your action<br /></div>');
 													NEXForms_clean_echo( '</div>');
 													
 													NEXForms_clean_echo( '<div class="row">');

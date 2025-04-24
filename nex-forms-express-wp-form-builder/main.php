@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.5
+Version: 8.8.6
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -2734,13 +2734,13 @@ function submit_nex_form($entry_action = false){
 						}
 					else
 						{
-						$admin_val = rest_sanitize_array($_POST['real_val__'.$key]);
-						$val = rest_sanitize_array($_POST['real_val__'.$key]);
-						}
-					}	
-				if(is_array($val))
+						$admin_val = $_POST['real_val__'.$key];
+						$val = $_POST['real_val__'.$key];
+						} 
+					}	 
+				if(is_array($val) || is_object($val))
 					{
-					$data_array[] = array('field_name'=>$key,'field_value'=>str_replace('\\','',filter_var_array($val)));
+					$data_array[] = array('field_name'=>$key,'field_value'=>rest_sanitize_array($val));
 					}
 				else
 					{
@@ -2761,6 +2761,11 @@ function submit_nex_form($entry_action = false){
 			$paypal_transaction = run_nf_adv_paypal($form_attr->Id, $_POST, $_POST['paypal_return_url']);
 		}
 	$geo_data = json_decode($nf7_functions->get_geo_location($_SERVER['REMOTE_ADDR']));
+	
+	
+	
+	
+	
 	if(!get_option('nf_activated'))
 		$checked = 'false';
 	else
@@ -5524,7 +5529,7 @@ else
 			$headers2  = 'MIME-Version: 1.0' . "\r\n";
 			$headers2 .= 'Content-Type: '.(($email_config['email_content']=='html') ? 'text/html' : 'text/plain').'; charset=UTF-8\n\n'. "\r\n";
 			$headers2 .= 'From: '.$from_name.' <'.$from_address.'>' . "\r\n";
-			if($_REQUEST[$form_attr->user_email_field])
+			if($send_user_email)
 				mail(esc_html($_REQUEST[$form_attr->user_email_field]),$subject,$body,$headers2);
 			}
 		}
@@ -5633,25 +5638,25 @@ else
 						}
 					}
 				
-				if($_REQUEST[$form_attr->user_email_field])
+				if($send_user_email)
 					{
-					if(NEXFORMS_validate_email(esc_html(sanitize_text_field($_REQUEST[$form_attr->user_email_field]))))
+					if(NEXFORMS_validate_email(esc_html(sanitize_text_field($send_user_email))))
 						{
 						if(is_array($set_emails))
 							{
 							if ( (function_exists('NEXForms_export_to_PDF')) &&  in_array('user',$set_emails) )
 								{
 								$attach_pdf[] = $pdf_attached_path; 
-								wp_mail(esc_html(sanitize_text_field($_REQUEST[$form_attr->user_email_field])),$user_subject,$body,$headers, $attach_pdf);
+								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers, $attach_pdf);
 								}
 							else
-								wp_mail(esc_html(sanitize_text_field($_REQUEST[$form_attr->user_email_field])),$user_subject,$body,$headers);
+								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers);
 							}
 						else
-							wp_mail(esc_html(sanitize_text_field($_REQUEST[$form_attr->user_email_field])),$user_subject,$body,$headers);
+							$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers);
 						}
 					}
-					
+						
 				if($bcc_user_mail)
 					{
 					if(is_array($bcc_user_mail))

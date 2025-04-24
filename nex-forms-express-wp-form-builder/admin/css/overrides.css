@@ -49,18 +49,18 @@ ul#adminmenu li img {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #e2e2e2;
+  background: #e7e7e7;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+/*::-webkit-scrollbar-thumb {
   background: #ccc;
   /*border-radius:5px;*/
-}
+/*}*/
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #40C4FF !important;
+  background: #aaa !important;
   cursor:pointer;
 }
 .php-error #adminmenuback, .php-error #adminmenuwrap {
