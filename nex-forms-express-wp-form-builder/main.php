@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://1.envato.market/zQ6de
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 8.8.7
+Version: 8.9.1
 Author URI: https://1.envato.market/zQ6de
 License: GPL
 Text Domain: nex-forms
@@ -635,7 +635,7 @@ function NEXForms5_run_instalation(){
 	//EMAIL SETTINGS
 	if (false === get_option('nex-forms-email-config')) {
 		update_option('nex-forms-email-config',array(
-				'email_method'=>'php_mailer', 
+				'email_method'=>'wp_mailer', 
 				'email_content'=>'html', 
 				'smtp_auth'=>'0',
 				'smtp_host'=>'smtp.gmail.com',
@@ -5911,66 +5911,4 @@ global $wp_meta_boxes;
 function nex_forms_dashboard() {
 NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>15 premium add-ons worth $300 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://1.envato.market/zQ6de" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $300</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Multi-Page Forms &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
 }
-
-
-
-//register_activation_hook( __FILE__, 'NEXForms_welcome_screen_activate' );
-function NEXForms_welcome_screen_activate() {
-  set_transient( 'NEXForms__welcome_screen_activation_redirect', true, 30 );
-}
-
-add_action( 'admin_init', 'NEXForms_welcome_screen_do_activation_redirect' );
-function NEXForms_welcome_screen_do_activation_redirect() {
-  // Bail if no activation redirect
-    if ( ! get_transient( 'NEXForms__welcome_screen_activation_redirect' ) ) {
-    return;
-  }
-
-  // Delete the redirect transient
-  delete_transient( 'NEXForms__welcome_screen_activation_redirect' );
-
-  // Bail if activating from network, or bulk
-  if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-    return;
-  }
-
-  // Redirect to bbPress about page
-  wp_safe_redirect( add_query_arg( array( 'page' => 'welcome-to-nex-forms' ), admin_url( 'index.php' ) ) );
-
-}
-
-add_action('admin_menu', 'NEXForms_welcome_screen_pages');
-
-function NEXForms_welcome_screen_pages() {
-  add_dashboard_page(
-    'Welcome To Welcome Screen',
-    'Welcome To Welcome Screen',
-    'read',
-    'welcome-to-nex-forms',
-    'NEXForms_welcome_screen_content'
-  );
-}
-
-function NEXForms_welcome_screen_content() {
-  ?>
-  <div class="wrap">
-    <h2>An Example Welcome Screen</h2>
-
-    <p>
-      You can put any content you like here from columns to sliders - it's up to you
-    </p>
-  </div>
-  <?php
-}
-
-add_action( 'admin_head', 'NEXForms_welcome_screen_remove_menus' );
-
-function NEXForms_welcome_screen_remove_menus() {
-    remove_submenu_page( 'index.php', 'welcome-to-nex-forms' );
-}
-
-
-
-
-
-
+?>

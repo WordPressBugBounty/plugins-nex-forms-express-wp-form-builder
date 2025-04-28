@@ -5,7 +5,7 @@ Donate link: https://1.envato.market/zQ6de
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
 Tested up to: 6.8
-Stable tag: 8.8.7
+Stable tag: 8.9.1
 License: GPLv3 or later
 Author URI: https://basixonline.net
 Plugin URI: https://1.envato.market/zQ6de
