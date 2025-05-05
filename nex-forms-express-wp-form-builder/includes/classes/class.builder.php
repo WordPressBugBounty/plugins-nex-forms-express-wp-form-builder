@@ -8118,8 +8118,8 @@ $output .= '<div class="inner-form-canvas">';
 			'.__('NEX-Forms version:','nex-forms').' '. $this->plugin_version.'';
 			
 			$output .= '</div>';
-
-			return $output;
+			$output = NEXForms_rgba2Hex($output);
+			return wp_kses( $output, NEXForms_allowed_tags2()) ;
 		}
 		
 		public function print_email_setup(){

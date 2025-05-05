@@ -329,7 +329,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					else
 						{
 						$_POST[$field->Field] = NEXForms_rgba2Hex($_POST[$field->Field]);
-						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags());
+						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags2());
 						}
 					}	
 				}
@@ -398,7 +398,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					else
 						{
 						$_POST[$field->Field] = NEXForms_rgba2Hex($_POST[$field->Field]);
-						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags());
+						$field_array[$field->Field] = wp_kses( $_POST[$field->Field], NEXForms_allowed_tags2());
 						}
 					}	
 				}
@@ -3983,9 +3983,10 @@ function NEXForms_sanitize_array( $array=array() ) {
 			}
 		else
 			{
-			$safe_array[ $key ] =  sanitize_text_field( $val );
+			$safe_array[ $key ] =  sanitize_text_field( wp_kses( $val, NEXForms_allowed_tags2()) );
 			}
 	}
+	
 	return $safe_array;
 }				
 		

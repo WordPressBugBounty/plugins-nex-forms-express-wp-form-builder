@@ -1233,7 +1233,7 @@ function NEXForms_dashboard(){
 	$saved_forms->table_headings = array('Id', array('heading'=>__('title','nex-forms'), 'user_func'=>'link_form_title_2', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id','sort_by'=>'title'),array('heading'=>__('Shortcode','nex-forms'), 'user_func'=>'get_form_shortcode', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id', 'sort_by'=>'Id'), array('heading'=>__('Total Entries','nex-forms'), 'user_func'=>'get_total_entries_3', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id','user_func_args_2'=>'entry_count', 'sort_by'=>'entry_count'),array('heading'=>'', 'user_func'=>'link_form_title', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'),array('heading'=>'', 'user_func'=>'duplicate_record', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'),array('heading'=>'', 'user_func'=>'print_export_form_link', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'));
 	$saved_forms->show_headings=true;
 	$saved_forms->extra_classes = 'my-forms chart-selection';
-	$saved_forms->additional_params = array(array('column'=>'is_form','operator'=>'!=','value'=>'preview'));
+	$saved_forms->additional_params = array(array('column'=>'is_form','operator'=>'!=','value'=>'preview'));	
 	$saved_forms->search_params = array('Id','title');
 	$saved_forms->checkout = $dashboard->checkout;
 	//$saved_forms->extra_buttons = array('new_form'=>array('class'=>'create_new_form', 'id'=>isset($_POST['form_Id']) ? sanitize_text_field($_POST['form_Id']) : '', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-file-medical"></span> '.__('&nbsp;&nbsp;Add a New Form','nex-forms').''));
@@ -1370,18 +1370,8 @@ function NEXForms_dashboard(){
 								
 								
 								
-						</div></div>';
-						
-						
-						$output .= '<div id="" class="dashboard-box database_table  wap_nex_forms new-forms" style="cursor:not-allowed">';
-								$output .= '<div class="">
-								
-								<span class="icon fas fa-file-import"></span><br />
-								'.__('Import Form','nex-forms').'
-								
-								
-								
 						</div></div></div>';
+						
 						
 						
 						$output .= '<div class="col-sm-7">';
@@ -4295,15 +4285,18 @@ if(!class_exists('NEXForms_dashboard'))
 								$func_args_5 = (isset($val['user_func_args_5'])) ? $val['user_func_args_5'] : '';
 								$func_args_6 = (isset($val['user_func_args_6'])) ? $val['user_func_args_6'] : '';
 								
-								
+								$whitelist_func = NEXForms_safe_user_functions();
 								if(isset($val['user_func_class']))
 									{
-									$whitelist_func = NEXForms_safe_user_functions();
+									
 									if(in_array($val['user_func'],$whitelist_func))
 										$output .= '<td class="'.$nf_functions->format_name($val['heading']).' '.((isset($val['set_class'])) ? $val['set_class'] : '').'">'.call_user_func(array($val['user_func_class'],$val['user_func']), array($record->$func_args_1, $func_args_2)).'</td>';
 									}
 								else
-									$output .= '<td class=" '.((isset($val['set_class'])) ? $val['set_class'] : '').'">'.call_user_func($val['user_func'], array($record->$func_args_1, $func_args_2)).'</td>';
+									{
+									if(in_array($val['user_func'],$whitelist_func))
+										$output .= '<td class=" '.((isset($val['set_class'])) ? $val['set_class'] : '').'">'.call_user_func($val['user_func'], array($record->$func_args_1, $func_args_2)).'</td>';
+									}
 								}
 							else
 								{
@@ -5558,10 +5551,9 @@ if(!class_exists('NEXForms_dashboard'))
 										<div class="col-sm-4">'.__('Mailing Method','nex-forms').'</div>
 										<div class="col-sm-8">
 											<input type="radio" '.(($email_config['email_method']=='wp_mailer' || $email_config['email_method']=='api') ? 	'checked="checked"' : '').' name="email_method" value="wp_mailer" 	id="wp_mailer"	class="with-gap"><label for="wp_mailer">WP Mail <span class="alert alert-success" style="
-    padding: 0px 10px 2px 10px;
-    font-size: 11px;
-    margin-left: 6px;
-">Recomended</span></label><br />
+												padding: 0px 10px 2px 10px;
+												font-size: 11px;
+												margin-left: 6px;">Recomended</span></label><br />
 											<input type="radio" '.((!$email_config['email_method'] || $email_config['email_method']=='php_mailer') ? 	'checked="checked"' : '').' name="email_method" value="php_mailer" 	id="php_mailer"	class="with-gap"><label for="php_mailer">PHP Mailer</label><br />
 											<input type="radio" '.(($email_config['email_method']=='php') ? 		'checked="checked"' : '').' name="email_method" value="php" 		id="php"		class="with-gap"><label for="php">Normal PHP</label><br />
 											<input type="radio" '.(($email_config['email_method']=='smtp') ? 		'checked="checked"' : '').' name="email_method" value="smtp" 		id="smtp"		class="with-gap"><label for="smtp">SMTP</label><br />
@@ -5758,7 +5750,7 @@ if(!class_exists('NEXForms_dashboard'))
 			if($theme->Name!='NEX-Forms Demo')
 				$output .= '<form name="other_config" id="other_config" action="'.admin_url('admin-ajax.php').'" method="post">';
 							
-							echo '######'.$user_config['enable-color-adapt'];	
+								
 				$output .= '	<div class="row">
 									<div class="col-sm-6">'.__('NEX-Forms User Level','nex-forms').'</div>
 									<div class="col-sm-6">
@@ -5779,7 +5771,7 @@ if(!class_exists('NEXForms_dashboard'))
 									<div class="col-sm-6">
 										
 										
-										<input type="radio" class="with-gap" name="enable-color-adapt" id="enable-color-adapt-light" value="2" '.(($user_config['enable-color-adapt']=='' || $user_config['enable-color-adapt']=='1' || $user_config['enable-color-adapt']=='2' || !isset($user_config['enable-color-adapt'])) ? 'checked="checked"' : '').'>
+										<input type="radio" class="with-gap" name="enable-color-adapt" id="enable-color-adapt-light" value="2" '.(($user_config['enable-color-adapt']=='1' || $user_config['enable-color-adapt']=='2' || !$user_config['enable-color-adapt']) ? 'checked="checked"' : '').'>
 										<label for="enable-color-adapt-light">'.__('NEX-Forms Light','nex-forms').'</label><br />
 										
 										
