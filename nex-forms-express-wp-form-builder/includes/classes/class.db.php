@@ -203,7 +203,37 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
+			//update_option( 'nf_activated', true );
+			//update_option( 'nf_fs_activated', false );
+			//return false;
+			if(function_exists('nf_fs'))
+				{
+				if ( nf_fs()->can_use_premium_code() )
+					{
+					update_option( 'nf_activated', false );
+					update_option( 'nf_fs_activated', true );
+					
+					$this->client_info = array(
+						'Id' => '2526991',
+						'item_code' => '7103891',
+						'purchase_code' => '*****************************',
+						'license_type' => 'Regular License',
+						'envato_user_name' => 'Basix',
+						'for_site'=>get_option('siteurl'),
+						'is_saas'=>true
+					);
+					return true;
+					}
+				else
+					{
+					update_option( 'nf_activated', false );
+					update_option( 'nf_fs_activated', false );
+					}
+				}
 			
+			if(!get_option('NFISENVA'))
+				return false;
+				
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
@@ -263,6 +293,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 							{
 							$this->deactivate_license();	
 							}
+						if($get_response['ver']=='true'){ update_option( 'nf_activated', true ); }
 						return ($get_response['ver']=='true') ? true : false;
 						}
 					else
@@ -279,6 +310,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 						{
 						$this->deactivate_license();	
 						}
+					if($get_response['ver']=='true'){ update_option( 'nf_activated', true ); }
 					return ($get_response['ver']=='true') ? true : false;
 					} 
 					
@@ -293,6 +325,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					{
 					$this->deactivate_license();	
 					}
+				if($get_response['ver']=='true'){ update_option( 'nf_activated', true ); }
 				return ($get_response['ver']=='true') ? true : false;
 				}
 			}
@@ -2901,7 +2934,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				}
 			else
 				{
-				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view entries. Go to global settings above and follow registration procedure.</div>';	
+				$output .= '<div class="alert alert-danger" style="margin:20px;"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view submitted form entry data. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 				}
 			echo( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			
@@ -2939,12 +2972,12 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if($total_pages>1)
 				{				
 				$output .= '<span class="pagination-links">';
-				$output .= '<a class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-angle-double-left"></span></a>';
+				$output .= '<a class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-backward-step"></span></a>';
 				$output .= '<a title="Go to the next page" class="iz-prev-page btn waves-effect waves-light prev-page"><span class="fa fa-angle-left"></span></a>&nbsp;';
 				$output .= '<span class="paging-input"> ';
 				$output .= '<span class="current-page">'.($_POST['page']+1).'</span> of <span class="total-pages">'.$total_pages.'</span>&nbsp;</span>';
 				$output .= '<a title="Go to the next page" class="iz-next-page btn waves-effect waves-light next-page"><span class="fa fa-angle-right"></span></a>';
-				$output .= '<a title="Go to the last page" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-angle-double-right"></span></a></span>';
+				$output .= '<a title="Go to the last page" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-forward-step"></span></a></span>';
 				}
 			if($echo)
 				{
@@ -3283,6 +3316,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$api_params = array( 'client_deactivate_license' => 1,'key'=>get_option('7103891'));
 			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 			update_option( 'nf_activated', false );
+			update_option( 'nf_fs_activated', false );
 			}
 	}
 

@@ -1,9 +1,13 @@
-.td-error-activate.td-admin-web-services {
+.td-error-activate.td-admin-web-services,
+.activate-license.nex-forms {
     display: none;
 }
-li.toplevel_page_nex-forms-dashboard ul.wp-submenu.wp-submenu-wrap li:last-child {
-    display: none;
+div.fs-notice.fs-slug-nex-forms{
+	/*display:none !important;*/
 }
+/*li.toplevel_page_nex-forms-dashboard ul.wp-submenu.wp-submenu-wrap li:last-child {
+    display: none;
+}*/
 div#nex_forms_widget {
 	/*border-color:#8bc34a;*/
 }

@@ -206,7 +206,7 @@ function NEXForms_stats_page(){
 	$output .= '<div class="hidden">';
 		$output .= $dashboard->dashboard_menu('Form Analytics');
 	$output .= '</div>';
-	if(!$dashboard->checkout)
+	/*if(!$dashboard->checkout)
 			{
 				 $output .= '<div id="dashboard_panel" class="dashboard_panel">';
 					$output .= '<div class="row row_zero_margin ">';
@@ -221,7 +221,7 @@ function NEXForms_stats_page(){
 			NEXForms_clean_echo( $output);
 			return;
 			}
-	
+	*/
 	$output .= '<div id="dashboard_panel" class="dashboard_panel">';
 	$output .= $dashboard->new_menu();
 	
@@ -307,7 +307,10 @@ function NEXForms_stats_page(){
 									$output .= '</div>';
 							  $output .= '</div>';*/
 							 
-							  
+							  if(!$dashboard->checkout)
+							  	{
+									$output .= '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form analytical data. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>';
+								}
 							  $output .= '<div class="row">';
 							  		$output .= '<div class="col-sm-4">';
 										$output .= '<div class="stats_summary_container">';
@@ -323,7 +326,7 @@ function NEXForms_stats_page(){
 										
 									$output .= '</div>';
 							  
-									$output .= '<div  class="col-sm-8">';
+									$output .= '<div  class="col-sm-8 analytics_panel">';
 										$output .= '<div class="geo_heading">'.__('Form Events','nex-forms').'</div>';
 										$output .= $dashboard->form_analytics();
 									$output .= '</div>';
@@ -331,7 +334,7 @@ function NEXForms_stats_page(){
 							  
 							  
 							  $output .= '<div class="row">';
-									$output .= '<div class="col-sm-9">';
+									$output .= '<div class="col-sm-9 geo_panel">';
 										$output .= '<div class="geo_heading">'.__('Global Form Submissions','nex-forms').'</div>';
 										$output .= '<div id="regions_div" style="width: 100%;"></div>';
 									$output .= '</div>';
@@ -354,12 +357,12 @@ function NEXForms_stats_page(){
 	$output .= '</div>';  	
 	NEXForms_clean_echo( $output);
 	
-	if(!get_option('7103891'))
+	/*if(!get_option('7103891'))
 		{
 		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-		}
+		}*/
 	update_option('nf_activated',$dashboard->checkout);
 }
 
@@ -552,21 +555,7 @@ function NEXForms_attachments_page(){
 	$output .= $dashboard->dashboard_menu('File Uploads');
 	$output .= '</div>';
 	
-	if(!$dashboard->checkout)
-			{
-				 $output .= '<div id="dashboard_panel" class="dashboard_panel">';
-					$output .= '<div class="row row_zero_margin ">';
-						
-						$output .= '<div class="col-sm-5">';
-							$output .= $dashboard->license_setup();
-						$output .= '</div>';
-					$output .= '</div>';
-				$output .= '</div>';
-			$output .= '</div>';
-			
-			NEXForms_clean_echo( $output);
-			return;
-			}
+	
 	
 	$output .= '<div class="admin_url" style="display:none;">'.admin_url().'</div>';
 	$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
@@ -657,12 +646,12 @@ function NEXForms_attachments_page(){
 	NEXForms_clean_echo( $output);
 	
 	$dashboard->remove_unwanted_styles();
-	if(!get_option('7103891'))
+	/*if(!get_option('7103891'))
 		{
 		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-		}
+		}*/
 	update_option('nf_activated',$dashboard->checkout);
 }
 
@@ -691,7 +680,7 @@ function NEXForms_global_setup_page(){
 			  	
 				//EMAIL SETUP
 				$output .= '<div class="col-sm-4">';
-					$output .= $dashboard->license_setup($dashboard->checkout, $dashboard->client_info);
+					$output .= $dashboard->license_setup($dashboard->checkout, $dashboard->client_info, $dashboard->license_info);
 					$output .= $dashboard->email_setup();
 				$output .= '</div>';
 			  	
@@ -727,6 +716,163 @@ function NEXForms_global_setup_page(){
 	
 }
 
+function NEXForms_get_add_ons(){
+	global $wpdb;
+	$theme = wp_get_theme();
+	$output = '';
+	
+	NEXForms_set_add_ons();
+	
+	$nf_function = new NEXForms_functions();
+	$dashboard = new NEXForms_dashboard();
+	$dashboard->dashboard_checkout();
+	$nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
+	$output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
+	$output .= '<div class="nex_forms_admin_page_wrapper">';
+	$output .= '<div class="hidden">';
+		$output .= $dashboard->dashboard_menu('Add-ons');
+	$output .= '</div>';		 
+			 $output .= '<div id="dashboard_panel" class="dashboard_panel global_settings_page">';
+				$output .= $dashboard->new_menu('add-ons');
+	$get_current_user_plan = 'Free';
+	if(get_option('nf_activated'))
+			{
+			$get_current_user_plan = 'Envato';	
+			}
+		else{
+	if(function_exists('nf_fs'))
+		{
+		
+		if ( nf_fs()->is_plan('elite', true) ) {
+    		$get_current_user_plan = 'Elite';
+			}
+		if ( nf_fs()->is_plan('pro', true) ) {
+    		$get_current_user_plan = 'Pro';
+			}
+		if ( nf_fs()->is_plan('plus', true) ) {
+    		$get_current_user_plan = 'Plus';
+			}
+		if ( nf_fs()->is_plan('basic', true) ) {
+    		$get_current_user_plan = 'Basic';
+			}
+		
+		}
+		}
+	//MY FORMS
+	$add_ons = new NEXForms_dashboard();
+	$add_ons->table = 'wap_nex_forms_add_ons';
+	$add_ons->table_header = 'Add-ons';
+	$add_ons->table_header_icon = '';
+	$add_ons->extra_buttons = array(
+								'Active'		=>array('class'=>'filter_add_on_active filter_add_on ', 		'id'=>'filter_add_on_active', 		'type'=>'button','link'=>'', 'rank'=>'2', 'icon'=>'<span class="far fa-circle-check"></span> '.__('&nbsp;Active','nex-forms').''),
+								'Inactive'		=>array('class'=>'filter_add_on_inactive filter_add_on ', 		'id'=>'filter_add_on_inactive', 	'type'=>'button','link'=>'', 'rank'=>'2', 'icon'=>'<span class="far fa-circle-stop"></span> '.__('&nbsp;Inactive','nex-forms').''),
+								'Not Installed'	=>array('class'=>'filter_add_on_not_installed filter_add_on ', 	'id'=>'filter_add_on_not_installed', 'type'=>'button','link'=>'', 'rank'=>'2', 'icon'=>'<span class="far fa-circle-xmark"></span> '.__('&nbsp;Not Installed','nex-forms').'')
+								//'read'			=>array('class'=>'filter_read filter_button', 			'id'=>'filter_read', 		'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-eye"></span> '.__('&nbsp;Read','nex-forms').''),
+								);
+	$add_ons->table_headings = array(
+	'title',
+	array('heading'=>__('Description','nex-forms'), 'user_func'=>'NEXForms_get_add_on_description','user_func_args_1'=>'Id','sort_by'=>'description'),
+	
+	//array('heading'=>__('Plan Availability','nex-forms'), 'user_func'=>'NEXForms_get_add_on_plans','user_func_args_1'=>'Id'),
+	array('heading'=>__('Avialable Plans','nex-forms'), 'user_func'=>'NEXForms_get_add_on_plans','user_func_args_1'=>'Id'),
+	array('heading'=>__('Status','nex-forms'), 'user_func'=>'NEXForms_get_add_on_status','user_func_args_1'=>'Id'),
+	array('heading'=>__('Action','nex-forms'), 'user_func'=>'NEXForms_install_add_on','user_func_args_1'=>'Id'),
+	);
+	$add_ons->show_headings=true;
+	$add_ons->extra_classes = 'my-forms chart-selection';
+	$add_ons->search_params = array('title', 'description','plans');
+	$add_ons->checkout = $dashboard->checkout;
+	
+	//$saved_forms->extra_buttons = array('new_form'=>array('class'=>'create_new_form', 'id'=>isset($_POST['form_Id']) ? sanitize_text_field($_POST['form_Id']) : '', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-file-medical"></span> '.__('&nbsp;&nbsp;Add a New Form','nex-forms').''));
+	$add_ons->color_adapt = true;
+	$add_ons->show_delete = false;
+	$add_ons->record_limit = 10;
+	
+	$output .= '<div class="col-sm-3">';
+		
+		
+		$output .= '<div class="stats_container">';
+		
+		 $output .= '<div class="row">';
+				$output .= '<div class="stats_summary_container" style="margin-top:-5px;">';
+				$output .= '<div class="geo_heading">'.__($get_current_user_plan.' Plan - Add-ons','nex-forms').'</div>';	
+					$output .= '
+							<div class="stats_summary_container3">
+					  			<div class="row stats aa_bg_sec header_stats2">';
+								$output .= NEXForms_get_add_on_stats();
+					$output .= '</div>';
+				$output .= '</div>';
+			$output .= '</div>';
+									
+			$output .= '</div>'; 
+		$output .= '</div>';
+		
+		
+	$output .= '</div>';
+	
+	$output .= '<div class="col-sm-9">';
+		$output .= $add_ons->print_record_table();
+	$output .= '</div>';
+	
+	
+	$output .= '</div>';
+		 $output .= '</div>';
+	 $output .= '</div>';
+	 NEXForms_clean_echo( $output);
+	 $dashboard->remove_unwanted_styles();
+}
+
+add_action('wp_ajax_nexforms_get_add_on_stats', 'NEXForms_get_add_on_stats');
+
+function NEXForms_get_add_on_stats(){
+	global $wpdb;
+	$count_add_ons = $wpdb->get_var('SELECT COUNT(*) FROM `'.$wpdb->prefix.'wap_nex_forms_add_ons` WHERE plans LIKE \'%'.$get_current_user_plan.'%\';'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$get_installed_add_ons = $wpdb->get_results('SELECT * FROM `'.$wpdb->prefix.'wap_nex_forms_add_ons`');
+		
+		$all_plugins = get_plugins();
+		
+		$count_installed_add_ons = 0;
+		$count_active_add_ons = 0;
+		$count_inactive_add_ons = 0;
+		foreach($get_installed_add_ons as $add_on)
+			{
+			if (isset($all_plugins[$add_on->add_on_url.'/main.php']) || isset($all_plugins[$add_on->add_on_url.'/'.$add_on->add_on_url.'.php']))
+				{
+				$count_installed_add_ons++;
+				if (is_plugin_active($add_on->add_on_url.'/main.php') || is_plugin_active($add_on->add_on_url.'/'.$add_on->add_on_url.'.php'))
+					{
+					$count_active_add_ons++;
+					}
+				else
+					{	
+					$count_inactive_add_ons++;
+					}
+				}
+			}							
+			$output .= '<div class="col-xs-3"><span class="big_txt">'.$count_add_ons.'</span>
+							  <label style="cursor:default;color:#6ca6e5">Avalialable Add-ons</label>
+							</div>
+							<div class="col-xs-3"><span class="big_txt">'.$count_installed_add_ons.'</span>
+							  <label style="cursor:default;color:#1875d0">Installed Add-ons</label>
+							</div>
+							<div class="col-xs-3"><span class="big_txt">'.$count_active_add_ons.'</span>
+							  <label style="cursor:default;color:#1875d0">Active Add-ons</label>
+							</div>
+							<div class="col-xs-3"><span class="big_txt">'.$count_inactive_add_ons.'</span>
+							  <label style="cursor:default;color:#1875d0">Inactive Add-ons</label>
+							</div>
+							';
+							
+		$do_ajax = (isset($_POST['do_ajax'])) ? sanitize_text_field($_POST['do_ajax']) : '';
+	
+		if($do_ajax)
+			{
+			NEXForms_clean_echo($output);
+			wp_die();
+			}
+		else
+			return $output;
+}
 function NEXForms_add_ons_page(){
 	global $wpdb;
 	$theme = wp_get_theme();
@@ -1233,7 +1379,7 @@ function NEXForms_dashboard(){
 	$saved_forms->table_headings = array('Id', array('heading'=>__('title','nex-forms'), 'user_func'=>'link_form_title_2', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id','sort_by'=>'title'),array('heading'=>__('Shortcode','nex-forms'), 'user_func'=>'get_form_shortcode', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id', 'sort_by'=>'Id'), array('heading'=>__('Total Entries','nex-forms'), 'user_func'=>'get_total_entries_3', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id','user_func_args_2'=>'entry_count', 'sort_by'=>'entry_count'),array('heading'=>'', 'user_func'=>'link_form_title', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'),array('heading'=>'', 'user_func'=>'duplicate_record', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'),array('heading'=>'', 'user_func'=>'print_export_form_link', 'user_func_class'=>'NEXForms_dashboard','user_func_args_1'=>'Id'));
 	$saved_forms->show_headings=true;
 	$saved_forms->extra_classes = 'my-forms chart-selection';
-	$saved_forms->additional_params = array(array('column'=>'is_form','operator'=>'!=','value'=>'preview'));	
+	$saved_forms->additional_params = array(array('column'=>'is_form','operator'=>'!=','value'=>'preview'));
 	$saved_forms->search_params = array('Id','title');
 	$saved_forms->checkout = $dashboard->checkout;
 	//$saved_forms->extra_buttons = array('new_form'=>array('class'=>'create_new_form', 'id'=>isset($_POST['form_Id']) ? sanitize_text_field($_POST['form_Id']) : '', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-file-medical"></span> '.__('&nbsp;&nbsp;Add a New Form','nex-forms').''));
@@ -1264,124 +1410,101 @@ function NEXForms_dashboard(){
 	$output .= $dashboard->dashboard_menu('Dashboard');
 	$output .= '</div>';
 	
-	
-	if(!is_array(get_option('7103891')))
-		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
-		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
-		
-		if(is_array($response->errors))
-				{
-				foreach($response->errors as $error_type => $error)
-					{
-					NEXForms_clean_echo( '<br /><br /><div class="alert alert-danger"><strong>WP ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'<br />NEX-Forms can not verify your license as a result of this error. Please as your Hosting Provider to resolve this error. <a href="https://www.google.com/search?q='.$error[0].'" target="_blank">Here are some helpfull articles for your Host</a> </div><br /><br />&nbsp;');
-					}	
-				}
-		else
-			{		
-			update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-			}
-		} 
-	update_option('nf_activated',$dashboard->checkout);
+					
 	 
+	 
+	
+	
+	
+		$get_info = $dashboard->client_info;
+				
+		$get_license = $dashboard->license_info;
+	 
+	 
+	 
+		 
+		 
+		if ( !nf_fs()->can_use_premium_code() )
+		 	{
+			$supported_until = $license_info['supported_until'];
+			$supported_date = new DateTime($supported_until);
+			$now = new DateTime();
+					
+			if(get_option('NFISENVA'))
+				{
+				if ($supported_date < $now)	
+					{
+					 $output .= '<div id="env_support" style="display:none;">0</div>';
+					}
+				}
+			}
+					
+		 
+		 
+		 
 		 
 		 $nonce_url = wp_create_nonce( 'nf_admin_dashboard_actions' );
 		 $output .= '<div id="nex_forms_wpnonce" style="display:none;">'.$nonce_url.'</div>';
-		 
+			update_option('nf_activated',$dashboard->checkout);
+			if(!is_array(get_option('7103891')))
+					{
+					$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+					$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
+					
+					if(is_array($response->errors))
+							{
+							foreach($response->errors as $error_type => $error)
+								{
+								$output .= '<span class="alert curl_error alert-danger">
+								<strong>LICENSE ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'NEX-Forms can not verify your license due to an Envato API error! <br /><strong>SOLUTION: </strong>We have overcome this issue by moving NEX-Forms to a cloud based service which comes with much more benifits.<br />
+								1. <a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?promo=1">Switch to a our cload based platform with a 50% discount.</a>
+								<br />
+								2. <a href="'.get_admin_url().'admin.php?page=nex-forms">Click here to enter your new cloud based license.</a><br /><br />
+								<strong>NOTE:</strong> No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
+								</span>';								
+								update_option('nf_activated','false');
+								}	
+							}
+					else
+						{		
+						update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+						}
+					} 
+				
+			
+								
+		  
+		  
+		  
 		  $output .= '<div id="dashboard_panel" class="dashboard_panel">';
 		  	  
 			  
-			
+
+	
 			  
 			
 			$output .= $dashboard->new_menu('dashboard');
 			  	
 					
-					
-					 if(!$dashboard->checkout)
+					//$output .= '</div>';
+					if ( !$dashboard->checkout )
 						{
 						$output .= '<div class="col-sm-3">';
-					$output .= '<div class="row row_zero_margin ">';
-						
-							$output .= $dashboard->license_setup();
-				$output .= '</div>';
-			$output .= '</div>';
-						//NEX-Forms is not registered and as such some key features will be disabled. To activate these features you will need to upgrade to the pro-version
-						/*$output .= '<div class="col-sm-3">';
-							$output .= '<div class="license_reg">
+						$output .= '<div class="dashboard-box global_settings">';
+							$output .= '<div class="dashboard-box-header aa_bg_main">';
+								$output .= '<div class="table_title"><i class="material-icons header-icon">verified_user</i>'.__('NEX-Forms License','nex-forms').'</div>';
+								$output .= '<p class="box-info"><strong>Status:</strong> '.(($checked=='true') ? '<span class="label label-success">'.__('Activated','nex-forms').'</span>' : '<span class="label label-danger">'.__('Not Activated','nex-forms').'</span>').'</p>';
+							$output .= '</div>';
 							
-								<div class="dashboard-box database_table">';
-								$output .= '<div class="dashboard-box-header aa_bg_main"><div class="table_title font_color_1 "><span class="label label-danger"><span class="fa fa-info"></span></span>&nbsp;&nbsp;NEX-Forms is NOT Registered </div></div>
-											
-											
-											<div class="dashboard-box-content">
-													Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://1.envato.market/zQ6de" target="_blank"><strong>upgrade to the pro-version</strong></a>
-												<div class="call-to-action">
-												
-													
-												
-													<a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings" class="col-2 register-now">
-														<div class="dashboard-box database_table wap_nex_forms new-forms">
-															I already own a license.<br />Regiter NEX-Forms now 
-														</div>
-													</a>
-													
-													<a href="https://1.envato.market/6vWmb" target="_blank" class="col-2 buy-now">
-														<div class="dashboard-box database_table wap_nex_forms new-forms">
-															Buy NEX-Forms now 
-														</div>
-													</a>
-											</div>	
-										</div>		
-								</div>
-							
-							</div>';
-						$output .= '</div>';*/
-						
-						$output .= '<div class="col-sm-2">';
-					
-					//$output .= '<button id="upload_form" class="form-control  btn blue waves-effect waves-light import_form">'.__('Import Form','nex-forms').'</button>';
-						$output .= '<div class="dashboard-box database_table create_new_form wap_nex_forms new-forms">';
-								$output .= '<div class="">
+							$output .= '<div  class="dashboard-box-content activation_box">';
+								$output .= nf_fs()->_connect_page_render();	
 								
-								<span class="icon fas fa-solid fa-file-circle-plus"></span><br />
-								
-								'.__('Add a New Form','nex-forms').'
-								
-								</div>
-						</div>';
-						
-						
-						$output .= '<div class="dashboard-box database_table create_new_form create-template wap_nex_forms new-forms">';
-								$output .= '<div class="">
-								
-								<span class="icon fas fa-file-invoice"></span><br />
-								'.__('Load Form Template','nex-forms').'
-								
-								
-								
-						</div></div>';
-						
-						$output .= '<div class="dashboard-box database_table create_new_form do-tut wap_nex_forms new-forms">';
-								$output .= '<div class="">
-								
-								<span class="icon fas fa-graduation-cap"></span><br />
-								'.__('Tutorials','nex-forms').'
-								
-								
-								
-						</div></div></div>';
-						
-						
-						
-						$output .= '<div class="col-sm-7">';
-							$output .= $saved_forms->print_record_table();
+								$output .= '<div class="alert alert-info">Currently, your NEX-Forms installation is not activated, which means some key features are disabled. To unlock these features you need to <a href="https://basixonline.net/nex-forms/pricing/" target="_blank"><strong>upgrade to PREMIUM</strong></a></div>';
+							$output .= '</div>';
 						$output .= '</div>';
-					$output .= '</div>';
-			
-			NEXForms_clean_echo( $output);
-			return;
-			}
+						$output .= '</div>';
+						}
+					 
 					
 					$output .= '<div class="col-sm-2">';
 					
@@ -1401,7 +1524,7 @@ function NEXForms_dashboard(){
 								$output .= '<div class="">
 								
 								<span class="icon fas fa-file-invoice"></span><br />
-								'.__('Load Form Template','nex-forms').'
+								'.((!$dashboard->checkout) ? '<span class="fa fa-lock"></span>&nbsp;' : '').''.__('Load Form Template','nex-forms').'
 								
 								
 								
@@ -1418,11 +1541,11 @@ function NEXForms_dashboard(){
 						</div></div>';
 						
 						
-						$output .= '<div id="upload_form" class="dashboard-box database_table import_form wap_nex_forms new-forms">';
+						$output .= '<div id="'.(($dashboard->checkout) ? 'upload_form' : '').'" class="dashboard-box database_table '.(($dashboard->checkout) ? 'import_form' : 'import_form2').'  wap_nex_forms new-forms">';
 								$output .= '<div class="">
 								
 								<span class="icon fas fa-file-import"></span><br />
-								'.__('Import Form','nex-forms').'
+								'.((!$dashboard->checkout) ? '<span class="fa fa-lock"></span>&nbsp;' : '').''.__('Import Form','nex-forms').'
 								
 								
 								
@@ -1457,7 +1580,7 @@ function NEXForms_dashboard(){
 						$output .= '</div>';
 					$output .= '</div>';
 					
-					$output .= '<div class="col-sm-10">';
+					$output .= '<div class="col-sm-'.(($dashboard->checkout) ? '10' : '7').'">';
 						$output .= $saved_forms->print_record_table();
 					$output .= '</div>';
 					
@@ -1529,18 +1652,22 @@ function NEXForms_reporting_page_new(){
 	$output .= $dashboard->dashboard_menu('Dashboard');
 	$output .= '</div>';
 	
-	
 	if(!is_array(get_option('7103891')))
 		{
 		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
-		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
+		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 10,'sslverify' => false,'body'=> $api_params));
 		
 		if(is_array($response->errors))
 				{
 				foreach($response->errors as $error_type => $error)
 					{
-					NEXForms_clean_echo( '<br /><br /><div class="alert alert-danger"><strong>WP ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'<br />NEX-Forms can not verify your license as a result of this error. Please as your Hosting Provider to resolve this error. <a href="https://www.google.com/search?q='.$error[0].'" target="_blank">Here are some helpfull articles for your Host</a> </div><br /><br />&nbsp;');
-					}	
+$output .= '<span class="alert curl_error alert-danger">
+								<strong>LICENSE ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'NEX-Forms can not verify your license due to an Envato API error! <br /><strong>SOLUTION: </strong>We have overcome this issue by moving NEX-Forms to a cloud based service which comes with much more benifits.<br />
+								1. <a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?promo=1">Switch to a our cload based platform here</a>
+								<br />
+								2. <a href="'.get_admin_url().'admin.php?page=nex-forms">Click here to enter your new cloud based license</a><br /><br />
+								<strong>NOTE:</strong> No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
+								</span>';						}	
 				}
 		else
 			{		
@@ -2624,16 +2751,38 @@ if(!class_exists('NEXForms_dashboard'))
 								</div>
 								<div class="item">
 									<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
-								</div>
-								'.(($page_title=="dashboard2" || $page_title=="add-ons" || !$dashboard->checkout) ? '<div class="item">
-									<a href="https://basixonline.net/nex-forms-free-add-ons-download/" target="_blank"><span class="fas fa-cloud-download-alt"></span>Free Add-ons Download</a>
-								</div>' : '');
+								</div>';
 								
-							$output .= ($theme->Name=='NEX-Forms Demo' || !$dashboard->checkout) ? '
-								<div class="item buy-now">
-									<a href="https://1.envato.market/zQ6de">Buy now</a>
-								</div>' : '';					
-				
+								if(!$dashboard->checkout)
+									{
+									$output .= '<div class="item buy-now">
+										<a href="https://basixonline.net/nex-forms/pricing/">Upgrade to PREMIUM</a>
+									</div>';
+									}
+							if(function_exists('nf_fs'))
+								{
+								if ( nf_fs()->is_trial() ) {
+									$site = nf_fs()->get_site();
+									$trialEnds = $site->trial_ends;
+									// Convert trial end date to DateTime object
+									$trial_end_date = new DateTime($trialEnds);
+									$today = new DateTime();
+									// Calculate the difference
+									$interval = $today->diff($trial_end_date);
+									// Check if trial is still active
+									
+									$days = $interval->d;
+									$hours = $interval->h;
+									$minutes = $interval->i;
+									
+									if ($trial_end_date > $today) {
+										$output .= '<div class="item trial-period"><a>Trial ends in&nbsp;<strong>' . ($days-1) . '</strong>&nbsp;day'.(($days>1) ? 's' : '').' '.$hours.' hrs and '.$minutes.' min</a></div>';
+									} else {
+										$output .= '<div class="item trial-period trial-end">Trial has ended</div>.';
+									}
+								}
+								}
+							
 				$output .= '</div>';
 				
 			$output .= '</div>';
@@ -2729,7 +2878,7 @@ if(!class_exists('NEXForms_dashboard'))
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons"  data-placement="bottom" data-title="'.__('Add-ons','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-plug"></span> <span class="menu-text">'.__('Add-ons','nex-forms').'</span></a></li>';
 								
 								
-							  $output .= ($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://1.envato.market/zQ6de" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '';
+							  $output .= ($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '';
 							   $output .= '</ul>';
 							   //$output .= '<div class="page-title aa_font_color_default">'.$page_title.'</div>';
 							
@@ -2784,7 +2933,7 @@ if(!class_exists('NEXForms_dashboard'))
 								<li class="tab has_icon '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings" class="global_settings_tab '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'active' : '').'"><span class="top-icon fa fas fa-cog"></span><span class="menu-text">'.__('Global Settings','nex-forms').'</span></a></li>
 								<li class="tab has_icon '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons" class="add_ons_tab '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'active' : '').'"><span class="top-icon fa fas fa-puzzle-piece"></span><span class="menu-text">'.__('ADD-ONS','nex-forms').'</span></a></li>
 								<li class="tab has_icon"><a href="http://basixonline.net/nex-forms-docs/" target="_blank"><span class="top-icon fa fas fa-file-export"></span><span class="menu-text">'.__('DOCS','nex-forms').'</span></a></li>
-								'.(($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://1.envato.market/zQ6de" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '' ).'
+								'.(($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '' ).'
 							  </ul>
 							</div>
 						  </nav>
@@ -2908,15 +3057,15 @@ if(!class_exists('NEXForms_dashboard'))
 					if($chart_view=='summary')
 						$where_str .= ' AND date_time >= DATE(NOW()) - INTERVAL 7 DAY';
 					else
-						$where_str .= ' AND YEAR(date_time)=YEAR("'.$current_year.'-'.$month_selected.'-01") ';
-								
+						{
+						if($month_selected=='0')
+							$where_str .= ' AND YEAR(date_time)=YEAR("'.$current_year.'-'.$month_selected.'-01")';
+						else
+							$where_str .= ' AND YEAR(date_time)=YEAR("'.$current_year.'-'.$month_selected.'-01") AND Month(date_time)= Month("'.$current_year.'-'.$month_selected.'-01")';
+						}
 					
 					$form_entries = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE '.$where_str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-					
-					//echo 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE '.$where_str;
-					
 					$form_views = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_views WHERE '.$where_str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-					
 					$form_interactions = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_stats_interactions WHERE '.$where_str); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 					
 					
@@ -3103,6 +3252,7 @@ if(!class_exists('NEXForms_dashboard'))
 													'PY' => __('Paraguay','nex-forms'),
 													'PE' => __('Peru','nex-forms'),
 													'PH' => __('Philippines','nex-forms'),
+
 													'PN' => __('Pitcairn Islands','nex-forms'),
 													'PL' => __('Poland','nex-forms'),
 													'PT' => __('Portugal','nex-forms'),
@@ -3901,11 +4051,11 @@ if(!class_exists('NEXForms_dashboard'))
 								<option value="1000" '.(($this->record_limit==1000) ? 'selected="selected"' : '').'>1000</option>
 								</select> '.__('records p/page','nex-forms').'</span>
 							
-								<a title="'.__('Go to the first page','nex-forms').'" class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-angle-double-left"></span></a>
+								<a title="'.__('Go to the first page','nex-forms').'" class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-backward-step"></span></a>
 								<a title="'.__('Go to the next page','nex-forms').'" class="iz-prev-page btn waves-effect waves-light prev-page"><span class="fa fa-angle-left"></span></a>
 								
 								<a title="'.__('Go to the next page','nex-forms').'" class="iz-next-page btn waves-effect waves-light next-page"><span class="fa fa-angle-right"></span></a>
-								<a title="'.__('Go to the last page','nex-forms').'" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-angle-double-right"></span></a>
+								<a title="'.__('Go to the last page','nex-forms').'" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-forward-step"></span></a>
 							</span>
 							
 							';	
@@ -4285,10 +4435,10 @@ if(!class_exists('NEXForms_dashboard'))
 								$func_args_5 = (isset($val['user_func_args_5'])) ? $val['user_func_args_5'] : '';
 								$func_args_6 = (isset($val['user_func_args_6'])) ? $val['user_func_args_6'] : '';
 								
+								
 								$whitelist_func = NEXForms_safe_user_functions();
 								if(isset($val['user_func_class']))
 									{
-									
 									if(in_array($val['user_func'],$whitelist_func))
 										$output .= '<td class="'.$nf_functions->format_name($val['heading']).' '.((isset($val['set_class'])) ? $val['set_class'] : '').'">'.call_user_func(array($val['user_func_class'],$val['user_func']), array($record->$func_args_1, $func_args_2)).'</td>';
 									}
@@ -4511,6 +4661,7 @@ if(!class_exists('NEXForms_dashboard'))
 			if(is_array($form_Id))
 				$set_form_id = $form_Id[0];
 			$title = $wpdb->get_var('SELECT title FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id='.$set_form_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+
 
 			$title= wp_unslash($title);
 			$title= str_replace('\"','',$title);
@@ -5337,7 +5488,7 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			if(!$database->checkout())
 				{
-				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view submission reports. Go to global settings above and follow registration procedure.</div>'	;
+				$output .= '<div class="alert alert-danger" style="margin:20px;"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view submission reports. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>'	;
 				}
 			else
 				{
@@ -5551,9 +5702,10 @@ if(!class_exists('NEXForms_dashboard'))
 										<div class="col-sm-4">'.__('Mailing Method','nex-forms').'</div>
 										<div class="col-sm-8">
 											<input type="radio" '.(($email_config['email_method']=='wp_mailer' || $email_config['email_method']=='api') ? 	'checked="checked"' : '').' name="email_method" value="wp_mailer" 	id="wp_mailer"	class="with-gap"><label for="wp_mailer">WP Mail <span class="alert alert-success" style="
-												padding: 0px 10px 2px 10px;
-												font-size: 11px;
-												margin-left: 6px;">Recomended</span></label><br />
+    padding: 0px 10px 2px 10px;
+    font-size: 11px;
+    margin-left: 6px;
+">Recomended</span></label><br />
 											<input type="radio" '.((!$email_config['email_method'] || $email_config['email_method']=='php_mailer') ? 	'checked="checked"' : '').' name="email_method" value="php_mailer" 	id="php_mailer"	class="with-gap"><label for="php_mailer">PHP Mailer</label><br />
 											<input type="radio" '.(($email_config['email_method']=='php') ? 		'checked="checked"' : '').' name="email_method" value="php" 		id="php"		class="with-gap"><label for="php">Normal PHP</label><br />
 											<input type="radio" '.(($email_config['email_method']=='smtp') ? 		'checked="checked"' : '').' name="email_method" value="smtp" 		id="smtp"		class="with-gap"><label for="smtp">SMTP</label><br />
@@ -5750,7 +5902,7 @@ if(!class_exists('NEXForms_dashboard'))
 			if($theme->Name!='NEX-Forms Demo')
 				$output .= '<form name="other_config" id="other_config" action="'.admin_url('admin-ajax.php').'" method="post">';
 							
-								
+							//echo '######'.$user_config['enable-color-adapt'];	
 				$output .= '	<div class="row">
 									<div class="col-sm-6">'.__('NEX-Forms User Level','nex-forms').'</div>
 									<div class="col-sm-6">
@@ -5771,7 +5923,7 @@ if(!class_exists('NEXForms_dashboard'))
 									<div class="col-sm-6">
 										
 										
-										<input type="radio" class="with-gap" name="enable-color-adapt" id="enable-color-adapt-light" value="2" '.(($user_config['enable-color-adapt']=='1' || $user_config['enable-color-adapt']=='2' || !$user_config['enable-color-adapt']) ? 'checked="checked"' : '').'>
+										<input type="radio" class="with-gap" name="enable-color-adapt" id="enable-color-adapt-light" value="2" '.(($user_config['enable-color-adapt']=='' || $user_config['enable-color-adapt']=='1' || $user_config['enable-color-adapt']=='2' || !isset($user_config['enable-color-adapt'])) ? 'checked="checked"' : '').'>
 										<label for="enable-color-adapt-light">'.__('NEX-Forms Light','nex-forms').'</label><br />
 										
 										
@@ -5991,143 +6143,219 @@ if(!class_exists('NEXForms_dashboard'))
 	}
 	
 
-	public function license_setup($args='', $client_info=''){
+	public function license_setup($args='', $client_info='', $license_info=''){
 		
 		
 		
-		if(!$args)
-			{
-			$api_params2 = array( 'check_key' => 1,'ins_data'=>get_option('7103891'));
-			$response2 = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params2) );
-			if(is_array($response2->errors))
-				{
-				foreach($response2->errors as $error_type => $error)
-					{
-					NEXForms_clean_echo( '<br /><br /><div class="alert alert-danger"><strong>WP ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'<br />NEX-Forms can not verify your license as a result of this error. Please as your Hosting Provider to resolve this error. <a href="https://www.google.com/search?q='.$error[0].'" target="_blank">Here are some helpfull articles for your Host</a> </div><br /><br />&nbsp;');
-					}	
-				}
-			$checked = false;
-			}
-		else
+		
 			$checked = $args;
 		
+		
+		
 		$output = '';
+		//$fs = new Freemius();
+		//$fs->_add_license_action_link();
+				
+		/*if ( function_exists( 'nf_fs' ) ) {
+        $output = nf_fs()->_open_license_activation_dialog_box();
+    }*/
+	/*echo '<pre>';
+	print_r($license_info);
+	echo '</pre>';*/
+		//$supported_until =  '2025-07-29T15:30:58+10:00';
+		$supported_until = $license_info['supported_until'];
+		$supported_date = new DateTime($supported_until);
+		$now = new DateTime();
+				
 		$output .= '<div class="dashboard-box global_settings">';
 			$output .= '<div class="dashboard-box-header aa_bg_main">';
-				$output .= '<div class="table_title"><i class="material-icons header-icon">verified_user</i>'.__('NEX-Forms Registration Info','nex-forms').'</div>';
-				$output .= '<p class="box-info"><strong>Status:</strong> '.(($checked=='true') ? '<span class="label label-success">'.__('Registered','nex-forms').'</span>' : '<span class="label label-danger">'.__('Not Registered','nex-forms').'</span>').'</p>';
+				$output .= '<div class="table_title"><i class="material-icons header-icon">verified_user</i>'.__('NEX-Forms License Info','nex-forms').'</div>';
+				$output .= '<p class="box-info"><strong>Status:</strong> '.(($checked=='true') ? '<span class="label label-success">'.__('Activated','nex-forms').'</span>' : '<span class="label label-danger">'.__('Not Activated','nex-forms').'</span>').'</p>';
 			$output .= '</div>';
 			
 			$output .= '<div  class="dashboard-box-content activation_box">';
 			
-			if($checked=='true')
-				{	
-				$theme = wp_get_theme();
-				if($theme->Name=='NEX-Forms Demo')
+			if ( nf_fs()->can_use_premium_code() )
+				$output .= 'License Active';	
+			else
+				{
+				if(get_option('NFISENVA'))
 					{
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Purchase Code','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;';
-							$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Envato Username','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= 'Basix';
-						$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('License Type','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= 'Regular';
-						$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Activated on','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= 'Demo Site';
-						$output .= '</div>';
-					$output .= '</div>';
-					
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-12">';
-							$output .= '
-							'.__('<div class="alert alert-info">Unregistering a Puchase Code will free up the above code to be re-used on another domain. <strong>NOTE:</strong> This will make the current active site\'s registration inactive!</div>
-							<button class="btn blue waves-effect waves-light" disabled="disabled">Unregister Puchase Code</button>','nex-forms').'';
-						$output .= '</div>';
-					$output .= '</div>';
+					if ($supported_date < $now)	
+						{
+						$output .= nf_fs()->_connect_page_render();		
+						}
 					}
 				else
 					{
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Purchase Code','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							if($client_info['purchase_code'])
-								$output .= '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['purchase_code'],-6);
-							else
-								$output .= __('License not activated for this domain. Please refresh this page and enter your purchase code when prompted.','nex-forms');
-						$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Envato Username','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= substr($client_info['envato_user_name'],0,1).'&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['envato_user_name'],-1);
-						$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('License Type','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= $client_info['license_type'];
-						$output .= '</div>';
-					$output .= '</div>';
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-5">';
-							$output .= '<strong>'.__('Activated on','nex-forms').'</strong>';
-						$output .= '</div>';
-						$output .= '<div class="col-sm-7">';
-							$output .= $client_info['for_site'];
-						$output .= '</div>';
-					$output .= '</div>';
-					
-					$output .= '<div class="row">';
-						$output .= '<div class="col-sm-12">';
-							$output .= __('
-							<div class="alert alert-info">Unregistering a Puchase Code will free up the above code to be re-used on another domain. <strong>NOTE:</strong> This will make the current active site\'s registration inactive!</div>
-							<button class="btn blue waves-effect waves-light deactivate_license">Unregister Puchase Code</button>','nex-forms');
-						$output .= '</div>';
-					$output .= '</div>';
+					$output .= nf_fs()->_connect_page_render();	
 					}
 				}
-			else
+			if(get_option('NFISENVA') && !nf_fs()->can_use_premium_code())
 				{
-				$output .= __('
-								<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://1.envato.market/zQ6de" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
-				
-							  <input name="purchase_code" id="purchase_code" placeholder="Enter Item Purchase Code" class="form-control" type="text">
-							  <br />
-							  <div class="show_code_response">
-							  <div class="alert alert-success">After your <a href="https://1.envato.market/zQ6de" target="_blank">purchase</a> you can find your purchase code from <a href="http://codecanyon.net/downloads" target="_blank"><strong>http://codecanyon.net/downloads</strong></a>. Click on Download next to NEX-Forms and then click on "License certificate &amp; purchase code" and copy that code into the above text field and hit Register.</div>
-							  </div>
-						   
-						<button class="btn blue waves-effect waves-light deactivate_license hidden">Unregister Puchase Code</button>
-						 <button class="btn blue waves-effect waves-light verify_purchase_code " type="button">Register</button> 
-						<div style="clear:both"></div>
-						','nex-forms');
+				if($checked=='true')
+					{	
+					$theme = wp_get_theme();
+					if($theme->Name=='NEX-Forms Demo')
+						{
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Purchase Code','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;';
+								$output .= '</div>';
+						$output .= '</div>';
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Envato Username','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= 'Basix';
+							$output .= '</div>';
+						$output .= '</div>';
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('License Type','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= 'Regular';
+							$output .= '</div>';
+						$output .= '</div>';
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Activated on','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= 'Demo Site';
+							$output .= '</div>';
+						$output .= '</div>';
+						
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-12">';
+								$output .= '
+								'.__('<div class="alert alert-info">Unregistering a Puchase Code will free up the above code to be re-used on another domain. <strong>NOTE:</strong> This will make the current active site\'s registration inactive!</div>
+								<button class="btn blue waves-effect waves-light" disabled="disabled">Unregister Puchase Code</button>','nex-forms').'';
+							$output .= '</div>';
+						$output .= '</div>';
+						}
+					else
+						{
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('License Type','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= '<span class="txt-green"><strong>Envato</strong></span> '.$client_info['license_type'];
+							$output .= '</div>';
+						$output .= '</div>';
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Purchase Code','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								if($client_info['purchase_code'])
+									$output .= '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['purchase_code'],-6);
+								else
+									$output .= __('License not activated for this domain. Please refresh this page and enter your purchase code when prompted.','nex-forms');
+							$output .= '</div>';
+						$output .= '</div>';
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Envato Username','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= substr($client_info['envato_user_name'],0,1).'&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;'.substr($client_info['envato_user_name'],-1);
+							$output .= '</div>';
+						$output .= '</div>';
+						
+						$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Activated on','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= $client_info['for_site'];
+							$output .= '</div>';
+						$output .= '</div>';
+						
+						
+						if ($supported_date < $now)
+							$output .= '<div class="env_s_expired" style="display:none;">true</div>';
+							
+						if ($supported_date > $now) {
+							$output .= '<div class="row">';
+								$output .= '<div class="col-sm-12">';
+									$output .= __('
+									<div class="alert alert-info">Unregistering a Puchase Code will free up the above code to be re-registered on another domain. <strong>NOTE:</strong> This will make the current active site\'s registration inactive!</div>
+									<button class="btn blue waves-effect waves-light deactivate_license">Unregister Puchase Code</button>','nex-forms');
+								$output .= '</div>';
+							$output .= '</div>';
+							}
+						else
+							{
+							
+							
+							
+							$output .= '<div class="row">';
+							$output .= '<div class="col-sm-5">';
+								$output .= '<strong>'.__('Supported?','nex-forms').'</strong>';
+							$output .= '</div>';
+							$output .= '<div class="col-sm-7">';
+								$output .= '<strong><span class="txt-red">Envato Support Expired!</span></strong>'; //substr($license_info['supported_until'], 0, 10)
+							$output .= '</div>';
+						$output .= '</div>';
+							
+							$output .= '<div class="upgrade_form_envato">
+<h5>Your Envato support have expired, <strong>but...</strong></h5><h4>Great News!</h4> We\'ve launched a powerful new version of NEX-Forms on a cloud based platform from Freemius, and it\'s packed with benefits you won\'t want to miss:<br />
+<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;Ongoing Support & Updates<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;Faster Performance & Better Stability<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;Easy License Management<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;Access to New Premium Features<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;Access to Up and Coming Premium add-ons<br />
+
+<span class="fa fa-check txt-green"></span>&nbsp;No More Support Renewal Hassles<br />
+
+<h5>How do I upgrade?</h5>
+All you have to do is this:
+<br />
+1. <a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?promo=1&eu='.$client_info['envato_user_name'].'">Switch to a plan</a> that better suit your needs<br />
+2. Activate your new license in the box below. That\'s it!
+<br /><br />
+<h5>Zero Loss</h5>
+No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
+<br /><br />
+<h5>Added Bonus!</h5>
+As an Envato License holder we will also offer you a <strong> 50% Discount</strong> on all pricing plans, simply click on the button below and claim your discount <span class="fa fa-arrow-down"></span><br />
+
+<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?promo=1&eu='.$client_info['envato_user_name'].'" target="_blank" class="do_saas_upgrade">Upgrade NOW with a <strong>50% Discount</strong></a>
+<a href="mailto:support@basixonline.net?subject=NEX-Forms Subscriptions Plan Question" target="_blank" class="do_saas_upgrade faq">I have more questions</a>
+</div>
+<div class="license_holder">Activate Cloud Based License:</div>
+';	
+							}
+						}
+					}
+				else
+					{
+					$output .= __('<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://basixonline.net/nex-forms/pricing/" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
+					
+								  <input name="purchase_code" id="purchase_code" placeholder="Enter Item Purchase Code" class="form-control" type="text">
+								  <br />
+								  <div class="show_code_response">
+								  <div class="alert alert-success">After your <a href="https://basixonline.net/nex-forms/pricing/" target="_blank">purchase</a> you can find your purchase code from <a href="http://codecanyon.net/downloads" target="_blank"><strong>http://codecanyon.net/downloads</strong></a>. Click on Download next to NEX-Forms and then click on "License certificate &amp; purchase code" and copy that code into the above text field and hit Register.</div>
+								  </div>
+							   
+							<button class="btn blue waves-effect waves-light deactivate_license hidden">Unregister Puchase Code</button>
+							 <button class="btn blue waves-effect waves-light verify_purchase_code " type="button">Register</button> 
+							<div style="clear:both"></div>
+							','nex-forms');
+					}
 				}
 		$output .= '</div>';	
 	$output .= '</div>';	
@@ -6148,7 +6376,7 @@ if(!class_exists('NEXForms_dashboard'))
 									  <li class="tab"><a class="active" href="#email_pref">'.__('Email Presets','nex-forms').'</a></li>
 									    <li class="tab"><a href="#other_pref">'.__('Form Presets','nex-forms').'</a></li>
 										<li class="tab field_prefs"><a  href="#field_pref">'.__('Field Presets','nex-forms').'</a></li>
-										<li class="tab"><a href="#validation_pref">'.__('Validation Preset Massages','nex-forms').'</a></li>
+										<li class="tab"><a href="#validation_pref">'.__('Validation Preset Messages','nex-forms').'</a></li>
 										
 										
 									  </ul>

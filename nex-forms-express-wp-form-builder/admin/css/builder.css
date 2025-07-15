@@ -13,6 +13,9 @@
 #nex-forms a:focus .plugin-icon{
 	box-shadow:none !important;
 }
+div.fs-notice.fs-slug-nex-forms{
+	display:none !important;
+}
 .nex_forms_admin_page_wrapper {
     font-family: sans-serif;
 }
@@ -4134,7 +4137,7 @@ div#toolbar-fields .tool-spacer:last-child{
 	position: absolute;
 	right: -800px;
 	top: 91px !important;
-	transition: all 0.15s ease 0s;
+	transition: all 0.1s ease 0s;
 	width: 539px;
 	z-index: 1999;
 }
@@ -4146,7 +4149,7 @@ div#toolbar-fields .tool-spacer:last-child{
 .field-settings-column.open_sidenav,
 .overall-settings-column.open_sidenav{
 	right: 0px;
-	transition: all 0.2s ease 0s;
+	transition: all 0.15s ease 0s;
 }
 
 #nex-forms .settings-column-style nav .nav-content li a{
@@ -5596,24 +5599,26 @@ h3.advanced_options{
 	padding: 19px 18px 14px !important;
 }
 
-.aa_menu a.upgrade_pro{
-	background: #8bc34a none repeat scroll 0 0 !important;
+.aa_menu a.upgrade_pro {
+    background: #e7f0f3 none repeat scroll 0 0 !important;
+    border: 1px solid #0074a6 !important;
+    color: #000 !important;
 }
 
-.aa_menu a.upgrade_pro,
-.aa_menu a.upgrade_pro:hover{
-	color: #fff !important;
-	font-weight: bold;
-	margin-left: 10px;
-	margin-right: 10px;
-	margin-top: -5px;
-	padding: 19px 18px 14px !important;
+.aa_menu a.upgrade_pro, .aa_menu a.upgrade_pro:hover {
+    color: #0074a6 !important;
+    font-weight: bold;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 6px;
+    padding: 8px 18px 8px !important;
+    border-radius: 20px;
 }
 
-.aa_menu a.upgrade_pro:hover{
+/*.aa_menu a.upgrade_pro:hover{
 	cursor: pointer !important;
 	background: #cddc39 none repeat scroll 0 0 !important;
-}
+}*/
 
 .top-menu-btn.view_test_page:hover{
 	opacity: 1 !important;
@@ -6065,6 +6070,7 @@ li.back-to-dashboard span{
     position: sticky;
     height: 100vh;
     z-index: 100;
+
     box-shadow: 1px 1px 12px #dadce0;
     border-right: 1px solid #d3d3d3;
     padding-left: 15px;
@@ -8197,9 +8203,9 @@ span.reset-button:hover .fa {
 	border: 1px solid #111;
 }
 
-#nex-forms .form-canvas-area.dark .width_input .input-group-addon.active{
-	background-color: #40C4FF !important;
-	border: 1px solid #40C4FF;
+#nex-forms .form-canvas-area.dark .width_input .input-group-addon.active {
+    background-color: #0074a6 !important;
+    border: 1px solid #40c4ff;
 }
 
 #nex-forms .form-canvas-area.dark .width_input .ui-spinner .fa{
@@ -9032,6 +9038,7 @@ span.show_value{
 	border-color: #555;
 	transition: all 0.3s;
 }
+
 
 .avd_arrows_connector.over-connector,
 .avd_targets_connector.over-connector{

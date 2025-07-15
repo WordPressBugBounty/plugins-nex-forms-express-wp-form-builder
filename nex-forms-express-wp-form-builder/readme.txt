@@ -1,14 +1,14 @@
 === NEX-Forms – Ultimate Forms Plugin for WordPress ===
 Plugin Name: NEX-Forms – Ultimate Forms Plugin for WordPress
 Contributors: Basix
-Donate link: https://1.envato.market/zQ6de
+Donate link: https://basixonline.net/nex-forms/pricing/
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
 Tested up to: 6.8.1
-Stable tag: 8.9.2
+Stable tag: 9.1.1
 License: GPLv3 or later
 Author URI: https://basixonline.net
-Plugin URI: https://1.envato.market/zQ6de
+Plugin URI: https://basixonline.net/nex-forms/pricing/
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes, booking forms, payments, popups & more with NEX-Forms...
@@ -34,7 +34,7 @@ https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
 
 
 **Useful Links**
-🚀[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
+🚀[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Go Pro NOW (50% Discount)](https://basixonline.net/nex-forms/pricing/ "The Ultimate WordPress Form Builder") 
 
 
 ✅ Create any type of form you can imagine and embed it anywhere on your site with ease -> Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, Survey Forms, Payment Forms, Booking Forms, Quiz Forms and more.
