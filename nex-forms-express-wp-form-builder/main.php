@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.1.1
+Version: 9.1.2
 Author URI: https://basixonline.net/nex-forms/pricing/
 License: GPL
 Text Domain: nex-forms
