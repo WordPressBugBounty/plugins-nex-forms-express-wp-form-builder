@@ -253,7 +253,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				$this->deactivate_license();
 				return false;
 			 }
-			$api_params = array( 'check_key' => 1,'ins_data'=>get_option('7103891'));
+			$api_params = array( 'check_key' => 1,'version' => '9','ins_data'=>get_option('7103891'));
 			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 			
 			if(isset($response->errors))
@@ -931,7 +931,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 					'email_address' => get_option('admin_email'),
 					'for_site' 		=> get_option('siteurl'),
 					'unique_key'	=> get_option('7103891'),
-					're_register'	=> (($_POST['rereg']=='false') ? false : true)
+					're_register'	=> (($_POST['rereg']=='false') ? false : true),
+					'version' 		=> '9'
 				);
 				
 				// Call the custom API.
@@ -3313,7 +3314,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			{
 			global $wpdb;
 			$delete = $wpdb->query('DELETE FROM '.$wpdb->prefix.'options WHERE option_name LIKE "1983017%"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$api_params = array( 'client_deactivate_license' => 1,'key'=>get_option('7103891'));
+			$api_params = array( 'client_deactivate_license' => 1,'version' => '9','key'=>get_option('7103891'));
 			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 			update_option( 'nf_activated', false );
 			update_option( 'nf_fs_activated', false );
@@ -3949,7 +3950,7 @@ if ($json_start !== false) {
 
 function NEXForms_run_calling(){
 	
-	$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+	$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org','version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 	$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
 	
 	$set_error = '';

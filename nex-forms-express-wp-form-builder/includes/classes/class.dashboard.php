@@ -186,7 +186,7 @@ function NEXForms_entries_page(){
 	$dashboard->remove_unwanted_styles();
 	if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -311,7 +311,58 @@ function NEXForms_stats_page(){
 							  	{
 									$output .= '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form analytical data. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>';
 								}
-							  $output .= '<div class="row">';
+								
+							if ( nf_fs()->can_use_premium_code() )
+								{
+								$output .= '<div class="row">';
+									$output .= '<div class="col-sm-4">';
+										$output .= '<div class="stats_summary_container">';
+										$output .= '<div class="geo_heading">'.__('Overview','nex-forms').'</div>';
+												$output .= '<div class="stats_summary_container2"><div class="row stats aa_bg_sec header_stats"><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#60a1e1">Form Views</label> </div><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#8BC34A">Form Interactions</label> </div><div class="col-xs-3"><span class="big_txt">0</span> <label style="cursor:default;color:#F57C00">Form Submissions</label> </div><div class="col-xs-3"><span class="big_txt">0.00%</span> <label>Conversion</label> </div></div></div>';	
+										$output .= '</div>';
+										
+										
+										$output .= '<div class="top_performing_form">';
+										$output .= '<div class="geo_heading">'.__('Top Forms by submissions','nex-forms').'</div>';
+										$output .= '<div class="top_forms_container"></div>';
+										$output .= '</div>';
+										
+									$output .= '</div>';
+								
+									$output .= '<div  class="col-sm-8 analytics_panel">';
+										$output .= '<div class="geo_heading">'.__('Form Events','nex-forms').'</div>';
+										$output .= $dashboard->form_analytics();
+									$output .= '</div>';
+							  $output .= '</div>';
+							  
+							  
+								  $output .= '<div class="row">';
+										$output .= '<div class="col-sm-9 geo_panel">';
+											$output .= '<div class="geo_heading">'.__('Global Form Submissions','nex-forms').'</div>';
+											$output .= '<div id="regions_div" style="width: 100%;"></div>';
+										$output .= '</div>';
+										
+										$output .= '<div class="col-sm-3">';
+											$output .= '<div class="geo_heading">'.__('Top Countries','nex-forms').'</div>';
+											$output .= '<div class="geo_stats_container"><ul class="top_countries"></ul></div>';
+											
+											
+										$output .= '</div>';
+										
+								  $output .= '</div>';
+									
+								}
+							else
+								{
+							    $license_info = $dashboard->license_info;
+							
+								$supported_until = $license_info['supported_until'];
+								$supported_date = new DateTime($supported_until);
+								$now = new DateTime();
+							
+							  if ($supported_date > $now)
+								{
+							  
 							  		$output .= '<div class="col-sm-4">';
 										$output .= '<div class="stats_summary_container">';
 										$output .= '<div class="geo_heading">'.__('Overview','nex-forms').'</div>';
@@ -325,30 +376,32 @@ function NEXForms_stats_page(){
 										$output .= '</div>';
 										
 									$output .= '</div>';
-							  
+								}
 									$output .= '<div  class="col-sm-8 analytics_panel">';
 										$output .= '<div class="geo_heading">'.__('Form Events','nex-forms').'</div>';
 										$output .= $dashboard->form_analytics();
 									$output .= '</div>';
 							  $output .= '</div>';
 							  
-							  
-							  $output .= '<div class="row">';
-									$output .= '<div class="col-sm-9 geo_panel">';
-										$output .= '<div class="geo_heading">'.__('Global Form Submissions','nex-forms').'</div>';
-										$output .= '<div id="regions_div" style="width: 100%;"></div>';
-									$output .= '</div>';
-									
-									$output .= '<div class="col-sm-3">';
-										$output .= '<div class="geo_heading">'.__('Top Countries','nex-forms').'</div>';
-										$output .= '<div class="geo_stats_container"><ul class="top_countries"></ul></div>';
+							  if ($supported_date > $now)
+								{
+								  $output .= '<div class="row">';
+										$output .= '<div class="col-sm-9 geo_panel">';
+											$output .= '<div class="geo_heading">'.__('Global Form Submissions','nex-forms').'</div>';
+											$output .= '<div id="regions_div" style="width: 100%;"></div>';
+										$output .= '</div>';
 										
+										$output .= '<div class="col-sm-3">';
+											$output .= '<div class="geo_heading">'.__('Top Countries','nex-forms').'</div>';
+											$output .= '<div class="geo_stats_container"><ul class="top_countries"></ul></div>';
+											
+											
+										$output .= '</div>';
 										
-									$output .= '</div>';
-									
-							  $output .= '</div>';
+								  $output .= '</div>';
 							  
-							  
+								}
+								}
 					 		$output .= '</div>';
 		  				$output .= '</div>';
 		  $output .= '</div>';
@@ -359,7 +412,7 @@ function NEXForms_stats_page(){
 	
 	/*if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}*/
@@ -482,7 +535,7 @@ function NEXForms_reporting_page(){
 	$dashboard->remove_unwanted_styles();
 	if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -648,7 +701,7 @@ function NEXForms_attachments_page(){
 	$dashboard->remove_unwanted_styles();
 	/*if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}*/
@@ -707,7 +760,7 @@ function NEXForms_global_setup_page(){
 	
 	if(!is_array(get_option('7103891')))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -1448,7 +1501,7 @@ function NEXForms_dashboard(){
 			update_option('nf_activated',$dashboard->checkout);
 			if(!is_array(get_option('7103891')))
 					{
-					$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+					$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 					$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
 					
 					if(is_array($response->errors))
@@ -1499,7 +1552,7 @@ function NEXForms_dashboard(){
 							$output .= '<div  class="dashboard-box-content activation_box">';
 								$output .= nf_fs()->_connect_page_render();	
 								
-								$output .= '<div class="alert alert-info">Currently, your NEX-Forms installation is not activated, which means some key features are disabled. To unlock these features you need to <a href="https://basixonline.net/nex-forms/pricing/" target="_blank"><strong>upgrade to PREMIUM</strong></a></div>';
+								$output .= '<div class="alert alert-info">Currently, your NEX-Forms installation is not activated, which means some key features are disabled. To unlock these features you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp" target="_blank"><strong>upgrade to PREMIUM</strong></a></div>';
 							$output .= '</div>';
 						$output .= '</div>';
 						$output .= '</div>';
@@ -1524,7 +1577,7 @@ function NEXForms_dashboard(){
 								$output .= '<div class="">
 								
 								<span class="icon fas fa-file-invoice"></span><br />
-								'.((!$dashboard->checkout) ? '<span class="fa fa-lock"></span>&nbsp;' : '').''.__('Load Form Template','nex-forms').'
+								'.((!$dashboard->checkout) ? '' : '').''.__('Load Form Template','nex-forms').'
 								
 								
 								
@@ -1545,7 +1598,7 @@ function NEXForms_dashboard(){
 								$output .= '<div class="">
 								
 								<span class="icon fas fa-file-import"></span><br />
-								'.((!$dashboard->checkout) ? '<span class="fa fa-lock"></span>&nbsp;' : '').''.__('Import Form','nex-forms').'
+								'.((!$dashboard->checkout) ? '' : '').''.__('Import Form','nex-forms').'
 								
 								
 								
@@ -1654,7 +1707,7 @@ function NEXForms_reporting_page_new(){
 	
 	if(!is_array(get_option('7103891')))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 10,'sslverify' => false,'body'=> $api_params));
 		
 		if(is_array($response->errors))
@@ -2739,24 +2792,86 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			$dashboard->dashboard_checkout();
 			
+			
+			
 			$output = '';
 			$output .= '<div class="nf-header">';
-				$output .= '<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/" target="_blank" class="logo"></a>
-							
-							<div class="version">v<strong>'.$config->plugin_version.'</strong></div>
+			
+			if(!$dashboard->checkout)
+				{
+				$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp" target="_blank" class="logo"></a>';	
+				}
+			else
+				{
+			if ( nf_fs()->can_use_premium_code() )
+				{
+				$output .= '<a href="https://basixonline.net/" target="_blank" class="logo"></a>';	
+				}
+			else
+				{
+				$license_info = $dashboard->license_info;
+				$supported_until = $license_info['supported_until'];
+				$supported_date = new DateTime($supported_until);
+				$now = new DateTime();
+				if ($supported_date < $now)
+						{
+						$output .= '<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?promo=1" target="_blank" class="logo"></a>';
+						}
+					else
+						{
+						$output .= '<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/" target="_blank" class="logo"></a>';	
+						}
+				}
+				}
+							$output .= '<div class="version">v<strong>'.$config->plugin_version.'</strong></div>
 							
 							<div class="dashboard-top-menu">
 								<div class="item">
 									<a href="https://basixonline.net/nex-forms-docs/" target="_blank"><span class="fas fa-graduation-cap"></span>Documentation</a>
-								</div>
-								<div class="item">
-									<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
 								</div>';
+							if(!$dashboard->checkout)
+								{
+								$output .= '
+									<div class="item">
+										<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
+									</div>';	
+								}
+							else
+								{
+							if ( nf_fs()->can_use_premium_code() )
+								{
+								$output .= '
+									<div class="item">
+										<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
+									</div>';	
+								}
+							else
+								{
+								$license_info = $dashboard->license_info;
+								$supported_until = $license_info['supported_until'];
+								$supported_date = new DateTime($supported_until);
+								$now = new DateTime();
+								if ($supported_date < $now)
+									{
+									$output .= '
+										<div class="item">
+											<a target="_blank" class="sup_ex txt-red"><i class="fas fa-warning txt-red"></i>&nbsp;Support</a>
+										</div>';					
+									}
+								else
+									{
+									$output .= '
+									<div class="item">
+										<a href="https://basix.ticksy.com/" target="_blank"><span class="fas fa-life-ring"></span>Support</a>
+									</div>';	
+									}
+								}						
+								}						
 								
 								if(!$dashboard->checkout)
 									{
 									$output .= '<div class="item buy-now">
-										<a href="https://basixonline.net/nex-forms/pricing/">Upgrade to PREMIUM</a>
+										<a href="https://basixonline.net/nex-forms/pricing/?src=wp">Upgrade to PREMIUM</a>
 									</div>';
 									}
 							if(function_exists('nf_fs'))
@@ -2776,9 +2891,9 @@ if(!class_exists('NEXForms_dashboard'))
 									$minutes = $interval->i;
 									
 									if ($trial_end_date > $today) {
-										$output .= '<div class="item trial-period"><a>Trial ends in&nbsp;<strong>' . ($days-1) . '</strong>&nbsp;day'.(($days>1) ? 's' : '').' '.$hours.' hrs and '.$minutes.' min</a></div>';
+										//$output .= '<div class="item trial-period"><a>Trial ends in&nbsp;<strong>' . ($days-1) . '</strong>&nbsp;day'.(($days>1) ? 's' : '').' '.$hours.' hrs and '.$minutes.' min</a></div>';
 									} else {
-										$output .= '<div class="item trial-period trial-end">Trial has ended</div>.';
+										//$output .= '<div class="item trial-period trial-end">Trial has ended</div>.';
 									}
 								}
 								}
@@ -6343,7 +6458,7 @@ As an Envato License holder we will also offer you a <strong> 50% Discount</stro
 					}
 				else
 					{
-					$output .= __('<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://basixonline.net/nex-forms/pricing/" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
+					$output .= __('<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
 					
 								  <input name="purchase_code" id="purchase_code" placeholder="Enter Item Purchase Code" class="form-control" type="text">
 								  <br />

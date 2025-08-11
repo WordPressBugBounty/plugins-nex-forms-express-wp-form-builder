@@ -136,7 +136,9 @@ td.result_head{
 	top: 30%;
 	width: 405px;
 }
-
+.sup_ex{
+	cursor:pointer;
+}
 a.add_ons_tab .new_badge{
 	background: #cddc39 !important;
 	color: #fff !important;
@@ -11789,7 +11791,7 @@ span.alert.curl_error.alert-danger {
 }
 .dash-left-col {
     flex: 2;
-    /* background: #fff; */
+    background: #f8f9fa;
     margin-left: -20px;
     position: fixed;
     border-inline-end: 1px solid #d3d3d3;
