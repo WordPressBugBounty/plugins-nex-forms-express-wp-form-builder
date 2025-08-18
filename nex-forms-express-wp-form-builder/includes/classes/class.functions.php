@@ -2661,7 +2661,9 @@ function nexforms_install_addon() {
         wp_send_json_error(array('message' => 'Permission denied.'));
     }
 	
-	
+	if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+				wp_die();
+			}
 	
 	
 	

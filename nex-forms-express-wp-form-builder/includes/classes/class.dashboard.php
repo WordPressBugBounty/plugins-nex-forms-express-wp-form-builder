@@ -186,7 +186,7 @@ function NEXForms_entries_page(){
 	$dashboard->remove_unwanted_styles();
 	if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -412,7 +412,7 @@ function NEXForms_stats_page(){
 	
 	/*if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}*/
@@ -535,7 +535,7 @@ function NEXForms_reporting_page(){
 	$dashboard->remove_unwanted_styles();
 	if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -701,7 +701,7 @@ function NEXForms_attachments_page(){
 	$dashboard->remove_unwanted_styles();
 	/*if(!get_option('7103891'))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}*/
@@ -760,7 +760,7 @@ function NEXForms_global_setup_page(){
 	
 	if(!is_array(get_option('7103891')))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));			
 		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
 		}
@@ -1501,7 +1501,7 @@ function NEXForms_dashboard(){
 			update_option('nf_activated',$dashboard->checkout);
 			if(!is_array(get_option('7103891')))
 					{
-					$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+					$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 					$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
 					
 					if(is_array($response->errors))
@@ -1552,7 +1552,11 @@ function NEXForms_dashboard(){
 							$output .= '<div  class="dashboard-box-content activation_box">';
 								$output .= nf_fs()->_connect_page_render();	
 								
-								$output .= '<div class="alert alert-info">Currently, your NEX-Forms installation is not activated, which means some key features are disabled. To unlock these features you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp" target="_blank"><strong>upgrade to PREMIUM</strong></a></div>';
+								$output .= '<div class="alert alert-info">Currently, your NEX-Forms installation is not activated, which means some key features are disabled. To unlock these features you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp-promo" target="_blank"><strong>upgrade to PREMIUM</strong></a><br />
+								<br /><strong>How to upgrade</strong><ul>
+								<li>1. <a href="https://basixonline.net/nex-forms/pricing/?src=wp" target="_blank"><strong>Click here and get 50% discount on your upgrade</strong></a></li>
+								<li>2. After upgrading you will receive an email with a license key.</li>
+								<li>3. Enter your license key in the box below.</li></ul></div>';
 							$output .= '</div>';
 						$output .= '</div>';
 						$output .= '</div>';
@@ -1707,7 +1711,7 @@ function NEXForms_reporting_page_new(){
 	
 	if(!is_array(get_option('7103891')))
 		{
-		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'version' => '9.1.4', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 10,'sslverify' => false,'body'=> $api_params));
 		
 		if(is_array($response->errors))
