@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.1.5
+Version: 9.1.6
 Author URI: https://basixonline.net/nex-forms/pricing/
 License: GPL
 Text Domain: nex-forms
@@ -13,54 +13,6 @@ Domain Path: /languages
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
-add_option('NFISENVA',false);
-if(get_option('nf_activated'))
-	update_option('NFISENVA',true);  
-
-if ( ! function_exists( 'nf_fs' ) ) {
-    function nf_fs() {
-        global $nf_fs;
-
-        if ( ! isset( $nf_fs ) ) {
-            require_once dirname( __FILE__ ) . '/vendor/freemius/start.php';
-			
-			$is_en =  (get_option( 'nf_activated')) ? false : true;
-			$is_fs =  (get_option( 'nf_fs_activated')) ? true : false;
-			
-            $nf_fs = fs_dynamic_init( array(
-                'id'                  => '18837',
-                'slug'                => 'nex-forms',
-                'type'                => 'plugin',
-                'public_key'          => 'pk_71b5d26c72d0e13fd0b1d533f0fbc',
-                'is_premium'          => true,
-                'is_premium_only'     => true,
-                'has_addons'          => false,
-                'has_paid_plans'      => true,
-                'trial'               => array(
-                    'days'               => 7,
-                    'is_require_payment' => true,
-                ),
-				
-               'menu'                => array(
-                    'slug'           => ($is_fs) ? 'nex-forms-dashboard' : '',
-					'has_submenu' 	 => false,
-                    'contact'        => false,
-                    'support'        => false,
-                ),
-            ) );
-        }
-        return $nf_fs;
-    }
-    nf_fs();
-    do_action( 'nf_fs_loaded' );
-}
-
-function enqueue_nf_admin_public_styles($hook){
-	if(is_admin())
-			wp_enqueue_style('nex-forms-public-admin', plugins_url( '/admin/css/'.NF_PATH.'public.css',__FILE__),'','8.4.2');
-}
-add_action( 'admin_enqueue_scripts', 'enqueue_nf_admin_public_styles' );
 $page = isset($_REQUEST['page']) ? sanitize_text_field($_REQUEST['page']) : '';
 
 define('NF_PATH','');
@@ -340,18 +292,6 @@ class NEXForms5_Config{
 			'location'				=>	'text',
 			'entry_Id'				=>	'text'
 			);
-			
-	public $nex_forms_add_ons = array
-			(
-			'title'					=>	'text',
-			'description'			=>	'text',
-			'price'					=>	'text',
-			'status'				=>	'text',
-			'add_on_url'			=>	'text',
-			'update_url'			=>	'text',
-			'version'				=>	'text',
-			'plans'					=>	'text'
-			);
 	
 	/************* Admin Menu **************/
 	public function __construct()
@@ -419,31 +359,10 @@ function NEXForms5_main_menu(){
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Reporting','Reporting', NF_USER_LEVEL, 'nex-forms-page-submission-reporting', 'NEXForms_reporting_page_new');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Analytics','Analytics',NF_USER_LEVEL, 'nex-forms-page-analytics', 'NEXForms_stats_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-File Uploads','File Uploads', NF_USER_LEVEL, 'nex-forms-page-file-uploads', 'NEXForms_attachments_page');
-	
-	if(get_option('NFISENVA'))
-		{
-		$dashboard = new NEXForms_dashboard();
-		$dashboard->dashboard_checkout();
-		$supported_until = $license_info['supported_until'];
-		$supported_date = new DateTime($supported_until);
-		$now = new DateTime();
-		if ($supported_date < $now)	
-			{
-			add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_get_add_ons');		
-			}
-		else
-			{
-			add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_add_ons_page');
-			}
-		}
-	else
-		{
-		add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_get_add_ons');	
-		}
-	
+	add_submenu_page( 'nex-forms-dashboard', 'NF-Add-ons','Add-ons', NF_USER_LEVEL, 'nex-forms-page-add-ons', 'NEXForms_add_ons_page');
 	add_submenu_page( 'nex-forms-dashboard', 'NF-Setup','Settings', NF_USER_LEVEL, 'nex-forms-page-global-settings', 'NEXForms_global_setup_page');
 	
-	add_submenu_page( '', 'NF-Builder-View','Builder', NF_USER_LEVEL, 'nex-forms-builder', 'NEXForms_form_builder');
+	add_submenu_page( 'nex-forms-dashboard', 'NF-Builder-View','Builder', NF_USER_LEVEL, 'nex-forms-builder', 'NEXForms_form_builder');
 	add_submenu_page( '', 'NF-Test','Test', NF_USER_LEVEL, 'nex-forms-test-page', 'NEXForms_test_page');
 	
 	add_submenu_page( '', 'NF-Welcome','Welcome', NF_USER_LEVEL, 'nf-welcome-page', 'NEXForms_welcome_page_content');
@@ -649,20 +568,7 @@ function NEXForms_test_page(){
 			echo ' \''.$array->handle.'\', ';
 			}	
 		}*/
-	echo '<div class="wrap">';
 	
-	nf_fs()->_account_page_load();
-	
-	echo '<a href="#" class="fs-toggle-whitelabel-mode">Click here</a>';
-	
-    nf_fs()->_account_page_render();
-	
-echo '<pre>';
-	
-
-	print_r(nf_fs());
-echo '</pre>';
-echo '<div>';
 	
 }
 
@@ -851,14 +757,6 @@ function NEXForms5_run_instalation(){
 	$instalation->component_prefix 		=  $config->plugin_prefix;
 	$instalation->component_alias		=  'nex_forms_files';
 	$instalation->db_table_fields		=  $config->file_manager;
-	$instalation->db_table_primary_key	=  $config->plugin_db_primary_key;
-	$instalation->install_component_table();	
-	
-	/* Add-ons Table */
-	$instalation = new NF5_Instalation();
-	$instalation->component_prefix 		=  $config->plugin_prefix;
-	$instalation->component_alias		=  'nex_forms_add_ons';
-	$instalation->db_table_fields		=  $config->nex_forms_add_ons;
 	$instalation->db_table_primary_key	=  $config->plugin_db_primary_key;
 	$instalation->install_component_table();	
 	
@@ -1430,7 +1328,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		}
 
 	//ADD CONDITIONAL LOGIC SCRIPT
-	if(get_option('nf_activated') || get_option('nf_fs_activated'))
+	if(get_option('nf_activated'))
 		{
 		if($nf_functions->isJson($form_attr->conditional_logic_array))
 			{
@@ -1572,18 +1470,18 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 					{
 					foreach($prefill_array as $key => $val)
 						{	
-						if(get_option('nf_activated') || get_option('nf_fs_activated'))				
+						if(get_option('nf_activated'))				
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}	
 					}
 				foreach($_REQUEST as $key => $val)
 						{
-						if(get_option('nf_activated') || get_option('nf_fs_activated'))					
+						if(get_option('nf_activated'))					
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}
 				foreach($set_default_field_array as $key => $val)
 						{
-						if(get_option('nf_activated')|| get_option('nf_fs_activated'))					
+						if(get_option('nf_activated'))					
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}
 			$output .= '</div>';
@@ -1603,7 +1501,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 				}
 				
 		//OPEN POPUP MODAL
-				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated') && !get_option('nf_fs_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? $form_css_style : 'background-image:'.$background).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).';height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
+				$output .= '<div  data-backdrop="'.esc_attr($backdrop).'" data-open-animation="'.esc_attr($open_animation).'" data-close-animation="'.esc_attr($close_animation).'" data-overlay-opacity="'.esc_attr($overlay_opacity).'" class="modal '.((!get_option('nf_activated')) ? 'do_nf_popup' : '' ).' fade nex_forms_modal animated '.(($background=='transparent') ? 'no_shadow' : '').' '.esc_attr($open_animation).' v_'.esc_attr($v_position).' h_'.esc_attr($h_position).'" style="'.(($background=='use-form-background') ? $form_css_style : 'background-image:'.$background).';padding-left:'.esc_attr($padding_left).' !important; padding-right:'.esc_attr($padding_right).' !important; padding-top:'.esc_attr($padding_top).' !important; padding-bottom:'.esc_attr($padding_bottom).' !important;'.' width:'.esc_attr($width).';height:'.esc_attr($height).' !important; margin: '.esc_attr($v_margin).' '.esc_attr($h_margin).'; " id="nexForms_popup_'.esc_attr($id).esc_attr($element_class).'" tabindex="-1" role="dialog">';
 					
 				$output .= '<span data-bs-dismiss="modal" data-dismiss="modal" class="modal-action modal-close '.esc_attr($button_color).'"><i class="material-icons fa fa-close"></i></span>';
 				$output .= '<div class="modal-content" id="nf_form_'.esc_attr($unigue_form_Id).'">';	
@@ -1681,7 +1579,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 			print_r($_REQUEST);
 		echo '</pre>';*/
 		//MAIN CONTAINER #NEX-FORMS
-		$output .= '<div id="nex-forms" data-loader="'.$loader_type.'" data-msg-hide-form="'.$msg_hide_form.'" data-msg-position="'.$msg_position.'" data-msg-placement="'.$msg_placement.'"  class="nex-forms '.$nf_functions->format_name($form_attr->title).' '.(($make_sticky=='yes' && (!get_option('nf_activated') && !get_option('nf_fs_activated'))) ? 'do_nf_sticky' : '' ).' '.(($make_sticky=='yes') ? 'is-nf-sticky-form' : '').'">';
+		$output .= '<div id="nex-forms" data-loader="'.$loader_type.'" data-msg-hide-form="'.$msg_hide_form.'" data-msg-position="'.$msg_position.'" data-msg-placement="'.$msg_placement.'"  class="nex-forms '.$nf_functions->format_name($form_attr->title).' '.(($make_sticky=='yes' && !get_option('nf_activated')) ? 'do_nf_sticky' : '' ).' '.(($make_sticky=='yes') ? 'is-nf-sticky-form' : '').'">';
 			
 			
 			//PRINT PRE-FILL FIELDS ARRAYS 
@@ -1690,19 +1588,19 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 					{
 					foreach($prefill_array as $key => $val)
 						{ 
-						if(get_option('nf_activated') || get_option('nf_fs_activated'))		
+						if(get_option('nf_activated'))		
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}	
 					}
 				foreach($_REQUEST as $key => $val)
 						{	
-						if(get_option('nf_activated')|| get_option('nf_fs_activated'))				
+						if(get_option('nf_activated'))				
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}
 				
 				foreach($set_default_field_array as $key => $val)
 						{
-						if(get_option('nf_activated') || get_option('nf_fs_activated'))					
+						if(get_option('nf_activated'))					
 						$output .= '<input type="hidden" name="'.esc_attr(sanitize_key($key)).'"  data-original-value="'.str_replace('\\','',sanitize_text_field($val)).'" value="'.str_replace('\\','',sanitize_text_field($val)).'">';	
 						}
 				
@@ -1994,7 +1892,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 					$output .= '<div id="the_plugin_url" style="display:none;">'.plugins_url('',__FILE__).'</div>';
 					if(isset($option_settings[0]['save_form_progress']))
 						$output .= '<div id="nf_save_form_progress" style="display:none;">'.$option_settings[0]['save_form_progress'].'</div>';
-					if(get_option('nf_activated') || get_option('nf_fs_activated')){
+					if(get_option('nf_activated')){
 						$output .= '<div id="confirmation_page" class="confirmation_page" style="display:none;">'.$set_confirmation_page.'</div>';
 					if(isset($form_attr->on_form_submission))
 						$output .= '<div id="on_form_submmision" class="on_form_submmision" style="display:none;">'.$form_attr->on_form_submission.'</div>';}
@@ -2006,7 +1904,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 						$output .= '<div class="hidden" id="ms_scroll_to_top" style="display:none;">'.$multistep_settings[0]['scroll_to_top'].'</div>';
 					
 					
-					if(!get_option('nf_activated') && !get_option('nf_fs_activated')){ $post_action = admin_url('admin-ajax.php');$post_method = 'post';}
+					if(!get_option('nf_activated')){ $post_action = admin_url('admin-ajax.php');$post_method = 'post';}
 					//PAYPAL SUCCESS / FAILURE MESSAGE (If paypal ios enabled)
 					
 					
@@ -2146,7 +2044,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 									{
 									foreach($_POST as $key => $val)
 										{	
-										if(get_option('nf_activated') || get_option('nf_fs_activated'))	
+										if(get_option('nf_activated'))	
 											{
 											if(
 												$key!='form_Id' &&
@@ -2290,7 +2188,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 								//PRINT SAVED FORM
 								$output .=  $set_form_html;
 								//$output .= '<div style="clear:both;"></div>';
-								if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+								if(!get_option('nf_activated'))
 									$output .= ''.chr(80).chr(111).chr(119).chr(101).chr(114).chr(101).chr(100).' '.chr(98).chr(121).' <a href="'.chr(104).chr(116).chr(116).chr(112).chr(115).chr(58).chr(47).chr(47).chr(49).chr(46).chr(101).chr(110).chr(118).chr(97).chr(116).chr(111).chr(46).chr(109).chr(97).chr(114).chr(107).chr(101).chr(116).chr(47).chr(122).chr(81).chr(54).chr(100).chr(101).'">'.chr(78).chr(69).chr(88).chr(45).chr(70).chr(111).chr(114).chr(109).chr(115).'</a>';
 						
 							$output .= 	'</form>';
@@ -2867,7 +2765,7 @@ function submit_nex_form($entry_action = false){
 	
 	
 	
-	if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+	if(!get_option('nf_activated'))
 		$checked = 'false';
 	else
 		$checked = 'true';
@@ -3130,7 +3028,7 @@ function submit_nex_form($entry_action = false){
 			if(!$entry_action)
 				nf_send_mail($nex_forms_id,$entry_id,false,true,$files, $checked, $files_array);
 			}
-	if($checked=='true' && (get_option('nf_activated') || get_option('nf_fs_activated')))
+	if($checked=='true' && get_option('nf_activated'))
 		{	
 		
 /**************************************************/
@@ -3649,13 +3547,13 @@ class CSVExport
 				if($column->Field!='Id')
 					{
 					$columns_array[$column->Field] = $column->Field;
-					$content .= $nf_functions->unformat_name($column->Field).',';
+					$content .= $nf_functions->unformat_name($column->Field).', ';
 					$count_cols ++;
 					}
 				/*}*/
 			
 			}
-		$content = rtrim($content,',');
+		$content = rtrim($content,', ');
 		$content .= '
 ';
 			
@@ -3698,16 +3596,16 @@ class CSVExport
 						else
 							$content .= $rep_content_2;
 							
-						$content .= ',';
+						$content .= ', ';
 						}
 					else
-						$content .= $field_value.',';
+						$content .= $field_value.', ';
 						
 					$i++;
 					}
 				if($i==$count_cols)
 					{
-					$content = rtrim($content,',');
+					$content = rtrim($content,', ');
 					$content .= '
 ';
 					$i = 1;	
@@ -3723,7 +3621,7 @@ class CSVExport
 			header("Content-Transfer-Encoding: base64");
 			echo esc_html("\xEF\xBB\xBF");
 			$database_actions = new NEXForms_Database_Actions();
-			$content = (get_option('nf_activated') || get_option('nf_fs_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to CSV. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
+			$content = (get_option('nf_activated')) ? $content : 'Sorry, you need to activate this plugin to export entries to CSV. Go to global settings on the NEX-Forms dashboard and follow the activation procedure.';
 			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			exit;
 	}
@@ -3849,7 +3747,11 @@ function gavickpro_register_my_tc_button($buttons) {
 }
 
 
-
+function enqueue_nf_admin_public_styles($hook){
+	if(is_admin())
+			wp_enqueue_style('nex-forms-public-admin', plugins_url( '/admin/css/'.NF_PATH.'public.css',__FILE__),'','8.4.1');
+}
+add_action( 'admin_enqueue_scripts', 'enqueue_nf_admin_public_styles' );
 
 
 
@@ -3908,7 +3810,7 @@ function NEXForms_dashboard_2(){
 			<div style="clear:both;"></div>
 		</div>
 		<div class="modal-content">
-		  <p>Printing form entries to PDF requires <a href="https://basixonline.net/nex-forms/pricing/">PDF Creator for NEX-Forms</a></p>
+		  <p>Printing form entries to PDF requires <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_pc">PDF Creator for NEX-Forms</a></p>
 		</div>
 		<div class="modal-footer">
 		  <a href="#!" data-bs-dismiss="modal" data-dismiss="modal" class="modal-action modal-close waves-effect waves-green btn-flat">Close</a>
@@ -3946,7 +3848,6 @@ function NEXForms_dashboard_2(){
 	  $latest_entries->checkout = $dashboard->checkout;
 	  
 	   if(function_exists('nf_get_paypal_payment'))
-
 		  	{
 			  $payments = new NEXForms_dashboard();
 			  $payments->table = 'wap_nex_forms_entries';
@@ -4099,7 +4000,7 @@ function NEXForms_dashboard_2(){
 			  	
 				//EMAIL SETUP
 				$output .= '<div class="col-sm-4">';
-					$output .= $dashboard->license_setup($dashboard->checkout, $dashboard->client_info, $dashboard->license_info);
+					$output .= $dashboard->license_setup($dashboard->checkout, $dashboard->client_info);
 					$output .= $dashboard->email_setup();
 				$output .= '</div>';
 			  	
@@ -4156,8 +4057,8 @@ function NEXForms_dashboard_2(){
 					$output .= '<div class="set_free_add_ons hidden">true</div>';
 				else
 					{
-					if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
-						$output .= '<div class="row"><div class="col-sm-12"><div class="alert alert-info"><h3>SALE NOW ON!</h3>We are celebrating 12 000+ Sales! <a href="https://basixonline.net/nex-forms/pricing/">Buy NEX-forms today</a> and all these add-ons worth $300 absolutely FREE!.</div></div></div>';
+					if(!get_option('nf_activated'))
+						$output .= '<div class="row"><div class="col-sm-12"><div class="alert alert-info"><h3>SALE NOW ON!</h3>We are celebrating 17 000+ Sales! <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_pc">Buy NEX-forms @ Less 50% today</a> and get all these add-ons worth $300 absolutely FREE!.</div></div></div>';
 					}
 			
 				//ZAPIER
@@ -4178,7 +4079,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4202,7 +4103,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4228,7 +4129,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4253,7 +4154,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4277,7 +4178,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a  href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4333,7 +4234,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4360,7 +4261,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4385,8 +4286,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
-
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4413,7 +4313,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4440,7 +4340,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4465,7 +4365,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4497,7 +4397,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4523,7 +4423,7 @@ function NEXForms_dashboard_2(){
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" class="buy_add_on btn btn-lime" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -4540,7 +4440,7 @@ function NEXForms_dashboard_2(){
 	$output .= '<div class="builder-footer">';
 			
 			$output .= '
-			'.(($theme->Name=='NEX-Forms Demo') ? '<a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn waves-effect waves-light upgrade_pro animated fadeInRight">BUY NEX-FORMS</a>' : '' ).'
+			'.(($theme->Name=='NEX-Forms Demo') ? '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_ao" target="_blank" class="btn waves-effect waves-light upgrade_pro animated fadeInRight">BUY NEX-FORMS</a>' : '' ).'
 			NEX-Forms version: '.$config->plugin_version;
 			
 			$output .= '</div>';
@@ -5348,7 +5248,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$set_emails = explode(',',$form_attr->attach_pdf_to_email);
 			}
 	
-if($checked=='false' || (!get_option('nf_activated') && !get_option('nf_fs_activated')))
+if($checked=='false' || !get_option('nf_activated'))
 	{	
 	$api_params = array( 
 			'from_address' => $from_address,
@@ -5364,8 +5264,7 @@ if($checked=='false' || (!get_option('nf_activated') && !get_option('nf_fs_activ
 			'user_email' => ($_REQUEST[$form_attr->user_email_field]) ? $_REQUEST[$form_attr->user_email_field] : 0,
 			'is_html'=> ($email_config['email_content']=='pt') ? 0 : 1,
 			'checked'=> $checked,
-			'do_email'=> 'true',
-			'version' => '9',
+			'do_email'=> 'true'
 		);
 		$response = wp_remote_post( 'https://basixonline.net/mail-api/', array('timeout'   => 30,'sslverify' => false,'body'  => $api_params) );
 		//$request = new WP_Http();
@@ -5967,35 +5866,28 @@ function nf_add_action_links( $actions, $plugin_file ) {
 		$action_links           = array();
 		$action_links           = array(
 			
-			' support'    => array(
-				'label' => __( 'Support', 'nex-forms' ),
+			'nf-pp support'    => array(
+				'label' => __( '<span class="dashicons-before dashicons-admin-users"></span> Support', 'nex-forms' ),
 				'url'   => 'https://basix.ticksy.com',
 			),
-			' docs'     => array(
-				'label' => __( 'Documentation', 'nex-forms' ),
+			'nf-pp docs'     => array(
+				'label' => __( '<span class="dashicons-before dashicons-welcome-learn-more"></span> Documentation', 'nex-forms' ),
 				'url'   => 'https://basixonline.net/nex-forms-docs/',
 			),
-			/*'nf-pp add-ons'     => array(
+			'nf-pp add-ons'     => array(
 				'label' => __( '<span class="dashicons-before dashicons-download"></span> Add-ons Download', 'nex-forms' ),
 				'url'   => 'https://basixonline.net/nex-forms-free-add-ons-download/',
-			),*/
+			),
 			
 		);
 
 		unset( $actions['edit'] );
 		$database_actions = new NEXForms_Database_Actions();
-		if ( !get_option('nf_activated') && !get_option('nf_fs_activated') ) {
-			
-			$action_links['nf_activate_license'] =
+		if ( !get_option('nf_activated') ) {
+			$action_links['nf-pp pro_upgrade'] =
 				array(
-					'label' => __( 'Activate License', 'nex-forms' ),
-					'url'   => get_admin_url().'admin.php?page=nex-forms',
-
-				);
-			$action_links['nf_upgrade_premium'] =
-				array(
-					'label' => __( 'Upgrade to PREMIUM', 'nex-forms' ),
-					'url'   => 'https://basixonline.net/nex-forms/pricing/',
+					'label' => __( '<span class="dashicons-before dashicons-unlock"></span>Upgrade today at 50% Discount', 'nex-forms' ),
+					'url'   => 'https://basixonline.net/nex-forms/pricing/?src=wp_env_pp',
 
 				);
 		}
@@ -6005,19 +5897,17 @@ function nf_add_action_links( $actions, $plugin_file ) {
 	
 	
 
-/*add_action('wp_dashboard_setup', 'nex_forms_dashboard_widgets');
+add_action('wp_dashboard_setup', 'nex_forms_dashboard_widgets');
  
 function nex_forms_dashboard_widgets() {
 global $wp_meta_boxes;
- if ( !get_option('nf_activated') && !get_option('nf_fs_activated')) {
+ if ( !get_option('nf_activated') ) {
 
 	wp_add_dashboard_widget('nex_forms_widget', 'NEX-Forms '.date('F').' Special', 'nex_forms_dashboard');
  }
 }
  
 function nex_forms_dashboard() {
-	
-	
-NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today and get <br /><strong>15 premium add-ons worth $300 absolutely FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://basixonline.net/nex-forms/pricing/" class="button button-primary button-hero" style="width:100%"><strong>Buy NEX-Forms today and SAVE $300</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Multi-Page Forms &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
-}*/
+NEXForms_clean_echo( '<center><h1><strong>Special now on!</strong></h1><br />Buy NEX-Forms Today at a 50% Discount and get <br /><strong>15 premium add-ons FREE</strong>. <br /><br />This offer includes lifetime free updates for NEX-Forms and your free add-ons!<br /><br /><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_db" class="button button-primary button-hero" style="width:100%;text-align:center;"><strong>Get your 50% Discount Today</strong></a><br /><br /><strong>FREE Add-ons Include:<br></strong>PayPal PRO &bull; PDF Creator &bull; Multi-Page Forms &bull; Digital Signatures &bull; Zapier &bull; Form Themes &bull; Form to Post/Page &bull; Conditional Content Blocks &bull; Shorcode Processor &bull; PayPal Classic &bull; Super Select Form Fields &bull; MailChimp &bull; MailPoet &bull; Mailster &bull; GetResponse</center>');
+}
 ?>

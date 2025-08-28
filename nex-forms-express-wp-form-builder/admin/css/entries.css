@@ -117,7 +117,6 @@ div#nex_forms_entries {
     height: calc(100vh - 93px);
     overflow: auto;
     border-right: 1px solid rgb(211 211 211);
-	overflow-x: hidden;
 }
 .submission_reporting .right-col {
     width: 100%;
@@ -375,8 +374,8 @@ tr.active td.read span.viewed,
 tr.active td.read span{
 }
 ::-webkit-scrollbar{
-	/*width: 10px;
-	height: 10px;*/
+	width: 10px;
+	height: 10px;
 }
 .wap_nex_forms_entries tr *{
 	user-select: none;

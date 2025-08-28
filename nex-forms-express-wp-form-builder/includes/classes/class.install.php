@@ -20,7 +20,7 @@ if(!class_exists('NF5_Instalation'))
 		
 		public function run_instalation($type){	
 				$this->install_component_table();
-				//$api_params = array( 'nexforms-installation' => 1, 'source' => 'wordpress', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+				//$api_params = array( 'nexforms-installation' => 1, 'source' => 'wordpress', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
 				//$response = wp_remote_post( 'http://basixonline.net/activate-license-new-api-v3/', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));					
 			$db_action = new NEXForms_Database_Actions();
 			update_option('nf_activated',$db_action->checkout());

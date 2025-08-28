@@ -389,7 +389,7 @@ if(!class_exists('NEXForms_Builder7')){
 											<div class="history_action do_redo" data-action="redo"><span class="fas fa-redo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Redo last undo - CTRL+SHIFT+Z','nex-forms').'"></span></div>
 										</div>
 										</li>
-										'.(((!get_option('nf_activated') && !get_option('nf_fs_activated')) || $theme->Name=='NEX-Forms Demo') ? '<li><a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn waves-effect-nf waves-light-nf upgrade_pro">UPGRADE TO PREMIUM</a>' : '').'</li>
+										'.((!get_option('nf_activated') || $theme->Name=='NEX-Forms Demo') ? '<li><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn waves-effect-nf waves-light-nf upgrade_pro">BUY NEX-FORMS</a>' : '').'</li>
 									  </ul>
 									  </div>';
 								$output .= '</nav>';
@@ -6640,7 +6640,7 @@ tiff</div></div></form>';
 																		else
 																			{
 																			$output .= '<div class="'.$input_width.'  input_container">';
-																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Digital Signatures for NEX-forms</em></strong></a>" Add-on to use digital signatures! <br /><br><a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
+																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Digital Signatures for NEX-forms</em></strong></a>" Add-on to use digital signatures! <br /><br><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
 																			$output .= '</div>';
 																			}
 																	break;
@@ -6814,7 +6814,7 @@ tiff</div></div></form>';
 																		if(!function_exists('nf_not_found_notice_ss'))
 																			{
 																			$output .= '<div class="'.$input_width.'  input_container">';
-																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Super Select for NEX-forms</em></strong></a>" Add-on to use enable this field <br /><br><a href="https://basixonline.net/nex-forms/pricing/" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
+																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Super Select for NEX-forms</em></strong></a>" Add-on to use enable this field <br /><br><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
 																			$output .= '</div>';
 																			}
 																		else
@@ -8072,11 +8072,11 @@ $output .= '<div class="inner-form-canvas">';
 					
 					$output .= '<div class="inner">';					
 							$set_code = true;
-						if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+						if(!get_option('nf_activated'))
 							$set_code = false;
 						
 						if(!$set_code)
-								$output .= '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to enable Conditional Logic.<br />&nbsp;&nbsp;&nbsp;<a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>';
+								$output .= '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For Conditional Logic to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
 							
 						
 						$output .= '<div class="con-logic-column con_col">';
@@ -8129,7 +8129,7 @@ $output .= '<div class="inner-form-canvas">';
 			$attach_to_email = json_decode($this->attachment_settings, true);
 			$option_settings = json_decode($this->option_settings,true);
 			$set_code = true;
-			if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+			if(!get_option('nf_activated'))
 				$set_code = false;
 			
 			NEXForms_clean_echo( '<div class="form_attr_wrapper">');
@@ -8149,7 +8149,7 @@ $output .= '<div class="inner-form-canvas">';
 						$send_admin_email 	= (isset($option_settings['0']['send_admin_email'])) ? $option_settings['0']['send_admin_email'] 	: 'true';
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to send Admin Email Alerts. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to receive Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 				
 						
 						NEXForms_clean_echo('<div class="row">');
@@ -8240,7 +8240,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo('<div id="user_email" class="nf-sub-screen hidden">');
 					
 						if(!$set_code)
-									NEXForms_clean_echo('<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to send User Confirmation Emails. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+									NEXForms_clean_echo('<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to send USER Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 									NEXForms_clean_echo( '<div class="row">');
 										NEXForms_clean_echo( '<div class="integration_form_label">'.__('Recipients (map email field)','nex-forms').'</div>');
@@ -8299,7 +8299,7 @@ $output .= '<div class="inner-form-canvas">';
 				NEXForms_clean_echo( '</div>');
 				
 						$set_code = true;
-						if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+						if(!get_option('nf_activated'))
 							$set_code = false;
 						
 						NEXForms_clean_echo( '<div class="form_attr_settings_wrapper">');
@@ -8308,7 +8308,7 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '<div id="on_submission_settings" class="nf-sub-screen">');
 							
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for these settings to take effect. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
 							NEXForms_clean_echo(  '<div class="row">');
@@ -8461,7 +8461,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="file_upload_settings" class="integration nf-sub-screen hidden">');
 							
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for these settings to take effect. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
 							
@@ -8664,7 +8664,7 @@ $output .= '<div class="inner-form-canvas">';
 	public function print_integration_setup(){
 			
 		$set_code = true;
-            if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+            if(!get_option('nf_activated'))
                 $set_code = false;
 					
 			$preferences = get_option('nex-forms-preferences');
@@ -8717,7 +8717,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="zapier_integration" class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 						if ( function_exists('NEXForms_not_found_notice_zapier'))
 							{	
@@ -8777,7 +8777,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="paypal_integration"  class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 						
@@ -8827,7 +8827,7 @@ $output .= '<div class="inner-form-canvas">';
 					
 						NEXForms_clean_echo( '<div id="pdfcreator"  class="integration nf-sub-screen">');
 							if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 							if (function_exists('nf_not_found_notice_pdf'))
@@ -8839,7 +8839,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="formtopost"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_ftp_setup'))
 									NEXForms_clean_echo( nexforms_ftp_setup($this->form_Id));
@@ -8851,7 +8851,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="mailchimp"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mc_test_api'))
 							{
@@ -8880,7 +8880,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="getresponse"  class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_gr_test_api'))
 								{
@@ -8910,7 +8910,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="mailpoet" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mp_test_api'))
 							{
@@ -8943,7 +8943,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="mailster" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required for form integrations. <a href="https://basixonline.net/nex-forms/pricing/" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_ms_test_api'))
 							{
@@ -9110,7 +9110,7 @@ $output .= '<div class="inner-form-canvas">';
 			$output .= '<div class="form_embed_settings_wrapper">';
 					
 					$set_code = '';
-						if(!get_option('nf_activated') && !get_option('nf_fs_activated'))
+						if(!get_option('nf_activated'))
 							$set_code = 'no_code';
 					
 					$output .= '<div class="form_embed_shortcode_display '.$set_code.'">';	

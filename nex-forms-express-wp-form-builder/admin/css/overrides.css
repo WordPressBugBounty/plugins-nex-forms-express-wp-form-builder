@@ -50,16 +50,13 @@ ul#adminmenu li img {
 /* Track */
 ::-webkit-scrollbar-track {
   background: #e7e7e7;
-  padding:5px !important;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
-  background: #e7e7e7;
-  border-radius:5px;
-  width:2px !important;
-  height:2px !important;
-}
+/*::-webkit-scrollbar-thumb {
+  background: #ccc;
+  /*border-radius:5px;*/
+/*}*/
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {

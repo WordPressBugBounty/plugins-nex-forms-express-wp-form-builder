@@ -31,10 +31,7 @@ Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes,
 
 https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
 
-
-**Useful Links**
-🚀[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
-
+✨[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Go Pro](https://basixonline.net/nex-forms/pricing/?src=wp.org "NEX-Forms Documentation") | ✨[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
 
 ✅ Create any type of form you can imagine and embed it anywhere on your site with ease -> Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, Survey Forms, Payment Forms, Booking Forms, Quiz Forms and more.
 
