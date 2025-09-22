@@ -203,7 +203,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			
 			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
 				{
 				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
@@ -2470,11 +2469,11 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$args 		= str_replace('\\','',$_POST['args']);
 			$headings 	= array('Form Name'=>'nex_forms_Id','Page'=>'page','IP Address'=>'ip','User'=>'user_Id','Date Submitted'=>'date_time');
 			
-			$form_Id = sanitize_title($_POST['form_Id']);
+			$form_Id = $wpdb->prepare('%s',esc_sql(sanitize_title($_POST['form_Id'])));
 			$post_additional_params = sanitize_text_field($_POST['additional_params']);
-			$plugin_alias = sanitize_text_field($_POST['plugin_alias']);
-			$orderby = sanitize_text_field($_POST['orderby']);
-			$current_page = sanitize_text_field($_POST['current_page']);
+			$plugin_alias = $wpdb->prepare('%s',esc_sql(sanitize_text_field($_POST['plugin_alias'])));
+			$orderby = $wpdb->prepare('%s',esc_sql(sanitize_text_field($_POST['orderby'])));
+			$current_page = $wpdb->prepare('%d',esc_sql(sanitize_text_field($_POST['current_page'])));
 			
 			$nf_functions 		= new NEXForms_Functions();	
 			$db_actions 		= new NEXForms_Database_Actions();
@@ -2484,9 +2483,9 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if(is_array($additional_params))
 				{
 				foreach($additional_params as $column=>$val)
-					$where_str .= ' AND '.$column.'="'.$val.'"';
+					$where_str .= ' AND '.$wpdb->prepare('%s',esc_sql($column)).'="'.$wpdb->prepare('%s',esc_sql($val)).'"';
 				}
-			
+			//$wpdb->prepare('%s',esc_sql(sanitize_title($clause['column']))
 			if($form_Id)
 				$where_str .= ' AND nex_forms_Id='.$form_Id;
 			
@@ -2901,7 +2900,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				}
 			else
 				{
-				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view entries. Go to global settings above and follow registration procedure.</div>';	
+				$output .= '<div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form entries. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-entries" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 				}
 			echo( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			

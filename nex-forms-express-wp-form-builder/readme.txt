@@ -3,11 +3,11 @@ Plugin Name: NEX-Forms - Ultimate Forms Plugin for WordPress
 Contributors: Basix
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
-Tested up to: 6.8.2
-Stable tag: 9.1.5
+Tested up to: 6.8
+Stable tag: 9.1.7
 License: GPLv3 or later
-Author URI: https://basixonline.net
-Plugin URI: https://basixonline.net/nex-forms/pricing/
+Author URI: https://basixonline.net?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-author-uri
+Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-plugin-uri
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes, booking forms, payments, popups & more with NEX-Forms...
@@ -31,7 +31,7 @@ Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes,
 
 https://youtu.be/EOjEH_x8d4o?si=eLJWWoLhF5ucAXIg
 
-✨[Live Demo](https://basixonline.net/ "The Ultimate WordPress Form Builder") | 🚀[Go Pro](https://basixonline.net/nex-forms/pricing/?src=wp.org "NEX-Forms Documentation") | ✨[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Download FREE add-ons worth $300](https://basixonline.net/nex-forms-free-add-ons-download/ "The Ultimate WordPress Form Builder") 
+✨[Live Demo](https://basixonline.net/?utm_source=wordpress&utm_medium=demo&utm_content=wp-live-demo "The Ultimate WordPress Form Builder") | 🚀[Go Pro](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-go-pro "NEX-Forms Documentation") | ✨[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Get all add-ons FREE](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-get-free-add-ons "The Ultimate WordPress Form Builder") 
 
 ✅ Create any type of form you can imagine and embed it anywhere on your site with ease -> Popup Forms, Interactive Forms, Multi-Step Forms, Sticky Forms, Contact Forms, Survey Forms, Payment Forms, Booking Forms, Quiz Forms and more.
 
@@ -120,6 +120,7 @@ Add any form to your site's top, right, bottom and/or left borders. Slides open 
 * Automatically popup any form when a user tries to leave your page. <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/popup-forms/popup-form-example-5/?ref=wp">See Exit Intent Popup Form Example</a>
 
 
+✨[Live Demo](https://basixonline.net/?utm_source=wordpress&utm_medium=demo&utm_content=wp-live-demo-2 "The Ultimate WordPress Form Builder") | 🚀[Go Pro](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-go-pro-2 "NEX-Forms Documentation") | ✨[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Get all add-ons FREE](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-get-free-add-ons-2 "The Ultimate WordPress Form Builder") 
 
 
 ### Features include:
@@ -268,6 +269,8 @@ While creating forms you are able to preview your forms on all the different dev
 * A very good plugin if you want to easily and quickly create beautiful forms!  - chriskon
 * Thank you for this plugin and the support! It looks and works awesome! Thank you very much! - henriett
 * NEX-Forms is without doubt the best Form Builder Plugin for Wordpress. - quatroweb
+
+✨[Live Demo](https://basixonline.net/?utm_source=wordpress&utm_medium=demo&utm_content=wp-live-demo-2 "The Ultimate WordPress Form Builder") | 🚀[Go Pro](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-go-pro-2 "NEX-Forms Documentation") | ✨[Docs](https://basixonline.net/nex-forms-docs/ "NEX-Forms Documentation") | ✨[Get all add-ons FREE](https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=wp-get-free-add-ons-2 "The Ultimate WordPress Form Builder") 
 
 <a href="https://codecanyon.net/item/nexforms-the-ultimate-wordpress-form-builder/reviews/7103891">View more testimonials</a>
 

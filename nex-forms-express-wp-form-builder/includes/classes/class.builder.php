@@ -389,7 +389,7 @@ if(!class_exists('NEXForms_Builder7')){
 											<div class="history_action do_redo" data-action="redo"><span class="fas fa-redo" data-toggle="tooltip_bs2" data-placement="bottom" title="'.__('Redo last undo - CTRL+SHIFT+Z','nex-forms').'"></span></div>
 										</div>
 										</li>
-										'.((!get_option('nf_activated') || $theme->Name=='NEX-Forms Demo') ? '<li><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn waves-effect-nf waves-light-nf upgrade_pro">BUY NEX-FORMS</a>' : '').'</li>
+										'.((!get_option('nf_activated') || $theme->Name=='NEX-Forms Demo') ? '<li><a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder" target="_blank" class="btn waves-effect-nf waves-light-nf upgrade_pro">BUY NEX-FORMS</a>' : '').'</li>
 									  </ul>
 									  </div>';
 								$output .= '</nav>';
@@ -4911,7 +4911,7 @@ tiff</div></div></form>';
 								else
 									{
 									$output .= '<div class="field-setting col-xs-12 s-super-select">';	
-										$output .= '<div class="alert alert-info">Please install <a href="https://codecanyon.net/item/super-selection-form-field-for-nexforms/23748570" target="_blank">Super Select Add-on for NEX-Forms</a> to customize this field.</div>';
+										$output .= '<div class="alert alert-info">Please install <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-super-select" target="_blank">Super Select Add-on for NEX-Forms</a> to customize this field.</div>';
 									$output .= '</div>';
 									}
 									
@@ -6640,7 +6640,7 @@ tiff</div></div></form>';
 																		else
 																			{
 																			$output .= '<div class="'.$input_width.'  input_container">';
-																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Digital Signatures for NEX-forms</em></strong></a>" Add-on to use digital signatures! <br /><br><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
+																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Digital Signatures for NEX-forms</em></strong></a>" Add-on to use digital signatures! <br /><br><a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-e-sigs" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
 																			$output .= '</div>';
 																			}
 																	break;
@@ -6814,7 +6814,7 @@ tiff</div></div></form>';
 																		if(!function_exists('nf_not_found_notice_ss'))
 																			{
 																			$output .= '<div class="'.$input_width.'  input_container">';
-																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Super Select for NEX-forms</em></strong></a>" Add-on to use enable this field <br /><br><a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
+																					$output .= '<div class="alert alert-success">'.__('You need the "<strong><em>Super Select for NEX-forms</em></strong></a>" Add-on to use enable this field <br /><br><a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-super-select" target="_blank" class="btn btn-success btn-sm">Buy Now</a>','nex-forms').'</div>';
 																			$output .= '</div>';
 																			}
 																		else
@@ -8076,7 +8076,7 @@ $output .= '<div class="inner-form-canvas">';
 							$set_code = false;
 						
 						if(!$set_code)
-								$output .= '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For Conditional Logic to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
+								$output .= '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For Conditional Logic to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-conditional-logic" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>';
 							
 						
 						$output .= '<div class="con-logic-column con_col">';
@@ -8149,7 +8149,7 @@ $output .= '<div class="inner-form-canvas">';
 						$send_admin_email 	= (isset($option_settings['0']['send_admin_email'])) ? $option_settings['0']['send_admin_email'] 	: 'true';
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to receive Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to receive Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-emails" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 				
 						
 						NEXForms_clean_echo('<div class="row">');
@@ -8240,7 +8240,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo('<div id="user_email" class="nf-sub-screen hidden">');
 					
 						if(!$set_code)
-									NEXForms_clean_echo('<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to send USER Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+									NEXForms_clean_echo('<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect and to send USER Emails you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-u-emails" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 									NEXForms_clean_echo( '<div class="row">');
 										NEXForms_clean_echo( '<div class="integration_form_label">'.__('Recipients (map email field)','nex-forms').'</div>');
@@ -8308,7 +8308,7 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '<div id="on_submission_settings" class="nf-sub-screen">');
 							
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-extra-options" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
 							NEXForms_clean_echo(  '<div class="row">');
@@ -8461,7 +8461,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="file_upload_settings" class="integration nf-sub-screen hidden">');
 							
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For these settings to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-extra-options" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 							
 							
@@ -8717,7 +8717,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="zapier_integration" class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-zapier" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 							
 						if ( function_exists('NEXForms_not_found_notice_zapier'))
 							{	
@@ -8757,7 +8757,7 @@ $output .= '<div class="inner-form-canvas">';
 										
 							}
 						else
-							NEXForms_clean_echo( '<div class="zapier_not_installed add_on_not_found"><span class="ni-icon fa fa-asterisk"></span><span class="message">'.__('Zapier add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="zapier_not_installed add_on_not_found"><span class="ni-icon fa fa-asterisk"></span><span class="message">'.__('Zapier add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-zapier" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 							
 					
 					
@@ -8777,7 +8777,7 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '<div id="paypal_integration"  class="integration nf-sub-screen hidden">');
 						
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-paypal" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 						
@@ -8818,7 +8818,7 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '</div>');
 						}
 						else
-							NEXForms_clean_echo( '<div class="paypal_not_installed add_on_not_found"><span class="ni-icon fa fa-paypal"></span><span class="message">'.__('PayPal add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="paypal_not_installed add_on_not_found"><span class="ni-icon fa fa-paypal"></span><span class="message">'.__('PayPal add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-paypal" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 											
 							
 						NEXForms_clean_echo( '</div>');
@@ -8827,31 +8827,31 @@ $output .= '<div class="inner-form-canvas">';
 					
 						NEXForms_clean_echo( '<div id="pdfcreator"  class="integration nf-sub-screen">');
 							if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-pdf-crreator" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						
 							if (function_exists('nf_not_found_notice_pdf'))
 								NEXForms_clean_echo( $this->print_pdf_creator($this->form_Id));
 							else
-								NEXForms_clean_echo( '<div class="pdf_not_installed add_on_not_found"><span class="ni-icon fa fa-file-pdf-o"></span><span class="message">'.__('PDF Creator add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/pdf-creator-for-nexforms/11220942?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+								NEXForms_clean_echo( '<div class="pdf_not_installed add_on_not_found"><span class="ni-icon fa fa-file-pdf-o"></span><span class="message">'.__('PDF Creator add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-pdf-creator" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
 						NEXForms_clean_echo( '</div>');
 						
 						NEXForms_clean_echo( '<div id="formtopost"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+								NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-form-to-post" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_ftp_setup'))
 									NEXForms_clean_echo( nexforms_ftp_setup($this->form_Id));
 							else
-								NEXForms_clean_echo( '<div class="ftp_not_installed add_on_not_found"><span class="ni-icon fa fa-edit"></span><span class="message">'.__('Form to Post add-on not installed','nex-forms').'</span><a class="button buy_item" href="http://codecanyon.net/item/form-to-postpage-for-nexforms/19538774?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+								NEXForms_clean_echo( '<div class="ftp_not_installed add_on_not_found"><span class="ni-icon fa fa-edit"></span><span class="message">'.__('Form to Post add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-form-to-post" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
 						NEXForms_clean_echo( '</div>');
 						
 						
 						NEXForms_clean_echo( '<div id="mailchimp"  class="integration nf-sub-screen hidden">');
 							if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailchimp" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mc_test_api'))
 							{
@@ -8873,14 +8873,14 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '</div>');
 							}
 						else
-							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailchimp add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailchimp add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailchimp" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
 						NEXForms_clean_echo( '</div>');
 					
 						
 						NEXForms_clean_echo( '<div id="getresponse"  class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-getresponse" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 							if ( function_exists('nexforms_gr_test_api'))
 								{
@@ -8902,7 +8902,7 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '</div>');
 							}
 						else
-							NEXForms_clean_echo( '<div class="gr_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">GetResponse add-on not installed</span><a class="button buy_item" href="https://codecanyon.net/item/getresponse-for-nexforms/18462247?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="gr_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">GetResponse add-on not installed</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-getresponse" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 						
 						NEXForms_clean_echo( '</div>');
 					
@@ -8910,7 +8910,7 @@ $output .= '<div class="inner-form-canvas">';
 						
 						NEXForms_clean_echo( '<div id="mailpoet" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailpoet" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_mp_test_api'))
 							{
@@ -8936,14 +8936,14 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '</div>');
 							}
 						else
-							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('MailPoet add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="mc_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('MailPoet add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailchimp" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
 						NEXForms_clean_echo( '</div>');
 						
 						
 						NEXForms_clean_echo( '<div id="mailster" class="integration nf-sub-screen hidden">');
 						if(!$set_code)
-							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
+							NEXForms_clean_echo( '<div class="row"><div class="alert alert-danger"><strong>PLUGIN NOT REGISTERED: </strong> For integrations to take effect you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailster" target="_blank" class="">UPGRADE to PRO</a> by registering NEX-Forms with your purchase code from your NEX-Forms Dashboard -> Global Settings.</div></div>');
 						
 						if ( function_exists('nexforms_ms_test_api'))
 							{
@@ -8969,7 +8969,7 @@ $output .= '<div class="inner-form-canvas">';
 							NEXForms_clean_echo( '</div>');
 							}
 						else
-							NEXForms_clean_echo( '<div class="ms_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailster add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://codecanyon.net/item/mailchimp-for-nexforms/18030221?ref=Basix" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
+							NEXForms_clean_echo( '<div class="ms_not_installed add_on_not_found"><span class="ni-icon fa fa-envelope"></span><span class="message">'.__('Mailster add-on not installed','nex-forms').'</span><a class="button buy_item" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-builder-integrations-mailster" target="_blank"><span class="fa fa-shopping-cart"></span><br />'.__('Buy Add-on','nex-forms').'</a><a class="button elements buy_item" href="https://elements.envato.com/user/Basix?ref=Basix" target="_blank"><span class="fa fa-cloud-download"></span><br />'.__('Download','nex-forms').'</a></div>');
 
 						NEXForms_clean_echo( '</div>');
 						

@@ -309,7 +309,7 @@ function NEXForms_stats_page(){
 							 
 							  if(!$dashboard->checkout)
 							  	{
-									$output .= '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form analytical data. <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>';
+									$output .= '<div class="row"><div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form analytical data. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-analytics" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div></div>';
 								}
 							  $output .= '<div class="row">';
 							  
@@ -808,7 +808,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/paypal-pro/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png',  dirname(dirname(__FILE__))).'"></a>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailster" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-paypal-pro.png',  dirname(dirname(__FILE__))).'"></a>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>PayPal Pro</h3>';
@@ -823,7 +823,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-paypal-pro" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -834,7 +834,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/pdf-creator/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png',  dirname(dirname(__FILE__))).'"></a>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-pdf-creator" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-pdf-creator.png',  dirname(dirname(__FILE__))).'"></a>'; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>PDF Creator</h3>';
@@ -848,7 +848,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-pdf-creator" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -859,7 +859,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="https://codecanyon.net/item/multipage-forms-for-nexforms/56328595" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-multi-page-forms.png',  dirname(dirname(__FILE__))).'"></a>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-ons-multi-page" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-multi-page-forms.png',  dirname(dirname(__FILE__))).'"></a>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Multi-Page Forms</h3>';
@@ -873,7 +873,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-multi-page" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -886,7 +886,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-themes/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-themes.png',  dirname(dirname(__FILE__))).'"></a>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-form-themes" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-themes.png',  dirname(dirname(__FILE__))).'"></a>';	 // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Form Themes/Color Schemes</h3>';
@@ -900,7 +900,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-form-themes" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -912,7 +912,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/zapier-integration/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-zapier.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-zapier" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-zapier.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Zapier Integration</h3>';
@@ -926,7 +926,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-zapier" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -938,7 +938,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/digital-signatures/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-e-sigs" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-digital-signatures.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Digital / E-Signatures</h3>';
@@ -952,7 +952,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-e-sigs" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -964,7 +964,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/super-select-form-field/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-super-select.png', dirname(dirname(__FILE__))).'"></a>';// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-super-select" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-super-select.png', dirname(dirname(__FILE__))).'"></a>';// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Super Selection Form Field</h3>';
@@ -978,7 +978,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-super-select" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1018,7 +1018,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/form-to-post-or-page/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-to-post-or-page.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-form-to-post" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-form-to-post-or-page.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Form to POST / PAGE</h3>';
@@ -1032,7 +1032,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-form-to-post" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1050,7 +1050,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/conditional-content-blocks/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-conditional-content-blocks.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-content-blocks" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-conditional-content-blocks.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Conditional Content Blocks</h3>';
@@ -1064,7 +1064,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-content-blocks" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1076,7 +1076,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/shortcode-processor/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-shortcode-processor.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-shortcode-processor" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-shortcode-processor.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Shorcode Processor</h3>';
@@ -1090,7 +1090,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-shortcode-processor" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1104,7 +1104,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailchimp" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailchimp.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>MailChimp</h3>';
@@ -1118,7 +1118,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailchimp" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1130,7 +1130,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailster" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailster.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>Mailster</h3>';
@@ -1144,7 +1144,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailster" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1155,7 +1155,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/mailchimp/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailpoet" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-mailpoet.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>MailPoet</h3>';
@@ -1169,7 +1169,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-mailpoet" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1182,7 +1182,7 @@ $output .= '</div>';
 				$output .= '<div class="col-sm-12">';
 					$output .= '<div class="add_on_item">';	
 						$output .= '<div class="add_on_cover">';
-							$output .= '<a  href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/add-ons/getresponse/" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+							$output .= '<a  href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-getresponse" target="_blank"><img src="'.plugins_url('/admin/images/add-ons/covers/nex-forms-add-on-getresponse.png',  dirname(dirname(__FILE__))).'"></a>';	// phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 						$output .= '</div>';
 						$output .= '<div class="add_on_desciprtion">';	
 							$output .= '<h3>GetRepsonse</h3>';
@@ -1196,7 +1196,7 @@ $output .= '</div>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env_aop" class="buy_add_on" target="_blank">Get Add-on</a>';	
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-add-on-getresponse" class="buy_add_on" target="_blank">Get Add-on</a>';	
 								}
 							
 						$output .= '</div>';
@@ -1290,7 +1290,7 @@ function NEXForms_dashboard(){
 					{
 					$output .= '<span class="alert curl_error alert-danger">
 								<strong>LICENSE ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'NEX-Forms can not verify your license due to an <strong>Envato API error</strong>! <br /><strong>SOLUTION: </strong>This API issue can only be resolved by switching to our cloud based licensing service from Freemius.<br />
-								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_fs">Switch to a our cload based platform with a 50% discount.</a>
+								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-curl">Switch to a our new Freemius platform with a 50% discount.</a>
 								<br /><br />
 								<strong>NOTE:</strong> No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
 								</span>';								
@@ -1561,7 +1561,7 @@ function NEXForms_reporting_page_new(){
 					{
 					$output .= '<span class="alert curl_error alert-danger">
 								<strong>LICENSE ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'NEX-Forms can not verify your license due to an <strong>Envato API error</strong>! <br /><strong>SOLUTION: </strong>This API issue can only be resolved by switching to our cloud based licensing service from Freemius.<br />
-								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_fsu">Switch to a our cload based platform with a 50% discount.</a>
+								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-curl">Switch to a our cload based platform with a 50% discount.</a>
 								<br /><br />
 								<strong>NOTE:</strong> No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
 								</span>';								
@@ -2649,11 +2649,11 @@ if(!class_exists('NEXForms_dashboard'))
 							
 							if ($supported_date < $now)
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_env" target="_blank" class="logo"></a>';
+								$output .= '<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-logo" target="_blank" class="logo"></a>';
 								}
 							else
 								{
-								$output .= '<a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/" target="_blank" class="logo"></a>';	
+								$output .= '<a href="https://basixonline.net/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-logo" target="_blank" class="logo"></a>';	
 								}
 							$output .= '<div class="version">v<strong>'.$config->plugin_version.'</strong></div>
 							
@@ -2663,7 +2663,7 @@ if(!class_exists('NEXForms_dashboard'))
 								</div>
 								
 								'.(($supported_date > $now) ? '<div class="item">
-									<a href="https://basixonline.net/nex-forms-free-add-ons-download/" target="_blank"><span class="fas fa-cloud-download-alt"></span>Free Add-ons Download</a>
+									<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-free-add-ons-download" target="_blank"><span class="fas fa-cloud-download-alt"></span>Free Add-ons Download</a>
 								</div>' : '');
 							
 							
@@ -2683,6 +2683,7 @@ if(!class_exists('NEXForms_dashboard'))
 								if ($supported_date < $now)
 									{
 									$output .= '
+									<div id="env_support" class="hidden">0</div>
 										<div class="item">
 											<a target="_blank" class="sup_ex txt-red"><i class="fas fa-warning txt-red"></i>&nbsp;Support</a>
 										</div>';					
@@ -2700,7 +2701,7 @@ if(!class_exists('NEXForms_dashboard'))
 								if(!$dashboard->checkout)
 									{
 									$output .= '<div class="item buy-now">
-										<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env">Upgrade to PREMIUM</a>
+										<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-top-menu">Upgrade to PREMIUM</a>
 									</div>';
 									}
 							
@@ -2800,7 +2801,7 @@ if(!class_exists('NEXForms_dashboard'))
 										$output .= '<li class="db_tab menu-item-has-children '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons"  data-placement="bottom" data-title="'.__('Add-ons','nex-forms').'" class="'.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').' submissions_tab"><span class="top-icon fas fa-plug"></span> <span class="menu-text">'.__('Add-ons','nex-forms').'</span></a></li>';
 								
 								
-							  $output .= ($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '';
+							  $output .= ($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '';
 							   $output .= '</ul>';
 							   //$output .= '<div class="page-title aa_font_color_default">'.$page_title.'</div>';
 							
@@ -2854,8 +2855,8 @@ if(!class_exists('NEXForms_dashboard'))
 								<li class="tab has_icon '.(($_REQUEST['page']=='nex-forms-page-attachments') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-attachments" class="file_uploads_tab '.(($_REQUEST['page']=='nex-forms-page-attachments') ? 'active' : '').'"><span class="top-icon fa fas fa-paperclip"></span><span class="menu-text">'.__('File Uploads','nex-forms').'</span></a></li>
 								<li class="tab has_icon '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-global-settings" class="global_settings_tab '.(($_REQUEST['page']=='nex-forms-page-global-settings') ? 'active' : '').'"><span class="top-icon fa fas fa-cog"></span><span class="menu-text">'.__('Global Settings','nex-forms').'</span></a></li>
 								<li class="tab has_icon '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'current' : '').'"><a href="'.get_admin_url().'admin.php?page=nex-forms-page-add-ons" class="add_ons_tab '.(($_REQUEST['page']=='nex-forms-page-add-ons') ? 'active' : '').'"><span class="top-icon fa fas fa-puzzle-piece"></span><span class="menu-text">'.__('ADD-ONS','nex-forms').'</span></a></li>
-								<li class="tab has_icon"><a href="http://basixonline.net/nex-forms-docs/" target="_blank"><span class="top-icon fa fas fa-file-export"></span><span class="menu-text">'.__('DOCS','nex-forms').'</span></a></li>
-								'.(($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '' ).'
+								<li class="tab has_icon"><a href="https://basixonline.net/nex-forms-docs/" target="_blank"><span class="top-icon fa fas fa-file-export"></span><span class="menu-text">'.__('DOCS','nex-forms').'</span></a></li>
+								'.(($theme->Name=='NEX-Forms Demo' || !$this->checkout) ? '<a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard" target="_blank" class="btn waves-effect waves-light upgrade_pro">BUY NEX-FORMS</a>' : '' ).'
 							  </ul>
 							</div>
 						  </nav>
@@ -5408,7 +5409,7 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			if(!$database->checkout())
 				{
-				$output .= '<div class="alert alert-danger" style="margin:20px;">Please register this plugin to view submission reports. Go to global settings above and follow registration procedure.</div>'	;
+				$output .= '<div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view submission reports. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-reports" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>'	;
 				}
 			else
 				{
@@ -6076,7 +6077,7 @@ if(!class_exists('NEXForms_dashboard'))
 					{
 					$output .= '<span class="alert curl_error alert-danger">
 								<strong>LICENSE ERROR: </strong>'.strtoupper($error_type).' - '.$error[0].'NEX-Forms can not verify your license due to an <strong>Envato API error</strong>! <br /><strong>SOLUTION: </strong>This API issue can only be resolved by switching to our cloud based licensing service from Freemius.<br />
-								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_envu">Switch to a our cload based platform with a 50% discount.</a>
+								<br /><a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-dashboard-curl">Switch to a our new Freemius platform with a 50% discount.</a>
 								<br /><br />
 								<strong>NOTE:</strong> No forms, form entries, settings or any data from your NEX-Forms setup will be lost when you transition to the cloud based platform. All your forms, form submissions, settings and data will remain exactly as it is now.
 								</span>';								
@@ -6235,7 +6236,7 @@ if(!class_exists('NEXForms_dashboard'))
 
 <h5>How do I upgrade and get access to ongoing support?</h5>
 
-Simple, just <a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_env&promo=1&eu='.$client_info['envato_user_name'].'">Click here &amp; Switch to a plan</a> that better suit your needs.<br />
+Simple, just <a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-settings&eu='.$client_info['envato_user_name'].'">Click here &amp; Switch to a plan</a> that better suit your needs.<br />
 
 <br />
 <h5>Zero Loss</h5>
@@ -6244,7 +6245,7 @@ No forms, form entries, settings or any data from your NEX-Forms setup will be l
 <h5>Added Bonus!</h5>
 As an Envato License holder we will also offer you a <strong> 50% Discount</strong> on all pricing plans, simply click on the button below and claim your discount <span class="fa fa-arrow-down"></span><br />
 
-<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?src=wp_env&promo=1&eu='.$client_info['envato_user_name'].'" target="_blank" class="do_saas_upgrade">Upgrade NOW with a <strong>50% Discount</strong></a>
+<a href="https://basixonline.net/nex-forms/pricing-comparison-envato-vs-SaaS/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-settings-discount&eu='.$client_info['envato_user_name'].'" target="_blank" class="do_saas_upgrade">Upgrade NOW with a <strong>50% Discount</strong></a>
 <a href="mailto:support@basixonline.net?subject=NEX-Forms Subscriptions Plan Question" target="_blank" class="do_saas_upgrade faq">I have more questions</a>
 </div>
 ';	
@@ -6255,7 +6256,7 @@ As an Envato License holder we will also offer you a <strong> 50% Discount</stro
 			else
 				{
 				$output .= __('
-								<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://basixonline.net/nex-forms/pricing/?src=wp_env" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
+								<div class="alert alert-info">Currently, your NEX-Forms installation is not registered, which means some key features are disabled. To unlock these features and to gain FREE access to all premium add-ons you need to <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-activation-box" target="_blank"><strong>upgrade to the pro-version</strong></a></div>
 				
 							  <input name="purchase_code" id="purchase_code" placeholder="Enter Item Purchase Code" class="form-control" type="text">
 							  <br />
