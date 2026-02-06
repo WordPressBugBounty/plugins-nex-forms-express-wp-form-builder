@@ -35,7 +35,7 @@ add_action( 'init', 'nf_prefix_register_admin_resources' );
 
 function nf_prefix_register_admin_resources(){
 	
-	 $js_version = '9.1.7';
+	 $js_version = '9.1.5';
 	
 	wp_register_script('nex-forms-timer',plugins_url('/public/js/min/jquery.timer.js',dirname(__FILE__)),'',$js_version, true);
 	wp_register_script('nex-forms-admin-functions',plugins_url('/admin/js/'.NF_PATH.'admin-functions.js',dirname(__FILE__)),'',$js_version, true);
@@ -92,7 +92,7 @@ function enqueue_nf_admin_scripts($hook) {
 	
 	//echo '##########'.$hook;
 	
-	$js_version = '9.1.7';
+	$js_version = '9.1.5';
 	
 	wp_enqueue_script('jquery');
 	wp_enqueue_style('jquery-ui');
@@ -200,7 +200,7 @@ function enqueue_nf_admin_scripts($hook) {
 function enqueue_nf_admin_styles($hook) {
 	// CSS 
 	
-	$js_version = '9.1.7';
+	$js_version = '9.1.5';
 	
 	if(strstr($hook,'nex-forms'))
 		{
@@ -319,7 +319,7 @@ function enqueue_nf_admin_styles($hook) {
 		wp_enqueue_style('nex-forms-material-theme-teal','','',$js_version);
 		wp_enqueue_style('nex-forms-material-theme-yellow','','',$js_version);	
 		
-		//add_action('admin_bar_menu', 'custom_toolbar_link', 999);
+		add_action('admin_bar_menu', 'custom_toolbar_link', 999);
 		}
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_nf_admin_scripts' );
@@ -334,5 +334,21 @@ if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) 
 	$db_act->deactivate_license();
 	}
 
-
+function custom_toolbar_link($wp_admin_bar) {
+    
+	$theme = wp_get_theme();
+	if($theme->Name=='NEX-Forms Demo')
+		{
+		$args = array(
+			'id' => 'wpbeginner',
+			'title' => '<span class="ab-icon"><span class="dashicons-before dashicons-external"></span></span><span class="ab-label">NF DEMO FORM - Test Page</span>', 
+			'href' => 'http://basixonline.net/nex-forms-admin-demo/?form_Id='.$_GET['open_form'].'', 
+			'meta' => array(
+				'class' => 'nf-test-page', 
+				'title' => 'Demo Form Test Page'
+				)
+		);
+    	$wp_admin_bar->add_node($args);
+		}
+}
 ?>

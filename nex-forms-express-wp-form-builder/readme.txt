@@ -3,8 +3,8 @@ Plugin Name: NEX-Forms - Ultimate Forms Plugin for WordPress
 Contributors: Basix
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
-Tested up to: 6.8
-Stable tag: 9.1.7
+Tested up to: 6.9
+Stable tag: 9.1.9
 License: GPLv3 or later
 Author URI: https://basixonline.net?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-author-uri
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-plugin-uri

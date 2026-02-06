@@ -87,7 +87,7 @@ if(!class_exists('NEXForms_Functions'))
 					$output .= '<div class="row">';
 					$output .= '<div class="col-sm-12">';
 					if(!$args)
-						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to gain access to pre-made templates as per <a href="http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/" target="_blank">http://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/</a>','nex-forms').'</strong></div>';	
+						$output .= '<div class="alert alert-danger" style="width:95%"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to gain access to pre-made templates. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 					else
 						{
 						foreach ( scandir( plugin_dir_path( dirname(dirname(__FILE__)))  . "includes/templates/" ) as $dir )
@@ -252,7 +252,7 @@ if(!class_exists('NEXForms_Functions'))
 					//$output .= '<h5><strong>'.__('Import Form','nex-forms').'</strong></h5>';
 					$output .= '<p>'.__('Browse to any form exported by NEX-Forms. Open it to start import.','nex-forms').'</p>';
 					if(!$args)
-						$output .= '<div class="alert alert-danger" style="width:95%"><strong>'.__('Plugin not registered. Please register the plugin to enable form imports.','nex-forms').'</strong></div>';	
+						$output .= '<div class="alert alert-danger" style="width:95%"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required import forms. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 					else
 						{
 						$output .= '<button id="upload_form" class="form-control  btn blue waves-effect waves-light import_form">'.__('Import Form','nex-forms').'</button>';
@@ -940,6 +940,7 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
     '“' => '_', '”' => '_', '«' => '_', '»' => '_', '„' => '_',
 ));
 			
+			
 			/*$cyrillic_map = array(
 				'а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'ts', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'sch', 'ъ' => '', 'ы' => 'y', 'ь' => '', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya',
 				'А' => 'A', 'Б' => 'B', 'В' => 'V', 'Г' => 'G', 'Д' => 'D', 'Е' => 'E', 'Ё' => 'Yo', 'Ж' => 'Zh', 'З' => 'Z', 'И' => 'I', 'Й' => 'Y', 'К' => 'K', 'Л' => 'L', 'М' => 'M', 'Н' => 'N', 'О' => 'O', 'П' => 'P', 'Р' => 'R', 'С' => 'S', 'Т' => 'T', 'У' => 'U', 'Ф' => 'F', 'Х' => 'H', 'Ц' => 'Ts', 'Ч' => 'Ch', 'Ш' => 'Sh', 'Щ' => 'Sch', 'Ъ' => '', 'Ы' => 'Y', 'Ь' => '', 'Э' => 'E', 'Ю' => 'Yu', 'Я' => 'Ya',
@@ -963,14 +964,25 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 			$str = str_replace('[','',$str);
 			$str = str_replace(']','',$str);
 			$str = ucfirst(trim($str));
-			
-			$str = str_replace('nr','Nr.',$str);
-			$str = str_replace('art ','Art. ',$str);
-			$str = str_replace('Art ','Art. ',$str);
-			$str = str_replace('eur','EUR',$str);
-			$str = str_replace('Eur','EUR',$str);
-			$str = str_replace('Chf','CHF',$str);
-			$str = str_replace('chf','CHF',$str);
+			if($str=='nr')
+				{
+				$str = str_replace('nr','Nr.',$str);
+				}
+			if($str=='art' || $str=='Art')
+				{
+				$str = str_replace('art','Art.',$str);
+				$str = str_replace('Art','Art.',$str);
+				}
+			if($str=='eur' || $str=='Eur')
+				{
+				$str = str_replace('eur','EUR',$str);
+				$str = str_replace('Eur','EUR',$str);
+				}
+			if($str=='Chf' || $str=='chf')
+				{
+				$str = str_replace('Chf','CHF',$str);
+				$str = str_replace('chf','CHF',$str);
+				}
 			
 			if($chars)
 				$str = substr($str,0,$chars);
@@ -1997,6 +2009,155 @@ function dismiss_nf_notice(){
       update_option( 'dismiss_nf_notice_wf_02', true );
 	  die();
 }
+
+function NEXForms_get_add_on_status($add_on_Id){
+	
+	global $wpdb;
+	if(is_array($add_on_Id))
+		$set_add_on_Id = $add_on_Id[0];
+	
+	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+	$output = '';
+	
+	$all_plugins = get_plugins();
+
+		if (isset($all_plugins[$add_on_info.'/main.php']) || isset($all_plugins[$add_on_info.'/'.$add_on_info.'.php']))
+			{
+			if (is_plugin_active($add_on_info.'/main.php') || is_plugin_active($add_on_info.'/'.$add_on_info.'.php'))
+				{
+				$output .= '<span class="add-on-status activated">Active</span>';
+				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'active'),array('Id'=>$set_add_on_Id));
+				}
+			else
+				{
+				$output .= '<span class="add-on-status inactive">Inactive</span>';	
+				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'inactive'),array('Id'=>$set_add_on_Id));
+				}
+			}
+		else
+			{
+			$output .= '<span class="add-on-status not_installed">Not Installed</span>';
+			}
+	
+	
+	
+	//print_r($all_plugins);
+	return $output;
+	
+}
+
+function NEXForms_get_add_on_version($add_on_Id){
+	
+	global $wpdb;
+	if(is_array($add_on_Id))
+		$set_add_on_Id = $add_on_Id[0];
+	
+	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+	$output = '';
+	
+	$all_plugins = get_plugins();
+
+		if (isset($all_plugins[$add_on_info.'/main.php']) || isset($all_plugins[$add_on_info.'/'.$add_on_info.'.php']))
+			{
+			if (is_plugin_active($add_on_info.'/main.php') || is_plugin_active($add_on_info.'/'.$add_on_info.'.php'))
+				{
+				$output .= '<span class="add-on-version">'.(($all_plugins[$add_on_info.'/'.$add_on_info.'.php']['Version']) ? $all_plugins[$add_on_info.'/'.$add_on_info.'.php']['Version'] : $all_plugins[$add_on_info.'/main.php']['Version']).'</span>';
+				//$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'active'),array('Id'=>$set_add_on_Id));
+				}
+			else
+				{
+				$output .= '<span class="add-on-version">'.$all_plugins[$add_on_info.'/'.$add_on_info.'.php']['Version'].'</span>';	
+				//$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'inactive'),array('Id'=>$set_add_on_Id));
+				}
+			}
+		else
+			{
+			$output .= '<span class="add-on-version">9.0</span>';
+			}
+	
+	
+	
+	//print_r($all_plugins);
+	return $output;
+	
+}
+
+function NEXForms_install_add_on($add_on_Id) {
+    global $wpdb;
+    include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+    include_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
+
+    if (is_array($add_on_Id))
+        $set_add_on_Id = $add_on_Id[0];
+    else
+        $set_add_on_Id = $add_on_Id;
+
+    $add_on_info = $wpdb->get_row('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+    $plugin_slug = $add_on_info->add_on_url;
+
+    // Get live info from WordPress.org
+    
+
+    $all_plugins = get_plugins();
+    $plugin_main_file = $plugin_slug . '/main.php';
+    $plugin_alt_file  = $plugin_slug . '/' . $plugin_slug . '.php';
+
+    $output = '';
+
+    if (isset($all_plugins[$plugin_main_file]) || isset($all_plugins[$plugin_alt_file])) {
+        
+		$api = plugins_api('plugin_information', array('slug' => $plugin_slug));
+    	$remote_version = !is_wp_error($api) && isset($api->version) ? $api->version : null;
+		
+		$plugin_file = isset($all_plugins[$plugin_main_file]) ? $plugin_main_file : $plugin_alt_file;
+        $installed_version = $all_plugins[$plugin_file]['Version'];
+		
+        if ($remote_version && version_compare($installed_version, $remote_version, '<')) {
+            $output .= '<button class="install_add_on nf_button aa_bg_main_btn" data-add-on-path="'.$plugin_slug.'" data-do-action="update" data-add-on-id="'.$set_add_on_Id.'" data-update-version="'.$remote_version.'">Update to '.$remote_version.'</button>';
+        }
+        else if (is_plugin_active($plugin_file)) {
+            $output .= '<button class="install_add_on nf_button aa_bg_main_btn" data-add-on-path="'.$plugin_slug.'" data-do-action="deactivate" data-add-on-id="'.$set_add_on_Id.'">Deactivate</button>';
+        } 
+        else {
+            $output .= '<button class="install_add_on nf_button aa_bg_main_btn" data-add-on-path="'.$plugin_slug.'" data-do-action="activate" data-add-on-id="'.$set_add_on_Id.'">Activate</button>';
+        }
+    } 
+    else {
+        $output .= '<button class="install_add_on nf_button aa_bg_main_btn" data-add-on-path="'.$plugin_slug.'" data-do-action="install" data-add-on-id="'.$set_add_on_Id.'">Install</button>';
+    }
+
+    return $output;
+}
+
+function NEXForms_get_add_on_description($add_on_Id){
+	
+	global $wpdb;
+			
+	if(is_array($add_on_Id))
+		$set_add_on_Id = $add_on_Id[0];
+	$description = $wpdb->get_var('SELECT description FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	
+	$description= wp_unslash($description);
+	$description= str_replace('\"','',$description);
+	$description= str_replace('/','',$description);
+	$description = sanitize_text_field( $description );
+	
+	
+	return $description;
+	
+}
+function NEXForms_get_add_on_plans($add_on_Id){
+	
+	global  $wpdb;
+			
+	if(is_array($add_on_Id))
+		$set_add_on_Id = $add_on_Id[0];
+	$plans = $wpdb->get_var('SELECT plans FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+
+	
+	return $plans;
+	
+}
 function NEXForms_paypal_payment_status($payment_status){
 		
 		if(is_array($payment_status))
@@ -2362,6 +2523,158 @@ function NEXForms_allowed_tags2(){
 	);
 	return $allowed_tags;
 }
+function NEXForms_add_ons_array(){
+	
+	$add_ons = array(
+		'add_on_1'=>array(
+			'title'			=>  'PayPal Pro',
+			'description'	=>	'Enable secure online payments via PayPal with itemized checkout and email triggers based on payment status.',
+			'price'			=>	'29',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-paypal-advanced',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_2'=>array(
+			'title'			=>  'PDF Creator',
+			'description'	=>	'Generate custom PDFs from submitted form data and attach them to admin and user emails automatically.',
+			'price'			=>	'29',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-export-to-pdf',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_3'=>array(
+			'title'			=>  'Form to POST / PAGE',
+			'description'	=>	'Automatically create WordPress posts or pages from form submissions, with support for featured images and smart data tag content mapping.',
+			'price'			=>	'29',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-form-to-post7',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_4'=>array(
+			'title'			=>  'Digital / E-Signatures',
+			'description'	=>	'Add digital signature fields to your forms and include captured signatures in emails and generated PDFs.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-digital-signatures7',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_5'=>array(
+			'title'			=>  'Zapier Integration',
+			'description'	=>	'Connect NEX-Forms to over 8,000 apps with Zapier for powerful automation and seamless data workflows.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-zapier-add-on',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_6'=>array(
+			'title'			=>  'Multi-Page Forms',
+			'description'	=>	'Create multi-page forms with the ability to pass submitted data seamlessly from one form to the next.',
+			'price'			=>	'29',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-multi-page-forms',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_7'=>array(
+			'title'			=>  'Form Themes/Color Schemes',
+			'description'	=>	'Easily match your form’s design to your site with built-in themes: Bootstrap, Material Design, Neumorphism, jQuery UI, and Classic. Includes 44 preset color schemes for instant styling.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-form-themes-add-on',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_8'=>array(
+			'title'			=>  'Super Selection',
+			'description'	=>	'Create fully customizable radio buttons, checkboxes, dropdowns, and spinners using 2000+ icons. Set unique icons and colors for selected and unselected states.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-super-select',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_9'=>array(
+			'title'			=>  'Conditional Content Blocks',
+			'description'	=>	'Dynamically show or hide content in emails and PDFs based on user input. Perfect for personalizing messages using submitted form data.',
+			'price'			=>	'29',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-conditional-content-blocks',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_10'=>array(
+			'title'			=>  'Shortcode Processor',
+			'description'	=>	'Execute your own or third-party shortcodes directly within forms for added functionality and seamless integration.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-shortcode-processor',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_11'=>array(
+			'title'			=>  'MailChimp',
+			'description'	=>	'Automatically add new subscribers to your MailChimp lists directly from NEX-Forms submissions.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-mail-chimp-add-on',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_12'=>array(
+			'title'			=>  'Mailster',
+			'description'	=>	'Automatically add new subscribers to your Mailster lists directly from NEX-Forms submissions.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-mailster',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_13'=>array(
+			'title'			=>  'MailPoet',
+			'description'	=>	'Automatically add new subscribers to your MailPoet lists directly from NEX-Forms submissions.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-mail-poet',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			),
+		'add_on_14'=>array(
+			'title'			=>  'GetResponse',
+			'description'	=>	'Automatically add new subscribers to your GetResponse lists directly from NEX-Forms submissions.',
+			'price'			=>	'19',
+			'status'		=>	'not installed',
+			'add_on_url'	=>	'nex-forms-getresponse-add-on7',
+			'version'		=>	'9.0',
+			'plans'			=>	'Basic, Plus, Pro, Elite'
+			)
+		);
+	return array_reverse($add_ons);
+}
+
+function NEXForms_set_add_ons(){
+	
+	global $wpdb;
+	
+	$get_add_ons = NEXForms_add_ons_array();
+	foreach($get_add_ons as $key=>$add_on)
+		{
+		$get_add_on = $wpdb->get_var($wpdb->prepare('SELECT title FROM `'. $wpdb->prefix .'wap_nex_forms_add_ons` WHERE title=%s',$add_on['title']));
+		
+		if(!$get_add_on)
+			$wpdb->insert ( $wpdb->prefix . 'wap_nex_forms_add_ons', $add_on);  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		else
+			$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', 
+			array(
+			'add_on_url'=>$add_on['add_on_url']
+			)
+			,array('title'=>$add_on['title']));  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		}	
+}
 
 function NEXForms_safe_user_functions(){
 	$whitelist_func = array(
@@ -2387,11 +2700,144 @@ function NEXForms_safe_user_functions(){
 	'link_report_title2',
 	'get_total_entries',
 	'NEXForms_paypal_payment_status',
+	'NEXForms_get_add_on_status',
+	'NEXForms_get_add_on_version',
+	'NEXForms_install_add_on',
+	'NEXForms_get_add_on_description',
+	'NEXForms_get_add_on_plans',
+	'get_add_on_version',
+	'get_add_on_update',
 	);
 	return $whitelist_func;
 }
 
 function NEXForms_isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+}
+
+add_action('wp_ajax_nexforms_install_addon', 'nexforms_install_addon_ajax');
+
+function nexforms_install_addon_ajax() {
+    if (!current_user_can('install_plugins')) {
+        wp_send_json_error(array('message' => 'Permission denied.'));
+    }
+
+    if (!wp_verify_nonce($_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions')) {
+        wp_die();
+    }
+
+    global $wpdb;
+
+    include_once ABSPATH . 'wp-admin/includes/file.php';
+    include_once ABSPATH . 'wp-admin/includes/misc.php';
+    include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+    include_once ABSPATH . 'wp-admin/includes/plugin.php';
+    include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+
+    $plugin_slug     = sanitize_text_field($_POST['plugin_file']);   // SVN slug
+    $addon_url       = esc_url_raw($_POST['addon_url']);              // fallback ZIP
+    $add_on_id       = intval($_POST['add_on_id']);
+    $do_action       = sanitize_text_field($_POST['do_action']);
+    $plugin_file_path = sanitize_text_field($_POST['plugin_file']);   // e.g., folder name
+
+    // DEACTIVATE
+    if ($do_action === 'deactivate') {
+        deactivate_plugins($plugin_file_path . '/main.php');
+        deactivate_plugins($plugin_file_path . '/' . $plugin_file_path . '.php');
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+        wp_send_json_success(array('message' => 'Add-on deactivated.'));
+    }
+
+    // ACTIVATE
+    if ($do_action === 'activate') {
+        $activate = activate_plugin($plugin_file_path . '/main.php');
+        $activate2 = activate_plugin($plugin_file_path . '/' . $plugin_file_path . '.php');
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        wp_send_json_success(array('message' => 'Add-on activated.'));
+    }
+
+    // INSTALL or UPDATE
+if ($do_action === 'install' || $do_action === 'update') {
+
+    $upgrader_skin = new WP_Ajax_Upgrader_Skin();
+    $upgrader = new Plugin_Upgrader($upgrader_skin);
+
+    // Check if plugin is already installed
+    $all_plugins = get_plugins();
+    $plugin_installed = false;
+    $plugin_file_path = '';
+
+    foreach ($all_plugins as $file => $data) {
+        if (strpos($file, $plugin_slug . '/') === 0) {
+            $plugin_installed = true;
+            $plugin_file_path = $file; // store the main plugin file
+            break;
+        }
+    }
+
+    // Try WordPress SVN first
+    $api = plugins_api('plugin_information', array(
+        'slug'   => $plugin_slug,
+        'fields' => array('sections' => false),
+    ));
+    if (!is_wp_error($api)) {
+        // SVN plugin available
+        if ($plugin_installed && $do_action === 'update') {
+            // Update existing plugin
+			
+			global $wp_filesystem;
+                if ( ! $wp_filesystem ) {
+                    WP_Filesystem();
+                }
+                $plugin_dir = WP_PLUGIN_DIR . '/' . dirname($plugin_file_path);
+				if(strstr($plugin_file_path,'add-on') && strstr($plugin_file_path,'nex-forms'))
+                	$wp_filesystem->delete($plugin_dir, true); // recursive delete
+			
+			
+           // $result = $upgrader->upgrade($plugin_file_path);
+        } 
+            // Initial install
+            $result = $upgrader->install($api->download_link);
+            $plugin_file_path = $upgrader->plugin_info();
+			
+			
+			
+        
+
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => 'SVN install/update failed: ' . $result->get_error_message()));
+        }
+
+        // Activate the plugin
+        $activate = activate_plugin($plugin_file_path);
+        if (is_wp_error($activate)) {
+            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+            wp_send_json_error(array('message' => 'Installed/Updated but activation failed: ' . $activate->get_error_message()));
+        }
+
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        wp_send_json_success(array('message' => $plugin_installed ? 'Plugin updated from WordPress SVN and activated.' : 'Plugin installed from WordPress SVN and activated.'));
+    }
+
+    // Fallback: install from server ZIP (only for initial install)
+    if (!$plugin_installed && !empty($addon_url)) {
+        $result = $upgrader->install($addon_url);
+        if (is_wp_error($result)) {
+            wp_send_json_error(array('message' => 'Server install failed: ' . $result->get_error_message()));
+        }
+
+        $plugin_file_path = $upgrader->plugin_info();
+        $activate = activate_plugin($plugin_file_path);
+        if (is_wp_error($activate)) {
+            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+            wp_send_json_error(array('message' => 'Installed but activation failed: ' . $activate->get_error_message()));
+        }
+
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        wp_send_json_success(array('message' => 'Plugin installed from server and activated.'));
+    }
+
+    wp_send_json_error(array('message' => 'Plugin not found in SVN and no server URL provided.'));
+	}
 }
 ?>

@@ -203,96 +203,35 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function checkout()
 			{
-			if( array_key_exists( 'pre_update_option_nf_activated' , $GLOBALS['wp_filter']) )
+			if(function_exists('nf_fs'))
 				{
-				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
-				$this->deactivate_license();
-				return false;
-				}
-			if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
-				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
-				$this->deactivate_license();
-				return false;
-			 }
-			 if ( function_exists( 'activator_admin_notice_plugin_activate' ) ) {
-				$api_params = array( 'recheck_key' => 1,'ins_data'=>get_option('7103891'));
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v4', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
-				$this->deactivate_license();
-				return false;
-			 }
-			$api_params = array( 'check_key' => 1,'version'=>'9','ins_data'=>get_option('7103891'));
-			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
-			
-			if(isset($response->errors))
-				{
-				$api_url = 'https://basixonline.net/activate-license-new-api-v3';
-				$api_params = http_build_query(array(
-					'check_key' => 1,
-					'ins_data'  => get_option('7103891')
-				));
-				$options = array(
-					'http' => array(
-						'method'  => 'POST',
-						'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-						'content' => $api_params,
-						'timeout' => 10, // Reduce timeout
-					)
-				);
-				$context = stream_context_create($options);
-				$response = file_get_contents($api_url, false, $context);
-				
-				if ($response === FALSE)
+				if ( nf_fs()->can_use_premium_code() )
 					{
-					$url = "https://basixonline.net/activate-license-new-api-v3";
-					$params = array('check_key' => 1, 'ins_data' => get_option('7103891'));
-					$response = NEXForms_send_license_request($url, $params);
-					if($response)
-						{
-						$response = preg_replace('/^[0-9a-fA-F]+\r\n/', '', $response); // Remove chunk sizes
-						$response = preg_replace("/\r\n0\r\n$/", '', $response); // Remove final chunk indicator
-						$response = trim($response, " \t\n\r\0\x0B0");
-						$get_response = json_decode($response, true);
+					update_option( 'nf_activated', false );
+					update_option( 'nf_fs_activated', true );
 					
-						$get_response = json_decode($response, true);
-						$this->client_info = $get_response['client_info'];
-						$this->license_info = $get_response['license_info'];
-						if($get_response['ver']!='true')
-							{
-							$this->deactivate_license();	
-							}
-						return ($get_response['ver']=='true') ? true : false;
-						}
-					else
-						{
-						return false;
-						}
-					} 
-				else 
-					{
-					$get_response = json_decode($response, true);
-					$this->client_info = $get_response['client_info'];
-					$this->license_info = $get_response['license_info'];
-					if($get_response['ver']!='true')
-						{
-						$this->deactivate_license();	
-						}
-					return ($get_response['ver']=='true') ? true : false;
-					} 
-					
-				}
-			else
-				{
-				$get_response = json_decode($response['body'],1);
-				
-				$this->client_info = $get_response['client_info'];
-				$this->license_info = $get_response['license_info'];
-				if($get_response['ver']!='true')
-					{
-					$this->deactivate_license();	
+					$this->client_info = array(
+						'Id' => '2526991',
+						'item_code' => '7103891',
+						'purchase_code' => '*****************************',
+						'license_type' => 'Regular License',
+						'envato_user_name' => 'Basix',
+						'for_site'=>get_option('siteurl'),
+						'is_saas'=>true
+					);
+					return true;
 					}
-				return ($get_response['ver']=='true') ? true : false;
+				else
+					{
+					update_option( 'nf_activated', false );
+					update_option( 'nf_fs_activated', false );
+					return false;
+					}
+				}
+			if(get_option('7103891'))
+				{
+				$api_params = array( 'check_key' => 1,'version' => '9','ins_data'=>get_option('7103891'));
+				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 				}
 			}
 		
@@ -584,7 +523,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 							
 							
 		if ( !function_exists('nf_get_paypal_payment') && !function_exists('nf_not_found_notice_pp') ) {
-				$output .= '<div class="alert alert-success">You need the "<strong><em>PayPal for NEX-forms</em></strong>" Add-on to use PayPal integration and receive online payments! <br>&nbsp;<a class="btn btn-success btn-large form-control" target="_blank" href="https://codecanyon.net/item/paypal-pro-for-nexforms/22449576?ref=Basix">Buy Now</a></div>';
+				$output .= '<div class="alert alert-success">You need the "<strong><em>PayPal for NEX-forms</em></strong>" Add-on to use PayPal integration and receive online payments! <br>&nbsp;<a class="btn btn-success btn-large form-control" target="_blank" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock">Buy Now</a></div>';
 		}
 		return $output;
 		
@@ -897,7 +836,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 					'email_address' => get_option('admin_email'),
 					'for_site' 		=> get_option('siteurl'),
 					'unique_key'	=> get_option('7103891'),
-					're_register'	=> (($_POST['rereg']=='false') ? false : true)
+					're_register'	=> (($_POST['rereg']=='false') ? false : true),
+					'version' 		=> '9'
 				);
 				
 				// Call the custom API.
@@ -2102,7 +2042,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			}
 			else
 				{
-				$output .= '<div class="alert alert-success">You need the "<strong><em>PDF Creator for NEX-forms</em></strong>" Add-on to create your own PDF\'s from form data and also have the ability to send these PDF\'s via your admin and usert emails! <br>&nbsp;<a class="btn btn-success btn-large form-control" target="_blank" href="https://codecanyon.net/item/export-to-pdf-for-nexforms/11220942?ref=Basix">Buy Now</a></div>';
+				$output .= '<div class="alert alert-success">You need the "<strong><em>PDF Creator for NEX-forms</em></strong>" Add-on to create your own PDF\'s from form data and also have the ability to send these PDF\'s via your admin and usert emails! <br>&nbsp;<a class="btn btn-success btn-large form-control" target="_blank" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock">Buy Now</a></div>';
 				}
 			
 			NEXForms_clean_echo( $output);
@@ -2190,7 +2130,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 									if($hidden_field[0])
 										{
 										$output .= '<div class="hidden_field"><div class="input-group input-group-sm">';
-												$output .= '<div class="input-group-addon name_label">Field Name</div><input type="text" class="form-control field_name hidden_field_name" value="'.$hidden_field[0].'" placeholder="Enter field name">';
+												$output .= '<div class="input-group-addon name_label">Field Name</div><input type="text" class="form-control field_name hidden_field_name" value="'.esc_html(sanitize_title($hidden_field[0])).'" placeholder="Enter field name">';
 												$output .= '<div class="input-group-addon the_hidden_field_value">
 																<select name="set_hidden_field_value" class="">
 																	<optgroup label="Dynamic Variables">
@@ -2220,10 +2160,10 @@ if(!class_exists('NEXForms_Database_Actions'))
 																		<option value="{{HTTP_USER_AGENT}}">HTTP_USER_AGENT</option>											
 																	</optgroup>
 																</select>
-												</div><input type="text" class="form-control field_value hidden_field_value" value="'.$hidden_field[1].'" placeholder="Enter field value">';
+												</div><input type="text" class="form-control field_value hidden_field_value" value="'.esc_html(sanitize_title($hidden_field[1])).'" placeholder="Enter field value">';
 												$output .= '<div class="input-group-addon remove_hidden_field"><span class="fa fa-close"></span></div>';
 												
-												$hidden_options .= '<option value="'.trim($hidden_field[0]).'">'.$hidden_field[0].'</option>';
+												$hidden_options .= '<option value="'.esc_html(sanitize_title(trim($hidden_field[0]))).'">'.esc_html(sanitize_title($hidden_field[0])).'</option>';
 												
 										$output .= '</div></div>';
 										}
@@ -2325,7 +2265,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 									//if($hidden_field[0])
 										//{
 										$output .= '<div class="hidden_field"><div class="input-group input-group-sm">';
-												$output .= '<div class="input-group-addon name_label">Field Name</div><input type="text" class="form-control field_name hidden_field_name" value="'.$hidden_field->field_name.'" placeholder="Enter field name">';
+												$output .= '<div class="input-group-addon name_label">Field Name</div><input type="text" class="form-control field_name hidden_field_name" value="'.esc_html(sanitize_title($hidden_field->field_name)).((strstr($hidden_field->field_name,'[]')) ? '[]' : '').'" placeholder="Enter field name">';
 												$output .= '<div class="input-group-addon the_hidden_field_value">
 																<select name="set_hidden_field_value" class="">
 																	<optgroup label="Dynamic Variables">
@@ -2355,10 +2295,10 @@ if(!class_exists('NEXForms_Database_Actions'))
 																		<option value="{{HTTP_USER_AGENT}}">HTTP_USER_AGENT</option>											
 																	</optgroup>
 																</select>
-												</div><input type="text" class="form-control field_value hidden_field_value" value="'.$hidden_field->field_value.'" placeholder="Enter field value">';
+												</div><input type="text" class="form-control field_value hidden_field_value" value="'.esc_html(sanitize_title($hidden_field->field_value)).'" placeholder="Enter field value">';
 												$output .= '<div class="input-group-addon remove_hidden_field"><span class="fa fa-close"></span></div>';
 												
-												$hidden_options .= '<option value="'.trim($hidden_field->field_name).'">'.$hidden_field->field_name.'</option>';
+												$hidden_options .= '<option value="'.esc_html(sanitize_title(trim($hidden_field->field_name))).((strstr($hidden_field->field_name,'[]')) ? '[]' : '').'">'.esc_html(sanitize_title($hidden_field->field_name)).((strstr($hidden_field->field_name,'[]')) ? '[]' : '').'</option>';
 												
 										$output .= '</div></div>';
 										//}
@@ -2538,7 +2478,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					if ( function_exists('NEXForms_export_to_PDF') )
 						$output .= '<a target="_blank" title="PDF [new window]" href="'.WP_PLUGIN_URL . '/nex-forms-export-to-pdf/examples/main.php?entry_ID='.$data->Id.'" class="nf-button"><span class="fa fa-file-pdf-o"></span> PDF</div></a>&nbsp;';
 					else
-						$output .= '<a target="_blank" title="Get export to PDF add-on" href="http://codecanyon.net/item/export-to-pdf-for-nexforms/11220942?ref=Basix" class="nf-button buy">PDF</a>&nbsp;';
+						$output .= '<a target="_blank" title="Get export to PDF add-on" href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock" class="nf-button buy">PDF</a>&nbsp;';
 					
 					$output .= '<a class="nf-button view_form_entry" data-target="#viewFormEntry" data-toggle="modal"  data-id="'.$data->Id.'">View</a>
 					<a data-original-title="Delete" title="" data-placement="top" data-toggle="tooltip2" class="do_delete_entry nf-button" id="'.$data->Id.'">&nbsp;
@@ -2900,7 +2840,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				}
 			else
 				{
-				$output .= '<div class="alert alert-danger"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view form entries. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_envato&utm_medium=upgrade&utm_content=nf-form-entries" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
+				$output .= '<div class="alert alert-danger" style="margin:20px;"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view submitted form entry data. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 				}
 			echo( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			
@@ -2938,12 +2878,12 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if($total_pages>1)
 				{				
 				$output .= '<span class="pagination-links">';
-				$output .= '<a class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-angle-double-left"></span></a>';
+				$output .= '<a class="first-page iz-first-page btn waves-effect waves-light"><span class="fa fa-backward-step"></span></a>';
 				$output .= '<a title="Go to the next page" class="iz-prev-page btn waves-effect waves-light prev-page"><span class="fa fa-angle-left"></span></a>&nbsp;';
 				$output .= '<span class="paging-input"> ';
 				$output .= '<span class="current-page">'.($_POST['page']+1).'</span> of <span class="total-pages">'.$total_pages.'</span>&nbsp;</span>';
 				$output .= '<a title="Go to the next page" class="iz-next-page btn waves-effect waves-light next-page"><span class="fa fa-angle-right"></span></a>';
-				$output .= '<a title="Go to the last page" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-angle-double-right"></span></a></span>';
+				$output .= '<a title="Go to the last page" class="iz-last-page btn waves-effect waves-light last-page"><span class="fa fa-forward-step"></span></a></span>';
 				}
 			if($echo)
 				{
@@ -3279,9 +3219,10 @@ if(!class_exists('NEXForms_Database_Actions'))
 			{
 			global $wpdb;
 			$delete = $wpdb->query('DELETE FROM '.$wpdb->prefix.'options WHERE option_name LIKE "1983017%"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$api_params = array( 'client_deactivate_license' => 1,'key'=>get_option('7103891'));
+			$api_params = array( 'client_deactivate_license' => 1,'version' => '9','key'=>get_option('7103891'));
 			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
 			update_option( 'nf_activated', false );
+			update_option( 'nf_fs_activated', false );
 			}
 	}
 
@@ -3901,7 +3842,7 @@ function NEXForms_send_license_request($url, $params) {
     while (!feof($fp)) {
 		$response .= fgets($fp, 1024);
 	}
-	fclose($fp);
+	fclose($fp); 
 	
 // Extract JSON by removing headers
 $json_start = strpos($response, "\r\n\r\n"); // Find the start of the body
@@ -3912,67 +3853,6 @@ if ($json_start !== false) {
     return $response;
 }
 
-function NEXForms_run_calling(){
-	
-	$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'wordpress.org', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
-	$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));
-	
-	$set_error = '';
-	$error_code = 0;
-	
-	if(is_array($response->errors))
-		{
-		foreach($response->errors as $error_type => $error)
-			{
-			$set_error = strtoupper($error_type).' - '.$error[0];
-			$error_code = 1;
-			}
-			
-		$api_url = 'https://basixonline.net/activate-license-new-api-v3';
-		$api_params = http_build_query(array(
-			'check_key' => 1,
-			'ins_data'  => get_option('7103891')
-		));
-		$options = array(
-			'http' => array(
-				'method'  => 'POST',
-				'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-				'content' => $api_params,
-				'timeout' => 10, // Reduce timeout
-			)
-		);
-		$context = stream_context_create($options);
-		$response = file_get_contents($api_url, false, $context);
-		
-		if ($response === FALSE)
-			{
-			$error_code = 2;
-			$url = "https://basixonline.net/activate-license-new-api-v3";
-			$params = array('check_key' => 1, 'ins_data' => get_option('7103891'));
-			$response = NEXForms_send_license_request($url, $params);
-			if($response)
-				{
-				$response = preg_replace('/^[0-9a-fA-F]+\r\n/', '', $response);
-				$response = preg_replace("/\r\n0\r\n$/", '', $response); 
-				$response = trim($response, " \t\n\r\0\x0B0");
-				update_option( '7103891' , array( $response,mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-				}
-			else
-				{
-				$error_code = 3;
-				return '<div class="col-sm-12"><div class="alert alert-danger"><strong>WP ERROR - CODE '.$error_code.': </strong>'.$set_error.'<br />NEX-Forms can not verify your license as a result of this error. Consult your Hosting Provider to resolve this error.</div></div>';
-				}	
-			}
-		else 
-			{
-			update_option( '7103891' , array( $response,mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-			}
-		}
-	else
-		{		
-		update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
-		}	
-}
 
 function NEXForms_sanitize_array( $array=array() ) {
 	foreach ( $array as $key => $val ) {

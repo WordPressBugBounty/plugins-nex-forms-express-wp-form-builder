@@ -2638,6 +2638,7 @@ div.jq_radio_check{
 }
 #nex-forms #the-radios a {
     color: transparent !important;
+    text-decoration-color: transparent !important;
 }
 #nex-forms .prettyradio a.ui-state-default,
 #nex-forms .prettyradio a.ui-state-active {
@@ -12728,7 +12729,7 @@ button.do_shine .shine {
 }
 
 #nex-forms .modal{
-	background-color: #fafafa;
+	/*background-color: #fafafa;*/
 	display: none;
 	left: 0;
 	margin: auto;
