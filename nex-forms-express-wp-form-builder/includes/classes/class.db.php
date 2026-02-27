@@ -11,7 +11,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		public function __construct(){
 			
-			add_action('wp_ajax_deactivate_license', array($this,'deactivate_license'));
 			add_action('wp_ajax_nf_insert_record', array($this,'insert_record'));
 			add_action('wp_ajax_nf_update_record', array($this,'update_record'));
 			add_action('wp_ajax_nf_delete_record', array($this,'delete_record'));
@@ -48,7 +47,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 			add_action('wp_ajax_nf_send_test_email', array($this,'nf_send_test_email'));
 			
 			add_action('wp_ajax_update_paypal', array($this,'update_paypal'));
-			add_action('wp_ajax_get_data', array($this,'NEXForms_get_data'));
 			add_action('wp_ajax_get_c_logic_ui', array($this,'get_c_logic_ui'));
 						
 		
@@ -825,42 +823,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			die();
 		}
-		public function NEXForms_get_data(){
-				
-			
-				$api_params = array( 
-					'verify-2' 		=> 1, //'',
-					'license' 		=> sanitize_text_field($_POST['pc']), 
-					'user_name' 	=> sanitize_text_field($_POST['eu']), 
-					'item_code' 	=> '7103891',
-					'email_address' => get_option('admin_email'),
-					'for_site' 		=> get_option('siteurl'),
-					'unique_key'	=> get_option('7103891'),
-					're_register'	=> (($_POST['rereg']=='false') ? false : true),
-					'version' 		=> '9'
-				);
-				
-				// Call the custom API.
-				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array(
-					'timeout'   => 30,
-					'sslverify' => false,
-					'body'      => $api_params
-				) );
-				// make sure the response came back okay
-				
-				if ( is_wp_error( $response ) )
-					NEXForms_clean_echo( '<div class="alert alert-danger"><strong>Could not connect</div><br /><br />Please try again later.');
-
-				// decode the license data
-				$license_data = json_decode($response['body'],true);
-				if($license_data['error']<=0)
-					{
-					update_option( '1983017'.$license_data['key'] , array( $license_data['pc']));
-					}
-				
-				NEXForms_clean_echo( sanitize_text_field($license_data['message']));
-				die();
-		}
+		
 /* ALTER TABLE */
 		public function alter_plugin_table($table='', $col = '', $type='text'){
 			
@@ -3213,18 +3176,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		die();
 	}
 	
-	function deactivate_license(){
-		$theme = wp_get_theme();
-		if($theme->Name!='NEX-Forms Demo')
-			{
-			global $wpdb;
-			$delete = $wpdb->query('DELETE FROM '.$wpdb->prefix.'options WHERE option_name LIKE "1983017%"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$api_params = array( 'client_deactivate_license' => 1,'version' => '9','key'=>get_option('7103891'));
-			$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'   => 10,'sslverify' => false,'body'  => $api_params) );
-			update_option( 'nf_activated', false );
-			update_option( 'nf_fs_activated', false );
-			}
-	}
+	
 
 	
 	public function load_template() {

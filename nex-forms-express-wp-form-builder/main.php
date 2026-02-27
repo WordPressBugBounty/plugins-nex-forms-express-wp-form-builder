@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.1.9
+Version: 9.1.10
 Author URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 License: GPL
 Text Domain: nex-forms
@@ -2701,16 +2701,7 @@ function NEXForms_add_form_interaction(){
 		 );
 	die();
 }
-$update_entry = isset($_REQUEST['nf_update_entry']) ? sanitize_text_field($_REQUEST['nf_update_entry']) : false;
-$create_entry = isset($_REQUEST['nf_create_entry']) ? sanitize_text_field($_REQUEST['nf_create_entry']) : false;
 
-if($update_entry || $create_entry)
-	{
-	if($update_entry)
-		submit_nex_form($entry_action = 'update_entry');	
-	if($create_entry)
-		submit_nex_form($entry_action = 'update_entry');	
-	}
 	
 
 function submit_nex_form($entry_action = false){
@@ -2942,85 +2933,9 @@ function submit_nex_form($entry_action = false){
 	
 	if($save_to_db)
 		{
-		$check_entry_update = isset($_REQUEST['nf_set_entry_update_id']) ? sanitize_text_field($_REQUEST['nf_set_entry_update_id']) : false;
-		$check_entry_redirect_update = isset($_REQUEST['nf_entry_redirect_id']) ? sanitize_text_field($_REQUEST['nf_entry_redirect_id']) : false;
 		
 		
-		if($check_entry_redirect_update)
-			{
-			$get_data = $wpdb->get_var($wpdb->prepare('SELECT form_data FROM '. $wpdb->prefix .'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($check_entry_redirect_update))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			
-			$set_data = json_decode($get_data);
-			
-			$merge_data = array_merge($set_data,$data_array);
-			
-			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			array(								
-				'nex_forms_Id'			=>	$set_nex_forms_id,
-				'page'					=>	sanitize_text_field($_POST['page']),
-				'ip'					=>  sanitize_text_field($_POST['ip']),
-				'paypal_invoice'		=>  sanitize_text_field($_POST['paypal_invoice']),
-				'user_Id'				=>	get_current_user_id(),
-				'hostname'				=>	$geo_data->hostname,
-				'city'					=>	$geo_data->city,
-				'region'				=>	$geo_data->region,
-				'country'				=>	$geo_data->country,
-				'loc'					=>	$geo_data->loc,
-				'org'					=>	$geo_data->org,
-				'postal'				=>	$geo_data->postal,
-				'date_time'				=>  $set_date->format('Y-m-d H:i:s'),
-				'form_data'				=>	json_encode($merge_data),
-				'paypal_payment_token'	=>  $paypal_transaction['payment_token'],
-				'paypal_payment_id'		=>  $paypal_transaction['payment_id'],
-				'payment_ammount'		=>  $paypal_transaction['payment_ammount'],
-				'payment_currency'		=>  $paypal_transaction['payment_currency'],
-				'payment_status'		=>  'pending',
-				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
-				), array(	'Id' => sanitize_text_field($check_entry_redirect_update))
-			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			
-			$entry_id = $check_entry_redirect_update;
-				
-			}
 		
-		else if($check_entry_update)
-			{
-			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			array(								
-				'nex_forms_Id'			=>	$set_nex_forms_id,
-				'page'					=>	sanitize_text_field($_POST['page']),
-				'ip'					=>  sanitize_text_field($_POST['ip']),
-				'paypal_invoice'		=>  sanitize_text_field($_POST['paypal_invoice']),
-				'user_Id'				=>	get_current_user_id(),
-				'hostname'				=>	$geo_data->hostname,
-				'city'					=>	$geo_data->city,
-				'region'				=>	$geo_data->region,
-				'country'				=>	$geo_data->country,
-				'loc'					=>	$geo_data->loc,
-				'org'					=>	$geo_data->org,
-				'postal'				=>	$geo_data->postal,
-				'date_time'				=>  $set_date->format('Y-m-d H:i:s'),
-				'form_data'				=>	json_encode($data_array),
-				'paypal_payment_token'	=>  $paypal_transaction['payment_token'],
-				'paypal_payment_id'		=>  $paypal_transaction['payment_id'],
-				'payment_ammount'		=>  $paypal_transaction['payment_ammount'],
-				'payment_currency'		=>  $paypal_transaction['payment_currency'],
-				'payment_status'		=>  'pending',
-				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
-				), array(	'Id' => sanitize_text_field($check_entry_update))
-			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			
-			$entry_id = $check_entry_update;
-				
-			}
-		else
-			{
 			$insert = $wpdb->insert($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 				array(								
 					'nex_forms_Id'			=>	$set_nex_forms_id,
@@ -3050,9 +2965,6 @@ function submit_nex_form($entry_action = false){
 			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 			
 			$entry_id = $wpdb->insert_id;
-			}
-		
-		
 		
 		}
 	if($entry_action)
