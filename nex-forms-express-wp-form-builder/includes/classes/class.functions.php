@@ -880,6 +880,9 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 			$str = str_replace('(','',$str);
 			$str = str_replace('%20','_',$str);
 			
+			$str = sanitize_text_field($str);
+			$str = esc_html($str);
+			
 			if($str=='name')
 				$str = '_'.$str;
 			
@@ -896,6 +899,7 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 			$str = str_replace(' ','_',$str);
 			$str = str_replace('-','_',$str);
 			$str = str_replace(':','_',$str);
+			
 			
 			//$str = str_replace(':','',$str);
 			
@@ -959,6 +963,9 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 			
 			$str = $nf_functions->format_name($str);
 			
+			$str = sanitize_text_field($str);
+			$str = esc_html($str);
+			
 			$str = str_replace('u2019','\'',$str);
 			$str = str_replace('_',' ',$str);
 			$str = str_replace('[','',$str);
@@ -969,6 +976,7 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 				$str = str_replace('nr','Nr.',$str);
 				}
 			if($str=='art' || $str=='Art')
+
 				{
 				$str = str_replace('art','Art.',$str);
 				$str = str_replace('Art','Art.',$str);
@@ -994,6 +1002,9 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 			$nf_functions 		= new NEXForms_Functions();
 			
 			$str = $nf_functions->format_name($str);
+			
+			$str = sanitize_text_field($str);
+			$str = esc_html($str);
 			
 			$str = str_replace('u2019','\'',$str);
 			$str = str_replace('_',' ',$str);

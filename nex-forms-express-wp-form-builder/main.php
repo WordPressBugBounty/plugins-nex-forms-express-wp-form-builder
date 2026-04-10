@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.1.10
+Version: 9.1.11
 Author URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 License: GPL
 Text Domain: nex-forms
@@ -464,12 +464,13 @@ function NEXForms_my_menu_pages() {
 		$entry 	= $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		
 		if($_REQUEST['emial-preview']=='admin')
-			NEXForms_clean_echo( $entry->saved_admin_email);
+			echo wp_kses( $entry->saved_admin_email,  NEXForms_allowed_tags2());
 		else
 			{
 			if($entry->saved_user_email_address)
 				{
-				NEXForms_clean_echo( $entry->saved_user_email);	
+				echo wp_kses( $entry->saved_user_email,  NEXForms_allowed_tags2());
+				//NEXForms_clean_echo( $entry->saved_user_email);	
 				}
 			else
 				NEXForms_clean_echo( '<center><strong style="font-family:Arial;"><br /><br />No User Email Sent.</strong></center>');
@@ -2831,6 +2832,10 @@ function submit_nex_form($entry_action = false){
 
 		foreach($_POST as $key=>$val)
 			{
+			
+			$key = sanitize_text_field($key);
+			$key = esc_html($key);
+			
 			if(
 			$key!='nf_entry_redirect_id' &&
 			$key!='nf_update_entry' &&
@@ -4673,6 +4678,10 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 
 			foreach($data_array as $key=>$val)
 				{
+				
+				$key = sanitize_text_field($key);
+				$key = esc_html($key);
+					
 				if(
 				$key!='nf_entry_redirect_id' &&
 				$key!='form_Id' &&
