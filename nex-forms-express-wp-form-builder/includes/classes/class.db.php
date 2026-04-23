@@ -3671,11 +3671,13 @@ function NEXForms_get_entry_data_preview($Id='',$table=''){
 			{
 			$field_name = ((isset($data['field_name'])) ? $data['field_name'] : '');
 			$field_value = ((isset($data['field_value'])) ? $data['field_value'] : '');
+			
+			
 			if(!is_array($field_value)){
 				if(!strstr($field_value,'data:image'))
-					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value">'.$field_value.'</span> | ';
+					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value">'.esc_html($field_value).'</span> | ';
 				else
-					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value"><img src="'.$field_value.'" width="50"/></span> | '; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+					$set_data .= '<span class="entry_data_name">'.$nf_functions->unformat_records_name($field_name).'</span> : <span class="entry_data_value"><img src="'.esc_html($field_value).'" width="50"/></span> | '; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 				}
 			}
 		$i++;

@@ -316,7 +316,7 @@ if(!class_exists('NEXForms_Functions'))
 	
 	public function code_to_country_flag($code) 
 		{
-		//return '';
+		return '<span class="f16"><span class="flag '.strtolower($code).'"></span></span>';
 		$emoji_flags = array();
 
 		// Now, all the country flags as emojis
