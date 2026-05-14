@@ -4216,12 +4216,42 @@ if(!class_exists('NEXForms_dashboard'))
 			else
 				$search_params = $this->search_params;
 			
-			if(isset($_POST['table']))
-				$table = $wpdb->prepare('%s',esc_sql($_POST['table']));
-			else
-				$table = $wpdb->prepare('%s',$this->table);
+			$allowed_tables = array(
+				'wap_nex_forms',
+				'wap_nex_forms_entries',
+				'wap_nex_forms_reports',
+				'wap_nex_forms_email_templates',
+				'wap_nex_forms_views',
+				'wap_nex_forms_stats_interactions',
+				'wap_nex_forms_files',
+				'wap_nex_forms_add_ons'
+			);
 			
-			$table = str_replace('\'','',$table);
+			$user_reports = $wpdb->get_results(
+				'SELECT db_table FROM '.$wpdb->prefix.'wap_nex_forms_reports'
+			);
+			
+			if (!empty($user_reports)) {
+			
+				foreach ($user_reports as $report) {
+					$report_table = sanitize_key($report->db_table);
+					if (!empty($report_table)) {
+						$allowed_tables[] = str_replace($wpdb->prefix,'',$report_table);
+					}
+				}
+			}
+			
+			
+			
+			$allowed_tables = array_unique($allowed_tables);
+						
+			$table = isset($_POST['table'])
+				? sanitize_key($_POST['table'])
+				: sanitize_key($this->table);
+
+			if (!in_array($table, $allowed_tables, true)) {
+				wp_die('Invalid table.');
+			}
 				
 			$where_str = '';
 			$show_hide_field = (isset($_POST['showhide_fields'])) ? str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($_POST['showhide_fields'])))) : '';
