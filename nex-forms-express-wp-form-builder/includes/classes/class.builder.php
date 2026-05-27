@@ -10,6 +10,7 @@ if(!class_exists('NEXForms_Builder7')){
 		$admin_html,
 		$mail_to,
 		$reply_to,
+		$user_reply_to,
 		$confirmation_mail_body,
 		$admin_email_body,
 		$confirmation_mail_subject,
@@ -93,6 +94,7 @@ if(!class_exists('NEXForms_Builder7')){
 				$this->form_title = esc_html(strip_tags(wp_unslash($form_attr->title)));
 				$this->mail_to = $form_attr->mail_to;
 				$this->reply_to = $form_attr->reply_to;
+				$this->user_reply_to = $form_attr->user_reply_to;
 				$this->confirmation_mail_body = $form_attr->confirmation_mail_body;
 				$this->admin_email_body = $form_attr->admin_email_body;
 				$this->confirmation_mail_subject = $form_attr->confirmation_mail_subject;
@@ -1330,8 +1332,8 @@ if(!class_exists('NEXForms_Builder7')){
 								$output .= '<div class="field-setting col-xs-3 s-all" >';	
 									$output .= '<div role="group" class="btn-group timer-animation" data-value="'.$timer_animation.'">';
 										$output .= '<small>'.__('Animation','nex-forms').'</small>';
-										$output .= '<button class="btn btn-default text-btn waves-effect-nf waves-light-nf smooth '.(($timer_animation=='smooth') ? 'active' : '' ).'" type="button" title="'.__('Smooth Transition','nex-forms').'">Smooth</button>';
-										$output .= '<button class="btn btn-default text-btn waves-effect-nf waves-light-nf ticks '.(($timer_animation=='ticks') ? 'active' : '' ).'" type="button" title="'.__('Ticking Transition','nex-forms').'">Ticks</button>';
+										$output .= '<button class="btn btn-default text-btn waves-effect-nf waves-light-nf smooth '.(($timer_animation=='smooth') ? 'active' : '' ).'" type="button" title="'.__('Smooth Transition','nex-forms').'">'.__('Ease','nex-forms').'</button>';
+										$output .= '<button class="btn btn-default text-btn waves-effect-nf waves-light-nf ticks '.(($timer_animation=='ticks') ? 'active' : '' ).'" type="button" title="'.__('Ticking Transition','nex-forms').'">'.__('Ticks','nex-forms').'</button>';
 									$output .= '</div>';
 								$output .= '</div>';
 								$output .= '<div class="field-setting col-xs-1 s-all" >';
@@ -8249,6 +8251,13 @@ $output .= '<div class="inner-form-canvas">';
 										NEXForms_clean_echo( '</div>');
 									NEXForms_clean_echo( '</div>');
 									
+									NEXForms_clean_echo('<div class="row">');
+										NEXForms_clean_echo('<div class="integration_form_label">'.__('Reply-To','nex-forms').'</div>');
+										NEXForms_clean_echo('<div class="integration_form_field tut_admin_email_8">');
+											NEXForms_clean_echo('<input type="text" class="form-control" name="nex_user_reply_to" id="nex_user_reply_to"  placeholder="'.__('Leave blank for user replies to be sent to: ','nex-forms').''.(($this->from_address) ? wp_unslash($this->from_address) : $preferences['email_preferences']['pref_email_from_address']).'" value="'.(($this->user_reply_to) ? wp_unslash($this->user_reply_to) : '').'" >');
+										NEXForms_clean_echo('</div>');
+									NEXForms_clean_echo('</div>');
+									
 									NEXForms_clean_echo( '<div class="row">');
 										NEXForms_clean_echo( '<div class="integration_form_label">'.__('BCC','nex-forms').'</div>');
 										NEXForms_clean_echo( '<div class="integration_form_field tut_user_email_2">');
@@ -9002,6 +9011,7 @@ $output .= '<div class="inner-form-canvas">';
 			
 			$orientation = $pdf_settings[0]['pdf_orientation'];
 			$pdf_size = $pdf_settings[0]['pdf_size'];
+			$pdf_file_name = $pdf_settings[0]['pdf_file_name'];
 			
 			
 			NEXForms_clean_echo( '<div class="">');
@@ -9015,6 +9025,13 @@ $output .= '<div class="inner-form-canvas">';
 					NEXForms_clean_echo( '</div>');
 				NEXForms_clean_echo( '</div>');
 				
+				
+				NEXForms_clean_echo('<div class="row">');
+							NEXForms_clean_echo('<div class="integration_form_label">'.__('PDF File Name','nex-forms').'</div>');
+							NEXForms_clean_echo('<div class="integration_form_field">');
+								NEXForms_clean_echo('<input type="text" class="form-control" name="pdf_file_name" id="pdf_file_name"  placeholder="'.__('Leave blank for default file name','nex-forms').'"  value="'.$pdf_file_name.'">');
+							NEXForms_clean_echo('</div>');
+						NEXForms_clean_echo('</div>');
 				
 				
 				NEXForms_clean_echo(  '<div class="row">');

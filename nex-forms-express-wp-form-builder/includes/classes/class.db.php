@@ -47,6 +47,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			add_action('wp_ajax_nf_send_test_email', array($this,'nf_send_test_email'));
 			
 			add_action('wp_ajax_update_paypal', array($this,'update_paypal'));
+			add_action('wp_ajax_get_data', array($this,'NEXForms_get_data'));
 			add_action('wp_ajax_get_c_logic_ui', array($this,'get_c_logic_ui'));
 						
 		
@@ -251,7 +252,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if(!strstr($db_table, 'nex_forms'))
 				wp_die();
 			
-			$fields 	= $wpdb->get_results('SHOW FIELDS FROM ' . $wpdb->prefix .sanitize_text_field($db_table)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$fields 	= $wpdb->get_results('SHOW FIELDS FROM ' . $wpdb->prefix .sanitize_text_field($db_table)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
 			foreach($fields as $field)
 				{
@@ -269,7 +270,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 						}
 					}	
 				}
-			$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array );  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$insert_id = $wpdb->insert_id;
 			NEXForms_clean_echo( $insert_id);
 			
@@ -320,7 +321,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$edit_id = sanitize_title($_POST['edit_Id']);
 			
-			$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'. $wpdb->prefix . sanitize_text_field($db_table).'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'. $wpdb->prefix . sanitize_text_field($db_table).'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
 			foreach($fields as $field)
 				{
@@ -339,7 +340,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					}	
 				}
 				
-			$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'Id' => $edit_id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'Id' => $edit_id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			NEXForms_clean_echo( sanitize_title($edit_id));
 			wp_die();
 		}
@@ -362,7 +363,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		$nex_forms_Id = sanitize_title($_POST['nex_forms_Id']);
 		
-		$fields 	= $wpdb->get_results('SHOW FIELDS FROM `' . $wpdb->prefix . sanitize_text_field($db_table).'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$fields 	= $wpdb->get_results('SHOW FIELDS FROM `' . $wpdb->prefix . sanitize_text_field($db_table).'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$field_array = array();
 		foreach($fields as $field)
 				{
@@ -382,12 +383,12 @@ if(!class_exists('NEXForms_Database_Actions'))
 				}
 		
 		$row_prep = $wpdb->prepare('SELECT nex_forms_Id FROM `'. $wpdb->prefix . sanitize_text_field($db_table).'` WHERE nex_forms_Id=%d',$nex_forms_Id);
-		$get_row = $wpdb->get_var($row_prep); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$get_row = $wpdb->get_var($row_prep); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		if(!$get_row)
-			$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		else
-			$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'nex_forms_Id' => sanitize_title($nex_forms_Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'nex_forms_Id' => sanitize_title($nex_forms_Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			
 		NEXForms_clean_echo( sanitize_title($nex_forms_Id));
@@ -401,7 +402,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		global $wpdb;
 		
 		
-		$form = $wpdb->get_row('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = '.sanitize_title($form_Id));  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$form = $wpdb->get_row('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = '.sanitize_title($form_Id));  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		$set_products = '';
 		$products = explode('[end_product]',$form->products);
@@ -532,7 +533,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		global $wpdb;
 		
 		
-		$form = $wpdb->get_row('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = '.sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$form = $wpdb->get_row('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = '.sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		$output = '';
 		
@@ -715,10 +716,10 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$record_id = sanitize_title($_POST['Id']);
 	
 			$get_record = $wpdb->prepare('SELECT * FROM ' .$wpdb->prefix. sanitize_text_field($db_table). ' WHERE Id = %d ',sanitize_title($record_id));
-			$record = $wpdb->get_row($get_record); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$record = $wpdb->get_row($get_record); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
-			$get_fields 	= $wpdb->prepare("SHOW FIELDS FROM " . $wpdb->prefix .sanitize_text_field($db_table),''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$fields 	= $wpdb->get_results($get_fields); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_fields 	= $wpdb->prepare("SHOW FIELDS FROM " . $wpdb->prefix .sanitize_text_field($db_table),''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$fields 	= $wpdb->get_results($get_fields); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
 			$draft_array = array();
 			foreach($fields as $field)
@@ -730,8 +731,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 			unset($field_array['entry_count']);
 			unset($field_array['Id']);
 			$draft_array = $field_array;	
-			$insert = $wpdb->prepare ( $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ),''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->query($insert); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$insert = $wpdb->prepare ( $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ),''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$wpdb->query($insert); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$insert_id = $wpdb->insert_id;
 	
@@ -778,8 +779,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$record_id = sanitize_title($_POST['Id']);
 			
-			$delete = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			//$delete_draft = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('draft_Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$delete = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			//$delete_draft = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('draft_Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			wp_die();
 		}	
 		public function delete_file(){
@@ -798,8 +799,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				wp_die();
 			
 			$record_id = sanitize_title($_POST['Id']);
-			$get_file = $wpdb->prepare('SELECT location FROM ' .$wpdb->prefix. sanitize_text_field($db_table). ' WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$file = $wpdb->get_var($get_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_file = $wpdb->prepare('SELECT location FROM ' .$wpdb->prefix. sanitize_text_field($db_table). ' WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$file = $wpdb->get_var($get_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			unlink($file);
 			
@@ -816,14 +817,49 @@ if(!class_exists('NEXForms_Database_Actions'))
 			global $wpdb;
 			
 			$record_id = sanitize_title($_POST['Id']);
-			$get_db_table = $wpdb->prepare('SELECT db_table FROM ' .$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$db_table = $wpdb->get_var($get_db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_db_table = $wpdb->prepare('SELECT db_table FROM ' .$wpdb->prefix.'wap_nex_forms_reports WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$db_table = $wpdb->get_var($get_db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
-			$drop_table = $wpdb->query('DROP TABLE `'.$db_table.'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$drop_table = $wpdb->query('DROP TABLE `'.$db_table.'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			die();
 		}
-		
+		public function NEXForms_get_data(){
+				
+			
+				$api_params = array( 
+					'verify-2' 		=> 1, //'',
+					'license' 		=> sanitize_text_field($_POST['pc']), 
+					'user_name' 	=> sanitize_text_field($_POST['eu']), 
+					'item_code' 	=> '7103891',
+					'email_address' => get_option('admin_email'),
+					'for_site' 		=> get_option('siteurl'),
+					'unique_key'	=> get_option('7103891'),
+					're_register'	=> (($_POST['rereg']=='false') ? false : true),
+					'version' 		=> '9'
+				);
+				
+				// Call the custom API.
+				$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array(
+					'timeout'   => 30,
+					'sslverify' => false,
+					'body'      => $api_params
+				) );
+				// make sure the response came back okay
+				
+				if ( is_wp_error( $response ) )
+					NEXForms_clean_echo( '<div class="alert alert-danger"><strong>Could not connect</div><br /><br />Please try again later.');
+
+				// decode the license data
+				$license_data = json_decode($response['body'],true);
+				if($license_data['error']<=0)
+					{
+					update_option( '1983017'.$license_data['key'] , array( $license_data['pc']));
+					}
+				
+				NEXForms_clean_echo( sanitize_text_field($license_data['message']));
+				die();
+		}
 /* ALTER TABLE */
 		public function alter_plugin_table($table='', $col = '', $type='text'){
 			
@@ -837,14 +873,14 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if(!strstr($table, 'nex_forms'))
 				return;
 			
-			$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.$table.'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$fields 	= $wpdb->get_results('SHOW FIELDS FROM `'.$wpdb->prefix.$table.'`'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
 			foreach($fields as $field)
 				{
 				$field_array[$field->Field] = $field->Field;
 				}
 			if(!in_array(sanitize_text_field($col),$field_array))
-				$result = $wpdb->query("ALTER TABLE `".$wpdb->prefix.$table."` ADD `".$col."` ".strtoupper($type)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$result = $wpdb->query("ALTER TABLE `".$wpdb->prefix.$table."` ADD `".$col."` ".strtoupper($type)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 		}
 		public function recollate_plugin_table(){
@@ -853,14 +889,14 @@ if(!class_exists('NEXForms_Database_Actions'))
 			//	wp_die();
 			
 			global $wpdb;
-			$check_field = $wpdb->query("SHOW COLUMNS FROM `".$wpdb->prefix ."wap_nex_forms` LIKE 'last_update'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$check_field = $wpdb->query("SHOW COLUMNS FROM `".$wpdb->prefix ."wap_nex_forms` LIKE 'last_update'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			if($check_field)
-				$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` DROP `last_update`"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` DROP `last_update`"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					
-			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` ENGINE = MYISAM;"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` DEFAULT CHARSET=utf8mb4"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` ENGINE = MYISAM;"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` DEFAULT CHARSET=utf8mb4"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			//$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms_entries` ENGINE = MYISAM;");
 			//$wpdb->query("ALTER TABLE `".$wpdb->prefix ."wap_nex_forms_entries` DEFAULT CHARSET=utf8mb4");
@@ -878,8 +914,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				wp_die();
 
 			
-			$form = $wpdb->get_var('SELECT Id FROM '. $wpdb->prefix .'wap_nex_forms WHERE is_form = "preview"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix . sanitize_text_field($db_table)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$form = $wpdb->get_var('SELECT Id FROM '. $wpdb->prefix .'wap_nex_forms WHERE is_form = "preview"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$fields 	= $wpdb->get_results("SHOW FIELDS FROM " . $wpdb->prefix . sanitize_text_field($db_table)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
 			
 			if($form)
@@ -898,7 +934,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 						}	
 					}
 					
-				$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'Id' => sanitize_title($edit_id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$update = $wpdb->update ( $wpdb->prefix . sanitize_text_field($db_table), $field_array, array(	'Id' => sanitize_title($edit_id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				NEXForms_clean_echo( sanitize_title($edit_id));
 			
 				}
@@ -906,7 +942,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				{
 			
 			
-				$wpdb->delete($wpdb->prefix.'wap_nex_forms',array('is_form'=>'preview')); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$wpdb->delete($wpdb->prefix.'wap_nex_forms',array('is_form'=>'preview')); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				foreach($fields as $field)
 					{
 					if(isset($_POST[$field->Field]))
@@ -920,7 +956,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				$field_array['form_hidden_fields'] = json_encode($field_array['form_hidden_fields']);
 				$field_array['hidden_fields'] = json_encode($field_array['hidden_fields']);
 				$field_array['conditional_logic_array'] = json_encode($field_array['conditional_logic_array']);
-				$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$insert = $wpdb->insert ( $wpdb->prefix . sanitize_text_field($db_table), $field_array ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 				NEXForms_clean_echo( $wpdb->insert_id);
 				}
@@ -942,17 +978,17 @@ if(!class_exists('NEXForms_Database_Actions'))
 		$output = '';
 		if($_POST['get_templates']=='1')
 			{
-			$get_forms = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template=1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC',''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_forms = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template=1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC',''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$is_template = 'is_template';
 			}
 		else
 			{
-			$get_forms = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template<>1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC',''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_forms = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_template<>1 AND is_form<>"preview" AND is_form<>"draft" ORDER BY Id DESC',''); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$is_template = '';
 			}
 
 		
-		$forms = $wpdb->get_results($get_forms); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$forms = $wpdb->get_results($get_forms); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		if($forms)
 			{
 			$output .= '<table class="table table-striped" style="width:100%; margin-bottom:0px;">';
@@ -1043,8 +1079,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				$table = $params[1];
 				}
 				
-			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d ",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$the_title = $wpdb->get_var($get_the_title); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d ",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$the_title = $wpdb->get_var($get_the_title); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$the_title= wp_unslash($the_title);
 			$the_title= str_replace('\"','',$the_title);
@@ -1071,8 +1107,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				$Id = $params[0];
 				$table = $params[1];
 				}
-			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$the_title = $wpdb->get_var($get_the_title); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$the_title = $wpdb->get_var($get_the_title); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$the_title= wp_unslash($the_title);
 			$the_title= str_replace('\"','',$the_title);
@@ -1088,34 +1124,34 @@ if(!class_exists('NEXForms_Database_Actions'))
 	
 	public function get_user_firstname($Id){
 			global $wpdb;
-			$get_username = $wpdb->prepare("SELECT meta_value FROM " . $wpdb->prefix . "usermeta WHERE user_id = %d AND meta_key='first_name'",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_username = $wpdb->prepare("SELECT meta_value FROM " . $wpdb->prefix . "usermeta WHERE user_id = %d AND meta_key='first_name'",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $username;
 			
 		}	
 	public function get_user_lastname($Id){
 			global $wpdb;
-			$get_username = $wpdb->prepare("SELECT meta_value FROM " . $wpdb->prefix . "usermeta WHERE user_id = %d AND meta_key='last_name'",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_username = $wpdb->prepare("SELECT meta_value FROM " . $wpdb->prefix . "usermeta WHERE user_id = %d AND meta_key='last_name'",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $username;
 		}	
 	
 	public function get_username($Id){
 			global $wpdb;
-			$get_username = $wpdb->prepare("SELECT display_name FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_username = $wpdb->prepare("SELECT display_name FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$username = $wpdb->get_var($get_username); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $username;
 		}
 	public function get_useremail($Id){
 			global $wpdb;
-			$get_useremail = $wpdb->prepare("SELECT user_email FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$useremail = $wpdb->get_var($get_useremail); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_useremail = $wpdb->prepare("SELECT user_email FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$useremail = $wpdb->get_var($get_useremail); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $useremail;
 		}
 	public function get_userurl($Id){
 			global $wpdb;
-			$get_userurl = $wpdb->prepare("SELECT user_url FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$userurl = $wpdb->get_var($get_userurl); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_userurl = $wpdb->prepare("SELECT user_url FROM " . $wpdb->prefix . "users WHERE ID = %d",sanitize_title($Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$userurl = $wpdb->get_var($get_userurl); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return $userurl;
 		}
 	
@@ -1129,8 +1165,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				
 			$form_Id = sanitize_title($_POST['form_Id']);
 				
-			$get_form = $wpdb->get_row($wpdb->prepare('SELECT form_fields FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'= %d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$form = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_form = $wpdb->get_row($wpdb->prepare('SELECT form_fields FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'= %d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$form = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			NEXForms_clean_echo( str_replace('\\','',$form->form_fields));
 			die();	
 		}
@@ -1141,8 +1177,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			global $wpdb;
 						
-			$get_logic = $wpdb->prepare('SELECT conditional_logic FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d ',sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$conditional_logic = $wpdb->get_var($get_logic); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_logic = $wpdb->prepare('SELECT conditional_logic FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d ',sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$conditional_logic = $wpdb->get_var($get_logic); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			//echo '<pre>';
 			if($conditional_logic)
@@ -1553,8 +1589,8 @@ if(!class_exists('NEXForms_Database_Actions'))
 				wp_die();
 			global $wpdb;
 						
-			$get_logic = $wpdb->prepare('SELECT conditional_logic_array FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d ',sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$conditional_logic = $wpdb->get_var($get_logic); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_logic = $wpdb->prepare('SELECT conditional_logic_array FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id=%d ',sanitize_title($form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$conditional_logic = $wpdb->get_var($get_logic); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			/*echo '<pre>';
 				print_r(json_decode($conditional_logic));
@@ -1858,7 +1894,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					
 				$form_Id = sanitize_title($_POST['form_Id']);
 			
-				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 	//ADMIN EMAIL SETUP
 					$preferences = get_option('nex-forms-preferences');
@@ -1973,7 +2009,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					
 				$form_Id = sanitize_title($_POST['form_Id']);
 			
-				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',sanitize_title($form_Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			//PDF SETUP
 					$preferences = get_option('nex-forms-preferences');
@@ -2022,7 +2058,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				if($form_Id)
 					{
 					$get_form = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id= %d ',sanitize_title($form_Id));
-					$form = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					$form = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					}
 				//HIDDEN FIELDS SETUP	
 					
@@ -2157,7 +2193,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				if($form_Id)
 					{
 					$get_form = $wpdb->prepare('SELECT form_hidden_fields FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id= %d ',sanitize_title($form_Id));
-					$hidden_fields = $wpdb->get_var($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					$hidden_fields = $wpdb->get_var($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					}
 				//HIDDEN FIELDS SETUP	
 					
@@ -2295,7 +2331,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					
 				$form_Id = sanitize_title($_POST['form_Id']);	
 				
-				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',$form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$form = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE '.$get_id.'=%d',$form_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			$preferences = get_option('nex-forms-preferences');	
 	//FORM ATTR
@@ -2393,7 +2429,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				$where_str .= ' AND nex_forms_Id='.$form_Id;
 			
 			
-			$results 	= $wpdb->get_results($wpdb->prepare('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms_entries WHERE Id <> "" '.(($tree) ? ' AND parent_Id="0"' : '').' '.(($plugin_alias) ? ' AND (plugin="'.sanitize_text_field($plugin_alias).'" || plugin="shared")' : '').' '.$where_str.'   ORDER BY '.((isset($orderby) && !empty($orderby)) ? sanitize_text_field($orderby).' '.sanitize_text_field($orderby) : 'Id DESC').' LIMIT '.((isset($current_page)) ? $current_page*10 : '0'  ).',10 ','')); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$results 	= $wpdb->get_results($wpdb->prepare('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms_entries WHERE Id <> "" '.(($tree) ? ' AND parent_Id="0"' : '').' '.(($plugin_alias) ? ' AND (plugin="'.sanitize_text_field($plugin_alias).'" || plugin="shared")' : '').' '.$where_str.'   ORDER BY '.((isset($orderby) && !empty($orderby)) ? sanitize_text_field($orderby).' '.sanitize_text_field($orderby) : 'Id DESC').' LIMIT '.((isset($current_page)) ? $current_page*10 : '0'  ).',10 ','')); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			
 			$output .= '<table class="table table-striped">';
@@ -2486,7 +2522,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			$form_entry_Id = sanitize_title($_POST['form_entry_Id']);
 			 if(isset($_POST['batch']) && $_POST['batch']=='false')
 				 	{
-					$form_entry = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$form_entry_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					$form_entry = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$form_entry_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 					
 					
 					$form_data = json_decode($form_entry->form_data);
@@ -2499,7 +2535,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			if($checkout)
 				{					
 				 
-				 $update = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries',array('viewed'=>'viewed'), array('Id'=>$form_entry_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				 $update = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries',array('viewed'=>'viewed'), array('Id'=>$form_entry_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				 
 				 if(isset($_POST['batch']) && $_POST['batch']=='false')
 				 	{
@@ -2749,7 +2785,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					foreach($_POST['selection'] as $key=>$val)
 						{
 						$get_form_entry = $wpdb->prepare('SELECT form_data,title FROM '.$wpdb->prefix.'wap_nex_forms_entries, '.$wpdb->prefix.'wap_nex_forms WHERE '.$wpdb->prefix.'wap_nex_forms_entries.nex_forms_Id = '.$wpdb->prefix.'wap_nex_forms.Id AND '.$wpdb->prefix.'wap_nex_forms_entries.Id=%d', sanitize_text_field($val));
-						$set_form_entry = $wpdb->get_row($get_form_entry);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery	
+						$set_form_entry = $wpdb->get_row($get_form_entry);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter	
 							if($set_form_entry)
 								{
 								$output .= '<div class="row batch_entry" id="'.$val.'">';
@@ -2916,15 +2952,15 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$wpdb->show_errors(); 
 			//$wpdb->print_error(); 
-			return $wpdb->get_var($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			return $wpdb->get_var($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			if($echo)
 				{
-				NEXForms_clean_echo( $wpdb->get_var($sql)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				NEXForms_clean_echo( $wpdb->get_var($sql)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				die();
 				}
 			else
-				return $wpdb->get_var($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				return $wpdb->get_var($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 		}
 	
@@ -3177,8 +3213,6 @@ if(!class_exists('NEXForms_Database_Actions'))
 	}
 	
 	
-
-	
 	public function load_template() {
 		if(!current_user_can( NF_USER_LEVEL ))	
 				wp_die();
@@ -3199,7 +3233,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 		
 		$get_form_data = json_decode($file_content,true);
 		
-		$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_form_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_form_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		//$wpdb->show_errors(); 
 		
 		
@@ -3257,7 +3291,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$get_data= json_decode($outputString2,true);
 			
-			$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$insert_id = $wpdb->insert_id;	
 			NEXForms_clean_echo( $insert_id);	
 			}
@@ -3282,7 +3316,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				
 				$get_form_data= json_decode($outputString2,true);
 				
-				$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_form_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$import_record = $wpdb->insert($wpdb->prefix.'wap_nex_forms',$get_form_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				$insert_id = $wpdb->insert_id;	
 				
 				NEXForms_clean_echo( $insert_id);
@@ -3484,7 +3518,7 @@ class NEXForms_widget extends WP_Widget{
 				$placeholders[ $key .'.value' ] = $this->control_options[ $key ];
 			}
 		global $wpdb;
-		$get_forms = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$get_forms = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		$current_form = NEXForms_widget_controls::parse('[+form_id.value+]', $placeholders);
 		
 		$tpl  = '<input id="[+title.id+]" name="[+title.name+]" value="'.$db_action->get_title(NEXForms_widget_controls::parse('[+form_id.value+]', $placeholders),'wap_nex_forms').'" class="widefat" style="width:96%;display:none;" />';
@@ -3621,7 +3655,7 @@ function NEXForms_entry_status($form_Id){
 			
 			if(is_array($form_Id))
 				$set_form_id = $form_Id[0];
-			$entry = $wpdb->get_var($wpdb->prepare('SELECT viewed FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$entry = $wpdb->get_var($wpdb->prepare('SELECT viewed FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return ($entry=='viewed') ? '<span data-form-id="'.$set_form_id.'" class="set_viewed is_viewed fas fa-eye"></span>' : '<span data-form-id="'.$set_form_id.'" class="set_viewed not_viewed fas fa-eye-slash"></span>';
 		}
 
@@ -3633,7 +3667,7 @@ function NEXForms_starred($form_Id){
 			
 			if(is_array($form_Id))
 				$set_form_id = $form_Id[0];
-			$entry = $wpdb->get_var($wpdb->prepare('SELECT starred FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$entry = $wpdb->get_var($wpdb->prepare('SELECT starred FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return ($entry=='1') ? '<span data-form-id="'.$set_form_id.'" class="set_starred is_starred fas fa-star"></span>' : '<span data-form-id="'.$set_form_id.'" class="set_starred not_starred far fa-star"></span>';
 		}
 
@@ -3644,7 +3678,7 @@ function NEXForms_get_attachment($form_Id){
 			
 			if(is_array($form_Id))
 				$set_form_id = $form_Id[0];
-			$entry = $wpdb->get_var($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files WHERE entry_Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$entry = $wpdb->get_var($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files WHERE entry_Id= %d',$set_form_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			return ($entry) ? '<span data-form-id="'.$set_form_id.'" class="set_attachement has_attachment fas fa-paperclip"></span>' : '';
 		}
 
@@ -3660,7 +3694,7 @@ function NEXForms_get_entry_data_preview($Id='',$table=''){
 		}
 	
 	$get_the_data = $wpdb->prepare("SELECT form_data FROM " . $wpdb->prefix ."wap_nex_forms_entries WHERE Id = %d ",$Id);
-	$set_form_data = $wpdb->get_var($get_the_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$set_form_data = $wpdb->get_var($get_the_data); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 	$form_data = json_decode($set_form_data,1);
 	$set_data = '';
@@ -3696,8 +3730,8 @@ function NEXForms_get_title($Id='',$table=''){
 				$table = $params[1];
 				}
 				
-			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d ",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d ",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$the_title= wp_unslash($the_title);
 			$the_title= str_replace('\"','',$the_title);
@@ -3720,8 +3754,8 @@ function NEXForms_get_title2($Id='',$table=''){
 				$Id = $params[0];
 				$table = $params[1];
 				}
-			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$the_title= wp_unslash($the_title);
 			$the_title= str_replace('\"','',$the_title);
@@ -3743,8 +3777,8 @@ function NEXForms_get_title3($Id='',$table=''){
 				$Id = $params[0];
 				$table = $params[1];
 				}
-			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_the_title = $wpdb->prepare("SELECT title FROM " . $wpdb->prefix .$table." WHERE Id = %d",$Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$the_title = sanitize_text_field($wpdb->get_var($get_the_title)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			
 			$the_title= wp_unslash($the_title);

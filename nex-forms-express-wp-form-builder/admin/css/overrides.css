@@ -46,7 +46,9 @@ ul#adminmenu li img {
 }
 
 
-
+#nex-forms input[type="number"] {
+    min-height: 35px;
+}
 /* Track */
 ::-webkit-scrollbar-track {
   background: #e7e7e7;

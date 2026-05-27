@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.1.13
+Version: 9.2.1
 Author URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 License: GPL
 Text Domain: nex-forms
@@ -120,7 +120,7 @@ function NEXForms5_deregister_javascript(){
 	
 	$output = '';
 	
-	$include_script_array = array('utils', 'common', 'wp-sanitize', 'sack', 'quicktags', 'colorpicker', 'editor', 'clipboard', 'wp-ajax-response', 'wp-api-request', 'wp-pointer', 'autosave', 'heartbeat', 'wp-auth-check', 'wp-lists', 'prototype', 'scriptaculous-root', 'scriptaculous-builder', 'scriptaculous-dragdrop', 'scriptaculous-effects', 'scriptaculous-slider', 'scriptaculous-sound', 'scriptaculous-controls', 'scriptaculous', 'cropper', 'jquery', 'jquery-core', 'jquery-migrate', 'jquery-ui-core', 'jquery-effects-core', 'jquery-effects-blind', 'jquery-effects-bounce', 'jquery-effects-clip', 'jquery-effects-drop', 'jquery-effects-explode', 'jquery-effects-fade', 'jquery-effects-fold', 'jquery-effects-highlight', 'jquery-effects-puff', 'jquery-effects-pulsate', 'jquery-effects-scale', 'jquery-effects-shake', 'jquery-effects-size', 'jquery-effects-slide', 'jquery-effects-transfer', 'jquery-ui-accordion', 'jquery-ui-autocomplete', 'jquery-ui-button', 'jquery-ui-datepicker', 'jquery-ui-dialog', 'jquery-ui-menu', 'jquery-ui-mouse', 'jquery-ui-progressbar', 'jquery-ui-selectmenu', 'jquery-ui-slider', 'jquery-ui-spinner', 'jquery-ui-tabs', 'jquery-ui-tooltip', 'jquery-ui-checkboxradio', 'jquery-ui-controlgroup', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-selectable', 'jquery-ui-sortable', 'jquery-ui-position', 'jquery-ui-widget', 'jquery-form', 'jquery-color', 'schedule', 'jquery-query', 'jquery-serialize-object', 'jquery-hotkeys', 'jquery-table-hotkeys', 'jquery-touch-punch', 'suggest', 'imagesloaded', 'masonry', 'jquery-masonry', 'thickbox', 'jcrop', 'swfobject', 'moxiejs', 'plupload', 'plupload-all', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'wp-plupload', 'swfupload', 'swfupload-all', 'swfupload-handlers', 'comment-reply', 'json2', 'underscore', 'backbone', 'wp-util', 'wp-backbone', 'revisions', 'imgareaselect', 'mediaelement', 'mediaelement-core', 'mediaelement-migrate', 'mediaelement-vimeo', 'wp-mediaelement', 'wp-codemirror', 'csslint', 'esprima', 'jshint', 'jsonlint', 'htmlhint', 'htmlhint-kses', 'code-editor', 'wp-theme-plugin-editor', 'wp-playlist', 'zxcvbn-async', 'password-strength-meter', 'application-passwords', 'auth-app', 'user-profile', 'language-chooser', 'user-suggest', 'admin-bar', 'wplink', 'wpdialogs', 'word-count', 'media-upload', 'hoverIntent', 'hoverintent-js', 'customize-base', 'customize-loader', 'customize-preview', 'customize-models', 'customize-views', 'customize-controls', 'customize-selective-refresh', 'customize-widgets', 'customize-preview-widgets', 'customize-nav-menus', 'customize-preview-nav-menus', 'wp-custom-header', 'accordion', 'shortcode', 'media-models', 'wp-embed', 'media-views', 'media-editor', 'media-audiovideo', 'mce-view', 'wp-api', 'admin-tags', 'admin-comments', 'xfn', 'postbox', 'tags-box', 'tags-suggest', 'post', 'editor-expand', 'link', 'comment', 'admin-gallery', 'admin-widgets', 'media-widgets', 'media-audio-widget', 'media-image-widget', 'media-gallery-widget', 'media-video-widget', 'text-widgets', 'custom-html-widgets', 'theme', 'inline-edit-post', 'inline-edit-tax', 'plugin-install', 'site-health', 'privacy-tools', 'updates', 'farbtastic', 'iris', 'wp-color-picker', 'dashboard', 'list-revisions', 'media-grid', 'media', 'image-edit', 'set-post-thumbnail', 'nav-menu', 'custom-header', 'custom-background', 'media-gallery', 'svg-painter', 'react', 'react-dom', 'regenerator-runtime', 'moment', 'lodash', 'wp-polyfill-fetch', 'wp-polyfill-formdata', 'wp-polyfill-node-contains', 'wp-polyfill-url', 'wp-polyfill-dom-rect', 'wp-polyfill-element-closest', 'wp-polyfill-object-fit', 'wp-polyfill-inert', 'wp-polyfill', 'wp-tinymce', 'wp-tinymce-lists', 'wp-a11y', 'wp-annotations', 'wp-api-fetch', 'wp-autop', 'wp-blob', 'wp-block-directory', 'wp-block-editor', 'wp-block-library', 'wp-block-serialization-default-parser', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-core-data', 'wp-customize-widgets', 'wp-data', 'wp-data-controls', 'wp-date', 'wp-deprecated', 'wp-dom', 'wp-dom-ready', 'wp-edit-post', 'wp-edit-site', 'wp-edit-widgets', 'wp-editor', 'wp-element', 'wp-escape-html', 'wp-format-library', 'wp-hooks', 'wp-html-entities', 'wp-i18n', 'wp-is-shallow-equal', 'wp-keyboard-shortcuts', 'wp-keycodes', 'wp-list-reusable-blocks', 'wp-media-utils', 'wp-notices', 'wp-nux', 'wp-plugins', 'wp-preferences', 'wp-preferences-persistence', 'wp-primitives', 'wp-priority-queue', 'wp-private-apis', 'wp-redux-routine', 'wp-reusable-blocks', 'wp-rich-text', 'wp-server-side-render', 'wp-shortcode', 'wp-style-engine', 'wp-token-list', 'wp-url', 'wp-viewport', 'wp-warning', 'wp-widgets', 'wp-wordcount', 'wp-block-file-view', 'wp-block-navigation-view', 'wp-block-navigation-view-2', 'nex-forms-polls', 'nex-forms-timer', 'nex-forms-admin-functions', 'nex-forms-charts', 'nex-forms-materialize.min', 'nex-forms-dashboard', 'nex-forms-bootstrap-admin', 'nex-forms-builder', 'nex-forms-field-settings-recall', 'nex-forms-field-settings', 'nex-forms-admin-tour', 'nex-forms-tinymce', 'nex-forms-drag-and-drop', 'nex-forms-locales.min', 'nex-forms-moment.min', 'nex-forms-date-time', 'nex-forms-raty', 'nex-forms-fields', 'nex-forms-bootstrap.touchspin', 'nex-forms-bootstrap.min', 'nex-forms-wow', 'nex-forms-raty-fa', 'nex-forms-onload', 'nex-forms-math.min', 'nex-forms-bootstrap-datetimepicker', 'nex-forms-bootstrap-touchspin', 'nex-forms-scrollTo', 'nex-forms-theme-script', 'nex-forms-ga', 'nex-forms-signature', 'nex-forms-themes-add-on');
+	$include_script_array = array('utils', 'common', 'wp-sanitize', 'sack', 'quicktags', 'colorpicker', 'editor', 'clipboard', 'wp-ajax-response', 'wp-api-request', 'wp-pointer', 'autosave', 'heartbeat', 'wp-auth-check', 'wp-lists', 'site-icon', 'prototype', 'scriptaculous-root', 'scriptaculous-builder', 'scriptaculous-dragdrop', 'scriptaculous-effects', 'scriptaculous-slider', 'scriptaculous-sound', 'scriptaculous-controls', 'scriptaculous', 'cropper', 'jquery', 'jquery-core', 'jquery-migrate', 'jquery-ui-core', 'jquery-effects-core', 'jquery-effects-blind', 'jquery-effects-bounce', 'jquery-effects-clip', 'jquery-effects-drop', 'jquery-effects-explode', 'jquery-effects-fade', 'jquery-effects-fold', 'jquery-effects-highlight', 'jquery-effects-puff', 'jquery-effects-pulsate', 'jquery-effects-scale', 'jquery-effects-shake', 'jquery-effects-size', 'jquery-effects-slide', 'jquery-effects-transfer', 'jquery-ui-accordion', 'jquery-ui-autocomplete', 'jquery-ui-button', 'jquery-ui-datepicker', 'jquery-ui-dialog', 'jquery-ui-menu', 'jquery-ui-mouse', 'jquery-ui-progressbar', 'jquery-ui-selectmenu', 'jquery-ui-slider', 'jquery-ui-spinner', 'jquery-ui-tabs', 'jquery-ui-tooltip', 'jquery-ui-checkboxradio', 'jquery-ui-controlgroup', 'jquery-ui-draggable', 'jquery-ui-droppable', 'jquery-ui-resizable', 'jquery-ui-selectable', 'jquery-ui-sortable', 'jquery-ui-position', 'jquery-ui-widget', 'jquery-form', 'jquery-color', 'schedule', 'jquery-query', 'jquery-serialize-object', 'jquery-hotkeys', 'jquery-table-hotkeys', 'jquery-touch-punch', 'suggest', 'imagesloaded', 'masonry', 'jquery-masonry', 'thickbox', 'jcrop', 'moxiejs', 'plupload', 'plupload-all', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'wp-plupload', 'comment-reply', 'json2', 'underscore', 'backbone', 'wp-util', 'wp-backbone', 'revisions', 'imgareaselect', 'mediaelement', 'mediaelement-core', 'mediaelement-migrate', 'mediaelement-vimeo', 'wp-mediaelement', 'wp-codemirror', 'csslint', 'esprima', 'jshint', 'jsonlint', 'htmlhint', 'htmlhint-kses', 'code-editor', 'wp-theme-plugin-editor', 'wp-playlist', 'zxcvbn-async', 'password-strength-meter', 'password-toggle', 'application-passwords', 'auth-app', 'user-profile', 'language-chooser', 'user-suggest', 'admin-bar', 'wplink', 'wpdialogs', 'word-count', 'media-upload', 'hoverIntent', 'hoverintent-js', 'customize-base', 'customize-loader', 'customize-preview', 'customize-models', 'customize-views', 'customize-controls', 'customize-selective-refresh', 'customize-widgets', 'customize-preview-widgets', 'customize-nav-menus', 'customize-preview-nav-menus', 'wp-custom-header', 'accordion', 'shortcode', 'media-models', 'wp-embed', 'media-views', 'media-editor', 'media-audiovideo', 'mce-view', 'wp-api', 'admin-tags', 'admin-comments', 'xfn', 'postbox', 'tags-box', 'tags-suggest', 'post', 'editor-expand', 'link', 'comment', 'admin-gallery', 'admin-widgets', 'media-widgets', 'media-audio-widget', 'media-image-widget', 'media-gallery-widget', 'media-video-widget', 'text-widgets', 'custom-html-widgets', 'theme', 'inline-edit-post', 'inline-edit-tax', 'plugin-install', 'site-health', 'privacy-tools', 'updates', 'farbtastic', 'iris', 'wp-color-picker', 'dashboard', 'list-revisions', 'media-grid', 'media', 'image-edit', 'set-post-thumbnail', 'nav-menu', 'custom-header', 'custom-background', 'media-gallery', 'svg-painter', 'react', 'react-dom', 'react-jsx-runtime', 'regenerator-runtime', 'moment', 'lodash', 'wp-polyfill-fetch', 'wp-polyfill-formdata', 'wp-polyfill-node-contains', 'wp-polyfill-url', 'wp-polyfill-dom-rect', 'wp-polyfill-element-closest', 'wp-polyfill-object-fit', 'wp-polyfill-inert', 'wp-polyfill', 'wp-tinymce-root', 'wp-tinymce', 'wp-tinymce-lists', 'wp-a11y', 'wp-annotations', 'wp-api-fetch', 'wp-autop', 'wp-base-styles', 'wp-blob', 'wp-block-directory', 'wp-block-editor', 'wp-block-library', 'wp-block-serialization-default-parser', 'wp-block-serialization-spec-parser', 'wp-blocks', 'wp-commands', 'wp-components', 'wp-compose', 'wp-core-commands', 'wp-core-data', 'wp-customize-widgets', 'wp-data', 'wp-data-controls', 'wp-date', 'wp-deprecated', 'wp-dom', 'wp-dom-ready', 'wp-edit-post', 'wp-edit-site', 'wp-edit-widgets', 'wp-editor', 'wp-element', 'wp-escape-html', 'wp-format-library', 'wp-hooks', 'wp-html-entities', 'wp-i18n', 'wp-is-shallow-equal', 'wp-keyboard-shortcuts', 'wp-keycodes', 'wp-list-reusable-blocks', 'wp-media-utils', 'wp-notices', 'wp-nux', 'wp-patterns', 'wp-plugins', 'wp-preferences', 'wp-preferences-persistence', 'wp-primitives', 'wp-priority-queue', 'wp-private-apis', 'wp-react-i18n', 'wp-redux-routine', 'wp-reusable-blocks', 'wp-rich-text', 'wp-router', 'wp-server-side-render', 'wp-shortcode', 'wp-style-engine', 'wp-theme', 'wp-token-list', 'wp-undo-manager', 'wp-upload-media', 'wp-url', 'wp-viewport', 'wp-warning', 'wp-widgets', 'wp-wordcount', 'nex-forms-polls', 'nex-forms-timer', 'nex-forms-admin-functions', 'nex-forms-google-charts', 'nex-forms-charts', 'nex-forms-materialize.min', 'nex-forms-dashboard', 'nex-forms-bootstrap-admin', 'nex-forms-builder', 'nex-forms-field-settings-recall', 'nex-forms-field-settings', 'nex-forms-admin-tour', 'nex-forms-tinymce', 'nex-forms-drag-and-drop', 'nex-forms-locales.min', 'nex-forms-moment.min', 'nex-forms-date-time', 'nex-forms-raty', 'nex-forms-fields', 'nex-forms-bootstrap.touchspin', 'nex-forms-bootstrap.min', 'nex-forms-wow', 'nex-forms-raty-fa', 'nex-forms-modal', 'nex-forms-selects-js', 'nex-forms-var', 'nex-forms-input-mask', 'nex-forms-sigs', 'nex-forms-tags', 'nex-forms-onload', 'nex-forms-math.min', 'nex-forms-bootstrap-datetimepicker', 'nex-forms-bootstrap-touchspin', 'nex-forms-signature', 'nex-forms-themes-add-on',);
 	
 	if($wp_scripts)
 		{
@@ -138,7 +138,7 @@ function NEXForms5_deregister_javascript(){
 function NEXForms5_deregister_stylesheets(){
 	global $wp_styles;
 	
-	$include_style_array = array('colors','wp-codemirror', 'wp-theme-plugin-editor','common','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default', 'nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat','nex_forms-builder','google-roboto');
+	$include_style_array = array('colors', 'common', 'forms', 'admin-menu', 'dashboard', 'list-tables', 'edit', 'revisions', 'media', 'themes', 'about', 'nav-menus', 'widgets', 'site-icon', 'l10n', 'code-editor', 'site-health', 'wp-admin', 'login', 'install', 'wp-color-picker', 'customize-controls', 'customize-widgets', 'customize-nav-menus', 'buttons', 'dashicons', 'admin-bar', 'wp-auth-check', 'editor-buttons', 'media-views', 'wp-pointer', 'customize-preview', 'wp-empty-template-alert', 'wp-block-template-skip-link', 'imgareaselect', 'wp-jquery-ui-dialog', 'mediaelement', 'wp-mediaelement', 'thickbox', 'wp-codemirror', 'deprecated-media', 'farbtastic', 'jcrop', 'colors-fresh', 'open-sans', 'wp-embed-template-ie', 'wp-editor-font', 'wp-block-library-theme', 'classic-theme-styles', 'wp-reset-editor-styles', 'wp-editor-classic-layout-styles', 'wp-block-editor-content', 'wp-edit-blocks', 'wp-view-transitions-admin', 'wp-block-editor', 'wp-block-library', 'wp-block-directory', 'wp-base-styles', 'wp-components', 'wp-commands', 'wp-edit-post', 'wp-editor', 'wp-format-library', 'wp-list-reusable-blocks', 'wp-reusable-blocks', 'wp-patterns', 'wp-preferences', 'wp-nux', 'wp-widgets', 'wp-edit-widgets', 'wp-customize-widgets', 'wp-edit-site', 'nex-forms-jq-ui-theme-black-tie', 'nex-forms-jq-ui-theme-blitzer', 'nex-forms-jq-ui-theme-cupertino', 'nex-forms-jq-ui-theme-dark-hive', 'nex-forms-jq-ui-theme-default', 'nex-forms-jq-ui-theme-dot-luv', 'nex-forms-jq-ui-theme-eggplant', 'nex-forms-jq-ui-theme-excite-bike', 'nex-forms-jq-ui-theme-flick', 'nex-forms-jq-ui-theme-hot-sneaks', 'nex-forms-jq-ui-theme-humanity', 'nex-forms-jq-ui-theme-le-frog', 'nex-forms-jq-ui-theme-mint-choc', 'nex-forms-jq-ui-theme-overcast', 'nex-forms-jq-ui-theme-pepper-grinder', 'nex-forms-jq-ui-theme-redmond', 'nex-forms-jq-ui-theme-smoothness', 'nex-forms-jq-ui-theme-south-street', 'nex-forms-jq-ui-theme-start', 'nex-forms-jq-ui-theme-sunny', 'nex-forms-jq-ui-theme-swanky-purse', 'nex-forms-jq-ui-theme-trontastic', 'nex-forms-jq-ui-theme-ui-darkness', 'nex-forms-jq-ui-theme-ui-lightness', 'nex-forms-jq-ui-theme-vader', 'nex-forms-polls', 'nex-forms-polls-bs-5', 'nex-forms-material-theme-amber', 'nex-forms-material-theme-blue-gray', 'nex-forms-material-theme-blue', 'nex-forms-material-theme-brown', 'nex-forms-material-theme-cyan', 'nex-forms-material-theme-deep-purple', 'nex-forms-material-theme-default', 'nex-forms-material-theme-gray', 'nex-forms-material-theme-green', 'nex-forms-material-theme-indigo', 'nex-forms-material-theme-light-blue', 'nex-forms-material-theme-light-green', 'nex-forms-material-theme-lime', 'nex-forms-material-theme-orange', 'nex-forms-material-theme-pink', 'nex-forms-material-theme-purple', 'nex-forms-material-theme-red', 'nex-forms-material-theme-teal', 'nex-forms-material-theme-yellow', 'nex-forms-font-awesome-6', 'nex-forms-font-awesome-4-shims', 'nex-forms-font-awesome-5-shims', 'nex-forms-bootstrap-ui', 'nex-forms-ui', 'nex-forms-animations', 'nex-forms-selects-css', 'nex-forms-materialize', 'nex-forms-public-admin', 'nex-forms-overrides', 'nex-forms-admin-color-adapt', 'wp-emoji-styles',);
 
 	if($wp_styles)
 		{
@@ -461,7 +461,7 @@ function NEXForms_my_menu_pages() {
 		global $wpdb; 
 		
 		$get_entry 	= $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($_REQUEST['entry_Id']));
-		$entry 	= $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$entry 	= $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		if($_REQUEST['emial-preview']=='admin')
 			echo wp_kses( $entry->saved_admin_email,  NEXForms_allowed_tags2());
@@ -589,7 +589,7 @@ function NEXForms_my_menu_pages() {
 	 
 	$unigue_form_Id 	= rand(0,99999);
 	   
-	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 	$theme_settings = json_decode($form_attr->md_theme,true);
 	$set_theme 		= ($theme_settings['0']['theme_name']!='') 	? $theme_settings['0']['theme_name'] 	: 'default';
@@ -652,17 +652,17 @@ add_action('admin_menu', 'NEXForms_my_menu_pages');
 
 
 function NEXForms_test_page(){
-	/*global $wp_scripts; 
+	/*global $wp_styles; 
 	$output = '';
-	if($wp_scripts)
+	if($wp_styles)
 		{
-		foreach($wp_scripts->registered as $wp_script=>$array)
+		foreach($wp_styles->registered as $wp_style=>$array)
 			{
 			//'utils','common','
 			echo ' \''.$array->handle.'\', ';
 			}	
-		}*/
-	echo '<div class="wrap">';
+		}
+	/*echo '<div class="wrap">';
 	
 	nf_fs()->_account_page_load();
 	
@@ -675,7 +675,7 @@ echo '<pre>';
 
 	print_r(nf_fs());
 echo '</pre>';
-echo '<div>';
+echo '<div>';*/
 	
 }
 
@@ -961,6 +961,7 @@ function NEXForms5_run_instalation(){
 	$database_actions->alter_plugin_table('wap_nex_forms','entry_count','bigint(20)');
 	$database_actions->alter_plugin_table('wap_nex_forms','zapier_web_hook_url','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','reply_to','longtext');
+	$database_actions->alter_plugin_table('wap_nex_forms','user_reply_to','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','enqueue_array','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','pdf_settings','longtext');
 	$database_actions->alter_plugin_table('wap_nex_forms','hubspot_portal_id','longtext');
@@ -1034,14 +1035,14 @@ function NEXForms5_run_instalation(){
 	//MIGRATE ATTACHMENT DATA
 	if(get_option('nf_set_attachments')!='1')
 			{
-			$get_files = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_files = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_files'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 			foreach($get_files as $file)
 				{
 				$data_array = array(
 					'attachments'	=>  1
 					);
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', $data_array, array(	'Id' => $file->entry_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', $data_array, array(	'Id' => $file->entry_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			update_option('nf_set_attachments','1');
 			}
@@ -1049,12 +1050,12 @@ function NEXForms5_run_instalation(){
 	
 	
 	//MIGRATE PAYPAL DATA FOR BACKWARD COMPATIBILITY
-	$get_paypal_table = $wpdb->get_var("show tables like '".$wpdb->prefix."wap_nex_forms_paypal"."'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$get_paypal_table = $wpdb->get_var("show tables like '".$wpdb->prefix."wap_nex_forms_paypal"."'"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	if($get_paypal_table)
 		{
 		if(get_option('convert_paypal')!='1')
 			{
-			$get_paypal = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_paypal'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_paypal = $wpdb->get_results('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_paypal'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 			foreach($get_paypal as $paypal_data)
 				{
@@ -1069,7 +1070,7 @@ function NEXForms5_run_instalation(){
 					'lc'								=>  $paypal_data->lc,
 					'environment'						=>  $paypal_data->environment
 					);
-				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', $data_array, array(	'Id' => $paypal_data->nex_forms_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', $data_array, array(	'Id' => $paypal_data->nex_forms_Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			update_option('convert_paypal','1');
 			}
@@ -1087,7 +1088,7 @@ function NEXForms5_main_page(){
 	$builder->form_builder_page();
 	
 	global $wp_styles;
-	$include_style_array = array('colors','common','wp-codemirror', 'wp-theme-plugin-editor','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default','nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat','nex_forms-builder','google-roboto');
+	$include_style_array = array('colors', 'common', 'forms', 'admin-menu', 'dashboard', 'list-tables', 'edit', 'revisions', 'media', 'themes', 'about', 'nav-menus', 'widgets', 'site-icon', 'l10n', 'code-editor', 'site-health', 'wp-admin', 'login', 'install', 'wp-color-picker', 'customize-controls', 'customize-widgets', 'customize-nav-menus', 'buttons', 'dashicons', 'admin-bar', 'wp-auth-check', 'editor-buttons', 'media-views', 'wp-pointer', 'customize-preview', 'wp-empty-template-alert', 'wp-block-template-skip-link', 'imgareaselect', 'wp-jquery-ui-dialog', 'mediaelement', 'wp-mediaelement', 'thickbox', 'wp-codemirror', 'deprecated-media', 'farbtastic', 'jcrop', 'colors-fresh', 'open-sans', 'wp-embed-template-ie', 'wp-editor-font', 'wp-block-library-theme', 'classic-theme-styles', 'wp-reset-editor-styles', 'wp-editor-classic-layout-styles', 'wp-block-editor-content', 'wp-edit-blocks', 'wp-view-transitions-admin', 'wp-block-editor', 'wp-block-library', 'wp-block-directory', 'wp-base-styles', 'wp-components', 'wp-commands', 'wp-edit-post', 'wp-editor', 'wp-format-library', 'wp-list-reusable-blocks', 'wp-reusable-blocks', 'wp-patterns', 'wp-preferences', 'wp-nux', 'wp-widgets', 'wp-edit-widgets', 'wp-customize-widgets', 'wp-edit-site', 'nex-forms-jq-ui-theme-black-tie', 'nex-forms-jq-ui-theme-blitzer', 'nex-forms-jq-ui-theme-cupertino', 'nex-forms-jq-ui-theme-dark-hive', 'nex-forms-jq-ui-theme-default', 'nex-forms-jq-ui-theme-dot-luv', 'nex-forms-jq-ui-theme-eggplant', 'nex-forms-jq-ui-theme-excite-bike', 'nex-forms-jq-ui-theme-flick', 'nex-forms-jq-ui-theme-hot-sneaks', 'nex-forms-jq-ui-theme-humanity', 'nex-forms-jq-ui-theme-le-frog', 'nex-forms-jq-ui-theme-mint-choc', 'nex-forms-jq-ui-theme-overcast', 'nex-forms-jq-ui-theme-pepper-grinder', 'nex-forms-jq-ui-theme-redmond', 'nex-forms-jq-ui-theme-smoothness', 'nex-forms-jq-ui-theme-south-street', 'nex-forms-jq-ui-theme-start', 'nex-forms-jq-ui-theme-sunny', 'nex-forms-jq-ui-theme-swanky-purse', 'nex-forms-jq-ui-theme-trontastic', 'nex-forms-jq-ui-theme-ui-darkness', 'nex-forms-jq-ui-theme-ui-lightness', 'nex-forms-jq-ui-theme-vader', 'nex-forms-polls', 'nex-forms-polls-bs-5', 'nex-forms-material-theme-amber', 'nex-forms-material-theme-blue-gray', 'nex-forms-material-theme-blue', 'nex-forms-material-theme-brown', 'nex-forms-material-theme-cyan', 'nex-forms-material-theme-deep-purple', 'nex-forms-material-theme-default', 'nex-forms-material-theme-gray', 'nex-forms-material-theme-green', 'nex-forms-material-theme-indigo', 'nex-forms-material-theme-light-blue', 'nex-forms-material-theme-light-green', 'nex-forms-material-theme-lime', 'nex-forms-material-theme-orange', 'nex-forms-material-theme-pink', 'nex-forms-material-theme-purple', 'nex-forms-material-theme-red', 'nex-forms-material-theme-teal', 'nex-forms-material-theme-yellow', 'nex-forms-font-awesome-6', 'nex-forms-font-awesome-4-shims', 'nex-forms-font-awesome-5-shims', 'nex-forms-bootstrap-ui', 'nex-forms-ui', 'nex-forms-animations', 'nex-forms-selects-css', 'nex-forms-materialize', 'nex-forms-public-admin', 'nex-forms-overrides', 'nex-forms-admin-color-adapt', 'wp-emoji-styles',);
 
 	NEXForms_clean_echo( '<div class="unwanted_css_array" style="display:none;">');
 	foreach($wp_styles->registered as $wp_style=>$array)
@@ -1105,7 +1106,7 @@ function NEXForms_form_preview(){
 	
 	global $wpdb;
 	$get_form = $wpdb->prepare('SELECT md_theme FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($_REQUEST['form_Id']));
-	$theme_settings = $wpdb->get_var($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$theme_settings = $wpdb->get_var($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	$theme_settings = json_decode($theme_settings,true);
 	//remove WP elements from preview
 	NEXForms_clean_echo( '	<style type="text/css">
@@ -1126,7 +1127,9 @@ function NEXForms_form_preview(){
 
 function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=''){
 	
-		
+	ini_set('display_errors', '0');
+	error_reporting(0);
+	
 	wp_add_inline_script('nex-forms-var', '
 	var exit_popup = 0;
 	var get_nex_forms = {};
@@ -1309,7 +1312,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 	
 	
 	
-	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$form_attr 	= $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',sanitize_text_field($id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 	$default_field_array = explode(',',$field_default_values);
 	$set_default_field_array= array();
@@ -2108,7 +2111,7 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 							{
 							if($option_settings[0]['submit_limit']>0)
 								{
-									$get_count 	= $wpdb->get_var('SELECT COUNT(*) FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id = '.$id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+									$get_count 	= $wpdb->get_var('SELECT COUNT(*) FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE nex_forms_Id = '.$id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 									if($get_count==$option_settings[0]['submit_limit'])
 										{
 										if($option_settings[0]['submit_limit_msg'])
@@ -2588,8 +2591,8 @@ function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=
 		
 	//PRINT OUTPUT
 	if($echo){
-		NEXForms_clean_echo2( $output);
-		//echo $output;	
+		//NEXForms_clean_echo2( $output);
+		echo $output;	
 	}
 	else
 		return $output;	
@@ -2672,7 +2675,7 @@ function NEXForms_add_view(){
 	$set_date = new DateTime("now", $tz);
 	
 	$id = sanitize_title($_POST['nex_forms_id']);
-	$add_view = $wpdb->insert($wpdb->prefix.'wap_nex_forms_views',  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$add_view = $wpdb->insert($wpdb->prefix.'wap_nex_forms_views',  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		array(								
 			'time_viewed'		=> time(),
 			'nex_forms_Id'		=> sanitize_text_field($id),
@@ -2693,7 +2696,7 @@ function NEXForms_add_form_interaction(){
 	$tz = wp_timezone();
 	$set_date = new DateTime("now", $tz);
 	
-	$add_interaction = $wpdb->insert($wpdb->prefix.'wap_nex_forms_stats_interactions', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$add_interaction = $wpdb->insert($wpdb->prefix.'wap_nex_forms_stats_interactions', // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		array(								
 			'time_interacted'	=> time(),
 			'nex_forms_Id'		=> sanitize_text_field($id),
@@ -2702,7 +2705,16 @@ function NEXForms_add_form_interaction(){
 		 );
 	die();
 }
+$update_entry = isset($_REQUEST['nf_update_entry']) ? sanitize_text_field($_REQUEST['nf_update_entry']) : false;
+$create_entry = isset($_REQUEST['nf_create_entry']) ? sanitize_text_field($_REQUEST['nf_create_entry']) : false;
 
+if($update_entry || $create_entry)
+	{
+	if($update_entry)
+		submit_nex_form($entry_action = 'update_entry');	
+	if($create_entry)
+		submit_nex_form($entry_action = 'update_entry');	
+	}
 	
 
 function submit_nex_form($entry_action = false){
@@ -2718,7 +2730,7 @@ function submit_nex_form($entry_action = false){
 	
 	$nex_forms_id = isset($_REQUEST['nex_forms_Id']) ? sanitize_title($_POST['nex_forms_Id']) : '';
 	
-	$form_attr = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$form_attr = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 	$upload_settings = json_decode($form_attr->upload_settings, true);
 	$upload_to_server 	= ($upload_settings['0']['upload_to_server']) ? $upload_settings['0']['upload_to_server'] 	: 'true';
@@ -2836,6 +2848,7 @@ function submit_nex_form($entry_action = false){
 			$key = sanitize_text_field($key);
 			$key = esc_html($key);
 			
+			
 			if(
 			$key!='nf_entry_redirect_id' &&
 			$key!='nf_update_entry' &&
@@ -2938,10 +2951,86 @@ function submit_nex_form($entry_action = false){
 	
 	if($save_to_db)
 		{
+		$check_entry_update = isset($_REQUEST['nf_set_entry_update_id']) ? sanitize_text_field($_REQUEST['nf_set_entry_update_id']) : false;
+		$check_entry_redirect_update = isset($_REQUEST['nf_entry_redirect_id']) ? sanitize_text_field($_REQUEST['nf_entry_redirect_id']) : false;
 		
 		
+		if($check_entry_redirect_update)
+			{
+			$get_data = $wpdb->get_var($wpdb->prepare('SELECT form_data FROM '. $wpdb->prefix .'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($check_entry_redirect_update))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			
+			$set_data = json_decode($get_data);
+			
+			$merge_data = array_merge($set_data,$data_array);
+			
+			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			array(								
+				'nex_forms_Id'			=>	$set_nex_forms_id,
+				'page'					=>	sanitize_text_field($_POST['page']),
+				'ip'					=>  sanitize_text_field($_POST['ip']),
+				'paypal_invoice'		=>  sanitize_text_field($_POST['paypal_invoice']),
+				'user_Id'				=>	get_current_user_id(),
+				'hostname'				=>	$geo_data->hostname,
+				'city'					=>	$geo_data->city,
+				'region'				=>	$geo_data->region,
+				'country'				=>	$geo_data->country,
+				'loc'					=>	$geo_data->loc,
+				'org'					=>	$geo_data->org,
+				'postal'				=>	$geo_data->postal,
+				'date_time'				=>  $set_date->format('Y-m-d H:i:s'),
+				'form_data'				=>	json_encode($merge_data),
+				'paypal_payment_token'	=>  $paypal_transaction['payment_token'],
+				'paypal_payment_id'		=>  $paypal_transaction['payment_id'],
+				'payment_ammount'		=>  $paypal_transaction['payment_ammount'],
+				'payment_currency'		=>  $paypal_transaction['payment_currency'],
+				'payment_status'		=>  'pending',
+				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
+				), array(	'Id' => sanitize_text_field($check_entry_redirect_update))
+			 );
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$set_count = $get_result + 1;
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			
+			$entry_id = $check_entry_redirect_update;
+				
+			}
 		
-			$insert = $wpdb->insert($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		else if($check_entry_update)
+			{
+			$insert = $wpdb->update($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			array(								
+				'nex_forms_Id'			=>	$set_nex_forms_id,
+				'page'					=>	sanitize_text_field($_POST['page']),
+				'ip'					=>  sanitize_text_field($_POST['ip']),
+				'paypal_invoice'		=>  sanitize_text_field($_POST['paypal_invoice']),
+				'user_Id'				=>	get_current_user_id(),
+				'hostname'				=>	$geo_data->hostname,
+				'city'					=>	$geo_data->city,
+				'region'				=>	$geo_data->region,
+				'country'				=>	$geo_data->country,
+				'loc'					=>	$geo_data->loc,
+				'org'					=>	$geo_data->org,
+				'postal'				=>	$geo_data->postal,
+				'date_time'				=>  $set_date->format('Y-m-d H:i:s'),
+				'form_data'				=>	json_encode($data_array),
+				'paypal_payment_token'	=>  $paypal_transaction['payment_token'],
+				'paypal_payment_id'		=>  $paypal_transaction['payment_id'],
+				'payment_ammount'		=>  $paypal_transaction['payment_ammount'],
+				'payment_currency'		=>  $paypal_transaction['payment_currency'],
+				'payment_status'		=>  'pending',
+				'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
+				), array(	'Id' => sanitize_text_field($check_entry_update))
+			 );
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			$set_count = $get_result + 1;
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			
+			$entry_id = $check_entry_update;
+				
+			}
+		else
+			{
+			$insert = $wpdb->insert($wpdb->prefix.'wap_nex_forms_entries', // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				array(								
 					'nex_forms_Id'			=>	$set_nex_forms_id,
 					'page'					=>	sanitize_text_field($_POST['page']),
@@ -2965,11 +3054,14 @@ function submit_nex_form($entry_action = false){
 					'attachments'			=> (count($insert_file_array)>0) ? 1 : NULL 
 					)
 			 );
-			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_result = $wpdb->get_var($wpdb->prepare('SELECT entry_count FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$set_count = $get_result + 1;
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms', array('entry_count'=>$set_count), array(	'Id' => sanitize_text_field($form_attr->Id)) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			$entry_id = $wpdb->insert_id;
+			}
+		
+		
 		
 		}
 	if($entry_action)
@@ -3000,7 +3092,7 @@ function submit_nex_form($entry_action = false){
 		
 		foreach($setup_file_insert_array as $insert_file)
 			{
-			$wpdb->insert($wpdb->prefix.'wap_nex_forms_files',$insert_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->insert($wpdb->prefix.'wap_nex_forms_files',$insert_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			}
 		}
 	
@@ -3114,14 +3206,16 @@ function submit_nex_form($entry_action = false){
 			<?php
 		}
 		else if(function_exists('nf_not_found_notice_pp') && $checked=='true'){
-			$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms WHERE Id = %d',sanitize_text_field($form_attr->Id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			
+			$nf_functions = new NEXForms_Functions();
 			
 			if(!$get_result->products)
 				{
-				$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms_paypal WHERE nex_forms_Id = %d ',sanitize_text_field($form_attr->Id)));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+				$get_result = $wpdb->get_row($wpdb->prepare('SELECT * FROM '. $wpdb->prefix .'wap_nex_forms_paypal WHERE nex_forms_Id = %d ',sanitize_text_field($form_attr->Id)));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
-			
-			$output = '<form id="nf_paypal" name="nf_paypal" action="https://www'.((!$get_result->environment || $get_result->environment=='sandbox') ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr" method="post" target="_top" class="hidden">
+			//$output = '<form id="nf_paypal" name="nf_paypal" action="https://www'.((!$get_result->environment || $get_result->environment=='sandbox') ? '.sandbox' : '').'.paypal.com/cgi-bin/webscr" method="post" target="_top" class="hidden">';
+			$output .= '
 			
 			<input type="hidden" name="cmd" value="_cart">
 			<input type="hidden" value="'.$get_result->currency_code.'" name="currency_code">
@@ -3167,7 +3261,7 @@ function submit_nex_form($entry_action = false){
 					$set_value ='';
 					if($set_amount2[0] == 'map' && $_POST[$map_item_amount2[0]])
 						{
-						$output .= '<input type="text" name="item_name_'.$i.'" value="'.$item_name2[0].'">';
+						$output .= '<input type="text" name="item_name_'.$i.'" value="'.nf_replace_merge_tags($item_name2[0], $nf_functions, $_REQUEST).'">';
 						if($set_quantity2[0] == 'map' && $_POST[$map_item_qty2[0]])
 							$output .= '<input type="text" value="'.sanitize_text_field($_POST[$map_item_qty2[0]]).'" name="quantity_'.$i.'">';
 						if($set_quantity2[0] == 'static' && $item_qty2[0])
@@ -3190,7 +3284,7 @@ function submit_nex_form($entry_action = false){
 						}
 					elseif($set_amount2[0] == 'static' && $item_amount2[0])
 						{
-						$output .= '<input type="text" name="item_name_'.$i.'" value="'.$item_name2[0].'">';
+						$output .= '<input type="text" name="item_name_'.$i.'" value="'.nf_replace_merge_tags($item_name2[0], $nf_functions).'">';
 						if($set_quantity2[0] == 'map' && $_POST[$map_item_qty2[0]])
 							$output .= '<input type="text" value="'.sanitize_text_field($_POST[$map_item_qty2[0]]).'" name="quantity_'.$i.'">';
 						if($set_quantity2[0] == 'static' && $item_qty2[0])
@@ -3568,7 +3662,7 @@ class CSVExport
 			exit();
 		
 		
-		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($report_id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$report = $wpdb->get_row($wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_reports WHERE Id=%d', sanitize_title($report_id))); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 		$db_table = $report->db_table;
 		$additional_params = json_decode($report->report_params,true);
@@ -3590,11 +3684,11 @@ class CSVExport
 				}
 			
 			
-			$form_data = $wpdb->get_results('SELECT * FROM '.$db_table.'  WHERE Id<>"" '.$where_str.' ORDER BY Id DESC'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$form_data = $wpdb->get_results('SELECT * FROM '.$db_table.'  WHERE Id<>"" '.$where_str.' ORDER BY Id DESC'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			
 		//echo $form_data;
-		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$table_fields 	= $wpdb->get_results('SHOW FIELDS FROM '.$db_table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		$nf_functions = new NEXForms_Functions();
 			
@@ -3728,7 +3822,7 @@ function gavickpro_add_tinymce_plugin($plugin_array) {
 
 	   global $wpdb;
 
-		$results	= $wpdb->get_results('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC '); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$results	= $wpdb->get_results('SELECT * FROM '. $wpdb->prefix . 'wap_nex_forms WHERE is_form=1 ORDER BY Id DESC '); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 		if($results)
 			{			
@@ -3828,12 +3922,12 @@ function NEXForms_dashboard_2(){
 	
 	
 	add_option('nf_interactions_converted', false);
-	$interactions_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_stats_interactions"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$interactions_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_stats_interactions"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 	if($interactions_table && get_option('nf_interactions_converted')!='converted')
 		{
 		$get_interactions = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_stats_interactions';
-		$form_interactions = $wpdb->get_results($get_interactions);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$form_interactions = $wpdb->get_results($get_interactions);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		foreach($form_interactions as $interaction)
 			{
@@ -3842,16 +3936,16 @@ function NEXForms_dashboard_2(){
 			$month = (int)substr($date,5,2);
 			$day = (int)substr($date,8,2);
 			//echo 	'#'.$interaction->time_interacted.' - '.date('Y-m-d H:i:s',$interaction->time_interacted).'<br />';
-			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_stats_interactions', array('date_time'=>date('Y-m-d H:i:s',$interaction->time_interacted)), array(	'Id' => $interaction->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_stats_interactions', array('date_time'=>date('Y-m-d H:i:s',$interaction->time_interacted)), array(	'Id' => $interaction->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			}
 		update_option('nf_interactions_converted', 'converted');
 		}
 	add_option('nf_views_converted', false);	
-	$views_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_views"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$views_table = $wpdb->query('SHOW TABLES LIKE "'.$wpdb->prefix.'wap_nex_forms_views"'); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	if($views_table && get_option('nf_views_converted')!='converted')
 		{
 		$get_views = 'SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_views';
-		$form_views = $wpdb->get_results($get_views);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$form_views = $wpdb->get_results($get_views);	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		foreach($form_views as $view)
 			{
@@ -3859,7 +3953,7 @@ function NEXForms_dashboard_2(){
 			$year = substr($date,0,4);
 			$month = (int)substr($date,5,2);
 			$day = (int)substr($date,8,2);
-			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_views', array('date_time'=>date('Y-m-d H:i:s',$view->time_viewed)), array(	'Id' => $view->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update($wpdb->prefix.'wap_nex_forms_views', array('date_time'=>date('Y-m-d H:i:s',$view->time_viewed)), array(	'Id' => $view->Id) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			}
 		update_option('nf_views_converted', 'converted');
 		}
@@ -4496,7 +4590,7 @@ function NEXForms_dashboard_2(){
 	
 	
 	global $wp_styles;
-	$include_style_array = array('colors','common','wp-codemirror', 'wp-theme-plugin-editor','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default','nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat','nex_forms-builder','google-roboto');
+	$include_style_array = array('colors', 'common', 'forms', 'admin-menu', 'dashboard', 'list-tables', 'edit', 'revisions', 'media', 'themes', 'about', 'nav-menus', 'widgets', 'site-icon', 'l10n', 'code-editor', 'site-health', 'wp-admin', 'login', 'install', 'wp-color-picker', 'customize-controls', 'customize-widgets', 'customize-nav-menus', 'buttons', 'dashicons', 'admin-bar', 'wp-auth-check', 'editor-buttons', 'media-views', 'wp-pointer', 'customize-preview', 'wp-empty-template-alert', 'wp-block-template-skip-link', 'imgareaselect', 'wp-jquery-ui-dialog', 'mediaelement', 'wp-mediaelement', 'thickbox', 'wp-codemirror', 'deprecated-media', 'farbtastic', 'jcrop', 'colors-fresh', 'open-sans', 'wp-embed-template-ie', 'wp-editor-font', 'wp-block-library-theme', 'classic-theme-styles', 'wp-reset-editor-styles', 'wp-editor-classic-layout-styles', 'wp-block-editor-content', 'wp-edit-blocks', 'wp-view-transitions-admin', 'wp-block-editor', 'wp-block-library', 'wp-block-directory', 'wp-base-styles', 'wp-components', 'wp-commands', 'wp-edit-post', 'wp-editor', 'wp-format-library', 'wp-list-reusable-blocks', 'wp-reusable-blocks', 'wp-patterns', 'wp-preferences', 'wp-nux', 'wp-widgets', 'wp-edit-widgets', 'wp-customize-widgets', 'wp-edit-site', 'nex-forms-jq-ui-theme-black-tie', 'nex-forms-jq-ui-theme-blitzer', 'nex-forms-jq-ui-theme-cupertino', 'nex-forms-jq-ui-theme-dark-hive', 'nex-forms-jq-ui-theme-default', 'nex-forms-jq-ui-theme-dot-luv', 'nex-forms-jq-ui-theme-eggplant', 'nex-forms-jq-ui-theme-excite-bike', 'nex-forms-jq-ui-theme-flick', 'nex-forms-jq-ui-theme-hot-sneaks', 'nex-forms-jq-ui-theme-humanity', 'nex-forms-jq-ui-theme-le-frog', 'nex-forms-jq-ui-theme-mint-choc', 'nex-forms-jq-ui-theme-overcast', 'nex-forms-jq-ui-theme-pepper-grinder', 'nex-forms-jq-ui-theme-redmond', 'nex-forms-jq-ui-theme-smoothness', 'nex-forms-jq-ui-theme-south-street', 'nex-forms-jq-ui-theme-start', 'nex-forms-jq-ui-theme-sunny', 'nex-forms-jq-ui-theme-swanky-purse', 'nex-forms-jq-ui-theme-trontastic', 'nex-forms-jq-ui-theme-ui-darkness', 'nex-forms-jq-ui-theme-ui-lightness', 'nex-forms-jq-ui-theme-vader', 'nex-forms-polls', 'nex-forms-polls-bs-5', 'nex-forms-material-theme-amber', 'nex-forms-material-theme-blue-gray', 'nex-forms-material-theme-blue', 'nex-forms-material-theme-brown', 'nex-forms-material-theme-cyan', 'nex-forms-material-theme-deep-purple', 'nex-forms-material-theme-default', 'nex-forms-material-theme-gray', 'nex-forms-material-theme-green', 'nex-forms-material-theme-indigo', 'nex-forms-material-theme-light-blue', 'nex-forms-material-theme-light-green', 'nex-forms-material-theme-lime', 'nex-forms-material-theme-orange', 'nex-forms-material-theme-pink', 'nex-forms-material-theme-purple', 'nex-forms-material-theme-red', 'nex-forms-material-theme-teal', 'nex-forms-material-theme-yellow', 'nex-forms-font-awesome-6', 'nex-forms-font-awesome-4-shims', 'nex-forms-font-awesome-5-shims', 'nex-forms-bootstrap-ui', 'nex-forms-ui', 'nex-forms-animations', 'nex-forms-selects-css', 'nex-forms-materialize', 'nex-forms-public-admin', 'nex-forms-overrides', 'nex-forms-admin-color-adapt', 'wp-emoji-styles',);
 
 	NEXForms_clean_echo( esc_html('<div class="unwanted_css_array" style="display:none;">'));
 	foreach($wp_styles->registered as $wp_style=>$array)
@@ -4595,7 +4689,7 @@ function NEXForms_form_builder(){
 NEXForms_clean_echo( '</div>');
 		
 	global $wp_styles;
-	$include_style_array = array('colors','common','wp-codemirror', 'wp-theme-plugin-editor','forms','admin-menu','dashboard','list-tables','bootstrap-timepicker','jqui-timepicker','bootstrap-material-datetimepicker','nf-nouislider','nf-jquery-ui','nf-md-checkbox-radio','edit','revisions','media','themes','about','nav-menus','widgets','site-icon','l10n','wp-admin','login','install','wp-color-picker','customize-controls','customize-widgets','customize-nav-menus','press-this','ie','buttons','dashicons','open-sans','admin-bar','wp-auth-check','editor-buttons','media-views','wp-pointer','customize-preview','wp-embed-template-ie','imgareaselect','wp-jquery-ui-dialog','mediaelement','wp-mediaelement','thickbox','deprecated-media','farbtastic','jcrop','colors-fresh','nex-forms-jQuery-UI','nex-forms-font-awesome','nex-forms-bootstrap','nex-forms-fields','nex-forms-ui','nex-forms-admin-style','nex-forms-animate','nex-forms-admin-overrides','nex-forms-admin-bootstrap.colorpickersliders','nex-forms-public-admin','nex-forms-editor','nex-forms-custom-admin','nex-forms-jq-ui','nf-styles-chosen','nf-admin-color-adapt', 'nex-forms-jq-ui','nf-styles-font-menu', 'nex-forms-bootstrap-tour.min','nf-color-adapt-fresh','nf-color-adapt-light','nf-color-adapt-blue','nf-color-adapt-coffee','nf-color-adapt-ectoplasm','nf-color-adapt-midnight','nf-color-adapt-ocean','nf-color-adapt-sunrise', 'nf-color-adapt-default','nex_forms-materialize.min','nex_forms-bootstrap.min','nex_forms-dashboard','nex_forms-font-awesome-5','nex_forms-font-awesome-4-shims','nex_forms-material-icons','ion.rangeSlider','ion.rangeSlider.skinFlat', 'nex_forms-builder','google-roboto');
+	$include_style_array = array('colors', 'common', 'forms', 'admin-menu', 'dashboard', 'list-tables', 'edit', 'revisions', 'media', 'themes', 'about', 'nav-menus', 'widgets', 'site-icon', 'l10n', 'code-editor', 'site-health', 'wp-admin', 'login', 'install', 'wp-color-picker', 'customize-controls', 'customize-widgets', 'customize-nav-menus', 'buttons', 'dashicons', 'admin-bar', 'wp-auth-check', 'editor-buttons', 'media-views', 'wp-pointer', 'customize-preview', 'wp-empty-template-alert', 'wp-block-template-skip-link', 'imgareaselect', 'wp-jquery-ui-dialog', 'mediaelement', 'wp-mediaelement', 'thickbox', 'wp-codemirror', 'deprecated-media', 'farbtastic', 'jcrop', 'colors-fresh', 'open-sans', 'wp-embed-template-ie', 'wp-editor-font', 'wp-block-library-theme', 'classic-theme-styles', 'wp-reset-editor-styles', 'wp-editor-classic-layout-styles', 'wp-block-editor-content', 'wp-edit-blocks', 'wp-view-transitions-admin', 'wp-block-editor', 'wp-block-library', 'wp-block-directory', 'wp-base-styles', 'wp-components', 'wp-commands', 'wp-edit-post', 'wp-editor', 'wp-format-library', 'wp-list-reusable-blocks', 'wp-reusable-blocks', 'wp-patterns', 'wp-preferences', 'wp-nux', 'wp-widgets', 'wp-edit-widgets', 'wp-customize-widgets', 'wp-edit-site', 'nex-forms-jq-ui-theme-black-tie', 'nex-forms-jq-ui-theme-blitzer', 'nex-forms-jq-ui-theme-cupertino', 'nex-forms-jq-ui-theme-dark-hive', 'nex-forms-jq-ui-theme-default', 'nex-forms-jq-ui-theme-dot-luv', 'nex-forms-jq-ui-theme-eggplant', 'nex-forms-jq-ui-theme-excite-bike', 'nex-forms-jq-ui-theme-flick', 'nex-forms-jq-ui-theme-hot-sneaks', 'nex-forms-jq-ui-theme-humanity', 'nex-forms-jq-ui-theme-le-frog', 'nex-forms-jq-ui-theme-mint-choc', 'nex-forms-jq-ui-theme-overcast', 'nex-forms-jq-ui-theme-pepper-grinder', 'nex-forms-jq-ui-theme-redmond', 'nex-forms-jq-ui-theme-smoothness', 'nex-forms-jq-ui-theme-south-street', 'nex-forms-jq-ui-theme-start', 'nex-forms-jq-ui-theme-sunny', 'nex-forms-jq-ui-theme-swanky-purse', 'nex-forms-jq-ui-theme-trontastic', 'nex-forms-jq-ui-theme-ui-darkness', 'nex-forms-jq-ui-theme-ui-lightness', 'nex-forms-jq-ui-theme-vader', 'nex-forms-polls', 'nex-forms-polls-bs-5', 'nex-forms-material-theme-amber', 'nex-forms-material-theme-blue-gray', 'nex-forms-material-theme-blue', 'nex-forms-material-theme-brown', 'nex-forms-material-theme-cyan', 'nex-forms-material-theme-deep-purple', 'nex-forms-material-theme-default', 'nex-forms-material-theme-gray', 'nex-forms-material-theme-green', 'nex-forms-material-theme-indigo', 'nex-forms-material-theme-light-blue', 'nex-forms-material-theme-light-green', 'nex-forms-material-theme-lime', 'nex-forms-material-theme-orange', 'nex-forms-material-theme-pink', 'nex-forms-material-theme-purple', 'nex-forms-material-theme-red', 'nex-forms-material-theme-teal', 'nex-forms-material-theme-yellow', 'nex-forms-font-awesome-6', 'nex-forms-font-awesome-4-shims', 'nex-forms-font-awesome-5-shims', 'nex-forms-bootstrap-ui', 'nex-forms-ui', 'nex-forms-animations', 'nex-forms-selects-css', 'nex-forms-materialize', 'nex-forms-public-admin', 'nex-forms-overrides', 'nex-forms-admin-color-adapt', 'wp-emoji-styles',);
 
 	NEXForms_clean_echo( '<div class="unwanted_css_array" style="display:none;">');
 	foreach($wp_styles->registered as $wp_style=>$array)
@@ -4643,10 +4737,10 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			
 			global $wpdb;
 			$get_form = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms WHERE Id = %d',$nex_forms_id);
-			$form_attr = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$form_attr = $wpdb->get_row($get_form); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 			$get_entry = $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id = %d',$entry_id);
-			$entry_attr = $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$entry_attr = $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			
 			
 			$nf_functions = new NEXForms_Functions();
@@ -4891,6 +4985,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 		$from_name 							= ($form_attr->from_name) 							? str_replace('\\','',$form_attr->from_name)							: $email_pref['pref_email_from_name'];
 		$mail_to 							= ($form_attr->mail_to) 							? str_replace('\\','',$form_attr->mail_to)								: $email_pref['pref_email_recipients'];
 		$reply_to 							= ($form_attr->reply_to) 							? str_replace('\\','',$form_attr->reply_to)								: '';
+		$user_reply_to 						= ($form_attr->user_reply_to) 						? str_replace('\\','',$form_attr->user_reply_to)						: '';
 		$bcc	 							= ($form_attr->bcc) 								? str_replace('\\','',$form_attr->bcc)									: '';
 		$bcc_user_mail	 					= ($form_attr->bcc_user_mail) 						? str_replace('\\','',$form_attr->bcc_user_mail) 						: '';
 		$subject 							= ($form_attr->confirmation_mail_subject) 			? str_replace('\\','',$form_attr->confirmation_mail_subject) 			:  str_replace('\\','',$email_pref['pref_email_subject']);
@@ -4912,6 +5007,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$from_name 		= $conditional_blocks->run_content_logic_blocks($from_name);
 			$mail_to 		= $conditional_blocks->run_content_logic_blocks($mail_to); 
 			$reply_to 		= $conditional_blocks->run_content_logic_blocks($reply_to);
+			$user_reply_to 	= $conditional_blocks->run_content_logic_blocks($user_reply_to);
 			$bcc 			= $conditional_blocks->run_content_logic_blocks($bcc); 
 			$bcc_user_mail 	= $conditional_blocks->run_content_logic_blocks($bcc_user_mail);
 			$subject 		= $conditional_blocks->run_content_logic_blocks($subject);
@@ -5013,11 +5109,16 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 				if(is_array($_REQUEST[$nf_functions->format_name($match)]))
 					{
 					$k = 1;
-				
+					
+					foreach($_REQUEST[$nf_functions->format_name($match)] as $option)
+						{
+						$the_val 	.= 	$option.' ';
+						}
+					
 					if(array_key_exists('real_val__'.$nf_functions->format_name($match),$_REQUEST))
 						{
 							
-							$the_val = sanitize_text_field($_REQUEST['real_val__'.$nf_functions->format_name($match)][0]); 	
+							//$the_val = sanitize_text_field($_REQUEST['real_val__'.$nf_functions->format_name($match)][0]); 	
 							
 						}
 					else
@@ -5088,11 +5189,17 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 				if(is_array($_REQUEST[$nf_functions->format_name($match)]))
 					{
 					$k = 1;
-				
+					
+					foreach($_REQUEST[$nf_functions->format_name($match)] as $option)
+						{
+						$the_val 	.= 	$option.' ';
+						}
+					
+					
 					if(array_key_exists('real_val__'.$nf_functions->format_name($match),$_REQUEST))
 						{
 							
-							$the_val = $_REQUEST['real_val__'.$nf_functions->format_name($match)][0];	
+						//	$the_val = $_REQUEST['real_val__'.$nf_functions->format_name($match)][0];	
 							
 						}
 					else
@@ -5151,91 +5258,16 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 				}
 			//echo $admin_body;
 		//EMAIL ATTR TAGS
-		preg_match_all($pattern, $from_address, $matches3);
-		foreach($matches3[0] as $match)
-			{
-			$from_address = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$from_address);
-			}
-		preg_match_all($pattern, $from_name, $matches4);
-		foreach($matches4[0] as $match)
-			{
-			$from_name = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$from_name);
-			}
-		preg_match_all($pattern, $subject, $matches5);
-		foreach($matches5[0] as $match)
-			{
-			$subject = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$subject);
-			}
-		preg_match_all($pattern, $user_subject, $matches6);
-		foreach($matches6[0] as $match)
-			{
-			$user_subject = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$user_subject);
-			}
+		$from_address  = nf_replace_merge_tags($from_address, $nf_functions, $_REQUEST);
+		$from_name     = nf_replace_merge_tags($from_name, $nf_functions, $_REQUEST);
+		$subject       = nf_replace_merge_tags($subject, $nf_functions, $_REQUEST);
+		$user_subject  = nf_replace_merge_tags($user_subject, $nf_functions, $_REQUEST);
 			
-		preg_match_all($pattern, $mail_to, $matches7);
-		foreach($matches7[0] as $match)
-			{
-			if(is_array($_REQUEST[$nf_functions->format_name($match)]))
-				{
-				foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
-					{
-					$mail_to .=sanitize_text_field($value).',';	
-					}
-				}
-			else
-				$mail_to = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$mail_to);
-			
-			}
-		
-		$mail_to = preg_replace($pattern,'',$mail_to);
-		
-		
-		preg_match_all($pattern, $reply_to, $matches8);
-		foreach($matches8[0] as $match)
-			{
-			if(is_array($_REQUEST[$nf_functions->format_name($match)]))
-				{
-				foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
-					{
-					$reply_to .=sanitize_text_field($value).',';	
-					}
-				}
-			else
-				$reply_to = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$reply_to);
-			
-			}
-		
-		$reply_to = preg_replace($pattern,'',$reply_to);
-		
-		preg_match_all($pattern, $bcc, $matches8);
-		foreach($matches8[0] as $match)
-			{
-			if(is_array($_REQUEST[$nf_functions->format_name($match)]))
-				{
-				foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
-					{
-					$bcc .=','.sanitize_text_field($value);	
-					}
-				}
-			else
-				$bcc = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$bcc);
-			}
-		$bcc = preg_replace($pattern,'',$bcc);
-		
-		preg_match_all($pattern, $bcc_user_mail, $matches9);
-		foreach($matches9[0] as $match)
-			{
-			if(is_array($_REQUEST[$nf_functions->format_name($match)]))
-				{
-				foreach($_REQUEST[$nf_functions->format_name($match)] as $thekey=>$value)
-					{
-					$bcc_user_mail .=sanitize_text_field($value).',';	
-					}
-				}
-			else
-			$bcc_user_mail = str_replace($match,sanitize_text_field($_REQUEST[$nf_functions->format_name($match)]),$bcc_user_mail);
-			}
-		$bcc_user_mail = preg_replace($pattern,'',$bcc_user_mail);
+		$mail_to       = nf_replace_merge_tags($mail_to, $nf_functions, $_REQUEST, true);
+		$reply_to      = nf_replace_merge_tags($reply_to, $nf_functions, $_REQUEST, true);
+		$user_reply_to = nf_replace_merge_tags($user_reply_to, $nf_functions, $_REQUEST, true);
+		$bcc           = nf_replace_merge_tags($bcc, $nf_functions, $_REQUEST, true);
+		$bcc_user_mail = nf_replace_merge_tags($bcc_user_mail, $nf_functions, $_REQUEST, true);
 		
 		
 		
@@ -5245,6 +5277,9 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 		
 		if(strstr($reply_to,','))
 			$reply_to = explode(',',$reply_to);
+			
+		if(strstr($user_reply_to,','))
+			$user_reply_to = explode(',',$user_reply_to);
 		
 		//SETUP BCC
 		if(strstr($bcc,','))
@@ -5285,7 +5320,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$send_user_email = $entry_attr->saved_user_email_address;
 			}
 		if(!$resent)
-			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('saved_admin_email'=>$admin_body,'saved_user_email'=>$body,'saved_user_email_address'=>$send_user_email), array(	'Id' => $entry_id )); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$update = $wpdb->update ( $wpdb->prefix . 'wap_nex_forms_entries', array('saved_admin_email'=>$admin_body,'saved_user_email'=>$body,'saved_user_email_address'=>$send_user_email), array(	'Id' => $entry_id )); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		if (function_exists('NEXForms_export_to_PDF') &&  $form_attr->attach_pdf_to_email!='' )
 			$pdf_attached_path = NEXForms_export_to_PDF($entry_id, true, false, true);
@@ -5305,6 +5340,7 @@ if($checked=='false' || (!get_option('nf_activated') && !get_option('nf_fs_activ
 			'user_subject' => $user_subject,
 			'mail_to' => $form_attr->mail_to,
 			'reply_to' => $reply_to,
+			'user_reply_to' => $user_reply_to,
 			'bcc' => $form_attr->bcc,
 			'bcc_user_mail' => $form_attr->bcc_user_mail,
 			'admin_message' => $admin_body,
@@ -5392,7 +5428,13 @@ else
 				$confirmation_mail->addBCC($bcc_user_mail, $from_name);
 			
 			
-				
+			if(is_array($user_reply_to))
+				{
+				foreach($user_reply_to as $add_reply)
+					$confirmation_mail->AddReplyTo($add_reply, $from_name);
+				}
+			else if($user_reply_to)
+				$confirmation_mail->AddReplyTo($user_reply_to, $from_name);
 				
 				
 			$confirmation_mail->Subject = ($user_subject) ? $user_subject : $subject;
@@ -5524,7 +5566,9 @@ else
 		else if($email_config['email_method']=='php')
 			{
 			
-			$headers = 'From: '.$from_address;   
+			$headers = "From: {$from_address}" . "\r\n" .
+			   "Reply-To: {$reply_to}" . "\r\n" .
+			   "X-Mailer: PHP/" . phpversion(); 
 			$time = time();  
 			$boundary = "==Multipart_Boundary_x{$time}x";  
 			$headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$boundary}\"";
@@ -5576,7 +5620,10 @@ else
 			
 			$headers2  = 'MIME-Version: 1.0' . "\r\n";
 			$headers2 .= 'Content-Type: '.(($email_config['email_content']=='html') ? 'text/html' : 'text/plain').'; charset=UTF-8\n\n'. "\r\n";
-			$headers2 .= 'From: '.$from_name.' <'.$from_address.'>' . "\r\n";
+			$headers2 .= "From: {$from_name} <{$from_address}>" . "\r\n" .
+			   "Reply-To: {$user_reply_to}" . "\r\n" .
+			   "X-Mailer: PHP/" . phpversion();
+			
 			if($send_user_email)
 				mail(esc_html($_REQUEST[$form_attr->user_email_field]),$subject,$body,$headers2);
 			}
@@ -5585,7 +5632,7 @@ else
 		/**************************************************/
 		/** WORDPRESS MAIL ********************************/
 		/**************************************************/	
-		else if($email_config['email_method']=='wp_mailer' || $email_config['email_method']=='api')
+		else if($email_config['email_method']=='wp_mailer' || $email_config['email_method']=='api' || $email_config['email_method']=='php')
 			{
 			 $attach_pdf = array();
 			 if(is_array($set_emails))
@@ -5604,10 +5651,15 @@ else
 			else
 				{
 				if($send_user_email)
+					{
 					$headers[] = 'Reply-To: <'.$send_user_email.'>';
+					}
 				else
+					{
 					$headers[] = 'Reply-To: <'.$from_address.'>';
+					}
 				}
+			
 			
 			if($send_email)
 				{
@@ -5688,6 +5740,17 @@ else
 				
 				if($send_user_email)
 					{
+					
+					$headers2[] = 'Content-Type: text/html; charset=UTF-8';
+					$headers2[] = 'From: '.$from_name.' <'.$from_address.'>';
+					
+					if($user_reply_to)
+						$headers2[] = 'Reply-To: <'.$user_reply_to.'>';
+					else
+						{
+						$headers2[] = 'Reply-To: <'.$from_address.'>';
+						}
+					
 					if(NEXFORMS_validate_email(esc_html(sanitize_text_field($send_user_email))))
 						{
 						if(is_array($set_emails))
@@ -5695,13 +5758,13 @@ else
 							if ( (function_exists('NEXForms_export_to_PDF')) &&  in_array('user',$set_emails) )
 								{
 								$attach_pdf[] = $pdf_attached_path; 
-								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers, $attach_pdf);
+								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers2, $attach_pdf);
 								}
 							else
-								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers);
+								$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers2);
 							}
 						else
-							$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers);
+							$do_wp_mail = wp_mail(esc_html(sanitize_text_field($send_user_email)),$user_subject,$body,$headers2);
 						}
 					}
 						
@@ -5716,13 +5779,13 @@ else
 								if ( (function_exists('NEXForms_export_to_PDF')) &&  in_array('user',$set_emails) )
 									{
 									$attach_pdf[] = $pdf_attached_path; 
-									wp_mail($email,$user_subject,$body,$headers, $attach_pdf);
+									wp_mail($email,$user_subject,$body,$headers2, $attach_pdf);
 									}
 								else
-									wp_mail($email,$user_subject,$body,$headers);
+									wp_mail($email,$user_subject,$body,$headers2);
 								}
 							else
-								wp_mail($email,$user_subject,$body,$headers);
+								wp_mail($email,$user_subject,$body,$headers2);
 							}
 						}
 					else
@@ -5732,13 +5795,13 @@ else
 							if ( (function_exists('NEXForms_export_to_PDF')) &&  in_array('user',$set_emails) )
 								{
 								$attach_pdf[] = $pdf_attached_path; 
-								wp_mail($bcc_user_mail,$user_subject,$body,$headers, $attach_pdf);
+								wp_mail($bcc_user_mail,$user_subject,$body,$headers2, $attach_pdf);
 								}
 							else
-								wp_mail($bcc_user_mail,$user_subject,$body,$headers);
+								wp_mail($bcc_user_mail,$user_subject,$body,$headers2);
 							}
 							else
-								wp_mail($bcc_user_mail,$user_subject,$body,$headers);
+								wp_mail($bcc_user_mail,$user_subject,$body,$headers2);
 						}
 					}
 				}

@@ -12456,6 +12456,7 @@ span.add-on-status.activated {
 .database_table.wap_nex_forms_add_ons tr.activated td.title {
     border-left: 5px solid #0074a6 !important;
 }
+
 .flag {
     background: url(images/flags16.png) no-repeat;
     height: 16px;

@@ -1,8 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-
-
 add_action('init', 'NEXForms_do_form_export');
 function NEXForms_do_form_export() {
 	

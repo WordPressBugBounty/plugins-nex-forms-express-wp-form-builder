@@ -33,7 +33,12 @@ div.fs-notice.fs-slug-nex-forms{
 .tool-spacer .slider{
 	width: unset !important;
 }
-
+#nex-forms input[type="number"] {
+    min-height: 35px;
+}
+#nex-forms select {
+    min-height: 35px;
+}
 body #nex-forms{
 	line-height: normal !important;
 	margin-left: -20px;

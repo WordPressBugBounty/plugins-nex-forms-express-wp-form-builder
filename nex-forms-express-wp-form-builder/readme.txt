@@ -3,8 +3,8 @@ Plugin Name: NEX-Forms - Ultimate Forms Plugin for WordPress
 Contributors: Basix
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
-Tested up to: 6.9
-Stable tag: 9.1.13
+Tested up to: 7.0
+Stable tag: 9.2.1
 License: GPLv3 or later
 Author URI: https://basixonline.net?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-author-uri
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-plugin-uri
@@ -317,6 +317,60 @@ There are 2 ways to install NEX-Forms. Please follow the steps for your NEX-Form
 13. NEX-Forms - Dashboard with form analytics and more!
 
 == Changelog ==
+= NEX Forms 9.2.1 (freemius v9.3) =
+IMPROVED: WP 7.x compatibility.
+NEW: Added an additional Reply-to for user confirmation emails.
+NEW: Enabled Smart Data Tags to be used in PayPal Item Names.
+NEW: Enabled Smart Data Tags to be used in PDF Creator File Names.
+FIX: Digital signatures add-on showing inactive on NEX-Forms Admin Add-ons backend page.
+FIX: Fixed Google Chrome country flag display rendering issues in form analytics.
+FIX: Fixed minor issue on Form Submission Reporting Filters.
+IMPROVED: Added security measures to prevent potential Cross Site Scripting (XSS).
+
+= NEX Forms 9.2 =
+NEW: Complete redevelopment of the Add-ons admin page
+NEW: Install add-ons directly from your NEX-Forms add-ons admin page.
+NEW: Activate add-ons directly from your NEX-Forms add-ons admin page.
+NEW: Deactivate add-ons directly from your NEX-Forms add-ons admin page.
+IMPROVED: Added security measures to prevent potential Cross Site Scripting (XSS).
+
+= NEX Forms 9.1.3 =
+NEW: Complete redevelopment of the Form analytics admin page
+NEW: Analytical data showing submission in a Geographical chart.
+NEW: Analytical data showing top countries by submissions.
+NEW: Analytical data showing top performing forms.
+NEW: Analytical data showing all year form performances.
+FIX: Compatibility issues with the latest MySQL/MariaDB versions causing forms not to display on the dashboard. Please ensure you update to NEX-Forms 9.1 or later before or immediately after upgrading your MySQL/MariaDB server.
+
+= NEX Forms 9.1.2 =
+NEW: Complete redevelopment of the submission reporting feature including a clean an more user friendly backend UI.
+NEW: Create and save reports. Now you can open a report without having to regenerate it.
+NEW: Quick Export to excel. Export the submission report to Excel(CSV) without having to generate it.
+NEW: Quick Export to PDF. Export the submission report to PDF without having to generate it.
+NEW: Use repeatable field data tags in emails and/or PDF's to generate a clean table of all repeated information sent from the form.
+
+= NEX Forms 8.6.2 =
+NEW: Full redevelopment of Dropdown Selects and Multi-selects
+NEW: Searchable Dropdown Selects and Multi-selects - Enable/Disable a search for dropdown selects and multi-selects options.
+NEW: Optgroups in the Select and Multi Select
+NEW: Font Size Setting for Radio Button labels
+NEW: Font Size Setting for Checkbox Labels
+NEW: Checkbox Size Setting - Set the Checkboxes to Small, Normal or Large
+NEW: Radio Button Size Setting - Set the Radio Button to Small, Normal or Large
+NEW: Off/Unchecked Background Setting for Radios
+NEW: Off/Unchecked Background Setting for Checkboxes
+NEW: Padding and margin Settings for field wrappers
+NEW: Background Color Setting for field wrappers
+NEW: Border Color Setting for field wrappers
+NEW: Border Width Setting for field wrappers
+NEW: Border Radius Setting for field wrappers
+
+= NEX Forms 8.6.1 =
+NEW: Added the ability to output the submission entry ID in the on-screen success message using data tag {{nf_entry_id}} inside your success message body.
+FIX: Styling on Form Timer Settings in the form editor
+FIX: Checkboxes recall issue for SAVE FORM PROGRESS feature
+FIX: Slider recall issue for SAVE FORM PROGRESS feature
+
 = NEX Forms 8.5.10 =
 NEW: Added the ability to output the submission entry ID in the on-screen success message using data tag {{nf_entry_id}} inside your success message body.
 FIX: Styling on Form Timer Settings in the form editor

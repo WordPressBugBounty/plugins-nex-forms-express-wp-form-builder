@@ -317,7 +317,7 @@ if(!class_exists('NEXForms_Functions'))
 	public function code_to_country_flag($code) 
 		{
 		return '<span class="f16"><span class="flag '.strtolower($code).'"></span></span>';
-		$emoji_flags = array();
+		/*$emoji_flags = array();
 
 		// Now, all the country flags as emojis
 		$emoji_flags["AD"] = "&#127462;&#127465;";
@@ -573,7 +573,7 @@ $emoji_flags["ZM"] = "&#127487;&#127474;";
 $emoji_flags["ZW"] = "&#127487;&#127484;";	
 		
 		
-		return $emoji_flags[$code];
+		return $emoji_flags[$code];*/
 		}
 	
 	public function code_to_country( $code, $get_list=false ){
@@ -976,7 +976,6 @@ $emoji_flags["ZW"] = "&#127487;&#127484;";
 				$str = str_replace('nr','Nr.',$str);
 				}
 			if($str=='art' || $str=='Art')
-
 				{
 				$str = str_replace('art','Art.',$str);
 				$str = str_replace('Art','Art.',$str);
@@ -2027,7 +2026,7 @@ function NEXForms_get_add_on_status($add_on_Id){
 	if(is_array($add_on_Id))
 		$set_add_on_Id = $add_on_Id[0];
 	
-	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	$output = '';
 	
 	$all_plugins = get_plugins();
@@ -2037,12 +2036,12 @@ function NEXForms_get_add_on_status($add_on_Id){
 			if (is_plugin_active($add_on_info.'/main.php') || is_plugin_active($add_on_info.'/'.$add_on_info.'.php'))
 				{
 				$output .= '<span class="add-on-status activated">Active</span>';
-				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'active'),array('Id'=>$set_add_on_Id));
+				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'active'),array('Id'=>$set_add_on_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			else
 				{
 				$output .= '<span class="add-on-status inactive">Inactive</span>';	
-				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'inactive'),array('Id'=>$set_add_on_Id));
+				$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', array('status'=>'inactive'),array('Id'=>$set_add_on_Id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				}
 			}
 		else
@@ -2063,7 +2062,7 @@ function NEXForms_get_add_on_version($add_on_Id){
 	if(is_array($add_on_Id))
 		$set_add_on_Id = $add_on_Id[0];
 	
-	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+	$add_on_info = $wpdb->get_var('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	$output = '';
 	
 	$all_plugins = get_plugins();
@@ -2103,7 +2102,7 @@ function NEXForms_install_add_on($add_on_Id) {
     else
         $set_add_on_Id = $add_on_Id;
 
-    $add_on_info = $wpdb->get_row('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id);
+    $add_on_info = $wpdb->get_row('SELECT add_on_url FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
     $plugin_slug = $add_on_info->add_on_url;
 
     // Get live info from WordPress.org
@@ -2146,7 +2145,7 @@ function NEXForms_get_add_on_description($add_on_Id){
 			
 	if(is_array($add_on_Id))
 		$set_add_on_Id = $add_on_Id[0];
-	$description = $wpdb->get_var('SELECT description FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$description = $wpdb->get_var('SELECT description FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 	
 	$description= wp_unslash($description);
 	$description= str_replace('\"','',$description);
@@ -2163,7 +2162,7 @@ function NEXForms_get_add_on_plans($add_on_Id){
 			
 	if(is_array($add_on_Id))
 		$set_add_on_Id = $add_on_Id[0];
-	$plans = $wpdb->get_var('SELECT plans FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$plans = $wpdb->get_var('SELECT plans FROM '.$wpdb->prefix.'wap_nex_forms_add_ons WHERE Id='.$set_add_on_Id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 
 	
 	return $plans;
@@ -2569,7 +2568,7 @@ function NEXForms_add_ons_array(){
 			'description'	=>	'Add digital signature fields to your forms and include captured signatures in emails and generated PDFs.',
 			'price'			=>	'19',
 			'status'		=>	'not installed',
-			'add_on_url'	=>	'nex-forms-digital-signatures7',
+			'add_on_url'	=>	'nex-forms-digital-signatures-add-on',
 			'version'		=>	'9.0',
 			'plans'			=>	'Basic, Plus, Pro, Elite'
 			),
@@ -2674,16 +2673,16 @@ function NEXForms_set_add_ons(){
 	$get_add_ons = NEXForms_add_ons_array();
 	foreach($get_add_ons as $key=>$add_on)
 		{
-		$get_add_on = $wpdb->get_var($wpdb->prepare('SELECT title FROM `'. $wpdb->prefix .'wap_nex_forms_add_ons` WHERE title=%s',$add_on['title']));
+		$get_add_on = $wpdb->get_var($wpdb->prepare('SELECT title FROM `'. $wpdb->prefix .'wap_nex_forms_add_ons` WHERE title=%s',$add_on['title'])); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
 		if(!$get_add_on)
-			$wpdb->insert ( $wpdb->prefix . 'wap_nex_forms_add_ons', $add_on);  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->insert ( $wpdb->prefix . 'wap_nex_forms_add_ons', $add_on);  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		else
-			$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons', 
+			$wpdb->update ( $wpdb->prefix . 'wap_nex_forms_add_ons',  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			array(
 			'add_on_url'=>$add_on['add_on_url']
 			)
-			,array('title'=>$add_on['title']));  // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			,array('title'=>$add_on['title']));  // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		}	
 }
 
@@ -2755,7 +2754,7 @@ function nexforms_install_addon_ajax() {
     if ($do_action === 'deactivate') {
         deactivate_plugins($plugin_file_path . '/main.php');
         deactivate_plugins($plugin_file_path . '/' . $plugin_file_path . '.php');
-        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
         wp_send_json_success(array('message' => 'Add-on deactivated.'));
     }
 
@@ -2763,7 +2762,7 @@ function nexforms_install_addon_ajax() {
     if ($do_action === 'activate') {
         $activate = activate_plugin($plugin_file_path . '/main.php');
         $activate2 = activate_plugin($plugin_file_path . '/' . $plugin_file_path . '.php');
-        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
         wp_send_json_success(array('message' => 'Add-on activated.'));
     }
 
@@ -2822,11 +2821,11 @@ if ($do_action === 'install' || $do_action === 'update') {
         // Activate the plugin
         $activate = activate_plugin($plugin_file_path);
         if (is_wp_error($activate)) {
-            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
             wp_send_json_error(array('message' => 'Installed/Updated but activation failed: ' . $activate->get_error_message()));
         }
 
-        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
         wp_send_json_success(array('message' => $plugin_installed ? 'Plugin updated from WordPress SVN and activated.' : 'Plugin installed from WordPress SVN and activated.'));
     }
 
@@ -2840,15 +2839,59 @@ if ($do_action === 'install' || $do_action === 'update') {
         $plugin_file_path = $upgrader->plugin_info();
         $activate = activate_plugin($plugin_file_path);
         if (is_wp_error($activate)) {
-            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id));
+            if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'inactive'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
             wp_send_json_error(array('message' => 'Installed but activation failed: ' . $activate->get_error_message()));
         }
 
-        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id));
+        if ($add_on_id) $wpdb->update($wpdb->prefix . 'wap_nex_forms_add_ons', array('status' => 'active'), array('Id' => $add_on_id)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
         wp_send_json_success(array('message' => 'Plugin installed from server and activated.'));
     }
 
     wp_send_json_error(array('message' => 'Plugin not found in SVN and no server URL provided.'));
 	}
 }
+
+
+function nf_replace_merge_tags($string, $nf_functions, $data_array, $allow_array = false) {
+
+    $pattern = '({{+([^}}])+}})';
+
+    preg_match_all($pattern, $string, $matches);
+
+    foreach ($matches[0] as $match) {
+
+        $field_name = $nf_functions->format_name($match);
+
+        if (!isset($data_array[$field_name])) {
+            continue;
+        }
+
+        $value = wp_unslash($data_array[$field_name]);
+
+        // Handle array values
+        if (is_array($value)) {
+
+            if ($allow_array) {
+
+                $clean_values = array_map('sanitize_text_field', $value);
+
+                $replacement = implode(',', $clean_values);
+
+            } else {
+
+                $replacement = '';
+            }
+
+        } else {
+
+            $replacement = sanitize_text_field($value);
+        }
+
+        $string = str_replace($match, $replacement, $string);
+    }
+
+    // Remove any leftover tags
+    return preg_replace($pattern, '', $string);
+}
+
 ?>

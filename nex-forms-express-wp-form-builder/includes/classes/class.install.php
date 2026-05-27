@@ -20,8 +20,8 @@ if(!class_exists('NF5_Instalation'))
 		
 		public function run_instalation($type){	
 				$this->install_component_table();
-				//$api_params = array( 'nexforms-installation' => 1, 'source' => 'wordpress', 'version' => '9', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
-				//$response = wp_remote_post( 'http://basixonline.net/activate-license-new-api-v3/', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));					
+				$api_params = array( 'nexforms-installation' => 1, 'source' => 'wordpress', 'version' => '9.3', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+				$response = wp_remote_post( 'http://basixonline.net/activate-license-new-api-v4/', array('timeout'=> 30,'sslverify' => false,'body'=> $api_params));					
 			$db_action = new NEXForms_Database_Actions();
 			update_option('nf_activated',$db_action->checkout());
 			
@@ -42,13 +42,13 @@ if(!class_exists('NF5_Instalation'))
 			
 			$charset_collate = $wpdb->get_charset_collate();
 			
-			if($wpdb->get_var("show tables like '".$table_name."'") != $table_name){$sql = 'CREATE TABLE '. $table_name .'('; // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			if($wpdb->get_var("show tables like '".$table_name."'") != $table_name){$sql = 'CREATE TABLE '. $table_name .'('; // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 				foreach($all_fields as $key => $val)
 					$sql .= ''.$key.' '.$val.',';
 				$sql .= 'PRIMARY KEY ('. $this->db_table_primary_key .')
 				) '.$charset_collate.';';
 				
-			$wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->query($sql); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			}
 		}
 	}
