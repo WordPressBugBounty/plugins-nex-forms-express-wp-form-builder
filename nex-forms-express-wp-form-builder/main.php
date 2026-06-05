@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.2.1
+Version: 9.2.2
 Author URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 License: GPL
 Text Domain: nex-forms
@@ -4723,14 +4723,14 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			if($_POST['resend_email']=='1')
 				{
 				$nex_forms_id = sanitize_title($_POST['nex_forms_Id']);
-				$entry_id = sanitize_title($_POST['entry_Id']);
+				$entry_id = $entry_id;
 				$resent = true;	
 				}
 			
 			if($_POST['send_nf_email']=='1')
 				{
 				$nex_forms_id = sanitize_title($_POST['set_nex_forms_Id']);
-				$entry_id = sanitize_title($_POST['set_entry_update_id']);
+				$entry_id = $entry_id;
 				$data_array = $_POST['data'];
 				}
 			
