@@ -66,7 +66,9 @@ li.has_icon a .fa{
 	margin-right: 24px;
 	font-size: 18px;
 }
-
+.nex_forms_admin_page_wrapper select {
+    min-height: 35px;
+}
 .navigation>li>a{
 	overflow: hidden;
 	width: 100% !important;

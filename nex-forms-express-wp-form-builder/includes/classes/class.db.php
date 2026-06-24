@@ -2497,7 +2497,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 			
 			$output .= '</table>';
 				
-			NEXForms_clean_echo( $output);
+			NEXForms_clean_echo2( $output);
 			die();
 
 		
@@ -2841,7 +2841,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 				{
 				$output .= '<div class="alert alert-danger" style="margin:20px;"><span class="fas fa-lock"></span> PREMIUM ONLY FEATURE: An active premium license is required to view submitted form entry data. <a href="https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"" class="upgrade-link" target="_blank"> Upgrade to Premium <span class="fa-solid fa-angles-up"></span></a></div>';	
 				}
-			NEXForms_clean_echo( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			NEXForms_clean_echo2( $output); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			
 			die();	
 		}

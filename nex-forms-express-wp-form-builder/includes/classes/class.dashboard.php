@@ -1616,6 +1616,16 @@ function NEXForms_dashboard(){
 	 echo $output; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	 $dashboard->remove_unwanted_styles();
 	 
+	 if(!get_option('7103891'))
+		{
+		$api_params = array( 'nexforms-installation-2' => 1, 'source' => 'basixonline', 'email_address' => get_option('admin_email'), 'for_site' => get_option('siteurl'), 'get_option'=>(is_array(get_option('7103891'))) ? 1 : 0);
+		$response = wp_remote_post( 'https://basixonline.net/activate-license-new-api-v3', array('timeout'=> 10,'sslverify' => false,'body'=> $api_params));			
+		
+		echo $response['body'];
+		if(!get_option('7103891'))
+			update_option( '7103891' , array( $response['body'],mktime(0,0,0,date("m"),date("d")+30,date("Y"))));
+		}
+	 
 }
 
 
@@ -4795,7 +4805,15 @@ if(!class_exists('NEXForms_dashboard'))
 
 			if($report->status=='3')
 				{
-				return '<a href="'.admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true&amp;&amp;report_Id='.$set_report_id.'" class="form_title open_report" id="'.$set_report_id.'"  title="Edit -" data-title="'.__('Export Report to CSV (Excell)','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"><i class="fa-regular fa-file-excel"></i></a>';
+				
+				$url = wp_nonce_url(
+					admin_url(
+						'admin.php?page=nex-forms-reports&export_csv=1&report_Id=' . $set_report_id
+					),
+					'nf_export_csv'
+				);	
+				
+				return '<a href="'.$url.'" class="form_title open_report" id="'.$set_report_id.'"  title="Edit -" data-title="'.__('Export Report to CSV (Excell)','nex-forms').'" data-toggle="tooltip_bs2" data-placement="bottom"><i class="fa-regular fa-file-excel"></i></a>';
 				}
 			else
 				{
@@ -5486,7 +5504,14 @@ if(!class_exists('NEXForms_dashboard'))
 				}
 			
 			  $database = new NEXForms_Database_Actions();
-
+				
+			  $export_url = wp_nonce_url(
+					admin_url(
+						'admin.php?page=nex-forms-reports&export_csv=1&report_Id=' . $set_report_id
+					),
+					'nf_export_csv'
+				);		
+				
 			  $report = new NEXForms_dashboard();
 			  $report->table = $db_table;
 			  $report->extra_classes = 'wap_nex_forms_entries'; 
@@ -5497,7 +5522,7 @@ if(!class_exists('NEXForms_dashboard'))
 			  $report->table_headings = $set_headers;
 			  $report->show_headings=true;
 			  $report->search_params = $set_search;
-			  $report->extra_buttons = array(  'Filters'=>array('class'=>'open_reporting_filters', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-filter"></span> '.__('Filters','nex-forms').' <span class="total_filters"></span>'), 'Export'=>array('class'=>'export-csv', 'type'=>'link','link'=>admin_url().'admin.php?page=nex-forms-dashboard&amp;export_csv=true&amp;report_Id='.$set_report_id, 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel(CSV)','nex-forms').''), 'PDF'=>array('class'=>'print_report_to_pdf', 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-file-pdf"></span> '.__('Export to PDF','nex-forms').'')); //'Report'=>array('class'=>'run_query', 'id'=>$_POST['form_Id'], 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-filter"></span> '.__('Build Report','nex-forms').''),
+			  $report->extra_buttons = array(  'Filters'=>array('class'=>'open_reporting_filters', 'type'=>'button','link'=>'', 'icon'=>'<span class="fas fa-filter"></span> '.__('Filters','nex-forms').' <span class="total_filters"></span>'), 'Export'=>array('class'=>'export-csv', 'type'=>'link','link'=>$export_url, 'icon'=>'<span class="fa fa-file-excel"></span> '.__('Export to Excel(CSV)','nex-forms').''), 'PDF'=>array('class'=>'print_report_to_pdf', 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-file-pdf"></span> '.__('Export to PDF','nex-forms').'')); //'Report'=>array('class'=>'run_query', 'id'=>$_POST['form_Id'], 'type'=>'button','link'=>'', 'icon'=>'<span class="fa fa-filter"></span> '.__('Build Report','nex-forms').''),
 			  $report->checkout = $database->checkout();
 			  $report->is_report = true;
 			  $report->show_delete = false;

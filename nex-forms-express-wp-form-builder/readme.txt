@@ -4,7 +4,7 @@ Contributors: Basix
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
 Requires at least: 4.0
 Tested up to: 7.0
-Stable tag: 9.2.2
+Stable tag: 9.2.3
 License: GPLv3 or later
 Author URI: https://basixonline.net?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-author-uri
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-plugin-uri
@@ -317,7 +317,14 @@ There are 2 ways to install NEX-Forms. Please follow the steps for your NEX-Form
 13. NEX-Forms - Dashboard with form analytics and more!
 
 == Changelog ==
-= NEX Forms 9.2.1 (freemius v9.3) =
+= NEX Forms 9.2.3 =
+IMPROVED: Added security measures to prevent potential Cross Site Scripting (XSS).
+IMPROVED: Added additional security measures for CSV/Excel Exports.
+IMPROVED: Added additional security measures for Email Previews.
+IMPROVED: Added additional security measures for Form Previews.
+
+
+= NEX Forms 9.2.2 =
 IMPROVED: WP 7.x compatibility.
 NEW: Added an additional Reply-to for user confirmation emails.
 NEW: Enabled Smart Data Tags to be used in PayPal Item Names.
@@ -678,256 +685,6 @@ FIX: Various reported styling interference from various themes
 
 
 
-
-= NEX Forms 7.5.21 =
-IMPROVED: Multistep sorting
-IMPROVED: Using conditional logic to show hide multisteps
-
-= NEX Forms 7.5.20 =
-FIXED: Image field issue
-FIXED: Reported conflict with some 3rd party scripts
-
-= NEX Forms 7.5.19 =
-IMPROVED: Drag and drop Builder system
-FIXED: Image Element settings
-FIXED: Classic validation field message settings recall
-
-= NEX Forms 7.5.18 =
-NEW: Refined Embed Options
-NEW: Form Shortcode and PHP output generator from embed options
-NEW: Set your popup position on the page
-NEW: Full screen popup option
-NEW: Set your own popup open animation
-NEW: Set your own popup close animation
-NEW: Create any type of slide in chat style popup with new options
-NEW: Added MailPoet Integration
-NEW: Added Mailster Integration
-NEW: Background and border settings (including border radius settings) for form field containers
-ADDED: Single Opt-In for Mailchimp
-
-= NEX Forms 7.5.17 =
-NEW: GRID Column drag resizing on the fly. No more static grids!
-NEW: Add/Delete Columns in a Grid System
-NEW: Spacer object. Use to finetune spacing on your forms.
-NEW: Image HTML Element. Before you had to use HTML to insert and image now you can simply use this element to manage your images in your forms.
-NEW: New Form templates and improved all existing templates
-NEW: Workspace light and dark views. Use a dark workspace when you use light field labels etc. 
-IMPROVED: Backend - All field setting controls.
-IMPROVED: Optimised backend and decreased load time
-IMPROVED: Overall backend form building usability.
-IMPROVED: Backend responsiveness on smaller screens. 
-FIXED: Newline issue in email and PDF content.
-FIXED: All reported bugs.
-FIXED: All reported css conflicts.
-
-= NEX Forms 7.5.16 =
-NEW: Conversational Forms!
-NEW: Manual form import (for servers that block cURL)
-
-= NEX Forms 7.5.15 =
-ADDED: Front-end Field Group Replication (enables field group replication from the users perspective)
-ADDED: Front-end Field Group Replication Limit (limits the number of fields the user can add)
-ADDED: Day, Month Year only data tags for emails and hidden fields
-IMPROVED: Date and time are now print to screen as per your WP->Settings-> Date/Time format
-IMPROVED: Default email layout using {{nf_form_data}} data tag.
-IMPROVED: Default CSS for default or custom emails.
-FIXED: Admin Submission Editing
-FIXED: Styling issues in the reporting section.
-FIXED: Popup overlay problem with some themes.
-FIXED: WP Mail Method BCC Emailing
-
-= NEX Forms 7.5.14 =
-ADDED: Form Submission limit with an optional "limit reached" message.
-IMPROVED: JS and CSS optimisation for overall performance and speed.
-
-= NEX Forms 7.5.13 =
-FIXED: Mobile issue with dragging jQuery slider fields 
-FIXED: Registration issue
-ADDED: User ID hidden field data tag {{WP_USER_ID}}. 
-ADDED: Quick Forms. Submit forms on a single field selection. See <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/form-examples/quick-forms/">Quick Forms Examples</a> 
-IMPROVED: Success message on form submission styling 
-
-= NEX Forms 7.5.12 =
-ENHANCED: Drag and drop grid system. Now even more responsive and easier to use!
-ENHANCED: Backend styling an usability. Basically refined the styling on some sections.
-ADDED: Multi-step breadcrumb styling section.
-FIXED: Multi-step alignment issue when re-calling in the backend
-FIXED: Multi-step color issue when re-calling in the backend for dotted counter top text.
-FIXED: Multi-step re-call issue for percentage bar.
-FIXED: Print option for submissions in the NEX-Forms Dashboard
-FIXED: Image Uploader Validation Issues
-
-= NEX Forms 7.5.11.5 =
-NEW: Multi-step step duplication.
-NEW: Pre-populate fields from a popup. This allows you to have the same form with different buttons and use the buttons to select and set fields differently in the popup form for each button.
-UPDATED: Scripts and style enqueues
-UPDATED: Multi-steps usability in the back end.
-FIXED: Fixed admin side percentage bar for multi-step recall
-FIXED: Gutenberg editor saving issue
-FIXED: Visual Composer / WP Bakery Page Builder form styling compatibility issue
-
-= NEX Forms 7.5.11 =
-NEW: New Percentage Progress Bar for Multi-Steps
-NEW: Auto Advance to next step on single selection fields like radio buttons enabling quick forms for Multi-Steps
-FIXED: Styling issues from various theme interference
-
-= NEX Forms 7.5.10 =
-NEW: Use field data tags in your submission redirects as URL parameters.
-UPDATED: Disabled double click on next and previous buttons.
-FIX: Various 3rd party styling interference as reported.
-FIX: Various 3rd party javascript interference as reported.
-
-= NEX Forms 7.5.9 =
-UPDATED: NEX-Forms DB table - ENGINE MYISAM (resolves large forms saving issues)
-UPDATED: NEX-Forms DB table - CHARACTER SET utf8mb4  (resolves large forms saving issues)
-UPDATED: NEX-Forms DB table - COLLATION utf8mb4_unicode_ci  (resolves large forms saving issues)
-FIXED: File uploader validation error messages
-FIXED: Form Import 403 issue
-FIXED: Various styling interference as reported
-NEW: 18 NEW Built-in Templates
-
-= NEX Forms 7.5.8 =
-FIXED: Fontawesome 5 missing icons
-FIXED: Save Form Progress default field value conflict
-ADDED: Using URL parameters to populate hidden fields and use in conditional logic
-ADDED: Using hidden fields in conditional logic
-
-= NEX Forms 7.5.7 =
-FIXED: File import Issue on some server configurations.
-FIXED: Some Reported CSS Issues
-
-= NEX Forms 7.5.6 =
-FIXED: Grid option hidden in backend.
-FIXED: Some Reported bugs
-FIXED: Font Awesome 5 icons not showing.
-NEW: Extra Save Form Progress Settings
-NEW: Use conditional logic to Skip to step, show/hide Entire Steps  
-
-= NEX Forms 7.5.5.1 =
-FIXED: Field Data Tags button on TinyMCE Editor
-
-= NEX Forms 7.5.5 =
-ENHANCED: Overall Back-end Usability
-ENHANCED: Code Optimization on entire Back-end to increase speed and performance
-ENHANCED: Front End output usability and styling
-ADDED: Auto save form progress
-ADDED: Super Selection Form Field Add-on Compatibility
-ADDED: WPML Compatibility
-FIXED: TinyMCE -> WP5.x -> Forms not saving issue
-FIXED: Thumb Selection Styling Issue 
-
-= NEX Forms 7.5.4 =
-ADDED: 800+ New Font Awesome Icons. There are now 1500+ Icons to use in Fields and forms.
-ADDED: New Icon Select Field compatibility
-ENHANCED: Overall performance optimization
-ENHANCED: Redesigned dashboard for better usability and control
-ENHANCED: Reporting Section
-REFINED: Overall front-end look and feel of forms
-REFINED: Field Validation
-FIXED: Multi-step height  issue
-ENHANCED: Various field settings
-
-
-= NEX Forms 7.5.3 =
-NEW: Interactive Tutorials! Building a Contact form, Using Conditional Logic, Using Math Logic, Creating Multi-step forms
-NEW: Admin Tours: Every aspect of the admin side is now covered with tours to help you know exactly where and how to make use of the entire package.
-NEW: Google analytics tracking for form submissions.
-ENHANCED: Back-end builder overall usability, look and feel to a much more solid experience.
-FIXED: Various reported styling compatibility with 3rd party plugins.
-
-= NEX Forms 7.5.2 =
-FIXED: Some styling issues.
-FIXED: Column layout for multiple checkboxes and radio buttons.
-ADDED: File upload Settings for the server.
-ADDED: File attachment Settings for emails.
-ADDED: New Multi-step Settings.
-ADDED: Extra security on form field validation.
-
-= NEX Forms 7.5.1 =
-FIXED: More WP 5.x issues like plugin registration.
-FIXED: Double image tags when using thumbnail fields
-FIXED: Field Data tags in On-screen success messages
-FIXED: Multi file uploader issues
-FIXED: Plugin WP user rights
-
-= NEX Forms 7.5 =
-FIXED: WP 5.0  tinyMCE Compatibility issue
-
-= NEX Forms 7.4.1 =
-NEW: Re-register license option. You can now re-register a license on any site without having to ask support to free up your license!
-FIXED: Conditional Logic checkboxes issue
-ENHANCED: Overall Multi-steps look and feel.
-FIXED: Some styling issues
-
-= NEX Forms 7.4 =
-ADDED: Automatic updates via WordPress Plugins Page. After this update, you can simply update from your WordPress plugins in the future. No need to go to Codecanyon Downloads making updating the plugin a breeze!
-
-= NEX Forms 7.3 =
-FIXED: Digital Signature issue
-ENHANCED: Live field validation styling and overall usability
-ENHANCED: Onscreen Success message styling
-ENHANCED: Sticky Forms styling
-ENHANCED: Popup Forms styling
-ENHANCED: Thumb/Image Selection Styling and usability
-ENHANCED: Overall Form design to a more modern look and feel
-ENHANCED: Optimized Conditional Logic
-ADDED: Compatibility for the NEW Short-code Processor Add-on
-
-= NEX Forms 7.2.3 =
-FIXED: Chrome auto-fill for chrome 65+
-FIXED: Digital signatures in chrome
-FIXED: Popup overlays
-ADDED: Popups from any custom trigger. Just provide an element class name to make it a popup trigger.
-
-
-= NEX Forms 7.2.2 =
-ADDED: Show logged in WP User datial in fieds. Add the following to field values:  {{nf_user_first_name}} , {{nf_user_last_name}} , {{nf_user_name}} , {{nf_user_email}} , {{nf_user_url}}
-
-= NEX Forms 7.2.1 =
-FIXED: A few reported styling issues.
-FIXED: Some JS issues.
-UPDATED: Changed from the old legacy API to the new Envato API
-FIXED: Digital Signatures drag and drop issue
-FIXED: Digital Signatures PDF Export issue
-FIXED: Digital Signatures PDF Email Attachment issue
-ADDED: Width and Height settings for Digital Signatures
-ADDED: Compatibility for new PayPal Pro Add-on
-ADDED: Compatibility for new features in Form To POST. The feature enables form field values in POSTS or PAGES content body.
-
-= NEX Forms 7.1.5 =
-FIXED: A few reported styling issues.
-FIXED: Checkbox labels show instead of values in Interactive Forms
-FIXED: Checkbox labels show instead of values in Emails
-FIXED: Reported Divi theme compatibility issue returning 0 on submit.
-
-= NEX Forms 7.1.4 =
-ADDED: Compatibility for new ADD-ON called Conditional Content Blocks
-ADDED: Disabled field settings
-ADDED: Thumb and multi-thumb selection size settings.
-FIXED: Some Styling issues
-FIXED: Submission Reporting Issues
-
-= NEX Forms 7.1.3 =
-FIXED: 3rd party script interference.
-
-= NEX Forms 7.1.2 =
-FIXED: Saving Preferences issue
-FIXED: Add media button on TinyMCE editors on Emails and PDF Creator
-FIXED: Some Styling issue
-FIXED: Input name change on check boxes
-
-= NEX Forms 7.1.1 =
-FIXED: Registration issue
-
-= NEX Forms 7.1 =
-OVERALL: Basically a full redevelopment of the builder and still have backward compatibility on forms built with earlier versions.
-NEW: Switch forms to Material Design
-NEW: Switch forms to Bootstrap
-NEW: Switch forms to jQuery UI
-NEW: Switch forms to Browser Default (theme styling)
-NEW: Multi-step Breadcrumb with 5 variations (Basic, Triangular, Rectangular, Dotted, Dot Counter)
-NEW: Overall Form Styling
-NEW: Overall back-end look and feel
 
 <a href="https://basixonline.net/nex-forms-wordpress-form-builder-demo/change-log/">View full changelog</a>
 

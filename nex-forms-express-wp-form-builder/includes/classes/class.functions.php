@@ -2312,8 +2312,6 @@ function NEXForms_allowed_tags(){
 			'loading' 				=> array(),
 			'name' 					=> array(),
 			'referrerpolicy' 		=> array(),
-			'sandbox' 				=> array(),
-			'srcdoc' 				=> array(),
 			'width' 				=> array(),
 		) ),
 		'img'          		=> array_merge( $default_attribs, array(
@@ -2399,12 +2397,6 @@ function NEXForms_allowed_tags2(){
 			'val' 			=> true,
 			'tabindex'		=> true,
 			'role'			=> true,
-			'onClick' 		=> true,
-			'onBlur' 		=> true,
-			'onChange' 		=> true,
-			'click' 		=> true,
-			'change' 		=> true,
-			'keyup' 		=> true,
 			'for' 			=> true,
 			'multiple' 		=> true,
 			'placeholder' 	=> true,
@@ -2459,16 +2451,8 @@ function NEXForms_allowed_tags2(){
 		'canvas'			=> $default_attribs,
 		'nav'				=> $default_attribs,
 		'iframe'          			=> array_merge( $default_attribs, array(
-			'src' 					=> array(),
-			'allow' 				=> array(),
-			'allowfullscreen' 		=> array(),
-			'allowpaymentrequest' 	=> array(),
 			'height' 				=> array(),
-			'loading' 				=> array(),
 			'name' 					=> array(),
-			'referrerpolicy' 		=> array(),
-			'sandbox' 				=> array(),
-			'srcdoc' 				=> array(),
 			'width' 				=> array(),
 		) ),
 		'img'          		=> array_merge( $default_attribs, array(
@@ -2506,30 +2490,7 @@ function NEXForms_allowed_tags2(){
 		'link'          	=> array_merge( $default_attribs, array(
 			'rel' 			=> array(),
 			'href' 			=> array(),
-		) ),
-		'video'          	=> array_merge( $default_attribs, array(
-			'autoplay' 		=> array(),
-			'controls' 		=> array(),
-			'loop' 			=> array(),
-			'muted' 		=> array(),
-			'poster' 		=> array(),
-			'preload' 		=> array(),
-			'src' 			=> array(),
-		) ),
-		'audio'          	=> array_merge( $default_attribs, array(
-			'autoplay' 		=> array(),
-			'controls' 		=> array(),
-			'loop' 			=> array(),
-			'muted' 		=> array(),
-			'preload' 		=> array(),
-			'src' 			=> array(),
-		) ),
-		'source'          	=> array_merge( $default_attribs, array(
-			'srcset' 		=> array(),
-			'sizes' 		=> array(),
-			'src' 			=> array(),
-			'media' 		=> array(),
-		) ),
+		) )
 	);
 	return $allowed_tags;
 }
@@ -2604,7 +2565,7 @@ function NEXForms_add_ons_array(){
 			'description'	=>	'Create fully customizable radio buttons, checkboxes, dropdowns, and spinners using 2000+ icons. Set unique icons and colors for selected and unselected states.',
 			'price'			=>	'19',
 			'status'		=>	'not installed',
-			'add_on_url'	=>	'nex-forms-super-select',
+			'add_on_url'	=>	'nex-forms-super-select-add-on',
 			'version'		=>	'9.0',
 			'plans'			=>	'Basic, Plus, Pro, Elite'
 			),
@@ -2892,6 +2853,26 @@ function nf_replace_merge_tags($string, $nf_functions, $data_array, $allow_array
 
     // Remove any leftover tags
     return preg_replace($pattern, '', $string);
+}
+
+function nf_recursive_sanitize($value)
+{
+    if (is_array($value)) {
+        foreach ($value as $k => $v) {
+            $value[$k] = nf_recursive_sanitize($v);
+        }
+        return $value;
+    }
+
+    if (is_object($value)) {
+        return array_map('nf_recursive_sanitize', (array) $value);
+    }
+
+    return sanitize_text_field(
+        strip_tags(
+            wp_unslash((string)$value)
+        )
+    );
 }
 
 ?>

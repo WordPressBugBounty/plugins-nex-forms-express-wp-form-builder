@@ -4,7 +4,7 @@ Plugin Name: NEX-Forms - Ultimate
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 Description: Premium WordPress Plugin - Ultimate Drag and Drop WordPress Forms Builder.
 Author: Basix
-Version: 9.2.2
+Version: 9.2.3
 Author URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress_fs&utm_medium=upgrade&utm_content=feature_unlock"
 License: GPL
 Text Domain: nex-forms
@@ -454,22 +454,36 @@ function NEXForms5_main_menu(){
 
 function NEXForms_my_menu_pages() {
 	add_action( 'init', 'nf_prefix_register_resources' );
+
+	
+	
+	
 	
 	$hook2 = add_submenu_page( '', 'Page Title', 'Page Title', NF_USER_LEVEL, 'nex-forms-email-preview', function() { });
 	 add_action('load-' . $hook2, function()
 		{
+		
+		if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
+				wp_die(
+					esc_html__('Security check failed.', 'nex-forms'),
+					403
+				);
+			}	
+		if(!current_user_can( NF_USER_LEVEL ))	
+				wp_die(esc_html__('Security check 2 failed.', 'nex-forms'),
+					403);	
 		global $wpdb; 
 		
 		$get_entry 	= $wpdb->prepare('SELECT * FROM '.$wpdb->prefix.'wap_nex_forms_entries WHERE Id = %d',sanitize_text_field($_REQUEST['entry_Id']));
 		$entry 	= $wpdb->get_row($get_entry); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		
-		if($_REQUEST['emial-preview']=='admin')
-			echo wp_kses( $entry->saved_admin_email,  NEXForms_allowed_tags2());
+		if($_REQUEST['email-preview']=='admin')
+			echo wp_kses( str_replace('Array','',$entry->saved_admin_email),  NEXForms_allowed_tags2());
 		else
 			{
 			if($entry->saved_user_email_address)
 				{
-				echo wp_kses( $entry->saved_user_email,  NEXForms_allowed_tags2());
+				echo wp_kses( str_replace('Array','',$entry->saved_user_email),  NEXForms_allowed_tags2());
 				//NEXForms_clean_echo( $entry->saved_user_email);	
 				}
 			else
@@ -483,6 +497,18 @@ function NEXForms_my_menu_pages() {
 	
     add_action('load-' . $hook, function()
 		{
+		
+		if ( !wp_verify_nonce( $_REQUEST['nfp_nonce'], 'nf_update_record' ) ) {
+				wp_die(
+					esc_html__('Security check failed.', 'nex-forms'),
+					403
+				);
+			}
+		
+		if(!current_user_can( NF_USER_LEVEL ))	
+				wp_die(esc_html__('Security check 2 failed.', 'nex-forms'),
+					403);
+		
 		global $wpdb; 
 		$config = new NEXForms5_Config();
 		$css_js_version = $config->plugin_version.'.22';
@@ -640,6 +666,7 @@ function NEXForms_my_menu_pages() {
 	
 	wp_print_styles();
 	wp_print_scripts();
+	
 	
 	NEXForms_ui_output(sanitize_title($_REQUEST['form_Id']),true,'',$unigue_form_Id);
 	
@@ -1126,6 +1153,7 @@ function NEXForms_form_preview(){
 
 
 function NEXForms_ui_output( $atts , $echo='',$prefill_array='',$unigue_form_Id=''){
+	
 	
 	ini_set('display_errors', '0');
 	error_reporting(0);
@@ -2889,23 +2917,36 @@ function submit_nex_form($entry_action = false){
 					{
 					if(!is_array($_POST['real_val__'.$key]))
 						{
-						$admin_val = sanitize_text_field($_POST['real_val__'.$key]);
-						$val = sanitize_text_field($_POST['real_val__'.$key]);
-						}
+						$admin_val = wp_kses($_POST['real_val__'.$key], NEXForms_allowed_tags2());
+						$val = wp_kses($_POST['real_val__'.$key], NEXForms_allowed_tags2());
+						} 
 					else
 						{
-						$admin_val = $_POST['real_val__'.$key];
-						$val = $_POST['real_val__'.$key];
-						} 
+						$admin_val = nf_recursive_sanitize($_POST['real_val__'.$key]);
+						$val = nf_recursive_sanitize($_POST['real_val__'.$key]);
+						}
 					}	 
-				if(is_array($val) || is_object($val))
+				if (is_array($val) || is_object($val))
 					{
-					$data_array[] = array('field_name'=>$key,'field_value'=>rest_sanitize_array($val));
+					$val = nf_recursive_sanitize($val);
+
+						$data_array[] = array(
+							'field_name'  => $key,
+							'field_value' => $val
+						);
+				
 					}
 				else
 					{
-					$val = strip_tags($val);
-					$data_array[] = array('field_name'=>$key,'field_value'=>sanitize_text_field(str_replace('\\','',$val)));
+					$val = sanitize_text_field(
+						strip_tags(
+							wp_unslash($val)
+						)
+					);
+					$data_array[] = array(
+						'field_name'  => $key,
+						'field_value' => $val
+					);
 					}
 				$i++;
 				$data_array2[$key] = $val;
@@ -3647,9 +3688,45 @@ class CSVExport
 	{
 	public function __construct()
 		{
-		$export_csv = isset($_REQUEST['export_csv']) ? sanitize_text_field($_REQUEST['export_csv']) : '';
-		if($export_csv)
-			$this->generate_csv();
+			$export_csv = isset($_REQUEST['export_csv']) ? sanitize_text_field(wp_unslash($_REQUEST['export_csv'])) : '';
+		
+			if (!$export_csv) {
+				return;
+			}
+			
+			if ( ! function_exists( 'is_user_logged_in' ) ) {
+					require_once ABSPATH . WPINC . '/pluggable.php';
+				}
+
+			// User must be logged in
+			if (!is_user_logged_in()) {
+				wp_die(
+					esc_html__('Unauthorized request.', 'nex-forms'),
+					403
+				);
+			}
+		
+			// Capability check
+			if (!current_user_can('manage_options')) {
+				wp_die(
+					esc_html__('Insufficient permissions.', 'nex-forms'),
+					403
+				);
+			}
+		
+			// Nonce verification
+			$nonce = isset($_REQUEST['_wpnonce'])
+				? sanitize_text_field(wp_unslash($_REQUEST['_wpnonce']))
+				: '';
+		
+			if (!wp_verify_nonce($nonce, 'nf_export_csv')) {
+				wp_die(
+					esc_html__('Security check failed.', 'nex-forms'),
+					403
+				);
+			}
+		
+		$this->generate_csv();
 		}
 	public function generate_csv()
 		{
@@ -5046,6 +5123,7 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			$email_head .= '</head>';
 			$body = '<html>'.$email_head.'<body>'.$body.'</body></html>';
 			$admin_body = '<html>'.$email_head.'<body>'.$admin_body.'</body></html>';
+			
 			}
 			
 		$_REQUEST['nf_form_data']				= ($email_config['email_content']!='pt') ? $user_fields : $pt_user_fields;
@@ -5330,6 +5408,9 @@ function nf_send_mail($nex_forms_id='', $entry_id='', $resent=0,$send_email=true
 			{
 			$set_emails = explode(',',$form_attr->attach_pdf_to_email);
 			}
+	
+		$body = str_replace('Array','',$body);
+		$admin_body = str_replace('Array','',$admin_body);
 	
 if($checked=='false' || (!get_option('nf_activated') && !get_option('nf_fs_activated')))
 	{	
