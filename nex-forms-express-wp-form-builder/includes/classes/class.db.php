@@ -240,17 +240,23 @@ if(!class_exists('NEXForms_Database_Actions'))
 				wp_die();
 			}
 			if ( function_exists( 'activator_inject_plugins_filter' ) ) {
-				 return false;
-			 }
-			if(!current_user_can( NF_USER_LEVEL ))	
+				 wp_die();
+			}
+			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die();
+			}
 			
 			global $wpdb;
 			
-			$db_table = sanitize_title($_POST['table']);
-			
-			if(!strstr($db_table, 'nex_forms'))
+			$db_table = sanitize_key( wp_unslash( $_POST['table'] ) );
+
+			if ( strpos( $db_table, 'nex_forms' ) === false ) {
 				wp_die();
+			}
+			
+			if ( $db_table === 'wap_nex_forms_files' ){
+				wp_die();
+			}
 			
 			$fields 	= $wpdb->get_results('SHOW FIELDS FROM ' . $wpdb->prefix .sanitize_text_field($db_table)); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			$field_array = array();
@@ -291,7 +297,7 @@ if(!class_exists('NEXForms_Database_Actions'))
 					)
 				);
 				}
-			die();
+			wp_die();
 		}
 		
 /* UPDATE */
@@ -783,28 +789,63 @@ if(!class_exists('NEXForms_Database_Actions'))
 			//$delete_draft = $wpdb->delete($wpdb->prefix. sanitize_text_field($db_table),array('draft_Id'=>$record_id));	 // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
 			wp_die();
 		}	
-		public function delete_file(){
-			
+		public function delete_file() {
+
 			if ( !wp_verify_nonce( $_REQUEST['nex_forms_wpnonce'], 'nf_admin_dashboard_actions' ) ) {
 				wp_die();
 			}
-			
-			if(!current_user_can( NF_USER_LEVEL ))	
+		
+			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die();
+			}
+		
 			global $wpdb;
-			
-			$db_table = sanitize_title($_POST['table']);
-			
-			if(!strstr($db_table, 'nex_forms'))
+		
+			$record_id = isset( $_POST['Id'] ) ? absint( $_POST['Id'] ) : 0;
+		
+			if ( ! $record_id ) {
 				wp_die();
-			
-			$record_id = sanitize_title($_POST['Id']);
-			$get_file = $wpdb->prepare('SELECT location FROM ' .$wpdb->prefix. sanitize_text_field($db_table). ' WHERE Id = %d',$record_id); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
-			$file = $wpdb->get_var($get_file); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
-			
-			unlink($file);
-			
-			die();
+			}
+		
+			$file = $wpdb->get_var(
+				$wpdb->prepare(
+					'SELECT location FROM '.$wpdb->prefix.'wap_nex_forms_files WHERE Id = %d',
+					$record_id
+				)
+			); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		
+			if ( empty( $file ) ) {
+				wp_die();
+			}
+		
+			// Normalize and resolve the file path
+			$file = wp_normalize_path( $file );
+			$file_path = realpath( $file );
+		
+			if ( false === $file_path )
+				{
+				wp_die();
+				}
+		
+			$upload_dir = wp_get_upload_dir();
+			$uploads_base = realpath( wp_normalize_path( $upload_dir['basedir'] ) );
+		
+			if ( false === $uploads_base )
+				{
+				wp_die();
+				}
+		
+			if ( strpos( $file_path, $uploads_base ) !== 0 )
+				{
+				wp_die();
+				}
+		
+			// Delete only if the file exists
+			if ( file_exists( $file_path ) ) {
+				wp_delete_file( $file_path );
+			}
+		
+			wp_die();
 		}
 		public function delete_db_table(){
 			

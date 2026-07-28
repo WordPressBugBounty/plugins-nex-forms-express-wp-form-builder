@@ -4268,6 +4268,15 @@ if(!class_exists('NEXForms_dashboard'))
 			
 			$show_cols = esc_sql(sanitize_text_field($show_hide_field));
 			
+			$table_fields = $wpdb->get_results('SHOW FIELDS FROM '.$wpdb->prefix.$table); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, PluginCheck.Security.DirectDB.UnescapedDBParameter
+			
+			$allowed_operators = array('=', '!=', '<>', '<', '>', '<=', '>=', 'LIKE', 'NOT LIKE');
+			$allowed_cols = array();
+			foreach($table_fields as $field=>$name)
+				{
+				$allowed_cols[$name->Field]=$name->Field;
+				}
+			
 			if(is_array($additional_params))
 				{
 				foreach($additional_params as $clause)
@@ -4275,13 +4284,19 @@ if(!class_exists('NEXForms_dashboard'))
 					$like = '';
 					if($clause['operator'] == 'LIKE' || $clause['operator'] == 'NOT LIKE')
 						$like = '%';
-					if($clause['value']=='NULL')
-						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql($clause['column']))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
-					else
-						$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql($clause['column']))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
-					
+					if(in_array($clause['column'],$allowed_cols))
+						{
+						if(in_array($clause['operator'],$allowed_operators))
+							{
+							if($clause['value']=='NULL')
+								$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql($clause['column']))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  '.str_replace('\'','',$wpdb->prepare('%s',$like.esc_sql(sanitize_text_field($clause['value'])).$like));
+							else
+								$where_str .= ' AND `'.str_replace('\'','',$wpdb->prepare('%s',esc_sql($clause['column']))).'` '.(($clause['operator']!='') ? str_replace('\'','',$wpdb->prepare('%s',$clause['operator'])) : '=').'  "'.$like.str_replace('\'','',$wpdb->prepare('%s',esc_sql(sanitize_text_field($clause['value'])))).$like.'"';
+							}
+						}
 					}
 				}
+			
 			
 			$select_fields = '*';
 			if($is_report)

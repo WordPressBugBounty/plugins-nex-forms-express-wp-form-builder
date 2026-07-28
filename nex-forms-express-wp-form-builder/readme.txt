@@ -2,13 +2,15 @@
 Plugin Name: NEX-Forms - Ultimate Forms Plugin for WordPress
 Contributors: Basix
 Tags: form builder, contact forms, wordpress forms, survey forms, multi-step forms
-Requires at least: 4.0
-Tested up to: 7.0
-Stable tag: 9.2.3
-License: GPLv3 or later
+Requires at least: 5.3
+Requires PHP: 7.2
+Tested up to: 7.0.2
+Stable tag: 9.2.4
+License: GPLv3
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Author URI: https://basixonline.net?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-author-uri
 Plugin URI: https://basixonline.net/nex-forms/pricing/?utm_source=wordpress&utm_medium=upgrade&utm_content=nf-plugin-uri
-License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
 
 Build beautiful responsive forms for WordPress. Contact forms, surveys, quizzes, booking forms, payments, popups & more with NEX-Forms...
 
@@ -317,6 +319,11 @@ There are 2 ways to install NEX-Forms. Please follow the steps for your NEX-Form
 13. NEX-Forms - Dashboard with form analytics and more!
 
 == Changelog ==
+= NEX Forms 9.2.4 =
+IMPROVED: Added additional security measures for submitted file deletions.
+IMPROVED: Added additional security measures for submission reporting.
+
+
 = NEX Forms 9.2.3 =
 IMPROVED: Added security measures to prevent potential Cross Site Scripting (XSS).
 IMPROVED: Added additional security measures for CSV/Excel Exports.
